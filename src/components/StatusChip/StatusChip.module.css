@@ -1,0 +1,33 @@
+.status-chip {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0px 8px;
+    border-radius: 25px;
+    max-width: fit-content;
+
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    font-size: 0.85em;
+}
+
+.status-chip-pending {
+    background: #5171e6;
+    color: #fff;
+}
+
+.status-chip-success {
+    background: #03af76;
+    color: #fff;
+}
+
+.status-chip-danger {
+    background: #af2003;
+    color: #fff;
+}
+
+.status-chip-cancel {
+    background: #BB5500;
+    color: #fff;
+}

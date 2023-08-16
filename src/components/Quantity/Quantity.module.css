@@ -1,0 +1,33 @@
+.card {
+    align-items: center;
+    border-radius: 7px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-layer1);
+    display: flex;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 1.25rem;
+    justify-content: center;
+    padding: 10px 12px 10px 12px;
+    width: 121px;
+    width: fit-content;
+
+}
+
+.button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: black;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    outline: none;
+    position: initial;
+    padding: 0;
+}
+
+.count {
+    padding: 0 18px 0 18px;
+
+}

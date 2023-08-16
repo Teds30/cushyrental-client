@@ -1,0 +1,32 @@
+@import url('./ButtonStyle.module.css');
+.btn {
+    background-color: var(--accent);
+    color: #fff;
+    fill: #fff;
+}
+
+.btn:hover {
+    background-color: #026a47;
+}
+
+.btn:disabled {
+    background-color: #85d5bc;
+}
+
+.btn-danger {
+    background-color: var(--accent-danger) !important;
+}
+
+.btn-danger:hover {
+    background-color: var(--accent-danger-secondary) !important;
+}
+
+svg {
+    fill: #fff;
+}
+.icon path {
+    fill: #fff;
+}
+.icon svg {
+    fill: #fff;
+}

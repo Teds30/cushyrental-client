@@ -1,0 +1,10 @@
+.link {
+    color: var(--accent);
+    cursor: pointer;
+}
+.link:hover {
+    color: var(--accent);
+}
+.underlined {
+    text-decoration: underline;
+}

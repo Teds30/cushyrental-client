@@ -1,0 +1,13 @@
+.avatar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #03B077;
+    padding: 2px;
+    border-radius: 50%;
+}
+
+.gradient {
+    background: linear-gradient(to right, #03B077, #A4EB5D) !important;
+}

@@ -1,0 +1,7 @@
+.icon_button {
+    color: var(--fc-primary) !important;
+}
+
+.icon_button:disabled {
+    color: rgba(0, 0, 0, 0.26) !important;
+}

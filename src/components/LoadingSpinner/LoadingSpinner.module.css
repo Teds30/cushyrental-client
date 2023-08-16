@@ -1,0 +1,14 @@
+.center {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.color__white {
+    color: #fff !important;
+}
+
+.color__primary {
+    color: var(--accent) !important;
+}

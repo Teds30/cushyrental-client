@@ -1,0 +1,7 @@
+.chip {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    /* justify-content: center; */
+}

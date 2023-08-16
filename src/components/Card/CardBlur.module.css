@@ -1,0 +1,11 @@
+.card {
+    backdrop-filter: blur(1px);
+    background: rgba(255, 255, 255, 0.80);
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.card-fill {
+    width: 100%;
+}
