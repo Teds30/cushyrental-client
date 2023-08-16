@@ -1,0 +1,51 @@
+/* F O R M S */
+.MuiFormLabel-root {
+    color: var(--fc-body) !important;
+}
+.MuiFormLabel-root.Mui-focused {
+    color: var(--accent) !important;
+}
+
+.MuiOutlinedInput-root {
+    border-radius: 10px !important;
+}
+
+.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    /* border-color: var(--input-border-color); */
+    border-color: var(--fc-body) !important;
+}
+
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: var(--accent) !important;
+}
+.MuiOutlinedInput-notchedOutline {
+    border-color: var(--border-color) !important;
+    outline: none !important;
+}
+
+.MuiInputAdornment-outlined p {
+    color: var(--fc-body) !important;
+}
+.MuiOutlinedInput-root {
+    color: var(--fc-body) !important;
+}
+.MuiOutlinedInput-root input {
+    color: var(--fc-body) !important;
+}
+.MuiMenuItem-root {
+    color: var(--fc-body) !important;
+    padding: 1em;
+}
+.MuiFormLabel-root-MuiInputLabel-root label {
+    color: var(--fc-body) !important;
+}
+.MuiMenuItem-root.Mui-selected {
+    background-color: var(--bg-layer3);
+    color: var(--fc-body);
+}
+.MuiRadio-root.Mui-checked {
+    color: var(--accent) !important;
+}
+.MuiRadio-root {
+    color: var(--accent) !important;
+}

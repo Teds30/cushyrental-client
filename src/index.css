@@ -1,69 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+    color-scheme: light dark;
+    /* color: rgba(255, 255, 255, 0.87);
+    background-color: #242424; */
+    color: #213547;
+    background-color: #ffffff;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+
+    --accent: #03b077;
+    --accent-rgb: 3, 176, 119;
+    --accent-light-opacity: #03b07724;
+
+    --accent-dark: #1d6156;
+    --accent-light: #5acfa9;
+    --accent-lighter: #b1eeda;
+    --accent-lightest: #c6f6e7;
+
+    --accent-danger: #eb5858;
+    --accent-danger-rgb: 235, 88, 88;
+    --accent-danger-secondary: rgb(198, 57, 57);
+    --accent-danger-light: #eb58580a;
+
+    --bg: #f4f6f9;
+    --bg-layer1: #fff;
+    --bg-layer2: #f5f6f9;
+    --bg-layer3: #f0f2f5;
+    --bg-layer4: #e4e6eb;
+
+    --fc-strong: #222736;
+    --fc-body: #5c6173;
+    --fc-body-light: #9299ad;
+    --fc-body-lighter: #b2b9ce;
+
+    --border-color: #e0e4f5;
+
+    --padding: 12px;
+
+    --subscription-gold: rgb(254, 223, 55);
+    --subscription-gold-bg: rgba(254, 223, 55, 0.15);
+
+    --subscription-bronze: #cd7f32;
+    --subscription-bronze-bg: #cd7f3226;
+
+    --subscription-silver: #c0c0c0;
+    --subscription-silver-bg: #c0c0c026;
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+    font-weight: 500;
+    /* color: #646cff; */
+    text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+    color: var(--accent);
+}
+a.static {
+    color: var(--accent);
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+    /* margin: 0;
+    display: flex;
+    place-items: center;
+    min-width: 320px;
+    min-height: 100vh; */
+
+    font-family: 'Inter';
+    font-size: 14px;
+    font-weight: 400;
+    line-height: calc(1em * 1.618);
+
+    color: var(--fc-body);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+p {
+    margin: 0;
 }
+/* h1 {
+    font-size: 3.2em;
+    line-height: 1.1;
+} */
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+/* button {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+    border-color: #646cff;
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+    outline: 4px auto -webkit-focus-ring-color;
+} */
+
+/* @media (prefers-color-scheme: light) {
+    :root {
+        color: #213547;
+        background-color: #ffffff;
+    }
+    a:hover {
+        color: #747bff;
+    }
+    button {
+        background-color: #f9f9f9;
+    }
+} */
+h1 {
+    font-size: 36px;
+    line-height: calc(36px * 1.618);
+    color: var(--fc-strong);
+    font-weight: 800;
+    letter-spacing: 2%;
+
+    /* color: red !important; */
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+h2 {
+    font-size: 24px;
+    line-height: calc(24px * 1.618);
+    color: var(--fc-strong);
+    font-weight: 700;
+    letter-spacing: 2%;
+    margin: 0;
+}
+
+.title {
+    font-family: 'Inter';
+    font-size: 1em;
+    font-weight: 600;
+    color: var(--fc-strong);
+}
+
+.caption {
+    font-size: 1em;
+    font-weight: 400;
+    color: var(--fc-body-light);
+}
+.strong {
+    font-size: 1em;
+    font-weight: 400;
+    color: var(--fc-strong);
+}
+
+.smaller-text {
+    font-size: 0.8em;
+    color: var(--fc-body);
+}
+
+.pre-title {
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 12px;
+    letter-spacing: 0.05em;
 }
