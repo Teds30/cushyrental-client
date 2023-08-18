@@ -118,5 +118,8 @@
 
 .login-option {
     align-items: center;
-    margin: 38px 0 0 0;
+    margin: 38px 0 38px 0;
+}
+.login-option .login {
+    color: #EB5858;
 }
