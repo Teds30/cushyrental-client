@@ -1,0 +1,161 @@
+.main-content {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 26px 20px 26px;
+}
+
+.logo {
+  display: flex;
+  flex-direction: flex-start;
+  align-items: start;
+  position: relative;
+  left: -10px;
+  top: 15px;
+}
+
+.sign-in,
+.sign-up {
+  display: flex;
+  flex-direction: column;
+  padding-top: 25px;
+  gap: 25px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding-bottom: 20px;
+}
+
+.remember-forgot {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sign-in #remember {
+  width: 24px;
+  height: 24px;
+  accent-color: var(--accent);
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.checkbox-container {
+  border: 1px solid var(--border-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 1em;
+  padding: 10px;
+  margin: 20px 0;
+}
+
+.dont-have-account {
+  display: flex;
+  justify-content: center;
+}
+
+.sign-up #remember {
+  width: 24px;
+  height: 24px;
+  accent-color: var(--accent);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+}
+
+.sign-up__container {
+  margin: 38px 0 0 0;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+}
+
+.sign-up__container .option {
+  color: #757171;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 0 6px;
+}
+
+.sign-up__container .hr {
+  flex: 1;
+  width: 100%;
+  height: 1px;
+  background-color: #a39797;
+}
+
+.back {
+  align-items: center;
+  color: #000;
+  display: flex;
+  font-size: 16px;
+  font-weight: 500;
+  gap: 8px;
+}
+
+.socmed {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.socmed {
+  margin: 38px 0 0 0;
+}
+
+.googleIcon {
+  height: 22px;
+  width: 22px;
+}
+
+.login-option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 38px 0 0 0;
+}
+
+.login-option span {
+  margin-right: 10px;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.otp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+
+  }
+  
+  .otp-input {
+    width: 35px;
+    height: 35px;
+    background-color: white ;
+    color: #000;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    margin: 0 5px;
+    padding: 5px;
+  }
+  
