@@ -18,7 +18,6 @@
 .sign-up {
   display: flex;
   flex-direction: column;
-  padding-top: 25px;
   gap: 25px;
 }
 
@@ -44,6 +43,10 @@ form {
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+.forgot-password {
+  color: var(--accent);
 }
 
 .checkbox-container {
@@ -72,7 +75,7 @@ form {
 }
 
 .sign-up__container {
-  margin: 38px 0 0 0;
+  margin: 0 0 0 0;
   width: 100%;
 
   display: flex;
@@ -94,6 +97,16 @@ form {
 }
 
 .back {
+  align-items: center;
+  color: #000;
+  display: flex;
+  font-size: 16px;
+  font-weight: 500;
+  gap: 8px;
+  margin-bottom: 50px;
+}
+
+.background {
   align-items: center;
   color: #000;
   display: flex;
@@ -124,7 +137,7 @@ form {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 38px 0 0 0;
+  margin: 15px 0 0 0;
 }
 
 .login-option span {
@@ -137,25 +150,81 @@ form {
   gap: 8px;
 }
 
-
 .otp {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
 
+.otp-input {
+  width: 50px; /* Adjust the initial width */
+  height: 50px; /* Adjust the initial height */
+  background-color: white;
+  color: #000;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+  margin: 0 5px;
+  padding: 5px;
+}
+
+
+.signup-word {
+  color: var(--accent-danger);
+}
+
+.enter-code {
+  display: flex;
+  align-items: center;
+}
+.enter-code svg {
+  margin-left: 5px;
+  fill: #000;
+}
+
+.enter-code {
+  position: relative;
+}
+
+.overlay-bubble {
+  position: absolute;
+  margin: 120px 80px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  z-index: 1;
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+
+@media (max-width: 768px) {
+  .otp {
+    flex-wrap: wrap;
+    justify-content: center; /* Center the items vertically */
   }
-  
+
   .otp-input {
-    width: 35px;
-    height: 35px;
-    background-color: white ;
-    color: #000;
-    font-size: 18px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: center;
-    margin: 0 5px;
-    padding: 5px;
+    width: 60px; /* Adjust the width for smaller screens */
+    height: 60px; /* Adjust the height for smaller screens */
+    font-size: 20px;
+    margin: 5px;
   }
-  
+}
+
+/* Media query for screens with min-width: 375px */
+@media (min-width: 375px) {
+  .otp-input {
+    width: 55px; /* Adjust the width for even smaller screens */
+    height: 55px; /* Adjust the height for even smaller screens */
+    font-size: 19px;
+  }
+}
