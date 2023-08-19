@@ -1,8 +1,10 @@
-.main-content {
+.main-container {
   max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: column;
-  padding: 20px 26px 20px 26px;
+  padding: 20px 26px;
 }
 
 .logo {
@@ -14,8 +16,7 @@
   top: 15px;
 }
 
-.sign-in,
-.sign-up {
+.sign-in {
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -205,26 +206,103 @@ form {
   display: block;
 }
 
-
 @media (max-width: 768px) {
   .otp {
     flex-wrap: wrap;
-    justify-content: center; /* Center the items vertically */
+    justify-content: center;
   }
 
   .otp-input {
-    width: 60px; /* Adjust the width for smaller screens */
-    height: 60px; /* Adjust the height for smaller screens */
+    width: 40px;
+    height: 40px;
     font-size: 20px;
     margin: 5px;
   }
 }
 
-/* Media query for screens with min-width: 375px */
+
 @media (min-width: 375px) {
+  .main-container {
+    max-width: 375px;
+  }
+
+  .overlay-bubble {
+    position: absolute;
+    margin: 95px 80px;
+    width: 250px;
+    z-index: 1;
+    display: none;
+  }
+  
+  .show {
+    display: block;
+  }
+
   .otp-input {
-    width: 55px; /* Adjust the width for even smaller screens */
-    height: 55px; /* Adjust the height for even smaller screens */
-    font-size: 19px;
+    width: 55px;
+    height: 55px;
+    font-size: 25px;
   }
 }
+
+@media (min-width: 475px) {
+  .main-container {
+    max-width: 475px;
+  }
+
+  .overlay-bubble {
+    position: absolute;
+    margin: 118px 80px;
+    width: 300px;
+    z-index: 1;
+    display: none;
+  }
+  
+  .show {
+    display: block;
+  }
+
+  .otp-input {
+    width: 75px;
+    height: 75px;
+    font-size: 25px;
+  }
+}
+
+
+@media (min-width: 640px) {
+  .main-container {
+    max-width: 640px;
+  }
+
+  .overlay-bubble {
+    position: absolute;
+    margin: 118px 80px;
+    width: 300px;
+    z-index: 1;
+    display: none;
+  }
+  
+  .show {
+    display: block;
+  }
+
+  .otp-input {
+    width: 90px;
+    height: 90px;
+    font-size: 38px;
+  }
+}
+
+@media (min-width: 768px) {
+  .main-container {
+    max-width: 768px;
+  }
+
+  .otp-input {
+    width: 110px;
+    height: 110px;
+    font-size: 50px;
+  }
+}
+

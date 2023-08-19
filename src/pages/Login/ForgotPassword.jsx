@@ -22,7 +22,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <form className={`${styles["main-content"]} `}>
+    <form className={`${styles["main-container"]} `}>
       <Link to={`/SignInPage`}>
         <div className={styles["back"]}>
           <FiChevronLeft size={24} /> FORGOT PASSWORD
@@ -44,7 +44,7 @@ const ForgotPassword = () => {
         </div>
       )}
 
-      <div className="otp">
+      <div className={styles["otp"]}>
         {otpDigits.map((digit, index) => (
           <input
             key={index}

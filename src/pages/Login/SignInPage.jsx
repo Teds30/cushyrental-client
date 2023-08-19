@@ -38,7 +38,7 @@ const SignInPage = () => {
   };
 
   return (
-    <form className={`${styles["main-content"]} `} onSubmit={handleSubmit}>
+    <form className={`${styles["main-container"]} `} onSubmit={handleSubmit}>
       <div>
         <div className="logo">
           <img src={Logo} alt="Cushy Rental Icon" />{" "}
