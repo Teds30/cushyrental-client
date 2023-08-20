@@ -4,6 +4,7 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import InputLabel from '@mui/material/InputLabel'
+import FormHelperText from '@mui/material/FormHelperText';
 
 const Dropdown = (props) => {
     const {
@@ -14,6 +15,7 @@ const Dropdown = (props) => {
         selected,
         handleSelect = (event) => {},
         disabled = false,
+        errorText = undefined
     } = props
 
     // const [selected, setSelected] = useState()
@@ -23,7 +25,7 @@ const Dropdown = (props) => {
     // }
 
     return (
-        <FormControl fullWidth={fullWidth} sx={{ minWidth: '120px' }}>
+        <FormControl fullWidth={fullWidth} sx={{ minWidth: '120px' }} {...props}>
             <InputLabel id="component-select-label">{label}</InputLabel>
             <Select
                 labelId="component-select-label"
@@ -42,6 +44,7 @@ const Dropdown = (props) => {
                         </MenuItem>
                     ))}
             </Select>
+            { errorText !== undefined && <FormHelperText>{errorText}</FormHelperText> }
         </FormControl>
     )
 }
