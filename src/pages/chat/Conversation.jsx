@@ -20,11 +20,13 @@ import styles from './Conversation.module.css'
 
 const Conversation = (props) => {
     const { room_id } = useParams()
-    const user_id = 2
+    const user_id = 3
 
     const [socket, setSocket] = useState(null)
     const [chats, setChats] = useState([])
     const [message, setMessage] = useState('')
+    const [typing, setTyping] = useState(false)
+    const [typingTimeout, setTypingTimeout] = useState()
     const container = useRef()
 
     useEffect(() => {
@@ -46,9 +48,12 @@ const Conversation = (props) => {
             console.log(message)
             setChats((prev) => [...prev, { message: message }])
         })
+
+        socket.on('typing-started', () => setTyping(true))
+        socket.on('typing-stopped', () => setTyping(false))
     }, [socket])
 
-    console.log(chats)
+    console.log(typing)
 
     const handleSend = () => {
         if (!message) return
@@ -132,6 +137,7 @@ const Conversation = (props) => {
                             </div>
                         ))}
                 </div>
+                {typing && <p>Typing...</p>}
             </div>
 
             <div className={styles['message-box']}>
@@ -148,6 +154,17 @@ const Conversation = (props) => {
                     label="Write a message..."
                     onChange={(e) => {
                         setMessage(e.target.value)
+                        socket.emit('typing-start', { room_id })
+
+                        if (typingTimeout) {
+                            clearTimeout(typingTimeout)
+                        }
+
+                        setTypingTimeout(
+                            setTimeout(() => {
+                                socket.emit('typing-stop', { room_id })
+                            }, 1000)
+                        )
                     }}
                 />
                 <IconButton
