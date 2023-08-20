@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import CreateAccount from "./pages/auth/CreateAccount/CreateAccount";
 import SignInPage from "./pages/Login/SigninPage";
 import ForgotPassword from "./pages/Login/ForgotPassword";
+import Conversation from "./pages/chat/Conversation";
 // import './App.css'
 
 function App() {
@@ -16,11 +17,14 @@ function App() {
           </>
         }
       ></Route>
+      
+      <Route path="/chats/:room_id" element={<Conversation />}></Route>
 
       <Route path="/signinpage" element={<SignInPage />}></Route>
       <Route path="/signinpage/forgotpassword" element={<ForgotPassword />}></Route>
 
       <Route path="/register" element={<CreateAccount />}></Route>
+
       <Route path="*" element={<Navigate replace to="/signinpage" />}></Route>
 
 
