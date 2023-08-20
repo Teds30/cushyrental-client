@@ -9,7 +9,7 @@ const useGoogleAuth = () => {
             let responseData;
             try {
                     responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api//auth/google/redirect`,
+                    url: `http://127.0.0.1:8000/auth/google/redirect`,
                     method: 'GET',
                     body: JSON.stringify(body),
                     headers: {
