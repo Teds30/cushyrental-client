@@ -8,7 +8,7 @@ export default function UserToggleButton(props) {
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
-    onUserType({user_type_id: newAlignment === 'tenant' ? 1 : 2});
+    onUserType({user_type_id: newAlignment === 'tenant' ? '1' : '2'});
   };
 
   const toggleStyles = {

@@ -105,9 +105,10 @@ const CreateAccountForm = (props) => {
     onCreateAccount({
       email: enteredEmail,
       password: enteredPassword,
+      password_confirmation: enteredConfirmPassword,
       first_name: enteredFirstName,
       last_name: enteredLastName,
-      gender: enteredGender === "Male" ? 1 : 2,
+      gender: enteredGender === "Male" ? '1' : '2',
       phone_number: enteredPhoneNumber,
     });
 
@@ -211,7 +212,8 @@ const CreateAccountForm = (props) => {
       </div>
 
       <div className={`${styles["sign-up-btn"]}`}>
-        <PrimaryButton width="100%" disabled={!formIsValid}>
+        <PrimaryButton width="100%" disabled={!formIsValid} isLoading={isLoading}
+                    loadingText="SIGNING UP">
           SIGN UP
         </PrimaryButton>
       </div>

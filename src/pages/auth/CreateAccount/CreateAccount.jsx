@@ -8,22 +8,23 @@ import styles from "./CreateAccount.module.css";
 
 const CreateAccount = () => {
   const { accountRegistration, isLoading } = useAuth();
-  const [userType, setUserType] = useState(1);
+  const [userType, setUserType] = useState({user_type_id: '1'});
   const [ register, setRegister ] = useState({});
 
   const userTypeHandler = useCallback(
     (userType) => {
       setUserType(userType);
-      console.log(userType);
     },
     [setUserType]
   );
 
   const createAccountHandler = async (userData) => {
-    userData = {...userData, user_type_id: userType, middle_name: 'C'};
-    console.log(isJSON)
+    const data = {...userData, user_type_id: userType.user_type_id};
+
+    console.log(data);
+
     try {
-      const res = await accountRegistration({...userData});
+      const res = await accountRegistration(data);
       console.log(res);
     } catch(error) {
       console.log(error.message);
