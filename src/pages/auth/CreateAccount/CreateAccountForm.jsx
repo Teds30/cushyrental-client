@@ -5,6 +5,7 @@ import TextField from "../../../components/TextField/TextField";
 import Dropdown from "../../../components/Dropdown/Dropdown";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import useValidate from "../../../hooks/validate-input-hook";
+import BorderlessButton from "../../../components/Button/BorderlessButton";
 
 import styles from "./CreateAccount.module.css";
 
@@ -12,7 +13,7 @@ import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import google from "../../../assets/google.svg";
 
 const CreateAccountForm = (props) => {
-  const { onCreateAccount, isLoading } = props;
+  const { onCreateAccount, isLoading, onGoogleAuth } = props;
 
   const {
     value: enteredFirstName,
@@ -108,7 +109,7 @@ const CreateAccountForm = (props) => {
       password_confirmation: enteredConfirmPassword,
       first_name: enteredFirstName,
       last_name: enteredLastName,
-      gender: enteredGender === "Male" ? '1' : '2',
+      gender: enteredGender === "Male" ? "1" : "2",
       phone_number: enteredPhoneNumber,
     });
 
@@ -119,6 +120,10 @@ const CreateAccountForm = (props) => {
     emailReset();
     passwordReset();
     confirmPasswordReset();
+  };
+
+  const googleAuthHandler = () => {
+    onGoogleAuth();
   };
 
   return (
@@ -212,8 +217,12 @@ const CreateAccountForm = (props) => {
       </div>
 
       <div className={`${styles["sign-up-btn"]}`}>
-        <PrimaryButton width="100%" disabled={!formIsValid} isLoading={isLoading}
-                    loadingText="SIGNING UP">
+        <PrimaryButton
+          width="100%"
+          disabled={!formIsValid}
+          isLoading={isLoading}
+          loadingText="SIGNING UP"
+        >
           SIGN UP
         </PrimaryButton>
       </div>
@@ -225,25 +234,25 @@ const CreateAccountForm = (props) => {
       </div>
 
       <div className={styles.socmed}>
-        <Link>
+        <BorderlessButton onClick={googleAuthHandler}>
           <div className={styles["back"]}>
             <FacebookOutlinedIcon size="large" style={{ color: "#4267B2" }} />{" "}
             Facebook
           </div>
-        </Link>
+        </BorderlessButton>
 
-        <Link>
+        <a href="http://127.0.0.1:8000/auth/google/redirect">
           <div className={styles["back"]}>
             <img src={google} alt="Google Icon" className={styles.googleIcon} />{" "}
             Google
           </div>
-        </Link>
+        </a>
       </div>
 
       <div className={`${styles["login-option"]}`}>
         <span>Already have an account? </span>
         <span>
-          <Link to={"/login"} className={styles.login}>
+          <Link to={"/signinpage"} className={styles.login}>
             Log In
           </Link>
         </span>

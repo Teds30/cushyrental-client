@@ -122,3 +122,10 @@
 .login-option .login {
     color: #EB5858;
 }
+
+@media (min-width: 640px) {
+    .container {
+        max-width: 768px;
+        margin: 0 auto;
+    }
+}

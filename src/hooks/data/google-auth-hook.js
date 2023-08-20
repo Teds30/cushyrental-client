@@ -1,7 +1,7 @@
 import { useCallback, useContext, useState } from 'react'
 import useHttp from '../http-hook'
 
-const googleAuth = () => {
+const useGoogleAuth = () => {
     const { sendRequest, isLoading } = useHttp()
 
     const googleAccountRegistration = useCallback(
@@ -10,7 +10,7 @@ const googleAuth = () => {
             try {
                     responseData = await sendRequest({
                     url: `http://127.0.0.1:8000/api//auth/google/redirect`,
-                    method: 'POST',
+                    method: 'GET',
                     body: JSON.stringify(body),
                     headers: {
                         'Content-Type': 'application/json',
@@ -32,4 +32,4 @@ const googleAuth = () => {
     }
 }
 
-export default googleAuth
+export default useGoogleAuth

@@ -21,7 +21,7 @@ function App() {
       <Route path="/signinpage/forgotpassword" element={<ForgotPassword />}></Route>
 
       <Route path="/register" element={<CreateAccount />}></Route>
-      <Route path="*" element={<Navigate replace to="/register" />}></Route>
+      <Route path="*" element={<Navigate replace to="/signinpage" />}></Route>
 
 
     </Routes>
