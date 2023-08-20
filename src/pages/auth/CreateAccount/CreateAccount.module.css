@@ -44,6 +44,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 0px;
 }
 
 .form-container-identity {
@@ -68,7 +69,7 @@
 }
 
 .sign-up-socmed {
-    margin: 38px 0 0 0;
+    margin: 32px 0 0 0;
     width: 100%;
 
     display: flex;
@@ -98,16 +99,13 @@
 }
 
 .socmed {
+    margin-top: 32px;
     width: 100%;
 
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 24px;
-}
-
-.socmed {
-    margin: 38px 0 0 0;
 }
 
 .googleIcon {
@@ -117,10 +115,10 @@
 
 .login-option {
     align-items: center;
-    margin: 38px 0 38px 0;
+    margin: 32px 0 32px 0;
 }
-.login-option .login {
-    color: #EB5858;
+.login-word {
+    color: var(--accent-danger);
 }
 
 @media (min-width: 640px) {

@@ -5,7 +5,6 @@ import TextField from "../../../components/TextField/TextField";
 import Dropdown from "../../../components/Dropdown/Dropdown";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import useValidate from "../../../hooks/validate-input-hook";
-import BorderlessButton from "../../../components/Button/BorderlessButton";
 
 import styles from "./CreateAccount.module.css";
 
@@ -13,7 +12,7 @@ import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import google from "../../../assets/google.svg";
 
 const CreateAccountForm = (props) => {
-  const { onCreateAccount, isLoading, onGoogleAuth } = props;
+  const { onCreateAccount, isLoading } = props;
 
   const {
     value: enteredFirstName,
@@ -122,10 +121,6 @@ const CreateAccountForm = (props) => {
     confirmPasswordReset();
   };
 
-  const googleAuthHandler = () => {
-    onGoogleAuth();
-  };
-
   return (
     <form className={`${styles["form-container"]}`} onSubmit={submitHandler}>
       <div className={`${styles["form-container-identity"]}`}>
@@ -163,10 +158,10 @@ const CreateAccountForm = (props) => {
           handleSelect={genderChangeHandler}
           onBlur={genderBlurHandler}
           selectedValue={enteredGender}
-          // helperText={
-          //   enteredGenderHasError && "Please select your gender."
-          // }
-          // error
+          errorText={
+            enteredGenderHasError && "Please select your gender."
+          }
+          error={enteredGenderHasError}
         />
         <TextField
           fullWidth
@@ -234,14 +229,14 @@ const CreateAccountForm = (props) => {
       </div>
 
       <div className={styles.socmed}>
-        <BorderlessButton onClick={googleAuthHandler}>
+        <a href="http://localhost:8000/auth/facebook/redirect">
           <div className={styles["back"]}>
             <FacebookOutlinedIcon size="large" style={{ color: "#4267B2" }} />{" "}
             Facebook
           </div>
-        </BorderlessButton>
+        </a>
 
-        <a href="http://127.0.0.1:8000/auth/google/redirect">
+        <a href="http://localhost:8000/auth/google/redirect">
           <div className={styles["back"]}>
             <img src={google} alt="Google Icon" className={styles.googleIcon} />{" "}
             Google
@@ -252,7 +247,7 @@ const CreateAccountForm = (props) => {
       <div className={`${styles["login-option"]}`}>
         <span>Already have an account? </span>
         <span>
-          <Link to={"/signinpage"} className={styles.login}>
+          <Link to={"/signinpage"} className={`${styles["login-word"]}`}>
             Log In
           </Link>
         </span>
