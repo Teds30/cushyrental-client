@@ -5,9 +5,11 @@ import styles from "../Login/SignInPage.module.css";
 import PrimaryButton from "../../components/Button/PrimaryButton";
 import TextField from "../../components/TextField/TextField";
 import { FiChevronLeft } from "react-icons/fi";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 
 const ForgotPassword = () => {
-  const [otpDigits, setOtpDigits] = useState(Array(6).fill(""));
+  const [otpDigits, setOtpDigits] = useState(Array(4).fill(""));
+  const [showInfo, setShowInfo] = useState(false);
 
   const otpDigitChangeHandler = (index, value) => {
     const updatedOtpDigits = [...otpDigits];
@@ -15,8 +17,12 @@ const ForgotPassword = () => {
     setOtpDigits(updatedOtpDigits);
   };
 
+  const toggleInfo = () => {
+    setShowInfo(!showInfo);
+  };
+
   return (
-    <form className={`${styles["main-content"]} `}>
+    <form className={`${styles["main-container"]} `}>
       <Link to={`/SignInPage`}>
         <div className={styles["back"]}>
           <FiChevronLeft size={24} /> FORGOT PASSWORD
@@ -27,11 +33,18 @@ const ForgotPassword = () => {
         <TextField fullWidth label="Email Address" type="email" />
       </div>
 
-      <div>
-        <h3>Enter Code</h3>
+      <div className={`${styles["enter-code"]} `}>
+        Enter Code
+        <AiOutlineInfoCircle size={20} onClick={toggleInfo} />
       </div>
 
-      <div className="otp">
+      {showInfo && (
+        <div className={`${styles["overlay-bubble"]} ${styles["show"]}`}>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, hic.
+        </div>
+      )}
+
+      <div className={styles["otp"]}>
         {otpDigits.map((digit, index) => (
           <input
             key={index}

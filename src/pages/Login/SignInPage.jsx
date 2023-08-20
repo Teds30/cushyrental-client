@@ -38,7 +38,7 @@ const SignInPage = () => {
   };
 
   return (
-    <form className={`${styles["main-content"]} `} onSubmit={handleSubmit}>
+    <form className={`${styles["main-container"]} `} onSubmit={handleSubmit}>
       <div>
         <div className="logo">
           <img src={Logo} alt="Cushy Rental Icon" />{" "}
@@ -76,7 +76,7 @@ const SignInPage = () => {
             <CheckBox items={[{ id: 1, name: "Remember Me" }]} onCheckBox={checkBoxHandler}/>
           </div>
           <div className={`${styles["remember-me"]} `}>
-            <Link to="/SignInPage/ForgotPassword">Forgot Password?</Link>
+            <Link to="/SignInPage/ForgotPassword" className={`${styles["forgot-password"]} `}>Forgot Password?</Link>
           </div>
         </div>
 
@@ -91,7 +91,7 @@ const SignInPage = () => {
 
           <div className={styles.socmed}>
             <Link>
-              <div className={styles["back"]}>
+              <div className={styles["background"]}>
                 <FacebookOutlinedIcon
                   size="large"
                   style={{ color: "#4267B2" }}
@@ -101,7 +101,7 @@ const SignInPage = () => {
             </Link>
 
             <Link>
-              <div className={styles["back"]}>
+              <div className={styles["background"]}>
                 <img
                   src={Google}
                   alt="Google Icon"
@@ -116,7 +116,7 @@ const SignInPage = () => {
         <div className={`${styles["login-option"]}`}>
           <span>Don't have an account? </span>
           <span className={`${styles["signup-link"]}`}>
-            <Link to="/register">Sign Up</Link>
+            <Link to="/register" className={`${styles["signup-word"]}`}>Sign Up</Link>
           </span>
         </div>
       </div>
