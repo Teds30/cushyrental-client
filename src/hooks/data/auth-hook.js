@@ -6,8 +6,9 @@ const useAuth = () => {
 
     const accountRegistration = useCallback(
         async (body) => {
+            let responseData;
             try {
-                    await sendRequest({
+                    responseData = await sendRequest({
                     url: `http://127.0.0.1:8000/api/register`,
                     method: 'POST',
                     body: JSON.stringify(body),
@@ -15,6 +16,8 @@ const useAuth = () => {
                         'Content-Type': 'application/json',
                     },
                 })
+
+                return responseData;
             } catch (err) {
                 throw err.message
             }
