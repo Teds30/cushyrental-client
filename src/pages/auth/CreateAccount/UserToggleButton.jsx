@@ -7,7 +7,14 @@ export default function UserToggleButton(props) {
   const [alignment, setAlignment] = useState('tenant');
 
   const handleChange = (event, newAlignment) => {
+    if (newAlignment === null && alignment === 'tenant') {
+      return;
+    } else if (newAlignment === null && alignment === 'landlord') {
+      return;
+    }
+
     setAlignment(newAlignment);
+    console.log(newAlignment);
     onUserType({user_type_id: newAlignment === 'tenant' ? '1' : '2'});
   };
 
