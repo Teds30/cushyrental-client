@@ -10,7 +10,7 @@ import './GlobalCss.css'
 ReactDOM.createRoot(document.getElementById('root')).render(
     <>
         <BrowserRouter>
-        <GoogleOAuthProvider clientId="289444714327-gufbfi9i1n85ml6one7145gb9eupju84.apps.googleusercontent.com">
+        <GoogleOAuthProvider clientId="289444714327-s692ob9granvnk1pr1lk0csn44fpptqu.apps.googleusercontent.com">
             <App />
             </GoogleOAuthProvider>
         </BrowserRouter>
