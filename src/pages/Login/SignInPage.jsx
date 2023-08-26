@@ -13,16 +13,32 @@ import Logo from "../../assets/cushyrental.svg";
 const SignInPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [ checkBoxItems, setCheckBoxItems ] = useState([]);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [checkBoxItems, setCheckBoxItems] = useState([]);
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+    setEmailError("");
   };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
+  
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+    setPasswordError("");
   };
-
+  
+  const handleEmailBlur = () => {
+    if (email === "") {
+      setEmailError("Email is required.");
+    }
+  };
+  
+  const handlePasswordBlur = () => {
+    if (password === "") {
+      setPasswordError("Password is required.");
+    }
+  };
+  
   const checkBoxHandler = (items) => {
     setCheckBoxItems(items);
   };
@@ -32,9 +48,22 @@ const SignInPage = () => {
     console.log(checkBoxItems);
   }, [checkBoxItems]);
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    setEmailError("");
+    setPasswordError("");
+
+    if (email === "") {
+      setEmailError("Email is required.");
+    }
+
+    if (password === "") {
+      setPasswordError("Password is required.");
+    }
+
+    if (email !== "" && password !== "") {
+    }
   };
 
   return (
@@ -58,7 +87,9 @@ const SignInPage = () => {
             type="email"
             value={email}
             onChange={handleEmailChange}
+            onBlur={handleEmailBlur}
           />
+          <p className={styles["error"]}>{emailError}</p>
         </div>
 
         <div className={`${styles["custom__inputs"]} `}>
@@ -68,15 +99,25 @@ const SignInPage = () => {
             type="password"
             value={password}
             onChange={handlePasswordChange}
+            onBlur={handlePasswordBlur}
           />
+          <div className={styles["error"]}>{passwordError}</div>
         </div>
 
         <div className={`${styles["remember-forgot"]} `}>
           <div className={`${styles["remember-me"]} `}>
-            <CheckBox items={[{ id: 1, name: "Remember Me" }]} onCheckBox={checkBoxHandler}/>
+            <CheckBox
+              items={[{ id: 1, name: "Remember Me" }]}
+              onCheckBox={checkBoxHandler}
+            />
           </div>
           <div className={`${styles["remember-me"]} `}>
-            <Link to="/SignInPage/ForgotPassword" className={`${styles["forgot-password"]} `}>Forgot Password?</Link>
+            <Link
+              to="/SignInPage/ForgotPassword"
+              className={`${styles["forgot-password"]} `}
+            >
+              Forgot Password?
+            </Link>
           </div>
         </div>
 
@@ -116,7 +157,9 @@ const SignInPage = () => {
         <div className={`${styles["login-option"]}`}>
           <span>Don't have an account? </span>
           <span className={`${styles["signup-link"]}`}>
-            <Link to="/register" className={`${styles["signup-word"]}`}>Sign Up</Link>
+            <Link to="/register" className={`${styles["signup-word"]}`}>
+              Sign Up
+            </Link>
           </span>
         </div>
       </div>
