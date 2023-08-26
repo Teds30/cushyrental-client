@@ -246,7 +246,7 @@ const CreateAccountForm = (props) => {
 
       <div className={styles.socmed}>
         <FacebookLogin
-          appId={"6722357257784876"}
+          appId={"782460463883150"}
           fields="name,email,picture"
           callback={responseFacebook}
           // custom button using render props
