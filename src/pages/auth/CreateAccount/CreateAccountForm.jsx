@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import FacebookLogin, { FacebookLoginResponse } from "rc-facebook-login";
 
 import TextField from "../../../components/TextField/TextField";
 import Dropdown from "../../../components/Dropdown/Dropdown";
@@ -12,7 +13,9 @@ import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import google from "../../../assets/google.svg";
 
 const CreateAccountForm = (props) => {
-  const { onCreateAccount, isLoading } = props;
+  const { onCreateAccount, isLoading, onGoogleAuth, onfacebookAuth } = props;
+
+  const regex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
   const {
     value: enteredFirstName,
@@ -71,7 +74,9 @@ const CreateAccountForm = (props) => {
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
     reset: passwordReset,
-  } = useValidate((value) => value.trim() !== "");
+  } = useValidate(
+    (value) => value.trim() !== "" && value.length >= 8 && regex.test(value)
+  );
   const {
     value: enteredConfirmPassword,
     isValid: enteredConfirmPasswordIsValid,
@@ -108,7 +113,8 @@ const CreateAccountForm = (props) => {
       password_confirmation: enteredConfirmPassword,
       first_name: enteredFirstName,
       last_name: enteredLastName,
-      gender: enteredGender === "Male" ? "1" : "2",
+      gender:
+        enteredGender === "Male" ? "1" : enteredGender === "Female" ? "2" : "3",
       phone_number: enteredPhoneNumber,
     });
 
@@ -119,6 +125,14 @@ const CreateAccountForm = (props) => {
     emailReset();
     passwordReset();
     confirmPasswordReset();
+  };
+
+  const registerGoogleAuthHandler = () => {
+    onGoogleAuth();
+  };
+
+  const responseFacebook = (FacebookLoginResponse) => {
+    onfacebookAuth(FacebookLoginResponse);
   };
 
   return (
@@ -154,13 +168,12 @@ const CreateAccountForm = (props) => {
           items={[
             { id: 0, name: "Male" },
             { id: 1, name: "Female" },
+            { id: 2, name: "Not to specify" },
           ]}
           handleSelect={genderChangeHandler}
           onBlur={genderBlurHandler}
           selectedValue={enteredGender}
-          errorText={
-            enteredGenderHasError && "Please select your gender."
-          }
+          errorText={enteredGenderHasError && "Please select your gender."}
           error={enteredGenderHasError}
         />
         <TextField
@@ -194,7 +207,10 @@ const CreateAccountForm = (props) => {
           value={enteredPassword}
           onChange={passwordChangeHandler}
           onBlur={passwordBlurHandler}
-          helperText={enteredPasswordHasError && "Please enter your password."}
+          helperText={
+            enteredPasswordHasError &&
+            "Password must contain 8+ characters, symbol, upper and lowercase letters and a number."
+          }
           error
         />
         <TextField
@@ -229,19 +245,34 @@ const CreateAccountForm = (props) => {
       </div>
 
       <div className={styles.socmed}>
-        <a href="http://localhost:8000/auth/facebook/redirect">
-          <div className={styles["back"]}>
-            <FacebookOutlinedIcon size="large" style={{ color: "#4267B2" }} />{" "}
-            Facebook
-          </div>
-        </a>
+        <FacebookLogin
+          appId={"6722357257784876"}
+          fields="name,email,picture"
+          callback={responseFacebook}
+          // custom button using render props
+          render={({ disabled, onClick }) => (
+            <Link
+              onClick={onClick}
+              disabled={disabled}
+              className="facebook-login-button"
+            >
+              <div className={styles["back"]}>
+                <FacebookOutlinedIcon
+                  size="large"
+                  style={{ color: "#4267B2" }}
+                />{" "}
+                Facebook
+              </div>
+            </Link>
+          )}
+        />
 
-        <a href="http://localhost:8000/auth/google/redirect">
+        <Link onClick={registerGoogleAuthHandler}>
           <div className={styles["back"]}>
             <img src={google} alt="Google Icon" className={styles.googleIcon} />{" "}
             Google
           </div>
-        </a>
+        </Link>
       </div>
 
       <div className={`${styles["login-option"]}`}>

@@ -5,11 +5,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 35px;
 }
 
 .container .container-title {
     text-align: center;
-    padding: 35px 0 34px 0;
+    padding: 35px 0 0 0;
 }
 
 .container-title h2 {
