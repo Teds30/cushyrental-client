@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
+import useNotistack from "../../../hooks/notistack-hook";
 
 import UserToggleButton from "./UserToggleButton";
 import CreateAccountForm from "./CreateAccountForm";
@@ -14,6 +15,7 @@ const CreateAccount = () => {
   const { accountRegistration, isLoading } = useAuth();
   const { googleAccountRegistration, googleAuth } = useGoogleAuth();
   const { facebookAccountRegistration } = useFacebookAuth();
+  const { notify, notifyWithCollapse } = useNotistack()
 
   const [warning, setWarning] = useState('');
   const [counter, setCounter] = useState(0);
@@ -33,7 +35,7 @@ const CreateAccount = () => {
       const res = await accountRegistration(data);
       console.log(res);
     } catch (error) {
-      setWarning(error);
+      console.log(error);
     }
   };
 
@@ -53,7 +55,7 @@ const CreateAccount = () => {
         const registerGoogleRes = await googleAccountRegistration(data);
         console.log(registerGoogleRes);
       } catch (error) {
-        setWarning(error);
+        console.log(error);
       }
     },
   });
@@ -94,31 +96,15 @@ const CreateAccount = () => {
       const res = await facebookAccountRegistration(data);
       console.log(res);
     } catch (error) {
-      setWarning(error);
+      console.log(error);
     }
   };
-
-  useEffect(() => {
-    if (warning !== '') {
-      if (counter === 3) {
-        setWarning('');
-        setCounter(0);
-        return;
-      } else {
-        const interval = setInterval(() => {
-          setCounter((prevCounter) => prevCounter + 1);
-        }, 1000);
-        return () => clearInterval(interval);
-      }
-    }
-  }, [counter, warning]);
 
   return (
     <div className={styles.container}>
       <div className={`${styles["container-title"]}`}>
         <h2>Create Account</h2>
       </div>
-      {warning && <Warning warning={warning} />}
       <div className={`${styles["main-container"]}`}>
         <div className={`${styles["main-container-type"]}`}>
           <UserToggleButton onUserType={userTypeHandler} />
