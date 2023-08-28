@@ -175,8 +175,15 @@ form {
   text-align: center;
   margin: 0 5px;
   padding: 5px;
+  outline: none;
 }
 
+.otp .otp-input:focus, .otp-input:focus-visible {
+  border: 2px solid var(--accent);
+}
+.otp-input.error {
+  border: 2px solid var(--accent-danger);
+}
 
 .signup-word {
   color: var(--accent-danger);
