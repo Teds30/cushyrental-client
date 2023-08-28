@@ -1,5 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
-import useNotistack from "../../../hooks/notistack-hook";
+import { useState, useCallback, useContext } from "react";
 
 import UserToggleButton from "./UserToggleButton";
 import CreateAccountForm from "./CreateAccountForm";
@@ -7,17 +6,16 @@ import { useGoogleLogin } from "@react-oauth/google";
 import useAuth from "../../../hooks/data/auth-hook";
 import useGoogleAuth from "../../../hooks/data/google-auth-hook";
 import useFacebookAuth from "../../../hooks/data/facebook-auth";
+import AuthContext from "../../../context/auth-context";
 
 import styles from "./CreateAccount.module.css";
-import Warning from "./Warning";
 
 const CreateAccount = () => {
   const { accountRegistration, isLoading } = useAuth();
   const { googleAccountRegistration, googleAuth } = useGoogleAuth();
   const { facebookAccountRegistration } = useFacebookAuth();
-  const { notify, notifyWithCollapse } = useNotistack()
+  const ctx = useContext(AuthContext);
 
-  const [warning, setWarning] = useState('');
   const [counter, setCounter] = useState(0);
   const [userType, setUserType] = useState({ user_type_id: "1" });
 
@@ -33,7 +31,8 @@ const CreateAccount = () => {
 
     try {
       const res = await accountRegistration(data);
-      console.log(res);
+      ctx.onLogin(res.user, res.token);
+      console.log(ctx.user);
     } catch (error) {
       console.log(error);
     }
@@ -53,7 +52,8 @@ const CreateAccount = () => {
         };
 
         const registerGoogleRes = await googleAccountRegistration(data);
-        console.log(registerGoogleRes);
+        ctx.onLogin(registerGoogleRes.user, registerGoogleRes.token);
+        console.log(user);
       } catch (error) {
         console.log(error);
       }
@@ -94,7 +94,8 @@ const CreateAccount = () => {
 
     try {
       const res = await facebookAccountRegistration(data);
-      console.log(res);
+      ctx.onLogin(res.user, res.token);
+      console.log(user);
     } catch (error) {
       console.log(error);
     }
