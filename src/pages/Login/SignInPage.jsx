@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import FacebookLogin, { FacebookLoginResponse } from "rc-facebook-login";
 
 import styles from "../Login/SignInPage.module.css";
 import PrimaryButton from "../../components/Button/PrimaryButton";
@@ -9,32 +10,34 @@ import CheckBox from "../../components/CheckBox/CheckBox";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import Google from "../../assets/google.svg";
 import Logo from "../../assets/cushyrental.svg";
+import useLogin from "../../hooks/data/login-hook";
 
 const SignInPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { loginUser, isLoading } = useLogin();
+  const [emailInput, setEmailInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [checkBoxItems, setCheckBoxItems] = useState([]);
 
   const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+    setEmailInput(event.target.value);
     setEmailError("");
   };
   
   const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+    setPasswordInput(event.target.value);
     setPasswordError("");
   };
   
   const handleEmailBlur = () => {
-    if (email === "") {
+    if (emailInput === "") {
       setEmailError("Email is required.");
     }
   };
   
   const handlePasswordBlur = () => {
-    if (password === "") {
+    if (passwordInput === "") {
       setPasswordError("Password is required.");
     }
   };
@@ -48,22 +51,28 @@ const SignInPage = () => {
     console.log(checkBoxItems);
   }, [checkBoxItems]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     setEmailError("");
     setPasswordError("");
 
-    if (email === "") {
+    if (emailInput === "") {
       setEmailError("Email is required.");
     }
 
-    if (password === "") {
+    if (passwordInput === "") {
       setPasswordError("Password is required.");
     }
 
-    if (email !== "" && password !== "") {
+    if (emailInput !== "" && passwordInput !== "") {
     }
+    
+    try { 
+      const res = await loginUser({email: emailInput, password: passwordInput }) 
+      console.log(res);
+    } catch (error)
+    {console.log(error)};
   };
 
   return (
@@ -85,7 +94,7 @@ const SignInPage = () => {
             fullWidth
             label="Email"
             type="email"
-            value={email}
+            value={emailInput}
             onChange={handleEmailChange}
             onBlur={handleEmailBlur}
           />
@@ -97,7 +106,7 @@ const SignInPage = () => {
             fullWidth
             label="Password"
             type="password"
-            value={password}
+            value={passwordInput}
             onChange={handlePasswordChange}
             onBlur={handlePasswordBlur}
           />
@@ -121,7 +130,7 @@ const SignInPage = () => {
           </div>
         </div>
 
-        <PrimaryButton type="submit">LOG IN</PrimaryButton>
+        <PrimaryButton type="submit" isLoading={isLoading}>LOG IN</PrimaryButton>
 
         <div>
           <div className={`${styles["sign-up__container"]}`}>
@@ -140,7 +149,6 @@ const SignInPage = () => {
                 Facebook
               </div>
             </Link>
-
             <Link>
               <div className={styles["background"]}>
                 <img
