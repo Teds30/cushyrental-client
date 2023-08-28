@@ -6,11 +6,9 @@ import styles from "../Login/SignInPage.module.css";
 import PrimaryButton from "../../components/Button/PrimaryButton";
 import TextField from "../../components/TextField/TextField";
 import CheckBox from "../../components/CheckBox/CheckBox";
-
-import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
-import Google from "../../assets/google.svg";
 import Logo from "../../assets/cushyrental.svg";
 import useLogin from "../../hooks/data/login-hook";
+import SocialMediaLogin from "./SocialMedia";
 
 const SignInPage = () => {
   const { loginUser, isLoading } = useLogin();
@@ -24,24 +22,24 @@ const SignInPage = () => {
     setEmailInput(event.target.value);
     setEmailError("");
   };
-  
+
   const handlePasswordChange = (event) => {
     setPasswordInput(event.target.value);
     setPasswordError("");
   };
-  
+
   const handleEmailBlur = () => {
     if (emailInput === "") {
       setEmailError("Email is required.");
     }
   };
-  
+
   const handlePasswordBlur = () => {
     if (passwordInput === "") {
       setPasswordError("Password is required.");
     }
   };
-  
+
   const checkBoxHandler = (items) => {
     setCheckBoxItems(items);
   };
@@ -67,12 +65,16 @@ const SignInPage = () => {
 
     if (emailInput !== "" && passwordInput !== "") {
     }
-    
-    try { 
-      const res = await loginUser({email: emailInput, password: passwordInput }) 
+
+    try {
+      const res = await loginUser({
+        email: emailInput,
+        password: passwordInput,
+      });
       console.log(res);
-    } catch (error)
-    {console.log(error)};
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -130,7 +132,9 @@ const SignInPage = () => {
           </div>
         </div>
 
-        <PrimaryButton type="submit" isLoading={isLoading}>LOG IN</PrimaryButton>
+        <PrimaryButton type="submit" isLoading={isLoading}>
+          LOG IN
+        </PrimaryButton>
 
         <div>
           <div className={`${styles["sign-up__container"]}`}>
@@ -139,27 +143,7 @@ const SignInPage = () => {
             <div className={styles.hr}></div>
           </div>
 
-          <div className={styles.socmed}>
-            <Link>
-              <div className={styles["background"]}>
-                <FacebookOutlinedIcon
-                  size="large"
-                  style={{ color: "#4267B2" }}
-                />{" "}
-                Facebook
-              </div>
-            </Link>
-            <Link>
-              <div className={styles["background"]}>
-                <img
-                  src={Google}
-                  alt="Google Icon"
-                  className={styles.googleIcon}
-                />{" "}
-                Google
-              </div>
-            </Link>
-          </div>
+          <SocialMediaLogin />
         </div>
 
         <div className={`${styles["login-option"]}`}>

@@ -23,12 +23,14 @@ const ForgotPassword = () => {
 
   return (
     <form className={`${styles["main-container"]} `}>
+      <div>
       <Link to={`/SignInPage`}>
         <div className={styles["back"]}>
           <FiChevronLeft size={24} /> FORGOT PASSWORD
         </div>
       </Link>
-
+      </div>
+      
       <div>
         <TextField fullWidth label="Email Address" type="email" />
       </div>
