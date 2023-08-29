@@ -15,11 +15,11 @@ import ChatRoom from './ChatRoom'
 
 import SearchField from '../../components/Search/SearchField'
 
-import { AuthContext } from '../../context/AuthContext'
+import AuthContext from '../../context/auth-context'
 
 const Chats = () => {
     const authCtx = useContext(AuthContext)
-    const user_id = authCtx.userId
+    const user_id = authCtx.user.id
 
     const [initialRooms, setInitialRooms] = useState([])
     const [rooms, setRooms] = useState(initialRooms)

@@ -15,11 +15,11 @@ import Messages from './Messages'
 import MessageBox from './MessageBox'
 
 import useHttp from '../../hooks/http-hook'
-import { AuthContext } from '../../context/AuthContext'
+import AuthContext from '../../context/auth-context'
 
 const Conversation = (props) => {
     const authCtx = useContext(AuthContext)
-    const user_id = authCtx.userId
+    const user_id = authCtx.user.id
 
     const { room_id } = useParams()
     const navigate = useNavigate()
