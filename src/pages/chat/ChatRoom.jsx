@@ -6,7 +6,6 @@ import moment from 'moment'
 
 import styles from './Chats.module.css'
 import { Link } from 'react-router-dom'
-import { AuthContext } from '../../context/AuthContext'
 
 const ChatRoom = ({ room, user_id, socket }) => {
     const [chat, setChat] = useState('')
