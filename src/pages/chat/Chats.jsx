@@ -92,7 +92,9 @@ const Chats = () => {
                     <div
                         className={styles['profile-pic']}
                         onClick={() => {
-                            user_id === 1 ? authCtx.login(2) : authCtx.login(1)
+                            user_id === 1
+                                ? authCtx.onLogin({ id: 2 })
+                                : authCtx.onLogin({ id: 1 })
                         }}
                     >
                         <img src="" alt="" />
