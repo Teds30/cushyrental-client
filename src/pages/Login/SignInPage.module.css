@@ -1,315 +1,320 @@
 .main-container {
-  max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  flex-direction: column;
-  padding: 20px 26px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 26px;
   gap: 25px;
 }
 
 .logo {
-  display: flex;
-  flex-direction: flex-start;
-  align-items: start;
-  position: relative;
-  left: -10px;
-  top: 15px;
+    display: flex;
+    flex-direction: flex-start;
+    align-items: start;
+    position: relative;
+    left: -10px;
+    top: 15px;
 }
 
 .sign-in {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+form {
   display: flex;
   flex-direction: column;
   gap: 25px;
+  padding-bottom: 20px;
 }
 
 .remember-forgot {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .sign-in #remember {
-  width: 24px;
-  height: 24px;
-  accent-color: var(--accent);
+    width: 24px;
+    height: 24px;
+    accent-color: var(--accent);
 }
 
 .remember-me {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .forgot-password {
-  color: var(--accent);
+    color: var(--accent);
 }
 
 .checkbox-container {
-  border: 1px solid var(--border-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 
-  gap: 1em;
-  padding: 10px;
-  margin: 20px 0;
+    gap: 1em;
+    padding: 10px;
+    margin: 20px 0;
 }
 
 .dont-have-account {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .sign-up #remember {
-  width: 24px;
-  height: 24px;
-  accent-color: var(--accent);
-  border: 2px solid var(--accent);
-  border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    accent-color: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: 50%;
 }
 
 .sign-up__container {
-  margin: 0 0 0 0;
-  width: 100%;
+    margin: 0 0 0 0;
+    width: 100%;
 
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .sign-up__container .option {
-  color: #757171;
-  font-size: 12px;
-  font-weight: 400;
-  padding: 0 6px;
+    color: #757171;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 0 6px;
 }
 
 .sign-up__container .hr {
-  flex: 1;
-  width: 100%;
-  height: 1px;
-  background-color: #a39797;
+    flex: 1;
+    width: 100%;
+    height: 1px;
+    background-color: #a39797;
 }
 
 .back {
-  align-items: center;
-  color: #000;
-  display: flex;
-  font-size: 16px;
-  font-weight: 500;
-  gap: 8px;
-  margin-bottom: 50px;
+    align-items: center;
+    color: #000;
+    display: flex;
+    font-size: 16px;
+    font-weight: 500;
+    gap: 8px;
+    margin-bottom: 50px;
 }
 
 .background {
-  align-items: center;
-  color: #000;
-  display: flex;
-  font-size: 16px;
-  font-weight: 500;
-  gap: 8px;
+    align-items: center;
+    color: #000;
+    display: flex;
+    font-size: 16px;
+    font-weight: 500;
+    gap: 8px;
 }
 
 .socmed {
-  width: 100%;
+    width: 100%;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
 }
 
 .socmed {
-  margin: 38px 0 0 0;
+    margin: 38px 0 0 0;
 }
 
 .googleIcon {
-  height: 22px;
-  width: 22px;
+    height: 22px;
+    width: 22px;
 }
 
 .login-option {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 15px 0 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0 0 0;
 }
 
 .login-option span {
-  margin-right: 10px;
+    margin-right: 10px;
 }
 
 .error {
-  color: red;
-  font-size: 14px;
-  margin-top: 5px;
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
 }
 
 .back {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .otp {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 .otp-input {
-  width: 50px; /* Adjust the initial width */
-  height: 50px; /* Adjust the initial height */
-  background-color: white;
-  color: #000;
-  font-size: 18px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  text-align: center;
-  margin: 0 5px;
-  padding: 5px;
-  outline: none;
+    width: 50px; /* Adjust the initial width */
+    height: 50px; /* Adjust the initial height */
+    background-color: white;
+    color: #000;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    margin: 0 5px;
+    padding: 5px;
+    outline: none;
 }
 
-.otp .otp-input:focus, .otp-input:focus-visible {
-  border: 2px solid var(--accent);
+.otp .otp-input:focus,
+.otp-input:focus-visible {
+    border: 2px solid var(--accent);
 }
 .otp-input.error {
-  border: 2px solid var(--accent-danger);
+    border: 2px solid var(--accent-danger);
 }
 
 .signup-word {
-  color: var(--accent-danger);
+    color: var(--accent-danger);
 }
 
 .enter-code {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 .enter-code svg {
-  margin-left: 5px;
-  fill: #000;
+    margin-left: 5px;
+    fill: #000;
 }
 
 .enter-code {
-  position: relative;
+    position: relative;
 }
 
 .overlay-bubble {
-  position: absolute;
-  margin: 120px 80px;
-  background-color: #ffffff;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  width: 300px;
-  z-index: 1;
-  display: none;
+    position: absolute;
+    margin: 120px 80px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    z-index: 1;
+    display: none;
 }
 
 .show {
-  display: block;
+    display: block;
 }
 
 @media (max-width: 768px) {
-  .otp {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+    .otp {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 
-  .otp-input {
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
-    margin: 5px;
-  }
+    .otp-input {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        margin: 5px;
+    }
 }
 
-
 @media (min-width: 375px) {
-  .main-container {
-    max-width: 375px;
-  }
+    .main-container {
+        max-width: 375px;
+    }
 
-  .overlay-bubble {
-    position: absolute;
-    margin: 95px 80px;
-    width: 250px;
-    z-index: 1;
-    display: none;
-  }
-  
-  .show {
-    display: block;
-  }
+    .overlay-bubble {
+        position: absolute;
+        margin: 95px 80px;
+        width: 250px;
+        z-index: 1;
+        display: none;
+    }
 
-  .otp-input {
-    width: 55px;
-    height: 55px;
-    font-size: 25px;
-  }
+    .show {
+        display: block;
+    }
+
+    .otp-input {
+        width: 55px;
+        height: 55px;
+        font-size: 25px;
+    }
 }
 
 @media (min-width: 475px) {
-  .main-container {
-    max-width: 475px;
-  }
+    .main-container {
+        max-width: 475px;
+    }
 
-  .overlay-bubble {
-    position: absolute;
-    margin: 118px 80px;
-    width: 300px;
-    z-index: 1;
-    display: none;
-  }
-  
-  .show {
-    display: block;
-  }
+    .overlay-bubble {
+        position: absolute;
+        margin: 118px 80px;
+        width: 300px;
+        z-index: 1;
+        display: none;
+    }
 
-  .otp-input {
-    width: 75px;
-    height: 75px;
-    font-size: 25px;
-  }
+    .show {
+        display: block;
+    }
+
+    .otp-input {
+        width: 75px;
+        height: 75px;
+        font-size: 25px;
+    }
 }
 
-
 @media (min-width: 640px) {
-  .main-container {
-    max-width: 640px;
-  }
+    .main-container {
+        max-width: 640px;
+    }
 
-  .overlay-bubble {
-    position: absolute;
-    margin: 118px 80px;
-    width: 300px;
-    z-index: 1;
-    display: none;
-  }
-  
-  .show {
-    display: block;
-  }
+    .overlay-bubble {
+        position: absolute;
+        margin: 118px 80px;
+        width: 300px;
+        z-index: 1;
+        display: none;
+    }
 
-  .otp-input {
-    width: 90px;
-    height: 90px;
-    font-size: 38px;
-  }
+    .show {
+        display: block;
+    }
+
+    .otp-input {
+        width: 90px;
+        height: 90px;
+        font-size: 38px;
+    }
 }
 
 @media (min-width: 768px) {
-  .main-container {
-    max-width: 768px;
-  }
+    .main-container {
+        max-width: 768px;
+    }
 
-  .otp-input {
-    width: 110px;
-    height: 110px;
-    font-size: 50px;
-  }
+    .otp-input {
+        width: 110px;
+        height: 110px;
+        font-size: 50px;
+    }
 }
-
