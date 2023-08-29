@@ -1,90 +1,142 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useRef, useState, useContext } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { io } from 'socket.io-client'
 
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
-import MenuIcon from '@mui/icons-material/Menu'
 
-import TextField from '../../components/TextField/TextField'
-
-import { TbChevronLeft } from 'react-icons/tb'
-import { BsCamera } from 'react-icons/bs'
-import { IoSend } from 'react-icons/io5'
+import { TbChevronLeft, TbDotsVertical } from 'react-icons/tb'
 
 import styles from './Conversation.module.css'
+import AvailModal from './AvailModal'
+import Messages from './Messages'
+import MessageBox from './MessageBox'
+
+import useHttp from '../../hooks/http-hook'
+import { AuthContext } from '../../context/AuthContext'
 
 const Conversation = (props) => {
+    const authCtx = useContext(AuthContext)
+    const user_id = authCtx.userId
+
     const { room_id } = useParams()
-    const user_id = 3
+    const navigate = useNavigate()
+
+    const { sendRequest, isLoading } = useHttp()
 
     const [socket, setSocket] = useState(null)
+    const [room, setRoom] = useState()
+    const [unit, setUnit] = useState()
     const [chats, setChats] = useState([])
-    const [message, setMessage] = useState('')
+    const [chatsReady, setChatReady] = useState(false)
     const [typing, setTyping] = useState(false)
-    const [typingTimeout, setTypingTimeout] = useState()
     const container = useRef()
 
     useEffect(() => {
         setSocket(
-            io('https://cushyrental-chat-fe02ec9a5b8b.herokuapp.com/', {
+            io(import.meta.env.VITE_CHAT_LOCALHOST, {
                 transports: ['websocket'],
             })
         )
+
+        const fetchUnit = async (unit_id) => {
+            const res = await sendRequest({
+                url: `${
+                    import.meta.env.VITE_BACKEND_LOCALHOST
+                }/api/units/${unit_id}`,
+            })
+            setUnit(res)
+        }
+
+        const fetchRoomDetails = async (room_id) => {
+            const res = await sendRequest({
+                url: `${import.meta.env.VITE_CHAT_LOCALHOST}/rooms/${room_id}`,
+            })
+
+            fetchUnit(res.unit_id)
+            setRoom(res)
+        }
+
+        fetchRoomDetails(room_id)
     }, [])
+
+    const getChats = async (room_id) => {
+        const res = await sendRequest({
+            url: `${import.meta.env.VITE_CHAT_LOCALHOST}/chats/${room_id}`,
+        })
+        setChatReady(true)
+        setChats(res)
+    }
+    const readChat = async (room_id, user_id) => {
+        const res = await sendRequest({
+            url: `${import.meta.env.VITE_CHAT_LOCALHOST}/read-chats/${room_id}`,
+            method: 'PATCH',
+            body: JSON.stringify({
+                user_id: user_id,
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+    }
+
+    useEffect(() => {
+        readChat(room_id, user_id)
+        getChats(room_id)
+    }, [user_id, room_id])
 
     useEffect(() => {
         if (!socket) return
 
         socket.emit('room-join', { room_id: room_id })
         socket.on('room-joined', () => {
-            console.log('room joined')
+            getChats(room_id)
         })
         socket.on('message-sent', ({ message }) => {
-            console.log(message)
-            setChats((prev) => [...prev, { message: message }])
+            setChats((prev) => [...prev, { ...message, read: true }])
+            socket.emit('receiver-seen-signal', { room_id: room_id })
         })
 
         socket.on('typing-started', () => setTyping(true))
         socket.on('typing-stopped', () => setTyping(false))
+
+        socket.on('receiver-seen', () => {
+            getChats(room_id)
+        })
     }, [socket])
 
-    console.log(typing)
-
-    const handleSend = () => {
+    const handleSend = (message) => {
         if (!message) return
         socket.emit('send-message', {
             message,
             sender_id: user_id,
             room_id: room_id,
+            createdAt: new Date().toISOString(),
         })
-
-        // setChats((prev) => [
-        //     ...prev,
-        //     {
-        //         message: {
-        //             message,
-        //             sender_id: 2,
-        //             room_id: '64e124a91d7dfeef232f22ff',
-        //         },
-        //         received: false,
-        //     },
-        // ])
+        setChats((prev) => [
+            ...prev,
+            {
+                message,
+                sender_id: user_id,
+                room_id: room_id,
+                createdAt: new Date().toISOString(),
+            },
+        ])
     }
+
     useEffect(() => {
         if (container.current) {
             container.current.scrollTop = container.current.scrollHeight
         }
     })
+
     return (
         <div className={styles['container']}>
-            <Box>
+            <Box sx={{ position: 'fixed', top: 0, width: '100%' }}>
                 <AppBar
-                    position="fixed"
+                    position="static"
                     sx={{
                         margin: 0,
                         backgroundColor: '#fff',
@@ -95,95 +147,83 @@ const Conversation = (props) => {
                     }}
                 >
                     <Toolbar>
+                        <Link
+                            to="/chats"
+                            onClick={() => {
+                                socket.emit('room-leave', { room_id: room_id })
+                                console.log('left')
+                            }}
+                        >
+                            <IconButton
+                                size="large"
+                                edge="start"
+                                color="inherit"
+                                aria-label="menu"
+                                sx={{ mr: 2 }}
+                            >
+                                <TbChevronLeft
+                                    style={{
+                                        color: 'var(--fc-strong)',
+                                        fill: 'transparent',
+                                    }}
+                                />
+                            </IconButton>
+                        </Link>
+                        <Box sx={{ flexGrow: 1 }}>
+                            <p className="title">{unit && unit.name}</p>
+                            <p>
+                                {unit && unit.landlord.first_name}{' '}
+                                {unit && unit.landlord.last_name}
+                            </p>
+                        </Box>
+
                         <IconButton
                             size="large"
                             edge="start"
                             color="inherit"
                             aria-label="menu"
-                            sx={{ mr: 2 }}
+                            // onClick={() => {
+                            //     user_id === 1 ? setUserId(2) : setUserId(1)
+                            // }}
                         >
-                            <TbChevronLeft
-                                style={{ color: 'var(--fc-strong)' }}
+                            <TbDotsVertical
+                                style={{
+                                    color: 'var(--fc-strong)',
+                                    fill: 'var(--fc-strong)',
+                                }}
                             />
                         </IconButton>
-                        <Box sx={{ flexGrow: 1 }}>
-                            <p className="title">
-                                Tya Els Ultimate Boarding House
-                            </p>
-                            <p>Tya Els</p>
-                        </Box>
                     </Toolbar>
                 </AppBar>
+                {socket && (
+                    <AvailModal
+                        user_id={user_id}
+                        socket={socket}
+                        room={room}
+                        room_id={room_id}
+                    />
+                )}
             </Box>
 
-            <div className={styles['message-container']}>
-                <div className={styles['messages']} ref={container}>
-                    {chats &&
-                        chats.map((data, index) => (
-                            <div
-                                className={
-                                    data.message.sender_id === user_id
-                                        ? styles['user-container']
-                                        : styles['recipient-container']
-                                }
-                                key={index}
-                            >
-                                {data.message.sender_id !== user_id && (
-                                    <div className={styles['chat-img']}></div>
-                                )}
-                                <div className={styles['chat-message']}>
-                                    {data.message.message}
-                                </div>
-                            </div>
-                        ))}
-                </div>
-                {typing && <p>Typing...</p>}
-            </div>
+            <Messages
+                isLoading={isLoading}
+                handleSend={handleSend}
+                chatsReady={chatsReady}
+                chats={chats}
+                containerRef={container}
+                typing={typing}
+                setTyping={setTyping}
+                user_id={user_id}
+                room_id={room_id}
+            />
 
-            <div className={styles['message-box']}>
-                <IconButton
-                    size="large"
-                    edge="start"
-                    color="inherit"
-                    aria-label="menu"
-                >
-                    <BsCamera style={{ fill: 'var(--fc-body)' }} />
-                </IconButton>
-                <TextField
-                    fullWidth
-                    label="Write a message..."
-                    onChange={(e) => {
-                        setMessage(e.target.value)
-                        socket.emit('typing-start', { room_id })
-
-                        if (typingTimeout) {
-                            clearTimeout(typingTimeout)
-                        }
-
-                        setTypingTimeout(
-                            setTimeout(() => {
-                                socket.emit('typing-stop', { room_id })
-                            }, 1000)
-                        )
-                    }}
-                />
-                <IconButton
-                    size="large"
-                    edge="end"
-                    color="inherit"
-                    aria-label="menu"
-                    onClick={handleSend}
-                    disabled={!message}
-                >
-                    <IoSend
-                        style={{
-                            fill: message
-                                ? 'var(--accent)'
-                                : 'var(--fc-body-lighter)',
-                        }}
-                    />
-                </IconButton>
-            </div>
+            <MessageBox
+                setChats={setChats}
+                handleSend={handleSend}
+                socket={socket}
+                room_id={room_id}
+                user_id={user_id}
+            />
         </div>
     )
 }

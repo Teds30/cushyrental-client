@@ -1,0 +1,5 @@
+.message-box {
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    padding: 12px 18px 35px 18px;
+}
