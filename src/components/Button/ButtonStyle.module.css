@@ -15,7 +15,11 @@
     cursor: pointer;
     transition: 0.2s ease-in;
     font-family: inherit;
-    font-size: 16px;
+    font-size: 1em;
+}
+
+.btn-small {
+    padding: 1em 1.5em;
 }
 
 .btn-rounded {
