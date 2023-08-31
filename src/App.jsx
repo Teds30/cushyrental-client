@@ -42,7 +42,7 @@ function App() {
                 element={<MyUnit />}
             ></Route>
             <Route
-                path="/managerenters"
+                path="/myunit-landlord/managerenters"
                 element={<ManageRenters />}
             ></Route>
         </Routes>
