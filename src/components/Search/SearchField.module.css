@@ -31,7 +31,7 @@
     color: var(--fc-body);
 }
 
-form:focus-within {
+.search-container form:focus-within {
     outline: none !important;
     border: 2px solid var(--accent);
 }
