@@ -1,87 +1,121 @@
+import { useContext } from "react";
+
 import TextField from "../../../../components/TextField/TextField";
 import PrimaryButton from "../../../../components/Button/PrimaryButton";
+import CreateUnitContext from "../../../../context/create-unit-context";
 import useValidate from "../../../../hooks/validate-input-hook";
 
 import styles from "./CreateUnit.module.css";
 import EastIcon from "@mui/icons-material/East";
 
 const BasicDetailsForm = (props) => {
-  const { onBasicDetails, unitDetails } = props;
+    const createUnitCtx = useContext(CreateUnitContext);
+    const unitDetails = createUnitCtx.unitData;
 
-  const {
-    value: enteredTitle,
-    isValid: enteredTitleIsValid,
-    hasError: enteredTitleHasError,
-    valueChangeHandler: titleChangeHandler,
-    inputBlurHandler: titleBlurHandler,
-    reset: titleReset,
-  } = useValidate((value) => value.trim() !== "");
-  const {
-    value: enteredDetails,
-    isValid: enteredDetailsIsValid,
-    hasError: enteredDetailsHasError,
-    valueChangeHandler: detailsChangeHandler,
-    inputBlurHandler: detailsBlurHandler,
-    reset: detailsReset,
-  } = useValidate((value) => value.trim() !== "");
+    const { onNext } = props;
 
-  let formIsValid = false;
+    const {
+        value: enteredTitle,
+        isValid: enteredTitleIsValid,
+        hasError: enteredTitleHasError,
+        valueChangeHandler: titleChangeHandler,
+        inputBlurHandler: titleBlurHandler,
+        reset: titleReset,
+    } = useValidate((value) => value.trim() !== "");
+    const {
+        value: enteredDetails,
+        isValid: enteredDetailsIsValid,
+        hasError: enteredDetailsHasError,
+        valueChangeHandler: detailsChangeHandler,
+        inputBlurHandler: detailsBlurHandler,
+        reset: detailsReset,
+    } = useValidate((value) => value.trim() !== "");
 
-  if (enteredTitleIsValid && enteredDetailsIsValid) {
-    formIsValid = true;
-  }
+    let formIsValid = false;
 
-  const submitHandler = (event) => {
-    event.preventDefault();
-
-    if (!formIsValid) {
-      return;
+    if (enteredTitleIsValid && enteredDetailsIsValid) {
+        formIsValid = true;
     }
 
-    onBasicDetails({
-      title: enteredTitle,
-      details: enteredDetails,
-    });
-  };
+    const submitHandler = (event) => {
+        event.preventDefault();
 
-  return (
-    <form
-      className={`${styles["basic-details-form"]}`}
-      onSubmit={submitHandler}
-    >
-      <div className="title">Basic Details</div>
+        if (
+            enteredDetails === "" ||
+            (enteredTitle === "" && Object.keys(unitDetails).length !== 0)
+        ) {
+            createUnitCtx.onUnitData({
+                ...createUnitCtx.unitData,
+                title: enteredTitleIsValid
+                    ? enteredTitle
+                    : createUnitCtx.unitData.title,
+                details: enteredDetailsIsValid
+                    ? enteredDetails
+                    : createUnitCtx.unitData.details,
+            });
 
-      <TextField
-        fullWidth
-        label="Title"
-        value={unitDetails ? unitDetails.title : enteredTitle}
-        onChange={titleChangeHandler}
-        onBlur={titleBlurHandler}
-        helperText={
-          enteredTitleHasError && "Please enter the name of your boarding house."
+            titleReset();
+            detailsReset();
+
+            onNext();
+
+            return;
         }
-        error
-      />
 
-      <TextField
-        fullWidth
-        label="First Name"
-        rows={4}
-        multiline
-        value={unitDetails ? unitDetails.details : enteredDetails}
-        onChange={detailsChangeHandler}
-        onBlur={detailsBlurHandler}
-        helperText={enteredDetailsHasError && "Please enter the detials of your boarding house."}
-        error
-      />
+        if (!formIsValid) {
+            return;
+        }
 
-      <div className={`${styles["basic-details-button"]}`}>
-        <PrimaryButton disabled={!formIsValid} rightIcon={<EastIcon />}>
-          Next
-        </PrimaryButton>
-      </div>
-    </form>
-  );
+        createUnitCtx.onUnitData({
+            ...createUnitCtx.unitData,
+            title: enteredTitleIsValid
+                ? enteredTitle
+                : createUnitCtx.unitData.title,
+            details: enteredDetailsIsValid
+                ? enteredDetails
+                : createUnitCtx.unitData.details,
+        });
+
+        titleReset();
+        detailsReset();
+
+        onNext();
+    };
+
+    return (
+        <form
+            className={`${styles["basic-details-form"]}`}
+            onSubmit={submitHandler}
+        >
+            <div className="title">Basic Details</div>
+
+            <TextField
+                fullWidth
+                label="Title"
+                defaultValue={!enteredTitle ? unitDetails.title : enteredTitle}
+                onChange={titleChangeHandler}
+                onBlur={titleBlurHandler}
+                required
+            />
+
+            <TextField
+                fullWidth
+                label="Details"
+                rows={4}
+                multiline
+                defaultValue={
+                    !enteredDetails ? unitDetails.details : enteredDetails
+                }
+                onChange={detailsChangeHandler}
+                onBlur={detailsBlurHandler}
+                required
+            />
+
+            <div className={`${styles["basic-details-button"]}`}>
+                <PrimaryButton rightIcon={<EastIcon />}>Next</PrimaryButton>
+            </div>
+        </form>
+    );
 };
 
 export default BasicDetailsForm;

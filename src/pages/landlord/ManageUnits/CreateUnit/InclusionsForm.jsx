@@ -9,26 +9,27 @@ import CreateUnitContext from "../../../../context/create-unit-context";
 import styles from "./CreateUnit.module.css";
 import EastIcon from "@mui/icons-material/East";
 
-const AmenitiesForm = (props) => {
-    const { onBack, onNext } = props;
+const InclusionsForm = (props) => {
     const createUnitCtx = useContext(CreateUnitContext);
-    const amenityData = createUnitCtx.unitData.amenities ? createUnitCtx.unitData.amenities : [];
+    const inclusionData = createUnitCtx.unitData.inclusions ? createUnitCtx.unitData.inclusions : [];
 
-    const { isLoading, fetchAmenities } = useAttributeManager();
-    const [amenityValue, setAmenityValue] = useState([]);
+    const { onBack, onNext} = props;
+
+    const { isLoading, fetchInclusions } = useAttributeManager();
+    const [inclusionValue, setInclusionValue] = useState([]);
     const [amenities, setAmenities] = useState([]);
 
-    const chipValueHandler = (amenityValue) => {
-        setAmenityValue(amenityValue);
+    const chipValueHandler = (inclusionValue) => {
+        setInclusionValue(inclusionValue);
     };
 
     const backHandler = (event) => {
         event.preventDefault();
 
-        if (amenityValue) {
+        if (inclusionValue) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
-                amenities: amenityValue
+                inclusions: inclusionValue
             });
         }
 
@@ -38,16 +39,16 @@ const AmenitiesForm = (props) => {
     const submitHandler = (event) => {
         event.preventDefault();
 
-        if (amenityValue.length === 0) {
+        if (inclusionValue.length === 0) {
             return;
         }
 
         createUnitCtx.onUnitData({
             ...createUnitCtx.unitData,
-            amenities: amenityValue
+            inclusions: inclusionValue
         });
 
-        setAmenityValue([]);
+        setInclusionValue([]);
 
         onNext();
     };
@@ -55,11 +56,11 @@ const AmenitiesForm = (props) => {
     useEffect(() => {
         const handleFetch = async () => {
             try {
-                const res = await fetchAmenities();
+                const res = await fetchInclusions();
                 setAmenities(res);
 
-                if (res.length !== 0 && amenityData.length !== 0) {
-                    const selectedAmenities = amenityData.filter((id) => {
+                if (res.length !== 0 && inclusionData.length !== 0) {
+                    const selectedAmenities = inclusionData.filter((id) => {
                         return res.some(
                             (amenityfetch) => amenityfetch.id === id
                         );
@@ -67,7 +68,7 @@ const AmenitiesForm = (props) => {
 
                     console.log(selectedAmenities);
 
-                    setAmenityValue(selectedAmenities);
+                    setInclusionValue(selectedAmenities);
                 }
             } catch (err) {}
         };
@@ -79,14 +80,14 @@ const AmenitiesForm = (props) => {
             className={`${styles["basic-details-form"]}`}
             onSubmit={submitHandler}
         >
-            <div className="title">What amenities do your unit offer?</div>
+            <div className="title">What inclusions do your unit offer?</div>
 
             {isLoading ? (
                 "Loading..."
             ) : (
                 <ChipBig
                     items={amenities}
-                    selected={amenityValue}
+                    selected={inclusionValue}
                     onChipValue={chipValueHandler}
                 />
             )}
@@ -103,4 +104,4 @@ const AmenitiesForm = (props) => {
     );
 };
 
-export default AmenitiesForm;
+export default InclusionsForm;
