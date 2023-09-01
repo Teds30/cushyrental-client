@@ -5,6 +5,7 @@ import SignInPage from './pages/Login/SignInPage'
 import ForgotPassword from './pages/Login/ForgotPassword'
 import Conversation from './pages/chat/Conversation'
 import Chats from './pages/chat/Chats'
+import CreateUnit from './pages/landlord/ManageUnits/CreateUnit/CreateUnit'
 // import './App.css'
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
 
             <Route path="/register" element={<CreateAccount />}></Route>
 
+            <Route path='/manage_unit/create_unit' element={<CreateUnit/>}></Route>
             <Route
                 path="*"
                 element={<Navigate replace to="/signinpage" />}
