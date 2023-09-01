@@ -30,11 +30,18 @@ const ChipBig = (props) => {
   const borderShadowStyle = background === 'success' ? "0px 0px 0px 5px rgba(3, 176, 119, 0.20)" : "0px 0px 0px 5px rgba(235, 88, 88, 0.20)";
 
   const content = items.map((item) => {
+
+    const attributesPath = "../../assets/attributes/";
+    const icon = new URL(
+      `${attributesPath}${item.icon.toLowerCase()}`,
+      import.meta.url
+    ).pathname;
+
     return (
       <Chip
         key={item.id}
         variant="outlined"
-        icon={<item.icon />}
+        icon={<img src={icon} alt={item.name} />}
         label={item.name}
         sx={{
           display: "flex",
