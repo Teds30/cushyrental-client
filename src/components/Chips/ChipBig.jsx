@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
 import styles from './ChipButton.module.css';
 
 const ChipBig = (props) => {
-  const { items, button = 'checkbox', clickable = true, background = 'success' } = props;
+  const { items, button = 'checkbox', clickable = true, background = 'success', selected = [] } = props;
 
   const [ chips, setChips ] = useState([]);
 
@@ -29,6 +29,10 @@ const ChipBig = (props) => {
   const colorStyle = background === 'success' ? "var(--accent)" : "var(--accent-danger)";
   const borderShadowStyle = background === 'success' ? "0px 0px 0px 5px rgba(3, 176, 119, 0.20)" : "0px 0px 0px 5px rgba(235, 88, 88, 0.20)";
 
+  useEffect(() => {
+    setChips(selected.length !== 0 ? selected : []);
+  }, [selected]);
+
   const content = items.map((item) => {
 
     const attributesPath = "../../assets/attributes/";
@@ -41,7 +45,7 @@ const ChipBig = (props) => {
       <Chip
         key={item.id}
         variant="outlined"
-        icon={<img src={icon} alt={item.name} />}
+        icon={<img src={icon} className={styles.chipImage} alt={item.name} />}
         label={item.name}
         sx={{
           display: "flex",
@@ -49,7 +53,7 @@ const ChipBig = (props) => {
           justifyContent: "center",
           alignItems: "center",
           height: "80px",
-          width: "90px",
+          width: "120px",
           fontWeight: "500",
           fontSize: "16px",
           background: chips.includes(item.id) ? colorStyle : "inherit",
@@ -68,7 +72,7 @@ const ChipBig = (props) => {
             background: chips.includes(item.id) && colorStyle,
             color: chips.includes(item.id) && colorStyle,
             border: chips.includes(item.id) ? "1px solid " + colorStyle : "1px solid inherit",
-            "& svg": {
+            "& img": {
               fill: chips.includes(item.id) ? colorStyle : "#8A93A6",
             },
           },
