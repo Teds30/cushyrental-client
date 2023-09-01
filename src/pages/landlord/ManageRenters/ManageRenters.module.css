@@ -1,0 +1,165 @@
+.main-container {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+}
+
+.top-back-container {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  border-bottom: 1px solid var(--border-color);
+  text-align: center;
+  background: var(--bg-layer1);
+}
+
+.back {
+  align-items: center;
+  color: #000;
+  display: flex;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 20px;
+}
+
+.back p {
+  width: 100%;
+}
+
+.filter {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+  position: relative;
+  background: white;
+  background-color: var(--bg-layer1);
+  margin-bottom: 20px;
+}
+
+.filter-1 {
+  width: 100%;
+  text-align: center;
+}
+
+.filter-2 {
+  width: 100%;
+  text-align: center;
+}
+
+.title {
+    font-family: 'Inter';
+    font-size: 1em;
+    font-weight: 600;
+    color: var(--fc-strong);
+}
+
+.search-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  background: white;
+}
+
+input.search-input {
+  outline: none;
+  border: 1px solid var(--border-color);
+  padding: 12px;
+  border-radius: 7px;
+  font-family: inherit;
+  width: 100%;
+
+  font-size: 1.1em;
+
+  display: block;
+  padding: 12px 12px 12px 40px;
+}
+
+.tenants-main-box_container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 12px;
+  margin: 20px 12px;
+  border: 4px solid #f20a86;
+}
+
+.box-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  /* width: 100%; */
+  padding: 10px;
+  gap: 10px;
+  background: #ffffff;
+  border: 4px solid #e0e4f5;
+  border-radius: 10px;
+}
+
+.box-image{
+  width: 84px;
+  height: 84px;
+}
+
+.box-details {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 0px;
+  gap: 5px;
+}
+
+.box-details-name {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  color: #222736;
+}
+
+.box-details-gender {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #959cb0;
+}
+
+.box-details-time {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #b2b9ce;
+}
+
+
+@media (max-width: 768px) {
+}
+
+@media (min-width: 375px) {
+  .main-container {
+    max-width: 375px;
+  }
+}
+
+@media (min-width: 475px) {
+  .main-container {
+    max-width: 475px;
+  }
+}
+
+@media (min-width: 640px) {
+  .main-container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .main-container {
+    max-width: 768px;
+  }
+}

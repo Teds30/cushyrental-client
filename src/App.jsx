@@ -5,6 +5,8 @@ import SignInPage from './pages/Login/SignInPage'
 import ForgotPassword from './pages/Login/ForgotPassword'
 import Conversation from './pages/chat/Conversation'
 import Chats from './pages/chat/Chats'
+import MyUnit from './pages/landlord/MyUnit/MyUnit'
+import ManageRenters from './pages/landlord/ManageRenters/ManageRenters'
 import CreateUnit from './pages/landlord/ManageUnits/CreateUnit/CreateUnit'
 // import './App.css'
 
@@ -35,6 +37,15 @@ function App() {
             <Route
                 path="*"
                 element={<Navigate replace to="/signinpage" />}
+            ></Route>
+
+            <Route
+                path="/myunit-landlord"
+                element={<MyUnit />}
+            ></Route>
+            <Route
+                path="/managerenters"
+                element={<ManageRenters />}
             ></Route>
         </Routes>
     )
