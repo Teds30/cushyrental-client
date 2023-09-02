@@ -5,3 +5,7 @@
     gap: 14px;
     /* justify-content: center; */
 }
+
+.chipImage path {
+    fill: white;
+}

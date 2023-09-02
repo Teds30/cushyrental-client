@@ -7,6 +7,7 @@ import Conversation from './pages/chat/Conversation'
 import Chats from './pages/chat/Chats'
 import MyUnit from './pages/landlord/MyUnit/MyUnit'
 import ManageRenters from './pages/landlord/ManageRenters/ManageRenters'
+import CreateUnit from './pages/landlord/ManageUnits/CreateUnit/CreateUnit'
 import ManagePendingInquiries from './pages/landlord/ManageRenters/ManagePendingInquiries'
 // import './App.css'
 
@@ -33,6 +34,7 @@ function App() {
 
             <Route path="/register" element={<CreateAccount />}></Route>
 
+            <Route path='/manage_unit/create_unit' element={<CreateUnit/>}></Route>
             <Route
                 path="*"
                 element={<Navigate replace to="/signinpage" />}
