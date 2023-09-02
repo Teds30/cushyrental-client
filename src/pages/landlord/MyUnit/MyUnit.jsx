@@ -15,7 +15,7 @@ const MyUnit = () => {
         <div className={styles["header"]}>
           <Link>
           <div className={styles["back"]}>
-          <FiChevronLeft size={24} /> <p>My Unit</p>
+          <FiChevronLeft size={24} style={{ fill: 'transparent' }}/> <p>My Unit</p>
           </div>
             
           </Link>

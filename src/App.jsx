@@ -7,6 +7,7 @@ import Conversation from './pages/chat/Conversation'
 import Chats from './pages/chat/Chats'
 import MyUnit from './pages/landlord/MyUnit/MyUnit'
 import ManageRenters from './pages/landlord/ManageRenters/ManageRenters'
+import ManagePendingInquiries from './pages/landlord/ManageRenters/ManagePendingInquiries'
 // import './App.css'
 
 function App() {
@@ -44,6 +45,10 @@ function App() {
             <Route
                 path="/myunit-landlord/managerenters"
                 element={<ManageRenters />}
+            ></Route>
+            <Route
+                path="/myunit-landlord/managependinginquiries"
+                element={<ManagePendingInquiries />}
             ></Route>
         </Routes>
     )
