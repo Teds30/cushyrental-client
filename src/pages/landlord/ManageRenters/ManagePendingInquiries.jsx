@@ -11,23 +11,16 @@ import styles from "./ManageRenters.module.css";
 import SearchField from "../../../components/Search/SearchField";
 import { FiChevronLeft } from "react-icons/fi";
 
-const ManageRenters = () => {
-    const [activeFilter, setActiveFilter] = useState("tenants");
+const ManagePendingInquiries = () => {
+    const [activeFilter, setActiveFilter] = useState("inquiries");
     const [rentalData, setRentalData] = useState(null);
 
     useEffect(() => {
-        const fetchUsers = async () => {
-          try {
-            const response = await fetch("http://127.0.0.1:8000/api/users/2");
-            const data = await response.json();
-            setRentalData(data);
-          } catch (error) {
-            console.error('Error fetching users:', error);
-          }
-        };
-    
-        fetchUsers();
-      }, []);
+        fetch("http://127.0.0.1:8000/api/users/2")
+            .then((response) => response.json())
+            .then((data) => setRentalData(data))
+            .catch((error) => console.error("Error fetching data:", error));
+    }, []);
 
     const GenderToText = (gender) => {
         if (gender === 1) {
@@ -40,7 +33,6 @@ const ManageRenters = () => {
             return "Unknown";
         }
     };
-
     const handleFilterClick = (filter) => {
         setActiveFilter(filter);
     };
@@ -84,21 +76,21 @@ const ManageRenters = () => {
 
             <div className={styles["filter"]}>
                 <div
-                    className={`${styles["filter-1"]} ${
-                        activeFilter === "tenants"
-                            ? styles["active-filter"]
-                            : ""
-                    }`}
-                    onClick={() => handleFilterClick("tenants")}
+                    className={`${styles["filter-1"] }`}
                 >
-                    <Link>
-                        <p className={styles["title-1"]}>Tenants</p>
+                    <Link to="/myunit-landlord/managerenters">
+                        <p className={styles["title-2"]}>Tenants</p>
                     </Link>
                 </div>
 
-                <div className={`${styles["filter-2"]}`}>
-                    <Link to="/myunit-landlord/managependinginquiries">
-                        <p className={styles["title-2"]}>Pending Inquiries</p>
+                <div
+                    className={`${styles["filter-2"]} ${
+                        activeFilter === "inquiries" ? styles["active-filter"] : ""
+                    }`}
+                    onClick={() => handleFilterClick("inquiries")}
+                >
+                    <Link>
+                        <p className={styles["title-1"]}>Pending Inquiries</p>
                     </Link>
                 </div>
             </div>
@@ -140,4 +132,4 @@ const ManageRenters = () => {
     );
 };
 
-export default ManageRenters;
+export default ManagePendingInquiries;

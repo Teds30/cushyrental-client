@@ -4,13 +4,21 @@ import { Link } from "react-router-dom";
 import styles from "../../landlord/MyUnit/MyUnit.module.css";
 
 import { FiChevronLeft } from "react-icons/fi";
+import { IoPeopleSharp } from "react-icons/io5";
+import { TbBuildingCommunity } from "react-icons/tb";
+
 
 const MyUnit = () => {
   return (
     <div>
-      <div className={`${styles["header-container"]} `}>
+      <div className={`${styles["main-container"]} `}>
         <div className={styles["header"]}>
-          <FiChevronLeft size={24} /> <p>My Unit</p>
+          <Link>
+          <div className={styles["back"]}>
+          <FiChevronLeft size={24} style={{ fill: 'transparent' }}/> <p>My Unit</p>
+          </div>
+            
+          </Link>
         </div>
       </div>
 
@@ -33,40 +41,21 @@ const MyUnit = () => {
 
       <div className={`${styles["main-box_container"]} `}>
         <Link
-          to="/managerenters"
-          className={`${styles["btn-link box-1_container"]} `}
+          to="/myunit-landlord/managerenters"
+          className={`${styles["box-1_container"]} `}
         >
-          <div className="box-1">
-            <svg
-              width="55"
-              height="54"
-              viewBox="0 0 55 54"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              {/* SVG paths */}
-            </svg>
+          <div className={`${styles["box-1"]} `}>
+            <IoPeopleSharp size={75} className={styles["icon"]}/>
             <p>MANAGE RENTERS</p>
           </div>
         </Link>
 
-        <a
-          href="../../landlord/pages/manage_units.php"
-          className="btn-link box-2_container"
-        >
-          <div className="box-2">
-            <svg
-              width="55"
-              height="54"
-              viewBox="0 0 55 54"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              {/* SVG paths */}
-            </svg>
+        <Link className={`${styles["box-2_container"]} `}>
+          <div className={`${styles["box-2"]} `}>
+            <TbBuildingCommunity size={75} className={styles["iconbox"]}/>
             <p>MANAGE UNITS</p>
           </div>
-        </a>
+        </Link>
       </div>
     </div>
   );

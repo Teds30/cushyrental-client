@@ -8,6 +8,7 @@ import Chats from './pages/chat/Chats'
 import MyUnit from './pages/landlord/MyUnit/MyUnit'
 import ManageRenters from './pages/landlord/ManageRenters/ManageRenters'
 import CreateUnit from './pages/landlord/ManageUnits/CreateUnit/CreateUnit'
+import ManagePendingInquiries from './pages/landlord/ManageRenters/ManagePendingInquiries'
 import Location from './pages/landlord/ManageUnits/CreateUnit/Location/Location'
 // import './App.css'
 
@@ -46,8 +47,12 @@ function App() {
                 element={<MyUnit />}
             ></Route>
             <Route
-                path="/managerenters"
+                path="/myunit-landlord/managerenters"
                 element={<ManageRenters />}
+            ></Route>
+            <Route
+                path="/myunit-landlord/managependinginquiries"
+                element={<ManagePendingInquiries />}
             ></Route>
         </Routes>
     )
