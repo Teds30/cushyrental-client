@@ -1,35 +1,77 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, Fragment } from "react";
 
 import useAttributeManager from "../../../../hooks/data/attribute-hook";
-import ChipBig from "../../../../components/Chips/ChipBig";
 import PrimaryButton from "../../../../components/Button/PrimaryButton";
 import BorderlessButton from "../../../../components/Button/BorderlessButton";
 import CreateUnitContext from "../../../../context/create-unit-context";
+import ComfortRoom from "./FacilityComponent/ComfortRoom";
+import Others from "./FacilityComponent/Others";
 
 import styles from "./CreateUnit.module.css";
 import EastIcon from "@mui/icons-material/East";
+import KitchenSink from "./FacilityComponent/KitchenSink";
 
 const FacilitiesForm = (props) => {
+    const { onBack, onNext } = props;
+    let cRData;
+
     const createUnitCtx = useContext(CreateUnitContext);
-    const inclusionData = createUnitCtx.unitData.inclusions ? createUnitCtx.unitData.inclusions : [];
+    const facilityData = createUnitCtx.unitData.facilities
+        ? createUnitCtx.unitData.facilities
+        : [];
 
-    const { onBack, onNext} = props;
+    const { isLoading, fetchFacilities } = useAttributeManager();
 
-    const { isLoading, fetchInclusions } = useAttributeManager();
-    const [inclusionValue, setInclusionValue] = useState([]);
-    const [amenities, setAmenities] = useState([]);
+    const [facilities, setFacilities] = useState([]);
 
-    const chipValueHandler = (inclusionValue) => {
-        setInclusionValue(inclusionValue);
+    const [cRSelectedValue, setCRSelectedValue] = useState('1');
+    const [kSSelectedValue, setKSSelectedValue] = useState("1");
+    const [otherFacility, setOtherFacility] = useState([]);
+
+    const comfortRoomHandler = (data) => {
+        console.log(data);
+        setCRSelectedValue(data);
+    };
+
+    const kitchenSinkHandler = (data) => {
+        console.log(data);
+        setKSSelectedValue(data);
+    };
+
+    const otherHandler = (data) => {
+        setOtherFacility(data);
+        console.log(data);
     };
 
     const backHandler = (event) => {
         event.preventDefault();
 
-        if (inclusionValue) {
+        const data = [
+            {
+                id: facilities
+                    .filter((cr) => cr.name === "Comfort Room")
+                    .map((cr) => cr.id)
+                    .join(""),
+                is_shared: cRSelectedValue,
+            },
+            {
+                id: facilities
+                    .filter((ks) => ks.name === "Kitchen Sink")
+                    .map((ks) => ks.id)
+                    .join(""),
+                is_shared: kSSelectedValue,
+            },
+        ];
+
+        if (otherFacility.length !== 0) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
-                inclusions: inclusionValue
+                facilities: [...otherFacility, data],
+            });
+        } else {
+            createUnitCtx.onUnitData({
+                ...createUnitCtx.unitData,
+                facilities: data,
             });
         }
 
@@ -39,59 +81,80 @@ const FacilitiesForm = (props) => {
     const submitHandler = (event) => {
         event.preventDefault();
 
-        createUnitCtx.onUnitData({
-            ...createUnitCtx.unitData,
-            inclusions: inclusionValue
-        });
+        if (otherFacility.length !== 0) {
+            createUnitCtx.onUnitData({
+                ...createUnitCtx.unitData,
+                facilities: [...otherFacility, data],
+            });
+        } else {
+            createUnitCtx.onUnitData({
+                ...createUnitCtx.unitData,
+                facilities: data,
+            });
+        }
 
-        setInclusionValue([]);
+        setCRSelectedValue("1");
+        setKSSelectedValue("1");
+        // setInclusionValue([]);
 
-        onNext();
+        // onNext();
     };
 
     useEffect(() => {
         const handleFetch = async () => {
             try {
-                const res = await fetchInclusions();
-                setAmenities(res);
-
-                if (res.length !== 0 && inclusionData.length !== 0) {
-                    const selectedAmenities = inclusionData.filter((id) => {
-                        return res.some(
-                            (amenityfetch) => amenityfetch.id === id
-                        );
-                    });
-
-                    console.log(selectedAmenities);
-
-                    setInclusionValue(selectedAmenities);
-                }
+                const res = await fetchFacilities();
+                setFacilities(res);
             } catch (err) {}
         };
         handleFetch();
-    }, []);s
+    }, []);
 
     return (
         <form
             className={`${styles["basic-details-form"]}`}
             onSubmit={submitHandler}
         >
-            <div className="title">What inclusions do your unit offer?</div>
-
+            {/* {isLoading && "Loading..."} */}
             {isLoading ? (
                 "Loading..."
             ) : (
-                <ChipBig
-                    items={amenities}
-                    selected={inclusionValue}
-                    onChipValue={chipValueHandler}
-                />
+                <div className={`${styles["facilities-container"]}`}>
+                    <div>
+                        <ComfortRoom
+                            comfortRoom={facilities.filter(
+                                (cr) => cr.name === "Comfort Room"
+                            )}
+                            selectedValue={cRSelectedValue}
+                            onComfortRoom={comfortRoomHandler}
+                        />
+                    </div>
+                    <div>
+                        <KitchenSink
+                            kitchenSink={facilities.filter(
+                                (ks) => ks.name === "Kitchen Sink"
+                            )}
+                            selectedValue={kSSelectedValue}
+                            onKitchenSink={kitchenSinkHandler}
+                        />
+                    </div>
+                    <div>
+                        <Others
+                            otherFacilities={facilities.filter(
+                                (facility) =>
+                                    facility.name !== "Kitchen Sink" &&
+                                    facility.name !== "Comfort Room"
+                            )}
+                            onOther={otherHandler}
+                        />
+                    </div>
+                </div>
             )}
 
             <div className={`${styles["basic-details-button"]}`}>
                 <BorderlessButton onClick={backHandler}>Back</BorderlessButton>
                 <PrimaryButton
-                    disabled={inclusionValue.length === 0}
+                    // disabled={inclusionValue.length === 0}
                     rightIcon={<EastIcon />}
                 >
                     Next

@@ -10,7 +10,7 @@ export const CreateUnitContextProvider = (props) => {
     const [unitData, setUnitData] = useState({});
 
     const unitDataHandler = (data) => {
-        // console.log(data);
+        console.log(data);
         setUnitData(data);
     };
 

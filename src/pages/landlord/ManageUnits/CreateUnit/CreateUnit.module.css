@@ -29,6 +29,20 @@
     justify-content: end;
 }
 
+.facilities-container {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.location-container {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
 @media (min-width: 640px) {
     .container {
         max-width: 768px;

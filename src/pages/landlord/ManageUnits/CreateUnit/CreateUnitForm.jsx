@@ -11,8 +11,13 @@ import AmenitiesForm from "./AmenitiesForm";
 import BasicDetailsForm from "./BasicDetailsForm";
 import InclusionsForm from "./InclusionsForm";
 import FacilitiesForm from "./FacilitiesForm";
+import RulesForm from "./RulesForm";
+import GenderForm from "./GenderForm";
+import SlotsForm from "./SlotsForm";
+import PricingForm from "./PricingForm";
 
 import styles from "./CreateUnit.module.css";
+import LocationForm from "./LocationForm";
 
 export default function CreateUnitForm() {
     const handleNext = () => {
@@ -24,28 +29,58 @@ export default function CreateUnitForm() {
     };
 
     const steps = [
+        // {
+        //     label: "BASIC DETAILS",
+        //     description: <BasicDetailsForm onNext={handleNext} />,
+        // },
+        // {
+        //     label: "AMENITIES",
+        //     description: (
+        //         <AmenitiesForm onBack={handleBack} onNext={handleNext} />
+        //     ),
+        // },
+        // {
+        //     label: "INCLUSIONS",
+        //     description: (
+        //         <InclusionsForm onBack={handleBack} onNext={handleNext} />
+        //     ),
+        // },
+        // {
+        //     label: "FACILITIES",
+        //     description: (
+        //         <FacilitiesForm onBack={handleBack} onNext={handleNext} />
+        //     ),
+        // },
+        // {
+        //     label: "RULES",
+        //     description: (
+        //         <RulesForm onBack={handleBack} onNext={handleNext} />
+        //     ),
+        // },
+        // {
+        //     label: "GENDER",
+        //     description: (
+        //         <GenderForm onBack={handleBack} onNext={handleNext} />
+        //     ),
+        // },
+        // {
+        //     label: "SLOTS",
+        //     description: (
+        //         <SlotsForm onBack={handleBack} onNext={handleNext} />
+        //     ),
+        // },
+        // {
+        //     label: "PRICE",
+        //     description: (
+        //         <PricingForm onBack={handleBack} onNext={handleNext} />
+        //     ),
+        // },
         {
-            label: "Basic Details",
-            description: <BasicDetailsForm onNext={handleNext} />,
-        },
-        {
-            label: "Amenitie",
+            label: "LOCATION",
             description: (
-                <AmenitiesForm onBack={handleBack} onNext={handleNext} />
+                <LocationForm onBack={handleBack} onNext={handleNext} />
             ),
         },
-        {
-            label: "Inclusions",
-            description: (
-                <InclusionsForm onBack={handleBack} onNext={handleNext} />
-            ),
-        },
-        {
-          label: "Facilities",
-          description: (
-              <FacilitiesForm onBack={handleBack} onNext={handleNext} />
-          ),
-      },
         {
             label: "Create an ad",
             description: `Try out different ad text to see what brings in the most customers,

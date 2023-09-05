@@ -9,27 +9,27 @@ import CreateUnitContext from "../../../../context/create-unit-context";
 import styles from "./CreateUnit.module.css";
 import EastIcon from "@mui/icons-material/East";
 
-const InclusionsForm = (props) => {
+const RulesForm = (props) => {
     const createUnitCtx = useContext(CreateUnitContext);
-    const inclusionData = createUnitCtx.unitData.inclusions ? createUnitCtx.unitData.inclusions : [];
+    const rulesData = createUnitCtx.unitData.rules ? createUnitCtx.unitData.rules : [];
 
     const { onBack, onNext} = props;
 
-    const { isLoading, fetchInclusions } = useAttributeManager();
-    const [inclusionValue, setInclusionValue] = useState([]);
-    const [amenities, setAmenities] = useState([]);
+    const { isLoading, fetchRules } = useAttributeManager();
+    const [ruleValue, setRuleValue] = useState([]);
+    const [rules, setRules] = useState([]);
 
-    const chipValueHandler = (inclusionValue) => {
-        setInclusionValue(inclusionValue);
+    const chipValueHandler = (ruleValue) => {
+        setRuleValue(ruleValue);
     };
 
     const backHandler = (event) => {
         event.preventDefault();
 
-        if (inclusionValue) {
+        if (ruleValue) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
-                inclusions: inclusionValue
+                rules: ruleValue
             });
         }
 
@@ -39,16 +39,16 @@ const InclusionsForm = (props) => {
     const submitHandler = (event) => {
         event.preventDefault();
 
-        if (inclusionValue.length === 0) {
+        if (ruleValue.length === 0) {
             return;
         }
 
         createUnitCtx.onUnitData({
             ...createUnitCtx.unitData,
-            inclusions: inclusionValue
+            rules: ruleValue
         });
 
-        setInclusionValue([]);
+        setRuleValue([]);
 
         onNext();
     };
@@ -56,19 +56,17 @@ const InclusionsForm = (props) => {
     useEffect(() => {
         const handleFetch = async () => {
             try {
-                const res = await fetchInclusions();
-                setAmenities(res);
+                const res = await fetchRules();
+                setRules(res);
 
-                if (res.length !== 0 && inclusionData.length !== 0) {
-                    const selectedAmenities = inclusionData.filter((id) => {
+                if (res.length !== 0 && rulesData.length !== 0) {
+                    const selectedRules = rulesData.filter((id) => {
                         return res.some(
-                            (amenityfetch) => amenityfetch.id === id
+                            (ruleFetch) => ruleFetch.id === id
                         );
                     });
 
-                    // console.log(selectedAmenities);
-
-                    setInclusionValue(selectedAmenities);
+                    setRuleValue(selectedRules);
                 }
             } catch (err) {}
         };
@@ -80,15 +78,16 @@ const InclusionsForm = (props) => {
             className={`${styles["basic-details-form"]}`}
             onSubmit={submitHandler}
         >
-            <div className="title">What inclusions do your unit offer?</div>
+            <div className="title">What are the unit rules?</div>
 
             {isLoading ? (
                 "Loading..."
             ) : (
                 <ChipBig
-                    items={amenities}
-                    selected={inclusionValue}
+                    items={rules}
+                    selected={ruleValue}
                     onChipValue={chipValueHandler}
+                    background={'danger'}
                 />
             )}
 
@@ -104,4 +103,4 @@ const InclusionsForm = (props) => {
     );
 };
 
-export default InclusionsForm;
+export default RulesForm;
