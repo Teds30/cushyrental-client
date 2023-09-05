@@ -5,9 +5,9 @@ import Stack from '@mui/material/Stack';
 import styles from './ChipButton.module.css';
 
 const ChipBig = (props) => {
-  const { items, button = 'checkbox', clickable = true, background = 'success', selected = [] } = props;
+  const { items = [], button = 'checkbox', clickable = true, background = 'success', selected = [] } = props;
 
-  const [ chips, setChips ] = useState([]);
+  const [ chips, setChips ] = useState(selected.length !== 0 ? selected : []);
 
   const handleClick = (id) => {
     if (button === "checkbox") {
@@ -28,10 +28,6 @@ const ChipBig = (props) => {
 
   const colorStyle = background === 'success' ? "var(--accent)" : "var(--accent-danger)";
   const borderShadowStyle = background === 'success' ? "0px 0px 0px 5px rgba(3, 176, 119, 0.20)" : "0px 0px 0px 5px rgba(235, 88, 88, 0.20)";
-
-  useEffect(() => {
-    setChips(selected.length !== 0 ? selected : []);
-  }, [selected]);
 
   const content = items.map((item) => {
 
