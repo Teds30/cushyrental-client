@@ -15,6 +15,7 @@ import RulesForm from "./RulesForm";
 import GenderForm from "./GenderForm";
 import SlotsForm from "./SlotsForm";
 import PricingForm from "./PricingForm";
+import UploadImageForm from "./UploadImageForm";
 
 import styles from "./CreateUnit.module.css";
 import LocationForm from "./LocationForm";
@@ -75,10 +76,16 @@ export default function CreateUnitForm() {
         //         <PricingForm onBack={handleBack} onNext={handleNext} />
         //     ),
         // },
+        // {
+        //     label: "LOCATION",
+        //     description: (
+        //         <LocationForm onBack={handleBack} onNext={handleNext} />
+        //     ),
+        // },
         {
-            label: "LOCATION",
+            label: "UPLOAD IMAGES",
             description: (
-                <LocationForm onBack={handleBack} onNext={handleNext} />
+                <UploadImageForm onBack={handleBack} onNext={handleNext} />
             ),
         },
         {
