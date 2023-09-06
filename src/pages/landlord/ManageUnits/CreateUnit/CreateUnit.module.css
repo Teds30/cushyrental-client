@@ -38,13 +38,30 @@
 }
 
 .location-container {
+    border: 1px solid red;
+    height: 100vh;
     display: flex;
-    gap: 12px;
-    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.location-map {
+    height: 100%;
+    width: 100%;
+}
+
+.location-map img {
+    height: 100%;
+    width: 100%;
 }
 
 @media (min-width: 640px) {
     .container {
+        max-width: 768px;
+        margin: 0 auto;
+    }
+
+    .location-container {
         max-width: 768px;
         margin: 0 auto;
     }
