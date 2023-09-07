@@ -98,7 +98,7 @@ const SlotsForm = (props) => {
             className={`${styles["basic-details-form"]}`}
             onSubmit={submitHandler}
         >
-            <div className="title">How many tenants can stay in the unit?</div>
+            <div className={`${styles.title}`}>How many tenants can stay in the unit?</div>
 
             <TextField
                 fullWidth

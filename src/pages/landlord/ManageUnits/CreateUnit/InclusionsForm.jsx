@@ -80,7 +80,7 @@ const InclusionsForm = (props) => {
             className={`${styles["basic-details-form"]}`}
             onSubmit={submitHandler}
         >
-            <div className="title">What inclusions do your unit offer?</div>
+            <div className={`${styles.title}`}>What inclusions do your unit offer?</div>
 
             {isLoading ? (
                 "Loading..."

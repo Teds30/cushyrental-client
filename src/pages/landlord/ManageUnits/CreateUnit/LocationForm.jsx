@@ -78,7 +78,7 @@ const LocationForm = (props) => {
             className={`${styles["basic-details-form"]}`}
             onSubmit={submitHandler}
         >
-            <div className="title">Basic Details</div>
+            <div className={`${styles.title}`}>Basic Details</div>
 
             <div className={`${styles['location-form-container']}`}>
             <TextField

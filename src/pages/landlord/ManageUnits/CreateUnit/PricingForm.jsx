@@ -118,7 +118,7 @@ const PricingForm = (props) => {
             />
 
             <div>
-                <div className="title">Do you require security deposit?</div>
+                <div className={`${styles.title}`}>Do you require security deposit?</div>
                 <div className="caption">
                     Leave 0 if you don’t require the tenant for security
                     deposits.
