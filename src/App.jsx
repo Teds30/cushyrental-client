@@ -10,6 +10,7 @@ import ManageRenters from './pages/landlord/ManageRenters/ManageRenters'
 import CreateUnit from './pages/landlord/ManageUnits/CreateUnit/CreateUnit'
 import ManagePendingInquiries from './pages/landlord/ManageRenters/ManagePendingInquiries'
 import Location from './pages/landlord/ManageUnits/CreateUnit/Location/Location'
+import ManageUnit from './pages/landlord/ManageUnits/ManageUnit/ManageUnit'
 // import './App.css'
 
 function App() {
@@ -35,8 +36,10 @@ function App() {
 
             <Route path="/register" element={<CreateAccount />}></Route>
 
+            <Route path='/manage_unit/:id' element={<ManageUnit/>}></Route>
             <Route path='/manage_unit/create_unit' element={<CreateUnit/>}></Route>
             <Route path='/manage_unit/create_unit/location' element={<Location/>}></Route>
+            
             <Route
                 path="*"
                 element={<Navigate replace to="/signinpage" />}
