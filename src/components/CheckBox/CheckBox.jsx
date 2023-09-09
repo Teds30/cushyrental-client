@@ -25,7 +25,6 @@ const CheckBox = (props) => {
         props.onCheckBox(checkItems);
     }, [checkItems]);
 
-    console.log(selectedValue);
     const content = items.map(item => (<FormControlLabel
         control={
           
