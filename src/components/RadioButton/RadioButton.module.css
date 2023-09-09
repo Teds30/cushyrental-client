@@ -1,0 +1,17 @@
+.radio-button {
+    border-radius: 8px;
+    border: 1px solid var(--border, #E0E4F5);
+    background: #FFF;
+
+    padding: 5px 0;
+}
+
+.radio-button.radio-style {
+    border-radius: 8px;
+    border: 1px solid var(--Accent, #03B077);
+    background: rgba(3, 176, 119, 0.15);    
+}
+
+.radio-button-style {
+    padding-left: 24px;
+}

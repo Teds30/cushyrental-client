@@ -1,41 +1,59 @@
-import React from 'react'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import FormControl from '@mui/material/FormControl'
+import React from "react";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+
+import styles from "./RadioButton.module.css";
 
 const RadioButton = (props) => {
-    const { items = [], onSelectedValue } = props
-
-    const content = items.map((item) => (
-        <FormControlLabel
-            key={item.id}
-            value={item.id}
-            control={<Radio sx={{ color: 'var(--accent)' }} />}
-            label={item.value}
-            sx={{
-                '& .MuiSvgIcon-root': {
-                    color: 'var(--accent)',
-                },
-            }}
-        />
-    ))
+    const {
+        items = [],
+        onSelectedValue,
+        selectedValue = 0,
+        button = false,
+    } = props;
 
     const handleChange = (event) => {
-        onSelectedValue(event.target.value)
-    }
+        const newValue = event.target.value.toString();
+        onSelectedValue(newValue);
+    };
 
-    return (
-        <FormControl>
-            <RadioGroup
-                defaultValue="none"
+    const content = items.map((item) => (
+        <RadioGroup
+                value={selectedValue.toString()} // Ensure the value is a string
                 name="radio-buttons-group"
                 onChange={handleChange}
+                className={`${button ? styles["radio-button"] : ""} ${
+                    selectedValue === item.id && styles["radio-style"]
+                }`}
+                key={item.id}
+                defaultValue={selectedValue}
             >
-                {content}
+                <FormControlLabel
+                value={item.id.toString()} // Ensure the value is a string
+                control={<Radio sx={{ color: "var(--accent)" }} />}
+                label={item.name}
+                sx={{
+                    "& .MuiSvgIcon-root": {
+                        color: "var(--accent)",
+                    },
+                }}
+                className={`${styles['radio-button-style']}`}
+            />
+                
             </RadioGroup>
-        </FormControl>
-    )
-}
+    ));
 
-export default RadioButton
+    return (
+        <FormControl sx={{
+            display: button ? "flex" : "",
+            flexDirection: button ? "column" : "",
+            gap: button ? "12px" : "",
+        }}>
+            {content}
+        </FormControl>
+    );
+};
+
+export default RadioButton;
