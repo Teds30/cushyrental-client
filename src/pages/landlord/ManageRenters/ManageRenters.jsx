@@ -1,49 +1,52 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, Route, Switch } from "react-router-dom";
+import ManageTenants from "./ManageTenants";
+import ManagePendingInquiries from "./ManagePendingInquiries";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
+import { StyledTabs, StyledTab, TabPanel } from "../../../components/Tabs/Tabs";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-
 import styles from "./ManageRenters.module.css";
-
-import SearchField from "../../../components/Search/SearchField";
 import { FiChevronLeft } from "react-icons/fi";
 
 const ManageRenters = () => {
-    const [activeFilter, setActiveFilter] = useState("tenants");
-    const [rentalData, setRentalData] = useState(null);
+    const [tenantsData, setTenantsData] = useState([]);
+    const [inquiriesData, setInquiriesData] = useState([]);
+    const [value, setValue] = useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
     useEffect(() => {
-        const fetchUsers = async () => {
-          try {
-            const response = await fetch("http://127.0.0.1:8000/api/users/2");
-            const data = await response.json();
-            setRentalData(data);
-          } catch (error) {
-            console.error('Error fetching users:', error);
-          }
+        const fetchTenantsData = async () => {
+            try {
+                const response = await fetch(
+                    "http://127.0.0.1:8000/api/landlord_tenants/1"
+                );
+                const data = await response.json();
+                setTenantsData(data);
+            } catch (error) {
+                console.error("Error fetching tenants data:", error);
+            }
         };
-    
-        fetchUsers();
-      }, []);
 
-    const GenderToText = (gender) => {
-        if (gender === 1) {
-            return "Male";
-        } else if (gender === 2) {
-            return "Female";
-        } else if (gender === 3) {
-            return "Not to specify";
-        } else {
-            return "Unknown";
-        }
-    };
+        const fetchInquiriesData = async () => {
+            try {
+                const response = await fetch(
+                    "http://127.0.0.1:4000/inquiries/1"
+                );
+                const data = await response.json();
+                setInquiriesData(data);
+            } catch (error) {
+                console.error("Error fetching inquiries data:", error);
+            }
+        };
 
-    const handleFilterClick = (filter) => {
-        setActiveFilter(filter);
-    };
+        fetchTenantsData();
+        fetchInquiriesData();
+    }, []);
 
     return (
         <div className={`${styles["main-container"]} `}>
@@ -82,60 +85,47 @@ const ManageRenters = () => {
                 </AppBar>
             </Box>
 
-            <div className={styles["filter"]}>
-                <div
-                    className={`${styles["filter-1"]} ${
-                        activeFilter === "tenants"
-                            ? styles["active-filter"]
-                            : ""
-                    }`}
-                    onClick={() => handleFilterClick("tenants")}
+            <Box
+                className={styles["filter"]}
+                sx={{ borderBottom: 1, borderColor: "divider" }}
+            >
+                <StyledTabs
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="primary"
                 >
-                    <Link>
-                        <p className={styles["title-1"]}>Tenants</p>
-                    </Link>
-                </div>
-
-                <div className={`${styles["filter-2"]}`}>
-                    <Link to="/myunit-landlord/managependinginquiries">
-                        <p className={styles["title-2"]}>Pending Inquiries</p>
-                    </Link>
-                </div>
-            </div>
-
-            <div className={`${styles["search-box"]} `}>
-                <SearchField placeholder="Search">
-                    <input type="text" className="search-input" />
-                </SearchField>
-            </div>
-
-            {rentalData && (
-                <div
-                    className={`${styles["tenants-main-box_container"]} `}
-                    id="tenants"
-                >
-                    <div className={`${styles["box-container"]} `}>
-                        <div className={`${styles["box-image"]} `}>
-                            <img
-                                src={rentalData.profile_picture_img}
-                                alt="Renter"
-                            />
-                        </div>
-                        <div className={`${styles["box-details"]} `}>
-                            <p className={`${styles["box-details-name"]} `}>
-                                {rentalData.first_name} {rentalData.middle_name}{" "}
-                                {rentalData.last_name}
-                            </p>
-                            <p className={`${styles["box-details-gender"]} `}>
-                                {GenderToText(rentalData.gender)}
-                            </p>
-                            <p className={`${styles["box-details-time"]} `}>
-                                {rentalData.created_at}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            )}
+                    <StyledTab
+                        disableRipple
+                        sx={{ textTransform: "none" }}
+                        label="Tenants"
+                    />
+                    <StyledTab
+                        disableRipple
+                        sx={{ textTransform: "none" }}
+                        label={
+                            "Pending Inquiries" +
+                            " " +
+                            "(" +
+                            inquiriesData.length +
+                            ")"
+                        }
+                    />
+                </StyledTabs>
+            </Box>
+            <TabPanel value={value} index={0}>
+                {!tenantsData ? (
+                    <p>No Renters available</p>
+                ) : (
+                    <ManageTenants tenants={tenantsData} />
+                )}
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+                {!inquiriesData ? (
+                    <p>No Pending Inquiries available</p>
+                ) : (
+                    <ManagePendingInquiries pendingInquiries={inquiriesData} />
+                )}
+            </TabPanel>
         </div>
     );
 };

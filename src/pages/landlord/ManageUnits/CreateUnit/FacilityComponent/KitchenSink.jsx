@@ -1,6 +1,8 @@
 import { Fragment, useState } from "react";
 import RadioButton from "../../../../../components/RadioButton/RadioButton";
 
+import styles from '../CreateUnit.module.css';
+
 const kitchen_sink = [
     {
         id: "1",
@@ -24,7 +26,7 @@ const KitchenSink = (props) => {
 
     const content = kitchenSink.map((data) => (
         <Fragment key={data.id}>
-            <div className="title" style={{ marginBottom: "12px" }}>
+            <div className={`${styles.title}`} style={{ marginBottom: "12px" }}>
                 {data.name}
             </div>
             <RadioButton

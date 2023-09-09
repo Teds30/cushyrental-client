@@ -1,5 +1,7 @@
 import { Fragment, useState } from "react";
 import ChipBig from "../../../../../components/Chips/ChipBig";
+import styles from '../CreateUnit.module.css';
+
 const Others = (props) => {
     const { otherFacilities, onOther } = props;
 
@@ -12,7 +14,7 @@ const Others = (props) => {
 
     return (
         <Fragment>
-            <div className="title" style={{marginBottom: '12px'}}>Other</div>
+            <div className={`${styles.title}`} style={{marginBottom: '12px'}}>Other</div>
             <ChipBig
             items={otherFacilities}
             selected={facilityValue}

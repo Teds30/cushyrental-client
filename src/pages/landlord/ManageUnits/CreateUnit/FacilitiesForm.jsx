@@ -81,10 +81,27 @@ const FacilitiesForm = (props) => {
     const submitHandler = (event) => {
         event.preventDefault();
 
+        const data = [
+            {
+                id: facilities
+                    .filter((cr) => cr.name === "Comfort Room")
+                    .map((cr) => cr.id)
+                    .join(""),
+                is_shared: cRSelectedValue,
+            },
+            {
+                id: facilities
+                    .filter((ks) => ks.name === "Kitchen Sink")
+                    .map((ks) => ks.id)
+                    .join(""),
+                is_shared: kSSelectedValue,
+            },
+        ];
+
         if (otherFacility.length !== 0) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
-                facilities: [...otherFacility, data],
+                facilities: [...otherFacility, data]
             });
         } else {
             createUnitCtx.onUnitData({
@@ -93,11 +110,7 @@ const FacilitiesForm = (props) => {
             });
         }
 
-        setCRSelectedValue("1");
-        setKSSelectedValue("1");
-        // setInclusionValue([]);
-
-        // onNext();
+        onNext();
     };
 
     useEffect(() => {

@@ -1,6 +1,8 @@
 import { Fragment, useState } from "react";
 import RadioButton from "../../../../../components/RadioButton/RadioButton";
 
+import styles from '../CreateUnit.module.css';
+
 const comfort_room = [
     {
         id: '1',
@@ -15,8 +17,6 @@ const comfort_room = [
 const ComfortRoom = (props) => {
     const { comfortRoom, selectedValue, onComfortRoom } = props;
 
-    console.log(selectedValue)
-
     const [cRValue, setCRValue] = useState(selectedValue);
 
     const selectedValueHandler = (data) => {
@@ -26,7 +26,7 @@ const ComfortRoom = (props) => {
 
     const content = comfortRoom.map((data) => (
         <Fragment key={data.id}>
-            <div className="title" style={{ marginBottom: "12px" }}>
+            <div className={`${styles.title}`} style={{ marginBottom: "12px" }}>
                 {data.name}
             </div>
             <RadioButton

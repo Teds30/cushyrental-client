@@ -79,7 +79,7 @@ const AmenitiesForm = (props) => {
             className={`${styles["basic-details-form"]}`}
             onSubmit={submitHandler}
         >
-            <div className="title">What amenities do your unit offer?</div>
+            <div className={`${styles.title}`}>What amenities do your unit offer?</div>
 
             {isLoading ? (
                 "Loading..."

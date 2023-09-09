@@ -78,7 +78,7 @@ const RulesForm = (props) => {
             className={`${styles["basic-details-form"]}`}
             onSubmit={submitHandler}
         >
-            <div className="title">What are the unit rules?</div>
+            <div className={`${styles.title}`}>What are the unit rules?</div>
 
             {isLoading ? (
                 "Loading..."

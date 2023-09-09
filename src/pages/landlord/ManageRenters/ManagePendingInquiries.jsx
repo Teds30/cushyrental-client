@@ -1,26 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-
 import styles from "./ManageRenters.module.css";
-
 import SearchField from "../../../components/Search/SearchField";
-import { FiChevronLeft } from "react-icons/fi";
 
-const ManagePendingInquiries = () => {
-    const [activeFilter, setActiveFilter] = useState("inquiries");
-    const [rentalData, setRentalData] = useState(null);
 
-    useEffect(() => {
-        fetch("http://127.0.0.1:8000/api/users/2")
-            .then((response) => response.json())
-            .then((data) => setRentalData(data))
-            .catch((error) => console.error("Error fetching data:", error));
-    }, []);
+const ManagePendingInquiries = (props) => {
+    const { pendingInquiries } = props;
+    const [filteredData, setFilteredData] = useState(pendingInquiries);
+    const [rentalData, setRentalData] = useState(pendingInquiries);
+
+    const handleSearch = (event) => {
+        const keywords = event.target.value.toLowerCase();
+        const newList = rentalData.filter((data) => {
+            const fullName = `${data.user.first_name} ${data.user.middle_name} ${data.user.last_name}`;
+            return fullName.toLowerCase().includes(keywords);
+        });
+        setFilteredData(newList);
+    };
+
+    const formatDate = (dateString) => {
+        const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+        const date = new Date(dateString);
+        const formattedDate = date.toLocaleDateString("en-GB", options);
+        const timeOptions = {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+        };
+        const formattedTime = date.toLocaleTimeString("en-US", timeOptions);
+        return `${formattedDate} | ${formattedTime}`;
+    };
 
     const GenderToText = (gender) => {
         if (gender === 1) {
@@ -39,95 +49,45 @@ const ManagePendingInquiries = () => {
 
     return (
         <div className={`${styles["main-container"]} `}>
-            <Box className={`${styles["top-back-container"]} `}>
-                <AppBar
-                    position="static"
-                    sx={{
-                        margin: 0,
-                        backgroundColor: "#fff",
-                        color: "var(--fc-body)",
-                        fontFamily: "Inter",
-                        boxShadow: "none",
-                        borderBottom: "1px solid var(--border-color)",
-                    }}
-                >
-                    <Toolbar>
-                        <Link to="/myunit-landlord">
-                            <IconButton
-                                size="large"
-                                edge="start"
-                                color="inherit"
-                                aria-label="menu"
-                            >
-                                <FiChevronLeft
-                                    style={{
-                                        color: "var(--fc-strong)",
-                                        fill: "transparent",
-                                    }}
-                                />
-                            </IconButton>
-                        </Link>
-                        <Box sx={{ flexGrow: 1, alignItems: "center" }}>
-                            <p className="title">Manage Renters</p>
-                        </Box>
-                    </Toolbar>
-                </AppBar>
-            </Box>
-
-            <div className={styles["filter"]}>
-                <div
-                    className={`${styles["filter-1"] }`}
-                >
-                    <Link to="/myunit-landlord/managerenters">
-                        <p className={styles["title-2"]}>Tenants</p>
-                    </Link>
-                </div>
-
-                <div
-                    className={`${styles["filter-2"]} ${
-                        activeFilter === "inquiries" ? styles["active-filter"] : ""
-                    }`}
-                    onClick={() => handleFilterClick("inquiries")}
-                >
-                    <Link>
-                        <p className={styles["title-1"]}>Pending Inquiries</p>
-                    </Link>
-                </div>
-            </div>
-
             <div className={`${styles["search-box"]} `}>
-                <SearchField placeholder="Search">
-                    <input type="text" className="search-input" />
-                </SearchField>
+                <SearchField
+                    placeholder="Search"
+                    onChange={handleSearch}
+                ></SearchField>
             </div>
 
-            {rentalData && (
-                <div
-                    className={`${styles["tenants-main-box_container"]} `}
-                    id="tenants"
-                >
-                    <div className={`${styles["box-container"]} `}>
-                        <div className={`${styles["box-image"]} `}>
-                            <img
-                                src={rentalData.profile_picture_img}
-                                alt="Renter"
-                            />
-                        </div>
-                        <div className={`${styles["box-details"]} `}>
-                            <p className={`${styles["box-details-name"]} `}>
-                                {rentalData.first_name} {rentalData.middle_name}{" "}
-                                {rentalData.last_name}
-                            </p>
-                            <p className={`${styles["box-details-gender"]} `}>
-                                {GenderToText(rentalData.gender)}
-                            </p>
-                            <p className={`${styles["box-details-time"]} `}>
-                                {rentalData.created_at}
-                            </p>
+            {filteredData.map((user) => (
+                <Link to={`/chats/${user.room._id}`} key={user.room._id}>
+                    <div
+                        className={`${styles["tenants-main-box_container"]} `}
+                        id={`user-${user.user.id}`}
+                    >
+                        <div className={`${styles["box-container"]} `}>
+                            <div className={`${styles["box-image"]} `}>
+                                <img
+                                    src={user.user.profile_picture_img}
+                                    alt="Renter"
+                                />
+                            </div>
+                            <div className={`${styles["box-details"]} `}>
+                                <p className={`${styles["box-details-name"]} `}>
+                                    {user.user.first_name}{" "}
+                                    {user.user.middle_name}{" "}
+                                    {user.user.last_name}
+                                </p>
+                                <p
+                                    className={`${styles["box-details-gender"]} `}
+                                >
+                                    {GenderToText(user.user.gender)}
+                                </p>
+                                <p className={`${styles["box-details-time"]} `}>
+                                    {formatDate(user.user.created_at)}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
+                </Link>
+            ))}
         </div>
     );
 };

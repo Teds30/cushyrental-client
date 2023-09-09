@@ -40,44 +40,64 @@ const BasicDetailsForm = (props) => {
     const submitHandler = (event) => {
         event.preventDefault();
 
-        if (
-            enteredDetails === "" ||
-            (enteredTitle === "" && Object.keys(unitDetails).length !== 0)
-        ) {
+        // if (
+        //     enteredDetails === "" ||
+        //     (enteredTitle === "" && Object.keys(unitDetails).length !== 0)
+        // ) {
+        //     createUnitCtx.onUnitData({
+        //         ...createUnitCtx.unitData,
+        //         title: enteredTitleIsValid
+        //             ? enteredTitle
+        //             : createUnitCtx.unitData.title,
+        //         details: enteredDetailsIsValid
+        //             ? enteredDetails
+        //             : createUnitCtx.unitData.details,
+        //     });
+
+        //     titleReset();
+        //     detailsReset();
+
+        //     onNext();
+
+        //     return;
+        // }
+
+        // if (!formIsValid) {
+        //     return;
+        // }
+
+        // createUnitCtx.onUnitData({
+        //     ...createUnitCtx.unitData,
+        //     title: enteredTitleIsValid
+        //         ? enteredTitle
+        //         : createUnitCtx.unitData.title,
+        //     details: enteredDetailsIsValid
+        //         ? enteredDetails
+        //         : createUnitCtx.unitData.details,
+        // });
+
+        // titleReset();
+        // detailsReset();
+
+        if (formIsValid) {
+            createUnitCtx.onUnitData({
+                ...createUnitCtx.unitData,
+                title: enteredTitle,
+                details: enteredDetails,
+            });
+        } else if (unitDetails !== undefined) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
                 title: enteredTitleIsValid
                     ? enteredTitle
-                    : createUnitCtx.unitData.title,
+                    : unitDetails.title,
                 details: enteredDetailsIsValid
                     ? enteredDetails
-                    : createUnitCtx.unitData.details,
+                    : unitDetails.details,
             });
-
-            titleReset();
-            detailsReset();
-
-            onNext();
-
+        } else {
             return;
         }
-
-        if (!formIsValid) {
-            return;
-        }
-
-        createUnitCtx.onUnitData({
-            ...createUnitCtx.unitData,
-            title: enteredTitleIsValid
-                ? enteredTitle
-                : createUnitCtx.unitData.title,
-            details: enteredDetailsIsValid
-                ? enteredDetails
-                : createUnitCtx.unitData.details,
-        });
-
-        titleReset();
-        detailsReset();
 
         onNext();
     };
@@ -87,7 +107,7 @@ const BasicDetailsForm = (props) => {
             className={`${styles["basic-details-form"]}`}
             onSubmit={submitHandler}
         >
-            <div className="title">Basic Details</div>
+            <div className={`${styles.title}`}>Basic Details</div>
 
             <TextField
                 fullWidth

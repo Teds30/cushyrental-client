@@ -8,7 +8,7 @@ const CardBlur = (props) => {
         filledStyle = styles['card-fill']
     }
     return (
-        <div className={`${styles.card} ${filledStyle}`}>{props.children}</div>
+        <div {...props} className={`${styles.card} ${filledStyle}`}>{props.children}</div>
     )
 }
 

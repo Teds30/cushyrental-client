@@ -19,7 +19,7 @@ const Location = (props) => {
     }
 
     return (
-        <div className={`${styles['location-container']}`}>
+        <div className={`${styles['location-map-container']}`}>
             <Box className={`${styles["top-back-container"]} `}>
                 <AppBar
                     position="static"
@@ -49,7 +49,7 @@ const Location = (props) => {
                             </IconButton>
                         </Link>
                         <Box>
-                            <p className="title">Manage Renters</p>
+                            <p className="title">Location</p>
                         </Box>
                         <PrimaryButton onClick={saveHandler}>Save</PrimaryButton>
                     </Toolbar>
