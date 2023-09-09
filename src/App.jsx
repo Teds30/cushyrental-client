@@ -10,6 +10,7 @@ import ManageRenters from './pages/landlord/ManageRenters/ManageRenters'
 import CreateUnit from './pages/landlord/ManageUnits/CreateUnit/CreateUnit'
 import ManagePendingInquiries from './pages/landlord/ManageRenters/ManagePendingInquiries'
 import Location from './pages/landlord/ManageUnits/CreateUnit/Location/Location'
+import MyCalendar from './pages/landlord/MyCalendar/MyCalendar'
 // import './App.css'
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
 
             <Route path="/chats/" element={<Chats />}></Route>
             <Route path="/chats/:room_id" element={<Conversation />}></Route>
+            <Route path="/calendar" element={<MyCalendar />}></Route>
 
             <Route path="/signinpage" element={<SignInPage />}></Route>
             <Route
@@ -35,17 +37,20 @@ function App() {
 
             <Route path="/register" element={<CreateAccount />}></Route>
 
-            <Route path='/manage_unit/create_unit' element={<CreateUnit/>}></Route>
-            <Route path='/manage_unit/create_unit/location' element={<Location/>}></Route>
+            <Route
+                path="/manage_unit/create_unit"
+                element={<CreateUnit />}
+            ></Route>
+            <Route
+                path="/manage_unit/create_unit/location"
+                element={<Location />}
+            ></Route>
             <Route
                 path="*"
                 element={<Navigate replace to="/signinpage" />}
             ></Route>
 
-            <Route
-                path="/myunit-landlord"
-                element={<MyUnit />}
-            ></Route>
+            <Route path="/myunit-landlord" element={<MyUnit />}></Route>
             <Route
                 path="/myunit-landlord/managerenters"
                 element={<ManageRenters />}
