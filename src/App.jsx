@@ -6,9 +6,10 @@ import ForgotPassword from './pages/Login/ForgotPassword'
 import Conversation from './pages/chat/Conversation'
 import Chats from './pages/chat/Chats'
 import MyUnit from './pages/landlord/MyUnit/MyUnit'
-import ManageRenters from './pages/landlord/ManageRenters/ManageRenters'
 import CreateUnit from './pages/landlord/ManageUnits/CreateUnit/CreateUnit'
+import ManageRenters from './pages/landlord/ManageRenters/ManageRenters'
 import ManagePendingInquiries from './pages/landlord/ManageRenters/ManagePendingInquiries'
+import ManageTenants from './pages/landlord/ManageRenters/ManageTenants'
 // import './App.css'
 
 function App() {
@@ -35,23 +36,31 @@ function App() {
             <Route path="/register" element={<CreateAccount />}></Route>
 
             <Route path='/manage_unit/create_unit' element={<CreateUnit/>}></Route>
+            
+            <Route
+                path="/myunit-landlord"
+                element={<MyUnit />}
+            ></Route>
+
+            <Route
+                path="/myunit-landlord/managerenters"
+                element={<ManageRenters />}
+            ></Route>      
+            {/* <Route
+                path="/myunit-landlord/managetenants"
+                element={<ManageTenants />}
+            ></Route>
+            <Route
+                path="/myunit-landlord/managependinginquiries"
+                element={<ManagePendingInquiries />}
+            ></Route> */}
+
             <Route
                 path="*"
                 element={<Navigate replace to="/signinpage" />}
             ></Route>
 
-            <Route
-                path="/myunit-landlord"
-                element={<MyUnit />}
-            ></Route>
-            <Route
-                path="/myunit-landlord/managerenters"
-                element={<ManageRenters />}
-            ></Route>
-            <Route
-                path="/myunit-landlord/managependinginquiries"
-                element={<ManagePendingInquiries />}
-            ></Route>
+
         </Routes>
     )
 }
