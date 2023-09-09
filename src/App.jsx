@@ -55,15 +55,6 @@ function App() {
                 path="/myunit-landlord/managerenters"
                 element={<ManageRenters />}
             ></Route>      
-            
-            {/* <Route
-                path="/myunit-landlord/managetenants"
-                element={<ManageTenants />}
-            ></Route>
-            <Route
-                path="/myunit-landlord/managependinginquiries"
-                element={<ManagePendingInquiries />}
-            ></Route> */}
 
             <Route
                 path="*"
