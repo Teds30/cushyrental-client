@@ -5,9 +5,9 @@ import Checkbox from '@mui/material/Checkbox';
 import SquareRoundedIcon from '@mui/icons-material/SquareRounded';
 
 const CheckBox = (props) => {
-    const { items = [] } = props;
+    const { items = [], selectedValue = [] } = props;
 
-    const [ checkItems, setCheckItems ] = React.useState([]);
+    const [ checkItems, setCheckItems ] = React.useState(selectedValue.length !== 0 ? selectedValue : []);
 
     const checkedItemsHandler = (item) => {
 
