@@ -43,6 +43,7 @@
     --fc-body-lighter: #b2b9ce;
 
     --border-color: #e0e4f5;
+    --fc-border-color: 'transparent'; /* fullcalendar */
 
     --padding: 12px;
 

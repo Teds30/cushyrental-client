@@ -1,28 +1,29 @@
-import { useState, Fragment } from 'react'
-import styles from './CardClose.module.css'
-import { AiOutlineClose } from 'react-icons/ai'
+import { useState, Fragment } from "react";
+import styles from "./CardClose.module.css";
+import { AiOutlineClose } from "react-icons/ai";
 
 const CardClose = (props) => {
-    const { filled = true } = props
+    const { filled = true } = props;
 
-    let filledStyle = ''
+    let filledStyle = "";
     if (filled === true) {
-        filledStyle = styles['card-fill']
+        filledStyle = styles["card-fill"];
     }
-    const [showCard, setShowCard] = useState(true)
+    const [showCard, setShowCard] = useState(true);
 
     const showCardHandler = () => {
-        setShowCard(true)
-    }
+        setShowCard(true);
+    };
 
     const closeCardHandler = () => {
-        setShowCard(false)
-    }
+        setShowCard(false);
+    };
 
     return (
         <Fragment>
             {showCard && (
                 <div
+                    {...props}
                     className={`${styles.card} ${filledStyle}`}
                     showCard={showCardHandler}
                 >
@@ -33,7 +34,7 @@ const CardClose = (props) => {
                 </div>
             )}
         </Fragment>
-    )
-}
+    );
+};
 
-export default CardClose
+export default CardClose;
