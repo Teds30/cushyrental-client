@@ -5,30 +5,36 @@ import Checkbox from '@mui/material/Checkbox';
 import SquareRoundedIcon from '@mui/icons-material/SquareRounded';
 
 const CheckBox = (props) => {
-    const { items = [], selectedValue = [] } = props;
+    const { items = [], selectedValue = [], onSelectedUsers = () => {}, isChecked = (false)} = props;
 
     const [ checkItems, setCheckItems ] = React.useState(selectedValue.length !== 0 ? selectedValue : []);
 
     const checkedItemsHandler = (item) => {
-
-        const updatedItems = checkItems.filter(checkItem => checkItem.id !== item.id);
-
+        const updatedItems = checkItems.filter(checkItem => {return checkItem !== item.id});
         if (updatedItems.length !== checkItems.length) {
           setCheckItems(updatedItems);
+          onSelectedUsers(updatedItems);
           return;
         }
-
-        setCheckItems((prevCheckItems) => [...prevCheckItems, item]);
+        setCheckItems((prevCheckItems) => [...prevCheckItems, item.id]);
+        onSelectedUsers((prevCheckItems) => [...prevCheckItems, item.id]);
     };
 
-    React.useEffect(() => {
-        props.onCheckBox(checkItems);
-    }, [checkItems]);
+    // console.log(checkItems.find(checkItem => checkItem.id === 1));
+    console.log(selectedValue);
+
+    React.useEffect (() => {
+      setCheckItems(selectedValue);
+    },[selectedValue]);
+    // React.useEffect(() => {
+    //     props.onCheckBox(checkItems);
+    // }, [checkItems]);
 
     const content = items.map(item => (<FormControlLabel
         control={
           
           <Checkbox
+            checked={checkItems.find(checkItem => checkItem === item.id) ? true : false}
             onChange={() => checkedItemsHandler(item)}
             sx={{
               border: 'var(--accent)',
