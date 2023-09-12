@@ -19,19 +19,20 @@ const ManageRenters = () => {
         setValue(newValue);
     };
 
-    useEffect(() => {
-        const fetchTenantsData = async () => {
-            try {
-                const response = await fetch(
-                    "http://127.0.0.1:8000/api/landlord_tenants/1"
-                );
-                const data = await response.json();
-                setTenantsData(data);
-            } catch (error) {
-                console.error("Error fetching tenants data:", error);
-            }
-        };
+    const fetchTenantsData = async () => {
+        try {
+            const response = await fetch(
+                "http://127.0.0.1:8000/api/landlord-rentals/1"
+            );
+            const data = await response.json();
+            const availableRentals = data.filter(rental => rental.rental_status === 1);
+            setTenantsData(availableRentals);
+        } catch (error) {
+            console.error("Error fetching tenants data:", error);
+        }
+    };
 
+    useEffect(() => {
         const fetchInquiriesData = async () => {
             try {
                 const response = await fetch(
@@ -87,21 +88,38 @@ const ManageRenters = () => {
 
             <Box
                 className={styles["filter"]}
-                sx={{ borderBottom: 1, borderColor: "divider" }}
+                sx={{
+                    borderBottom: 1,
+                    borderColor: "divider",
+                    display: "flex",
+                    width: "100%",
+                }}
             >
                 <StyledTabs
                     value={value}
                     onChange={handleChange}
                     indicatorColor="primary"
+                    sx={{ display: "flex", flex: 1, gap: "0"}}
                 >
                     <StyledTab
                         disableRipple
-                        sx={{ textTransform: "none" }}
+                        sx={{
+                            textTransform: "none",
+                            flex: 1,
+                            maxWidth: "100%",
+                            margin: "0",
+                        }}
                         label="Tenants"
                     />
+
                     <StyledTab
                         disableRipple
-                        sx={{ textTransform: "none" }}
+                        sx={{
+                            textTransform: "none",
+                            flex: 1,
+                            maxWidth: "100%",
+                            margin: "0",
+                        }}
                         label={
                             "Pending Inquiries" +
                             " " +
@@ -112,11 +130,12 @@ const ManageRenters = () => {
                     />
                 </StyledTabs>
             </Box>
+
             <TabPanel value={value} index={0}>
                 {!tenantsData ? (
                     <p>No Renters available</p>
                 ) : (
-                    <ManageTenants tenants={tenantsData} />
+                    <ManageTenants tenants={tenantsData} setTenants={setTenantsData} onRefresh={fetchTenantsData} />
                 )}
             </TabPanel>
             <TabPanel value={value} index={1}>

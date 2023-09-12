@@ -110,7 +110,7 @@ input.search-input {
     padding: 10px;
     gap: 10px;
     background: #ffffff;
-    border: 2px solid #03b077;
+    border: 3px solid #03b077;
     border-radius: 10px;
     align-self: stretch;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18);
@@ -123,6 +123,7 @@ input.search-input {
 
 .box-details {
     display: flex;
+    width: 100%;
     flex-direction: column;
     padding: 15px 0px;
     gap: 5px;
@@ -136,6 +137,12 @@ input.search-input {
     color: #222736;
 }
 
+.box-details-unit{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}
 .box-details-gender {
     font-style: normal;
     font-weight: 400;
@@ -154,7 +161,6 @@ input.search-input {
 
 .box-selected {
     display: flex;
-    width: 80%;
     justify-content: end;
 }
 

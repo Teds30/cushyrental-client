@@ -17,6 +17,7 @@ import UserAmenities from "./pages/landlord/ManageUnits/EditUnit/Features/Amenit
 import UserFacilities from "./pages/landlord/ManageUnits/EditUnit/Features/Facilities/UserFacilities";
 import UserInclusions from "./pages/landlord/ManageUnits/EditUnit/Features/Inclusions/UserInclusions";
 import UserRules from "./pages/landlord/ManageUnits/EditUnit/Features/Rules/UserRules";
+import MyCalendar from './pages/landlord/MyCalendar/MyCalendar'
 // import './App.css'
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
 
             <Route path="/chats/" element={<Chats />}></Route>
             <Route path="/chats/:room_id" element={<Conversation />}></Route>
+            <Route path="/calendar" element={<MyCalendar />}></Route>
 
             <Route path="/signinpage" element={<SignInPage />}></Route>
             <Route
@@ -42,8 +44,7 @@ function App() {
 
             <Route path="/register" element={<CreateAccount />}></Route>
 
-            {/* Manage Unit Landlord */}
-            <Route path="/manage_unit/:id" element={<ManageUnit />}></Route>
+            <Route path='/manage_unit/:id' element={<ManageUnit/>}></Route>
             <Route
                 path="/manage_unit/create_unit"
                 element={<CreateUnit />}
@@ -52,25 +53,7 @@ function App() {
                 path="/manage_unit/create_unit/location"
                 element={<Location />}
             ></Route>
-            <Route path="/manage_unit/edit/:id" element={<UnitData />}></Route>
-            <Route
-                path="/manage_unit/edit/amenities/:id"
-                element={<UserAmenities />}
-            ></Route>
-            <Route
-                path="/manage_unit/edit/facilities/:id"
-                element={<UserFacilities />}
-            ></Route>
-            <Route
-                path="/manage_unit/edit/inclusions/:id"
-                element={<UserInclusions />}
-            ></Route>
-            <Route
-                path="/manage_unit/edit/rules/:id"
-                element={<UserRules />}
-            ></Route>
-            {/* Manage Unit Landlord */}
-
+            
             <Route
                 path="*"
                 element={<Navigate replace to="/signinpage" />}

@@ -1,0 +1,31 @@
+.container {
+    margin-top: 58px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.calendar-container {
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+.datepicker {
+    display: none;
+}
+.title {
+    display: flex;
+}
+
+.month-year {
+    display: flex;
+    flex-direction: column;
+}
+
+.year p {
+    font-weight: 600;
+}
+.month {
+    display: flex;
+}
