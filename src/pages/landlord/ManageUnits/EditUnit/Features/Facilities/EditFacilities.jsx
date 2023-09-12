@@ -4,23 +4,68 @@ import useAttributeManager from "../../../../../../hooks/data/attribute-hook";
 
 import styles from "./EditFacilities.module.css";
 import PrimaryButton from "../../../../../../components/Button/PrimaryButton";
+import FacilityCR from "./FacilityCR";
+import FacilityKS from "./FacilityKS";
+import FacilityOthers from "./FacilityOthers";
 
 const EditAmenities = (props) => {
     const { unitFacilities } = props;
     const { fetchFacilities, isLoading } = useAttributeManager();
 
     const [facilities, setFacilities] = useState([]);
+    const [comfortRoom, setComfortRoom] = useState(
+        facilities.filter((facility) => facility.name === "Comfort Room")
+    );
+    const [kitchenSink, setKitchenSink] = useState(
+        facilities.filter((facility) => facility.name === "Kitchen Sink")
+    );
+    const [ otherFacilities, setOtherFacilities ] = useState([]);
 
-    const chipAmenityHandler = (value) => {
-        console.log(value);
-        setSelectedFacilities(value);
+    const cRFacilityHandler = (value) => {
+        let found = false;
+        const updatedComfortRoom = kitchenSink.map((facility) => {
+            if (facility.id === value.id) {
+                found = true;
+                // Update the specific item with the matching id
+                return { ...facility, is_shared: value.is_shared };
+            }
+            return facility;
+        });
+
+        if (!found) {
+            setComfortRoom([value]);
+        } else {
+            setComfortRoom(updatedComfortRoom);
+        }
     };
 
+    const kSFacilityHandler = (value) => {
+        let found = false;
+        const updatedComfortRoom = comfortRoom.map((facility) => {
+            if (facility.id === value.id) {
+                found = true;
+                // Update the specific item with the matching id
+                return { ...facility, is_shared: value.is_shared };
+            }
+            return facility;
+        });
+
+        if (!found) {
+            setComfortRoom([value]);
+        } else {
+            setComfortRoom(updatedComfortRoom);
+        }
+    };
+
+    const otherFacilityHandler = (value) => {
+        setOtherFacilities(value);
+    }
+
     const saveAmenityHandler = (event) => {
-        event.preventDefault()
-        console.log(selectedFacilities);
-        console.log("save facilities");
-    } 
+        event.preventDefault();
+
+        // save to database here
+    };
 
     useEffect(() => {
         const handleFetch = async () => {
@@ -32,26 +77,58 @@ const EditAmenities = (props) => {
         handleFetch();
     }, []);
 
-    return (
+    return !isLoading && facilities.length !== 0 ? (
         <form onSubmit={saveAmenityHandler}>
-            {/* <div className={`${styles["feature-main"]}`}>
-                <div className={`${styles["amenity-main-title"]}`}>
-                    <p className="title">Choose unit amenities</p>
+            <div className={`${styles["feature-main"]}`}>
+                <div className={`${styles["main-feature-title"]}`}>
+                    <p className="title">Set up facilities</p>
                 </div>
 
-                <div className={`${styles["amenity-chip-col"]}`}>
-                    <ChipBig
-                        items={amenities}
-                        selected={selectedAmenities}
-                        onChipValue={chipAmenityHandler}
+                <div className={`${styles['feature-main-body']}`}>
+                    <div className={`${styles["main-attributes"]}`}>
+                    <FacilityCR
+                        facilityCR={facilities.filter(
+                            (facility) => facility.name === "Comfort Room"
+                        )}
+                        onCRFacility={cRFacilityHandler}
+                        comfortRoom={comfortRoom}
                     />
                 </div>
-            </div> */}
+
+                <div className={styles["hr"]}></div>
+
+                <div className={`${styles["main-attributes"]}`}>
+                    <FacilityKS
+                        facilityKS={facilities.filter(
+                            (facility) => facility.name === "Kitchen Sink"
+                        )}
+                        onKSFacility={kSFacilityHandler}
+                        kitchenSink={kitchenSink}
+                    />
+                </div>
+
+                    <div className={styles["hr"]}></div>
+
+                    <div className={`${styles["main-attributes"]}`}>
+                        <FacilityOthers
+                            facilityOthers={facilities.filter(
+                                (facility) =>
+                                    facility.name !== "Kitchen Sink" &&
+                                    facility.name !== "Comfort Room"
+                            )}
+                            onOtherFacilities={otherFacilityHandler}
+                            // others={kitchenSink}
+                        />
+                    </div>
+                </div>
+            </div>
 
             <div className={`${styles["feature-button"]}`}>
                 <PrimaryButton width="100%">Save</PrimaryButton>
             </div>
         </form>
+    ) : (
+        ""
     );
 };
 

@@ -24,24 +24,50 @@ const EditUnit = (props) => {
 
     const [unit, setUnit] = useState(userUnit);
 
-    const swithDepositHandler = (value) => {};
+    const unitNameChangeHandler = (event) => {
+        setUnit({ ...unit, name: event.target.value });
+    }
 
-    const quantityPaymentHandler = (value) => {};
+    const descriptionChangeHandler = (event) => {
+        setUnit({ ...unit, details: event.target.value });
+    }
 
-    const swithAdvanceHandler = (value) => {};
+    const unitPriceChangeHandler = (event) => {
+        setUnit({ ...unit, price: event.target.value });
+    }
 
-    const quantitySlotsHandler = (value) => {};
+    const swithDepositHandler = (value) => {
+        setUnit({ ...unit, month_deposit: value.value === true ? 1 : 0 });
+    };
 
-    const swithIsListedHandler = (value) => {};
+    const quantityPaymentHandler = (value) => {
+        setUnit({ ...unit, month_advance: value.value});
+    };
 
-    const targetGenderHandler = (value) => {};
+    const swithAdvanceHandler = (value) => {
+        setUnit({ ...unit, month_advance: value.value === true ? 1 : 0 });
+    };
+
+    const targetGenderHandler = (value) => {
+        setUnit({ ...unit, target_gender: value[0] });
+    };
+
+    const quantitySlotsHandler = (value) => {
+        setUnit({ ...unit, slots: value.value });
+    };
+
+    const swithIsListedHandler = (value) => {
+        setUnit({ ...unit, is_listed: value.value === true ? 1 : 0 });
+    };
 
     const saveHandler = (event) => {
         event.preventDefault();
+        // delete handler
     };
 
     const deleteHandler = (event) => {
         event.preventDefault();
+        // save handler
     };
 
     return (
@@ -94,7 +120,7 @@ const EditUnit = (props) => {
 
                 <div className={`${styles["unit-details"]}`}>
                     <p>Unit Name</p>
-                    <TextField label="" defaultValue={unit.name} />
+                    <TextField label="" defaultValue={unit.name} onChange={unitNameChangeHandler} />
 
                     <p>Unit Description</p>
                     <TextField
@@ -102,6 +128,7 @@ const EditUnit = (props) => {
                         defaultValue={unit.details}
                         rows={4}
                         multiline
+                        onChange={descriptionChangeHandler}
                     />
 
                     <div className={styles["hr"]}></div>
@@ -110,7 +137,7 @@ const EditUnit = (props) => {
                         Pricing Details
                     </p>
                     <p>Price</p>
-                    <TextField label="" defaultValue={unit.price} />
+                    <TextField label="" defaultValue={unit.price} onChange={unitPriceChangeHandler} />
 
                     <CardShadow filled={"false"}>
                         <div className={`${styles["price-deposit"]}`}>

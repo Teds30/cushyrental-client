@@ -31,7 +31,7 @@ const EditUnitTargetGender = (props) => {
 
     return (
         <div className={`${styles['target-gender-container']}`}>
-            <p className={`${styles["unit-details-title"]}`}>Features</p>
+            <p className={`${styles["unit-details-title"]}`}>Target Gender</p>
             
             <ChipBig items={gender} selected={[targetGender]} onChipValue={chipValueHandler} button={'radio'} />
         </div>

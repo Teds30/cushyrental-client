@@ -40,45 +40,6 @@ const BasicDetailsForm = (props) => {
     const submitHandler = (event) => {
         event.preventDefault();
 
-        // if (
-        //     enteredDetails === "" ||
-        //     (enteredTitle === "" && Object.keys(unitDetails).length !== 0)
-        // ) {
-        //     createUnitCtx.onUnitData({
-        //         ...createUnitCtx.unitData,
-        //         title: enteredTitleIsValid
-        //             ? enteredTitle
-        //             : createUnitCtx.unitData.title,
-        //         details: enteredDetailsIsValid
-        //             ? enteredDetails
-        //             : createUnitCtx.unitData.details,
-        //     });
-
-        //     titleReset();
-        //     detailsReset();
-
-        //     onNext();
-
-        //     return;
-        // }
-
-        // if (!formIsValid) {
-        //     return;
-        // }
-
-        // createUnitCtx.onUnitData({
-        //     ...createUnitCtx.unitData,
-        //     title: enteredTitleIsValid
-        //         ? enteredTitle
-        //         : createUnitCtx.unitData.title,
-        //     details: enteredDetailsIsValid
-        //         ? enteredDetails
-        //         : createUnitCtx.unitData.details,
-        // });
-
-        // titleReset();
-        // detailsReset();
-
         if (formIsValid) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,

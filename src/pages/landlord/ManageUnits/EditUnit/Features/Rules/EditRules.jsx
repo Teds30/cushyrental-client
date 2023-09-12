@@ -42,7 +42,7 @@ const EditRules = (props) => {
     return (
         <form onSubmit={saveAmenityHandler}>
             <div className={`${styles["feature-main"]}`}>
-                <div className={`${styles["amenity-main-title"]}`}>
+                <div className={`${styles["feature-main-title"]}`}>
                     <p className="title">Choose rules</p>
                 </div>
 

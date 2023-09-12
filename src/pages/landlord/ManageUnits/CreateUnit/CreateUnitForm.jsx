@@ -59,12 +59,12 @@ export default function CreateUnitForm() {
             label: "RULES",
             description: <RulesForm onBack={handleBack} onNext={handleNext} />,
         },
-        // {
-        //     label: "GENDER",
-        //     description: (
-        //         <GenderForm onBack={handleBack} onNext={handleNext} />
-        //     ),
-        // },
+        {
+            label: "GENDER",
+            description: (
+                <GenderForm onBack={handleBack} onNext={handleNext} />
+            ),
+        },
         {
             label: "SLOTS",
             description: <SlotsForm onBack={handleBack} onNext={handleNext} />,

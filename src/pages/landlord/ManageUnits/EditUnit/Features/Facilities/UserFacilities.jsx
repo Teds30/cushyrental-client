@@ -62,17 +62,17 @@ const UserFacilities = () => {
                             </IconButton>
                         </Link>
                         <Box className={`${styles['edit-feature-title']}`}>
-                            <p className="title">Amenities</p>
+                            <p className="title">Facilities</p>
                         </Box>
                     </Toolbar>
                 </AppBar>
             </Box>
 
-            {/* {!isLoading && unitAmenities.length ? (
-                <EditAmenities unitAmenities={unitAmenities} />
+            {!isLoading && unitFacilities.length ? (
+                <EditFacilities unitFacilities={unitFacilities} />
             ) : (
                 ""
-            )} */}
+            )}
         </div>
     );
 };

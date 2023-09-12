@@ -20,11 +20,10 @@ const UploadImageForm = (props) => {
             ? []
             : createUnitCtx.unitData.images;
 
-    console.log(uploadImageDetails);
-
     const [unitImages, setUnitImages] = useState(uploadImageDetails); // Use an array to store multiple images
 
     const addImageChangeHandler = (event) => {
+        console.log(URL.createObjectURL(event.target.files[0]))
         setUnitImages([...unitImages, event.target.files[0]]);
     };
 

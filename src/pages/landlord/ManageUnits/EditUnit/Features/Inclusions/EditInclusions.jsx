@@ -46,7 +46,7 @@ const EditInclusions = (props) => {
                     <p className="title">Choose inclusions</p>
                 </div>
 
-                <div className={`${styles["amenity-chip-col"]}`}>
+                <div className={`${styles["feature-chip-col"]}`}>
                     <ChipBig
                         items={inclusions}
                         selected={selectedInclusions}
