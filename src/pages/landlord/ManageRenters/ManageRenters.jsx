@@ -48,6 +48,7 @@ const ManageRenters = () => {
         fetchTenantsData();
         fetchInquiriesData();
     }, []);
+    
 
     return (
         <div className={`${styles["main-container"]} `}>
@@ -133,7 +134,7 @@ const ManageRenters = () => {
 
             <TabPanel value={value} index={0}>
                 {!tenantsData ? (
-                    <p>No Renters available</p>
+                    <p>No Tenants available</p>
                 ) : (
                     <ManageTenants tenants={tenantsData} setTenants={setTenantsData} onRefresh={fetchTenantsData} />
                 )}

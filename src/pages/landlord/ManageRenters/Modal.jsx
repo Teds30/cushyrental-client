@@ -12,7 +12,6 @@ const style = {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
     bgcolor: "background.paper",
     borderRadius: "16px",
     boxShadow: 24,
@@ -20,10 +19,10 @@ const style = {
 };
 
 const buttonContainerStyle = {
-  display: "flex",
-  justifyContent: "center",
-  marginTop: "16px",
-  gap: "16px",
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "35px",
+    gap: "16px",
 };
 
 function TerminateConfirmationModal({ open, onClose, onTerminate }) {
@@ -34,12 +33,31 @@ function TerminateConfirmationModal({ open, onClose, onTerminate }) {
             aria-labelledby="terminate-modal-title"
             aria-describedby="terminate-modal-description"
         >
-            <Box sx={style}>
+            <Box
+                sx={{
+                    ...style,
+                    width: "70%",
+                    "@media (min-width: 600px)": {
+                        width: "60%",
+                    },
+                    "@media (min-width: 960px)": {
+                        width: "50%",
+                    },
+                    "@media (min-width: 1280px)": {
+                        width: "40%",
+                    },
+                    "@media (min-width: 1920px)": {
+                        width: "30%",
+                    },
+                }}
+            >
                 <Typography
                     id="terminate-modal-title"
                     variant="h6"
                     component="h2"
-
+                    sx={{
+                        fontWeight: "bolder",
+                    }}
                 >
                     Confirm Termination
                 </Typography>
@@ -48,21 +66,20 @@ function TerminateConfirmationModal({ open, onClose, onTerminate }) {
                 </Typography>
 
                 <div style={buttonContainerStyle}>
-                <PrimaryButton
-
-                    btnType="danger"
-                    onClick={onTerminate}
-                    sx={{ mt: 2 }}
-                >
-                    Terminate
-                </PrimaryButton>
-                <BorderedButton
-                    variant="outlined"
-                    onClick={onClose}
-                    sx={{ mt: 2, ml: 2 }}
-                >
-                    Cancel
-                </BorderedButton>
+                    <PrimaryButton
+                        btnType="danger"
+                        onClick={onTerminate}
+                        sx={{ mt: 2 }}
+                    >
+                        Terminate
+                    </PrimaryButton>
+                    <BorderedButton
+                        variant="outlined"
+                        onClick={onClose}
+                        sx={{ mt: 2, ml: 2 }}
+                    >
+                        Cancel
+                    </BorderedButton>
                 </div>
             </Box>
         </Modal>
