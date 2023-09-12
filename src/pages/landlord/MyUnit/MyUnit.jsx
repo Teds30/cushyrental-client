@@ -50,7 +50,9 @@ const MyUnit = () => {
           </div>
         </Link>
 
-        <Link className={`${styles["box-2_container"]} `}>
+        <Link 
+        to="/manage_unit/:id"
+        className={`${styles["box-2_container"]} `}>
           <div className={`${styles["box-2"]} `}>
             <TbBuildingCommunity size={75} className={styles["iconbox"]}/>
             <p>MANAGE UNITS</p>
