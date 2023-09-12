@@ -1,0 +1,50 @@
+.edit-feature-container {
+    height: 100vh;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* This is for the app nav */
+.toolbar-container {
+    display: flex;
+    position: relative;
+}
+
+.link-button {
+    position: absolute;
+}
+
+.edit-feature-title {
+    flex: 1;
+    text-align: center;
+}
+/* This is for the app nav */
+
+/* .feature-main {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.amenity-chip-col {
+    padding: 0 16px;
+} */
+
+.feature-button {
+    border: 1px solid red;
+    position: absolute;
+    bottom: 35px;
+    width: 100%;
+    padding: 0 24px;
+    box-sizing: border-box;
+} 
+
+@media (min-width: 640px) {
+    .edit-feature-container {
+        max-width: 768px;
+        margin: 0 auto;
+    }
+}

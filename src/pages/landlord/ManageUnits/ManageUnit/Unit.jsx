@@ -4,13 +4,18 @@ import CardPlain from "../../../../components/Card/CardPlain";
 import Status from "./Status";
 import PrimaryButton from "../../../../components/Button/PrimaryButton";
 import BorderedButton from "../../../../components/Button/BorderedButton";
+import useImageManager from "../../../../hooks/data/image-hook";
 
 import styles from "./ManageUnit.module.css";
-import photo from "../../../../assets/Units/pics.png";
+import photo from "../../../../assets/cushyrental.svg";
 import { CiLocationOn } from "react-icons/ci";
+import { useEffect, useState } from "react";
 
 const Unit = (props) => {
     const { user_unit } = props;
+
+    const { fetchImage, fetchImages, isLoading } = useImageManager();
+    const [image, setImage] = useState();
 
     let type, gender;
 
@@ -38,11 +43,28 @@ const Unit = (props) => {
 
         const formattedDate = `${year}-${month}-${day}`;
 
-        return (
+        if (
             formattedDate >= subscription.date_start &&
             formattedDate <= subscription.date_end
-        );
+        ) {
+            return subscription;
+        }
     });
+
+    useEffect(() => {
+        const handleFetch = async () => {
+            try {
+                const res = await fetchImages();
+                const filteredImages = user_unit.images.map((image) => {
+                    return res.find((photo) => photo.id === image.id) || null;
+                });
+
+                const resImage = await fetchImage(filteredImages[0].image);
+                setImage(resImage);
+            } catch (err) {}
+        };
+        handleFetch();
+    }, []);
 
     return (
         <div className={`${styles["units-container"]}`}>
@@ -57,7 +79,10 @@ const Unit = (props) => {
             >
                 <div className={`${styles["unit-col"]}`}>
                     <div className={`${styles["unit-images"]}`}>
-                        <img src={photo} alt="photo" />
+                        <img
+                            src={image === undefined ? photo : image}
+                            alt="photo"
+                        />
                     </div>
 
                     <div className={`${styles["col-data"]}`}>
@@ -114,7 +139,7 @@ const Unit = (props) => {
                     </div>
                 </div>
 
-                {subscriptions !== undefined || subscriptions.length !== 0 ? (
+                {subscriptions.length !== 0 ? (
                     subscriptions[0].request_status === 1 ? (
                         <BorderedButton width="100%" btnType="danger">
                             Cancel Unit Request
@@ -122,15 +147,27 @@ const Unit = (props) => {
                     ) : (
                         subscriptions[0].request_status === 2 && (
                             <div className={`${styles["unit-button"]}`}>
-                                <PrimaryButton width="100%">
-                                    Manage Unit
-                                </PrimaryButton>
+                                <Link
+                                    to={`/manage_unit/edit/${user_unit.landlord_id}`}
+                                    style={{ width: "100%" }}
+                                >
+                                    <PrimaryButton width="100%">
+                                        Manage Unit
+                                    </PrimaryButton>
+                                </Link>
                             </div>
                         )
                     )
                 ) : (
                     <div className={`${styles["unit-button"]}`}>
-                        <PrimaryButton width="100%">Manage Unit</PrimaryButton>
+                        <Link
+                            to={`/manage_unit/edit/${user_unit.id}`}
+                            style={{ width: "100%" }}
+                        >
+                            <PrimaryButton width="100%">
+                                Manage Unit
+                            </PrimaryButton>
+                        </Link>
                         <BorderedButton>Promote</BorderedButton>
                     </div>
                 )}

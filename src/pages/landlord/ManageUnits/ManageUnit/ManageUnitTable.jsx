@@ -117,7 +117,7 @@ const ManageUnitTabs = (props) => {
                 {userUnits.length === 0 ? (
                     <p style={{ textAlign: "center" }}>No units posted</p>
                 ) : (
-                    <Units userUnits={userUnits} />
+                    <Units userUnits={userUnits}/>
                 )}
             </TabPanel>
             <TabPanel value={value} index={1}>

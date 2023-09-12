@@ -5,7 +5,9 @@ import { TbPlus, TbMinus } from "react-icons/tb";
 import styles from "./Quantity.module.css";
 
 const Quantity = (props) => {
-    const { maxValue = 0, setQuantityvalue = 0 } = props;
+    const { maxValue = 0, setQuantityvalue = 0, styled = false } = props;
+
+    console.log(setQuantityvalue);
 
     const [value, setValue] = useState(setQuantityvalue);
 
@@ -28,7 +30,7 @@ const Quantity = (props) => {
     };
 
     return (
-        <div className={styles.card}>
+        <div className={`${styles['card']} ${styled && styles['styled-quantity']}`}>
             <button type="button" className={styles.button} onClick={decrementHandler}>
                 <TbMinus size={24} />
             </button>

@@ -1,0 +1,148 @@
+.edit-unit-container {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg);
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.learn-more {
+    font-size: 12px;
+    padding: 12px 0 12px 12px;
+
+    display: flex;
+    gap: 12px;
+}
+
+.image {
+    background-color: black;
+    width: 100%;
+    height: 249px;
+
+    position: relative;
+}
+
+.image img {
+    width: 100%;
+    height: 249px;
+}
+
+.image-chip {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+
+    padding: 4px 10px;
+    border-radius: 10px;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.edit-image-button {
+    position: absolute;
+    left: 18px;
+    bottom: 24px;
+}
+
+.edit-image-button p {
+    font-weight: 500;
+}
+
+.unit-details {
+    padding: 0 12px 106px 12px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.unit-details P {
+    color: var(--normal, var(--fc-strong));
+}
+
+.hr {
+    width: 100%;
+    height: 1px;
+    background-color: var(--border-color);
+}
+
+.unit-details-title {
+    color: var(--normal, var(--fc-strong));
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.price-deposit, .payments, .price-advance {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.point {
+    width: 2px;
+    height: 2px;
+    background-color: var(--body_light, #959CB0);
+    border-radius: 50%;
+}
+
+.unit-location {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.feature-container, .target-gender-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.feature-style {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.feature-style-col {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.attribute {
+    display: flex;
+    gap: 10px;
+}
+
+.unit-slot {
+    padding: 10px 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.unit-management {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.list-unit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@media (min-width: 640px) {
+    .edit-unit-container {
+        max-width: 768px;
+        margin: 0 auto;
+    }
+}
