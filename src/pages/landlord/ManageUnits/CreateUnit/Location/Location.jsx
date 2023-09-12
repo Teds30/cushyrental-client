@@ -1,38 +1,128 @@
-import { Link } from 'react-router-dom';
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
-import PrimaryButton from '../../../../../components/Button/PrimaryButton';
-import SearchField from '../../../../../components/Search/SearchField';
+import { useLoadScript } from '@react-google-maps/api'
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
 
-import styles from '../CreateUnit.module.css';
-import photo from '../../../../../assets/Units/pics.png';
-import { FiChevronLeft } from "react-icons/fi";
+import PrimaryButton from '../../../../../components/Button/PrimaryButton'
+import SearchField from '../../../../../components/Search/SearchField'
+
+import styles from '../CreateUnit.module.css'
+import photo from '../../../../../assets/Units/pics.png'
+import { FiChevronLeft } from 'react-icons/fi'
+import BasicMap from './BasicMap'
 
 const Location = (props) => {
-    const saveHandler = (event) => {
-        event.preventDefault();
+    const { isLoaded } = useLoadScript({
+        googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API,
+    })
 
+    const [center, setCenter] = useState({
+        lat: 13.14457855948287,
+        lng: 123.72523867131375,
+    })
+    const [newCenter, setNewCenter] = useState(center)
+
+    console.log(isLoaded)
+
+    const handleCurrentLocation = () => {
+        // navigator.geolocation.getCurrentPosition((position) => {
+        //     const { latitude, longitude } = position.coords
+        //     setCenter({ lat: latitude, lng: longitude })
+        // })
+        // options for current position
+        const navigatorLocationOptions = {
+            enableHighAccuracy: true,
+            timeout: 7000,
+            maximumAge: 0,
+        }
+
+        // does browser have geo services enabled
+        navigator.permissions.query({ name: 'geolocation' }).then(
+            (result) => {
+                if (result.state === 'granted') {
+                    // you are good
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            // alert('granted user location permission')
+                            // console.log(
+                            //     'granted user location permission',
+                            //     position
+                            // )
+
+                            const { latitude, longitude } = position.coords
+                            setCenter({ lat: latitude, lng: longitude })
+
+                            //.. do your stuff
+                        },
+                        (error) => {
+                            alert('Please turn on OS located services')
+                            // OS services are not enabled
+                            console.log(
+                                'Please turn on OS located services',
+                                navigator
+                            )
+                            errorLocation()
+                        },
+                        navigatorLocationOptions
+                    )
+                } else {
+                    // browser issues seriveces
+                    alert('Browser location services disabled')
+                    console.log('Browser location services disabled', navigator)
+                    errorLocation()
+                }
+            },
+            (error) => {
+                /* Browser doesn't support querying for permissions */
+
+                alert('Please turn on BROWSER location services')
+                console.log(
+                    'Please turn on BROWSER location services',
+                    navigator
+                )
+                errorLocation()
+            }
+        )
+
+        //handle errors
+        function errorLocation() {
+            console.log('error')
+        }
+    }
+
+    const saveHandler = (coords) => {
+        console.log(newCenter)
         // save
+    }
+
+    const handleChangeCenter = (coords) => {
+        setNewCenter(coords)
     }
 
     return (
         <div className={`${styles['location-map-container']}`}>
-            <Box className={`${styles["top-back-container"]} `}>
+            <Box className={`${styles['top-back-container']} `}>
                 <AppBar
                     position="static"
                     sx={{
                         margin: 0,
-                        backgroundColor: "#fff",
-                        color: "var(--fc-body)",
-                        fontFamily: "Inter",
-                        boxShadow: "none",
-                        borderBottom: "1px solid var(--border-color)",
+                        backgroundColor: '#fff',
+                        color: 'var(--fc-body)',
+                        fontFamily: 'Inter',
+                        boxShadow: 'none',
+                        borderBottom: '1px solid var(--border-color)',
                     }}
                 >
-                    <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
+                    <Toolbar
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                        }}
+                    >
                         <Link>
                             <IconButton
                                 size="large"
@@ -42,8 +132,8 @@ const Location = (props) => {
                             >
                                 <FiChevronLeft
                                     style={{
-                                        color: "var(--fc-strong)",
-                                        fill: "transparent",
+                                        color: 'var(--fc-strong)',
+                                        fill: 'transparent',
                                     }}
                                 />
                             </IconButton>
@@ -51,20 +141,27 @@ const Location = (props) => {
                         <Box>
                             <p className="title">Location</p>
                         </Box>
-                        <PrimaryButton onClick={saveHandler}>Save</PrimaryButton>
+                        <PrimaryButton onClick={saveHandler}>
+                            Save
+                        </PrimaryButton>
                     </Toolbar>
                 </AppBar>
             </Box>
 
-            <div style={{padding: '0 10px'}}>
-                <SearchField placeholder='Search' />
+            <div style={{ padding: '0 10px' }}>
+                <SearchField placeholder="Search" />
             </div>
 
             <div className={`${styles['location-map']}`}>
-                   <img src={photo} alt="CushyRental" />                 
+                <BasicMap
+                    isLoaded={isLoaded}
+                    center={center}
+                    onChangeCenter={handleChangeCenter}
+                    onUseCurrentLocation={handleCurrentLocation}
+                />
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Location;
+export default Location
