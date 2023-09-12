@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import moment from "moment";
 import styles from "./ManageRenters.module.css";
 import SearchField from "../../../components/Search/SearchField";
 
@@ -20,16 +20,9 @@ const ManagePendingInquiries = (props) => {
     };
 
     const formatDate = (dateString) => {
-        const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-        const date = new Date(dateString);
-        const formattedDate = date.toLocaleDateString("en-GB", options);
-        const timeOptions = {
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,
-        };
-        const formattedTime = date.toLocaleTimeString("en-US", timeOptions);
-        return `${formattedDate} | ${formattedTime}`;
+        const date = moment(dateString);
+        const formattedDate = date.format("DD/MM/YYYY | hh:mm A");
+        return formattedDate;
     };
 
     const GenderToText = (gender) => {

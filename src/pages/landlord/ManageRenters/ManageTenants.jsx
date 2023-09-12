@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import moment from "moment";
 import useHttp from "../../../hooks/http-hook";
 import Checkbox from "@mui/material/Checkbox";
 import styles from "./ManageRenters.module.css";
@@ -8,13 +9,11 @@ import BorderlessButton from "../../../components/Button/BorderlessButton";
 import PrimaryButton from "../../../components/Button/BorderlessButton";
 import CheckBox from "../../../components/CheckBox/CheckBox";
 import TerminateConfirmationModal from "./Modal";
-// import Indeterminate from "../../../components/Indeterminate/Indeterminate";
 
 const ManageTenants = (props) => {
     const { tenants, setTenants, onRefresh } = props;
     const [filteredData, setFilteredData] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
-    const [selectedAllUsers, setSelectedAllUsers] = useState([]);
     const [showCheckboxes, setShowCheckboxes] = useState(false);
     const [selectAllChecked, setSelectAllChecked] = useState(false);
     const [terminateModalOpen, setTerminateModalOpen] = useState(false);
@@ -29,36 +28,29 @@ const ManageTenants = (props) => {
     const handleSearch = (event) => {
         const keywords = event.target.value.toLowerCase();
         const newList = tenants.filter((data) => {
-            const fullName = `${data.first_name} ${data.middle_name} ${data.last_name}`;
+            const fullName = `${data.user.first_name} ${data.user.middle_name} ${data.user.last_name}`;
             return fullName.toLowerCase().includes(keywords);
         });
         setFilteredData(newList);
     };
 
     const formatDate = (dateString) => {
-        const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-        const date = new Date(dateString);
-        const formattedDate = date.toLocaleDateString("en-GB", options);
-        const timeOptions = {
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,
-        };
-        const formattedTime = date.toLocaleTimeString("en-US", timeOptions);
-        return `${formattedDate} | ${formattedTime}`;
+        const date = moment(dateString);
+        const formattedDate = date.format("DD/MM/YYYY | hh:mm A");
+        return formattedDate;
     };
 
-    const GenderToText = (gender) => {
-        if (gender === 1) {
-            return "Male";
-        } else if (gender === 2) {
-            return "Female";
-        } else if (gender === 3) {
-            return "Not to specify";
-        } else {
-            return "Unknown";
-        }
-    };
+    // const GenderToText = (gender) => {
+    //     if (gender === 1) {
+    //         return "Male";
+    //     } else if (gender === 2) {
+    //         return "Female";
+    //     } else if (gender === 3) {
+    //         return "Not to specify";
+    //     } else {
+    //         return "Unknown";
+    //     }
+    // };
 
     const handleChange = (event) => {
         if (checked) {
@@ -73,13 +65,14 @@ const ManageTenants = (props) => {
     };
 
     useEffect(() => {
-        if (selectedUsers.length === filteredData.length && filteredData.length !== 0) {
+        if (
+            selectedUsers.length === filteredData.length &&
+            filteredData.length !== 0
+        ) {
             setChecked(true);
         } else {
             setChecked(false);
         }
-        console.log(selectedUsers);
-        console.log(filteredData);
     }, [selectedUsers, filteredData]);
 
     // const handleSelectAllChecked = () => {
@@ -122,8 +115,6 @@ const ManageTenants = (props) => {
                 terminate();
                 onRefresh();
                 setSelectedUsers([]);
-
-                // setChecked(false);
             }
         } else {
         }
@@ -139,6 +130,11 @@ const ManageTenants = (props) => {
                 ></SearchField>
             </div>
 
+            {tenants.length === 0 ? (
+                
+                <p className={`${styles["no-tenants-message"]} `}>No Tenants Found.</p>
+            ) : (
+                <>
             {!showCheckboxes && (
                 <div className={`${styles["select-container"]} `}>
                     <Link
@@ -157,6 +153,17 @@ const ManageTenants = (props) => {
                         checked={checked}
                         onChange={handleChange}
                         inputProps={{ "aria-label": "controlled" }}
+                        sx={{
+                            marginRight: "-8px",
+                            border: "var(--accent)",
+                            color: "var(--accent)",
+                            "&.Mui-checked": {
+                                color: "var(--accent)",
+                            },
+                            "&:hover": {
+                                color: "var(--accent)",
+                            },
+                        }}
                     />
                     <Link
                         onClick={() => {
@@ -182,6 +189,7 @@ const ManageTenants = (props) => {
                                 : ""
                         }`}
                     >
+                        
                         <div className={`${styles["box-image"]} `}>
                             <img
                                 src={user.user.profile_picture_img}
@@ -243,6 +251,8 @@ const ManageTenants = (props) => {
                         Terminate
                     </PrimaryButton>
                 </div>
+            )}
+            </>
             )}
             <TerminateConfirmationModal
                 open={terminateModalOpen}
