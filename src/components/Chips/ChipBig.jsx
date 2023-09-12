@@ -85,33 +85,33 @@ const ChipBig = (props) => {
                 width: "120px",
                 fontWeight: "500",
                 fontSize: "16px",
-                background: chips.map((chip) => chip).includes(item.id)
+                background:  chips.includes(item.id) 
                     ? colorStyle
                     : "inherit",
-                color: chips.map((chip) => chip).includes(item.id)
+                color:  chips.includes(item.id) 
                     ? "var(--bg-layer1)"
                     : "inherit",
-                border: chips.map((chip) => chip).includes(item.id)
+                border:  chips.includes(item.id) 
                     ? "1px solid " + colorStyle
                     : "1px solid inherit",
-                boxShadow: chips.map((chip) => chip).includes(item.id)
+                boxShadow:  chips.includes(item.id) 
                     ? borderShadowStyle
                     : "inherit",
                 "& svg": {
-                    fill: chips.map((chip) => chip).includes(item.id)
+                    fill:  chips.includes(item.id) 
                         ? "var(--bg-layer1)"
                         : "#8A93A6",
                     height: '32px',
                     width: '32px'
                 },
                 "&:hover": {
-                    background: chips.map((chip) => chip).includes(item.id)
+                    background: chips.includes(item.id) 
                         ? colorStyle
                         : "inherit",
-                    color: chips.map((chip) => chip).includes(item.id)
+                    color: chips.includes(item.id) 
                         ? colorStyle
                         : "inherit",
-                    border: chips.map((chip) => chip).includes(item.id)
+                    border: chips.includes(item.id) 
                         ? "1px solid " + colorStyle
                         : "1px solid inherit",
                 },
