@@ -90,7 +90,7 @@ const UnitFeatures = (props) => {
 
                     <div className={styles["hr"]}></div>
 
-                    <Link className={`${styles["feature-style-col"]}`}>
+                    <Link to={`/manage_unit/edit/facilities/${id}`} className={`${styles["feature-style-col"]}`}>
                         <div className={`${styles["attribute"]}`}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -145,7 +145,7 @@ const UnitFeatures = (props) => {
 
                     <div className={styles["hr"]}></div>
 
-                    <Link className={`${styles["feature-style-col"]}`}>
+                    <Link to={`/manage_unit/edit/inclusions/${id}`} className={`${styles["feature-style-col"]}`}>
                         <div className={`${styles["attribute"]}`}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -200,7 +200,7 @@ const UnitFeatures = (props) => {
 
                     <div className={styles["hr"]}></div>
 
-                    <Link className={`${styles["feature-style-col"]}`}>
+                    <Link to={`/manage_unit/edit/rules/${id}`} className={`${styles["feature-style-col"]}`}>
                         <div className={`${styles["attribute"]}`}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

@@ -44,6 +44,7 @@ function App() {
 
             <Route path="/register" element={<CreateAccount />}></Route>
 
+            {/* Manage Landlord Unit */}
             <Route path='/manage_unit/:id' element={<ManageUnit/>}></Route>
             <Route
                 path="/manage_unit/create_unit"
@@ -53,6 +54,27 @@ function App() {
                 path="/manage_unit/create_unit/location"
                 element={<Location />}
             ></Route>
+            <Route
+                path="/manage_unit/edit/:id"
+                element={<UnitData />}
+            ></Route>
+             <Route
+                path="/manage_unit/edit/amenities/:id"
+                element={<UserAmenities />}
+            ></Route>
+            <Route
+                path="/manage_unit/edit/facilities/:id"
+                element={<UserFacilities />}
+            ></Route>
+            <Route
+                path="/manage_unit/edit/inclusions/:id"
+                element={<UserInclusions />}
+            ></Route>
+            <Route
+                path="/manage_unit/edit/rules/:id"
+                element={<UserRules />}
+            ></Route>
+            {/* Manage Landlord Unit */}
             
             <Route
                 path="*"
