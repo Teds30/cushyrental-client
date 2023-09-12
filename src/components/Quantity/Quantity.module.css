@@ -25,3 +25,13 @@
 .count {
     padding: 0 18px 0 18px;
 }
+
+.card.styled-quantity {
+    border: none;
+}
+
+.card.styled-quantity button {
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+}
