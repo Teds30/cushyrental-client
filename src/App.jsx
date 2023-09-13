@@ -19,6 +19,7 @@ import UserInclusions from "./pages/landlord/ManageUnits/EditUnit/Features/Inclu
 import UserRules from "./pages/landlord/ManageUnits/EditUnit/Features/Rules/UserRules";
 import MyCalendar from './pages/landlord/MyCalendar/MyCalendar'
 import UnitImageData from "./pages/landlord/ManageUnits/EditUnit/EditUnitImage/UnitImageData";
+import Rules from './pages/Rules'
 // import './App.css'
 
 function App() {
@@ -91,6 +92,11 @@ function App() {
             <Route
                 path="/myunit-landlord/managerenters"
                 element={<ManageRenters />}
+            ></Route>
+
+            <Route
+                path="/rules"
+                element={<Rules />}
             ></Route>
 
             <Route
