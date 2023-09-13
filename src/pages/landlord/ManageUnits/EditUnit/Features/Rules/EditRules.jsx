@@ -46,7 +46,7 @@ const EditRules = (props) => {
                     <p className="title">Choose rules</p>
                 </div>
 
-                <div className={`${styles["amenity-chip-col"]}`}>
+                <div className={`${styles["feature-chip-col"]}`}>
                     <ChipBig
                         items={rules}
                         selected={selectedRules}

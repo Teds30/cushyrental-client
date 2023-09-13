@@ -18,6 +18,7 @@ import UserFacilities from "./pages/landlord/ManageUnits/EditUnit/Features/Facil
 import UserInclusions from "./pages/landlord/ManageUnits/EditUnit/Features/Inclusions/UserInclusions";
 import UserRules from "./pages/landlord/ManageUnits/EditUnit/Features/Rules/UserRules";
 import MyCalendar from './pages/landlord/MyCalendar/MyCalendar'
+import UnitImageData from "./pages/landlord/ManageUnits/EditUnit/EditUnitImage/UnitImageData";
 // import './App.css'
 
 function App() {
@@ -57,6 +58,10 @@ function App() {
             <Route
                 path="/manage_unit/edit/:id"
                 element={<UnitData />}
+            ></Route>
+            <Route
+                path="/manage_unit/edit/image/:id"
+                element={<UnitImageData />}
             ></Route>
              <Route
                 path="/manage_unit/edit/amenities/:id"

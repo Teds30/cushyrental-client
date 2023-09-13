@@ -51,9 +51,9 @@ const EditAmenities = (props) => {
         });
 
         if (!found) {
-            setComfortRoom([value]);
+            setKitchenSink([value]);
         } else {
-            setComfortRoom(updatedComfortRoom);
+            setKitchenSink(updatedComfortRoom);
         }
     };
 
