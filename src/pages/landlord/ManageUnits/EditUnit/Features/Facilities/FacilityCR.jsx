@@ -10,15 +10,6 @@ const FacilityCR = (props) => {
     const { fetchIcon, isLoading } = useImageManager();
     const [cRFacility, setCRFacility] = useState(facilityCR);
     const [icon, setIcon] = useState("");
-    const [selectedValue, setSelectedValue] = useState(
-        comfortRoom.length !== 0
-            ? comfortRoom[0].is_shared === 1
-                ? "Owned"
-                : comfortRoom[0].is_shared === 2
-                ? "Shared"
-                : "Choose"
-            : "Choose"
-    );
 
     const handleCRSelect = (event) => {
         if (event.target.value === "Choose") {
@@ -35,7 +26,6 @@ const FacilityCR = (props) => {
         const handleFetch = async () => {
             try {
                 const res = await fetchIcon(cRFacility[0].icon);
-                console.log(res);
                 setIcon(res);
             } catch (err) {
                 // Handle errors here
@@ -62,7 +52,15 @@ const FacilityCR = (props) => {
                 </div>
                 <Dropdown
                     label=""
-                    selected={selectedValue}
+                    selected={
+                        comfortRoom.length !== 0
+                            ? comfortRoom[0].is_shared === 1
+                                ? "Owned"
+                                : comfortRoom[0].is_shared === 2
+                                ? "Shared"
+                                : "Choose"
+                            : "Choose"
+                    }
                     items={[
                         { id: 0, name: "Choose" },
                         { id: 1, name: "Owned" },

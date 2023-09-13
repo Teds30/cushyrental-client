@@ -39,7 +39,11 @@ const FacilityOthers = (props) => {
         ? "adsfdsf"
         : otherFacilities.map((facility, index) => {
               return (
-                  <div className={`${styles['other-container']} ${index === 0 && styles['facility-container']}`}>
+                  <div
+                      className={`${styles["other-container"]} ${
+                          index === 0 && styles["facility-container"]
+                      }`}
+                  >
                       <div
                           key={facility.id}
                           className={`${styles["facility-row"]}`}
@@ -61,7 +65,7 @@ const FacilityOthers = (props) => {
                               onSelectedUsers={setSelectedFacilities}
                           />
                       </div>
-                      
+
                       <div className={styles["hr"]}></div>
                   </div>
               );
