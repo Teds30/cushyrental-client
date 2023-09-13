@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
+import useNotistack from "../../../../hooks/notistack-hook";
 
 import PrimaryButton from "../../../../components/Button/PrimaryButton";
 import UnitImage from "./UnitImage";
@@ -13,35 +14,42 @@ import Quantity from "../../../../components/Quantity/Quantity";
 import UnitFeatures from "./UnitFeatures";
 import EditUnitTargetGender from "./EditUnitTargetGender";
 import BorderedButton from "../../../../components/Button/BorderedButton";
+import useUnitManager from "../../../../hooks/data/units-hook";
 
 import styles from "./EditUnit.module.css";
 import { FiChevronLeft } from "react-icons/fi";
-import { BsFillSendFill, BsTrashFill } from "react-icons/bs";
+import { BsFillSendFill, BsTrashFill } from 'react-icons/bs'
 import { useState } from "react";
+import UnitData from "./UnitData";
+import Units from "../ManageUnit/Units";
 
 const EditUnit = (props) => {
     const { userUnit } = props;
+
+    const { updateUnit, isLoading } = useUnitManager();
+    const { notify, notifyWithCollapse } = useNotistack();
+    const navigate = useNavigate();
 
     const [unit, setUnit] = useState(userUnit);
 
     const unitNameChangeHandler = (event) => {
         setUnit({ ...unit, name: event.target.value });
-    }
+    };
 
     const descriptionChangeHandler = (event) => {
         setUnit({ ...unit, details: event.target.value });
-    }
+    };
 
     const unitPriceChangeHandler = (event) => {
         setUnit({ ...unit, price: event.target.value });
-    }
+    };
 
     const swithDepositHandler = (value) => {
         setUnit({ ...unit, month_deposit: value.value === true ? 1 : 0 });
     };
 
     const quantityPaymentHandler = (value) => {
-        setUnit({ ...unit, month_advance: value.value});
+        setUnit({ ...unit, month_advance: value.value });
     };
 
     const swithAdvanceHandler = (value) => {
@@ -60,14 +68,76 @@ const EditUnit = (props) => {
         setUnit({ ...unit, is_listed: value.value === true ? 1 : 0 });
     };
 
-    const saveHandler = (event) => {
+    function filterObject(obj, excludeProperties) {
+        const filtered = {};
+        for (const key in obj) {
+            if (!excludeProperties.includes(key)) {
+                filtered[key] = obj[key];
+            }
+        }
+        return filtered;
+    }
+
+    const saveHandler = async (event) => {
         event.preventDefault();
-        // delete handler
+
+        // Properties to exclude from the new data
+        const excludeProperties = [
+            "landlord",
+            "amenities",
+            "facilities",
+            "inclusions",
+            "rules",
+            "images",
+            "subscriptions",
+            "rentals",
+        ];
+
+        // Create a filtered version of the object
+        const filteredData = filterObject(unit, excludeProperties);
+
+        const id = filteredData.id
+        console.log(id)
+
+        try {
+            const res = await updateUnit(id, filteredData);
+            // ctx.onLogin(res.user, res.token);
+            notify('Successfully updated!', 'success');
+            navigate('/manage_unit/' + res.id);
+          } catch (error) {
+            console.log(error);
+          }
     };
 
-    const deleteHandler = (event) => {
+    const deleteHandler = async (event) => {
         event.preventDefault();
-        // save handler
+
+        // Properties to exclude from the new data
+        const excludeProperties = [
+            "landlord",
+            "amenities",
+            "facilities",
+            "inclusions",
+            "rules",
+            "images",
+            "subscriptions",
+            "rentals",
+        ];
+
+        // Create a filtered version of the object
+        const filteredData = filterObject(unit, excludeProperties);
+
+        const id = filteredData.id
+        console.log(id)
+
+        try {
+            const res = await updateUnit(id, {...filteredData, status: 0});
+            // ctx.onLogin(res.user, res.token);
+            notify('Successfully updated!', 'success');
+            navigate('/manage_unit/' + res.id);
+          } catch (error) {
+            console.log(error);
+          }
     };
 
     return (
@@ -109,7 +179,12 @@ const EditUnit = (props) => {
                             <p className="title">Edit Unit</p>
                         </Box>
                         <form onSubmit={saveHandler}>
-                            <PrimaryButton>Save</PrimaryButton>
+                            <PrimaryButton
+                                isLoading={isLoading}
+                                loadingText="Saving"
+                            >
+                                Save
+                            </PrimaryButton>
                         </form>
                     </Toolbar>
                 </AppBar>
@@ -120,7 +195,11 @@ const EditUnit = (props) => {
 
                 <div className={`${styles["unit-details"]}`}>
                     <p>Unit Name</p>
-                    <TextField label="" defaultValue={unit.name} onChange={unitNameChangeHandler} />
+                    <TextField
+                        label=""
+                        defaultValue={unit.name}
+                        onChange={unitNameChangeHandler}
+                    />
 
                     <p>Unit Description</p>
                     <TextField
@@ -137,7 +216,11 @@ const EditUnit = (props) => {
                         Pricing Details
                     </p>
                     <p>Price</p>
-                    <TextField label="" defaultValue={unit.price} onChange={unitPriceChangeHandler} />
+                    <TextField
+                        label=""
+                        defaultValue={unit.price}
+                        onChange={unitPriceChangeHandler}
+                    />
 
                     <CardShadow filled={"false"}>
                         <div className={`${styles["price-deposit"]}`}>
@@ -258,6 +341,8 @@ const EditUnit = (props) => {
                             <BorderedButton
                                 btnType="danger"
                                 leftIcon={<BsTrashFill />}
+                                isLoading={isLoading}
+                                loadingText="Deleting"
                             >
                                 Delete
                             </BorderedButton>

@@ -145,7 +145,8 @@ const useUnitManager = () => {
         fetchUnitAmenities,
         fetchUnitFacilities,
         fetchUnitInclusions,
-        fetchUnitRules
+        fetchUnitRules,
+        updateUnit
     };
 };
 

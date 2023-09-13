@@ -23,7 +23,7 @@ import { BsTrashFill } from "react-icons/bs";
 import photo from "../../../../../assets/Units/pics.png";
 
 const EditUnitImages = (props) => {
-    const { unitImages } = props;
+    const { unitImages, unitId } = props;
 
     const { fetchImage, isLoading } = useImageManager();
 
@@ -68,20 +68,16 @@ const EditUnitImages = (props) => {
         );
         setImagesData(updatedImages);
 
-        // Check if all images are deleted
         if (updatedImages.length === 0) {
             setImagesDeleted(true);
         }
-        // setImagesData(selectedImage.map((i) => {
-        //     return ImagesData.filter((data, index) => index !== i)
-        // }));
 
         setSelectedImage([]);
     };
 
     const makeThumbnailHandler = () => {
         const imageIndex = selectedImage[0];
-
+s
         setImagesData(
             ImagesData.map((data, index) => {
                 if (data.is_thumbnail === 1) {
@@ -107,7 +103,6 @@ const EditUnitImages = (props) => {
                 });
 
                 const newDataUpdate = await Promise.all(promise);
-                // console.log(newDataUpdate);
                 setImagesData(newDataUpdate);
             } catch (err) {}
         };
@@ -163,7 +158,7 @@ const EditUnitImages = (props) => {
                             justifyContent: "space-between",
                         }}
                     >
-                        <Link to={``}>
+                        <Link to={`/manage_unit/edit/${unitId}`}>
                             <IconButton
                                 size="large"
                                 edge="start"
