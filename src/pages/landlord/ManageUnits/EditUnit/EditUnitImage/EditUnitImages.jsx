@@ -12,12 +12,13 @@ import SecondaryButton from "../../../../../components/Button/SecondaryButton";
 import BorderlessButton from "../../../../../components/Button/BorderlessButton";
 import BorderedButton from "../../../../../components/Button/BorderedButton";
 import useImageManager from "../../../../../hooks/data/image-hook";
+import CardBlur from "../../../../../components/Card/CardBlur";
 
 import styles from "./EditUnitImages.module.css";
 import { FiChevronLeft } from "react-icons/fi";
 import { BiImageAdd } from "react-icons/bi";
-import ImageIcon from '@mui/icons-material/Image';
-import { BsTrashFill } from 'react-icons/bs'
+import ImageIcon from "@mui/icons-material/Image";
+import { BsTrashFill } from "react-icons/bs";
 // BiImageAdd
 import photo from "../../../../../assets/Units/pics.png";
 
@@ -28,6 +29,7 @@ const EditUnitImages = (props) => {
 
     const [ImagesData, setImagesData] = useState([]);
     const [selectedImage, setSelectedImage] = useState([]);
+    const [imagesDeleted, setImagesDeleted] = useState(false);
 
     console.log(selectedImage);
 
@@ -44,6 +46,7 @@ const EditUnitImages = (props) => {
     };
 
     const addImageChangeHandler = (event) => {
+        setImagesDeleted(false);
         const image = URL.createObjectURL(event.target.files[0]);
         setImagesData([
             ...ImagesData,
@@ -52,35 +55,46 @@ const EditUnitImages = (props) => {
     };
 
     const selectAllHandler = () => {
-        setSelectedImage(ImagesData.map((image, index) => index))
-    }
+        setSelectedImage(ImagesData.map((image, index) => index));
+    };
 
     const cancelHandler = () => {
         setSelectedImage([]);
-    }
+    };
 
     const deleteImageHandler = () => {
-        setImagesData(selectedImage.map((i) => {
-            return ImagesData.filter((data, index) => index !== i)
-        }));
+        const updatedImages = ImagesData.filter(
+            (data, index) => !selectedImage.includes(index)
+        );
+        setImagesData(updatedImages);
+
+        // Check if all images are deleted
+        if (updatedImages.length === 0) {
+            setImagesDeleted(true);
+        }
+        // setImagesData(selectedImage.map((i) => {
+        //     return ImagesData.filter((data, index) => index !== i)
+        // }));
 
         setSelectedImage([]);
-    }
+    };
 
     const makeThumbnailHandler = () => {
         const imageIndex = selectedImage[0];
 
-        setImagesData(ImagesData.map((data, index) => {
-            if (data.is_thumbnail === 1) {
-                return { ...data, is_thumbnail: 0 };
-            } else if (index === imageIndex) {
-                console.log('pumasok dito');
-                return { ...data, is_thumbnail: 1 };
-            } else {
-                return data;
-            }
-        }));
-    }
+        setImagesData(
+            ImagesData.map((data, index) => {
+                if (data.is_thumbnail === 1) {
+                    return { ...data, is_thumbnail: 0 };
+                } else if (index === imageIndex) {
+                    console.log("pumasok dito");
+                    return { ...data, is_thumbnail: 1 };
+                } else {
+                    return data;
+                }
+            })
+        );
+    };
 
     const saveHandler = (event) => {};
 
@@ -105,10 +119,16 @@ const EditUnitImages = (props) => {
             key={index}
             className={`${styles["image-col"]} ${
                 ImagesData.length === 0 ? styles["image-col-hidden"] : ""
-              }`}
+            }`}
             onClick={() => imageHandler(index)}
         >
-            <img src={image.image} alt={image.name} className={`${selectedImage.includes(index) && styles['image-background']}`} />
+            <img
+                src={image.image}
+                alt={image.name}
+                className={`${
+                    selectedImage.includes(index) && styles["image-background"]
+                }`}
+            />
             {image.is_thumbnail === 1 && (
                 <div className={styles.thumbnail}>
                     <p className="pre-title">THUMBNAIL</p>
@@ -116,14 +136,12 @@ const EditUnitImages = (props) => {
             )}
 
             {selectedImage.includes(index) && (
-                <div
-                    className={`${styles["selected-image"]}`}
-                >
+                <div className={`${styles["selected-image"]}`}>
                     <CheckIcon />
                 </div>
             )}
         </button>
-    ))
+    ));
 
     return (
         <div className={`${styles["edit-image-container"]}`}>
@@ -171,12 +189,20 @@ const EditUnitImages = (props) => {
             </Box>
 
             <div className={`${styles["edit-image-main"]}`}>
-                { isLoading ? 'Loading' : ImagesData.length === 0 ? <p>No image uploaded</p> : content }
+                {isLoading ? (
+                    "Loading"
+                ) : imagesDeleted ? (
+                    <p>No image uploaded</p>
+                ) : (
+                    content
+                )}
 
                 <div className={`${styles["edit-image-button"]}`}>
                     {selectedImage.length === 1 ? (
                         <Fragment>
-                            <BorderlessButton onClick={cancelHandler}>Cancel</BorderlessButton>
+                            <BorderlessButton onClick={cancelHandler}>
+                                Cancel
+                            </BorderlessButton>
                             <div className={`${styles["upload-image-button"]}`}>
                                 <SecondaryButton
                                     width="100%"
@@ -186,15 +212,31 @@ const EditUnitImages = (props) => {
                                     Make Thumbnail
                                 </SecondaryButton>
                             </div>
-                            <BorderedButton btnType="danger" onClick={deleteImageHandler}><BsTrashFill /></BorderedButton>
+                            <BorderedButton
+                                btnType="danger"
+                                onClick={deleteImageHandler}
+                            >
+                                <BsTrashFill />
+                            </BorderedButton>
                         </Fragment>
                     ) : selectedImage.length > 1 ? (
                         <Fragment>
-                            <BorderlessButton onClick={cancelHandler}>Cancel</BorderlessButton>
-                            <div className={`${styles["upload-image-button"]} ${styles['many-selected-image']}`}>
-                                <p style={{color: 'var(--fc-strong)'}}>Selected ({selectedImage.length})</p>
+                            <BorderlessButton onClick={cancelHandler}>
+                                Cancel
+                            </BorderlessButton>
+                            <div
+                                className={`${styles["upload-image-button"]} ${styles["many-selected-image"]}`}
+                            >
+                                <p style={{ color: "var(--fc-strong)" }}>
+                                    Selected ({selectedImage.length})
+                                </p>
                             </div>
-                            <BorderedButton btnType="danger" onClick={deleteImageHandler}><BsTrashFill /></BorderedButton>
+                            <BorderedButton
+                                btnType="danger"
+                                onClick={deleteImageHandler}
+                            >
+                                <BsTrashFill />
+                            </BorderedButton>
                         </Fragment>
                     ) : (
                         <Fragment>
@@ -213,7 +255,9 @@ const EditUnitImages = (props) => {
                                     Add Image
                                 </SecondaryButton>
                             </div>
-                            <BorderlessButton onClick={selectAllHandler}>Select</BorderlessButton>
+                            <BorderlessButton onClick={selectAllHandler}>
+                                Select
+                            </BorderlessButton>
                         </Fragment>
                     )}
                 </div>
