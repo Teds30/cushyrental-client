@@ -9,7 +9,7 @@ import MyUnit from "./pages/landlord/MyUnit/MyUnit";
 import CreateUnit from "./pages/landlord/ManageUnits/CreateUnit/CreateUnit";
 import ManageRenters from "./pages/landlord/ManageRenters/ManageRenters";
 import ManagePendingInquiries from "./pages/landlord/ManageRenters/ManagePendingInquiries";
-import Location from "./pages/landlord/ManageUnits/CreateUnit/Location/Location";
+// import Location from "./pages/landlord/ManageUnits/CreateUnit/Location/Location";
 import ManageUnit from "./pages/landlord/ManageUnits/ManageUnit/ManageUnit";
 import ManageTenants from "./pages/landlord/ManageRenters/ManageTenants";
 import UnitData from "./pages/landlord/ManageUnits/EditUnit/UnitData";
@@ -18,6 +18,7 @@ import UserFacilities from "./pages/landlord/ManageUnits/EditUnit/Features/Facil
 import UserInclusions from "./pages/landlord/ManageUnits/EditUnit/Features/Inclusions/UserInclusions";
 import UserRules from "./pages/landlord/ManageUnits/EditUnit/Features/Rules/UserRules";
 import MyCalendar from './pages/landlord/MyCalendar/MyCalendar'
+import UnitImageData from "./pages/landlord/ManageUnits/EditUnit/EditUnitImage/UnitImageData";
 import Rules from './pages/Rules'
 // import './App.css'
 
@@ -58,6 +59,10 @@ function App() {
             <Route
                 path="/manage_unit/edit/:id"
                 element={<UnitData />}
+            ></Route>
+            <Route
+                path="/manage_unit/edit/images/:id"
+                element={<UnitImageData />}
             ></Route>
              <Route
                 path="/manage_unit/edit/amenities/:id"

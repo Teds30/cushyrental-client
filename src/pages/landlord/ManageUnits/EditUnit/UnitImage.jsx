@@ -9,7 +9,7 @@ import stars from '../../../../../src/assets/stars.svg';
 import { BiSolidEdit } from "react-icons/bi";
 
 const UnitImage = (props) => {
-    const { unitImages } = props;
+    const { unitImages, unitId } = props;
 
     console.log(unitImages.length)
 
@@ -37,12 +37,12 @@ const UnitImage = (props) => {
             </div>
 
             <div className={`${styles['image']}`}>
-                <img src={image} alt="" />
+                <img src={image} alt={unitImages[0].name} />
                 <div className={`${styles['image-chip']}`}>
                     <p>1 of { unitImages.length }</p>
                 </div>
                 <div className={`${styles['edit-image-button']}`}>
-                    <SecondaryButton leftIcon={<BiSolidEdit size={20} />}><p>Edit images</p></SecondaryButton>
+                    <Link to={`/manage_unit/edit/images/${unitId}`}><SecondaryButton leftIcon={<BiSolidEdit size={20} />}><p>Edit images</p></SecondaryButton></Link>
                 </div>
             </div>
         </div>

@@ -116,7 +116,7 @@ const EditUnit = (props) => {
             </Box>
 
             <div className={`${styles["main-container"]}`}>
-                <UnitImage unitImages={unit.images} />
+                <UnitImage unitImages={unit.images} unitId={userUnit.id} />
 
                 <div className={`${styles["unit-details"]}`}>
                     <p>Unit Name</p>

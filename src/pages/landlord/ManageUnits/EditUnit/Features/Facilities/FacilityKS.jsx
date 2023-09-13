@@ -10,15 +10,6 @@ const FacilityKS = (props) => {
     const { fetchIcon, isLoading } = useImageManager();
     const [kSFacility, setKSFacility] = useState(facilityKS);
     const [icon, setIcon] = useState("");
-    const [selectedValue, setSelectedValue] = useState(
-        kitchenSink.length !== 0
-            ? kitchenSink[0].is_shared === 1
-                ? "Owned"
-                : kitchenSink[0].is_shared === 2
-                ? "Shared"
-                : "Choose"
-            : "Choose"
-    );
 
     const handleCRSelect = (event) => {
         if (event.target.value === "Choose") {
@@ -61,7 +52,15 @@ const FacilityKS = (props) => {
                 </div>
                 <Dropdown
                     label=""
-                    selected={selectedValue}
+                    selected={
+                        kitchenSink.length !== 0
+                            ? kitchenSink[0].is_shared === 1
+                                ? "Owned"
+                                : kitchenSink[0].is_shared === 2
+                                ? "Shared"
+                                : "Choose"
+                            : "Choose"
+                    }
                     items={[
                         { id: 0, name: "Choose" },
                         { id: 1, name: "Owned" },

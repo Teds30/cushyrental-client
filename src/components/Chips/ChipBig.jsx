@@ -85,35 +85,31 @@ const ChipBig = (props) => {
                 width: "120px",
                 fontWeight: "500",
                 fontSize: "16px",
-                background:  chips.includes(item.id) 
-                    ? colorStyle
-                    : "inherit",
-                color:  chips.includes(item.id) 
-                    ? "var(--bg-layer1)"
-                    : "inherit",
-                border:  chips.includes(item.id) 
+                background: chips.includes(item.id) ? colorStyle : "inherit",
+                color: chips.includes(item.id) ? "var(--bg-layer1)" : "inherit",
+                border: chips.includes(item.id)
                     ? "1px solid " + colorStyle
                     : "1px solid inherit",
-                boxShadow:  chips.includes(item.id) 
+                boxShadow: chips.includes(item.id)
                     ? borderShadowStyle
                     : "inherit",
                 "& svg": {
-                    fill:  chips.includes(item.id) 
+                    fill: chips.includes(item.id)
                         ? "var(--bg-layer1)"
                         : "#8A93A6",
-                    height: '32px',
-                    width: '32px'
+                    height: "32px",
+                    width: "32px",
                 },
                 "&:hover": {
-                    background: chips.includes(item.id) 
-                        ? colorStyle
-                        : "inherit",
-                    color: chips.includes(item.id) 
-                        ? colorStyle
-                        : "inherit",
-                    border: chips.includes(item.id) 
+                    // Add this to remove the hover effect
+                    background: chips.includes(item.id) && colorStyle,
+                    color: chips.includes(item.id) && colorStyle,
+                    border: chips.includes(item.id)
                         ? "1px solid " + colorStyle
                         : "1px solid inherit",
+                    "& svg": {
+                        fill: chips.includes(item.id) ? colorStyle : "#8A93A6",
+                    },
                 },
             }}
             onClick={clickable ? () => handleClick(item.id) : undefined}
