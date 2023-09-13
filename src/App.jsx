@@ -9,7 +9,7 @@ import MyUnit from "./pages/landlord/MyUnit/MyUnit";
 import CreateUnit from "./pages/landlord/ManageUnits/CreateUnit/CreateUnit";
 import ManageRenters from "./pages/landlord/ManageRenters/ManageRenters";
 import ManagePendingInquiries from "./pages/landlord/ManageRenters/ManagePendingInquiries";
-import Location from "./pages/landlord/ManageUnits/CreateUnit/Location/Location";
+// import Location from "./pages/landlord/ManageUnits/CreateUnit/Location/Location";
 import ManageUnit from "./pages/landlord/ManageUnits/ManageUnit/ManageUnit";
 import ManageTenants from "./pages/landlord/ManageRenters/ManageTenants";
 import UnitData from "./pages/landlord/ManageUnits/EditUnit/UnitData";
@@ -60,7 +60,7 @@ function App() {
                 element={<UnitData />}
             ></Route>
             <Route
-                path="/manage_unit/edit/image/:id"
+                path="/manage_unit/edit/images/:id"
                 element={<UnitImageData />}
             ></Route>
              <Route
