@@ -15,22 +15,22 @@ import UnitFeatures from "./UnitFeatures";
 import EditUnitTargetGender from "./EditUnitTargetGender";
 import BorderedButton from "../../../../components/Button/BorderedButton";
 import useUnitManager from "../../../../hooks/data/units-hook";
+import TerminateConfirmationModal from "../../ManageRenters/Modal";
 
 import styles from "./EditUnit.module.css";
 import { FiChevronLeft } from "react-icons/fi";
-import { BsFillSendFill, BsTrashFill } from 'react-icons/bs'
+import { BsTrashFill } from "react-icons/bs";
 import { useState } from "react";
-import UnitData from "./UnitData";
-import Units from "../ManageUnit/Units";
 
 const EditUnit = (props) => {
     const { userUnit } = props;
 
     const { updateUnit, isLoading } = useUnitManager();
-    const { notify, notifyWithCollapse } = useNotistack();
+    const { notify } = useNotistack();
     const navigate = useNavigate();
 
     const [unit, setUnit] = useState(userUnit);
+    const [terminateModalOpen, setTerminateModalOpen] = useState(false);
 
     const unitNameChangeHandler = (event) => {
         setUnit({ ...unit, name: event.target.value });
@@ -81,7 +81,10 @@ const EditUnit = (props) => {
     const saveHandler = async (event) => {
         event.preventDefault();
 
-        // Properties to exclude from the new data
+        if (unit.name === "" || unit.details === '' && unit.price === "") {
+            return;
+        }
+
         const excludeProperties = [
             "landlord",
             "amenities",
@@ -93,26 +96,32 @@ const EditUnit = (props) => {
             "rentals",
         ];
 
-        // Create a filtered version of the object
         const filteredData = filterObject(unit, excludeProperties);
 
-        const id = filteredData.id
-        console.log(id)
+        const id = filteredData.id;
+        console.log(id);
 
         try {
             const res = await updateUnit(id, filteredData);
-            // ctx.onLogin(res.user, res.token);
-            notify('Successfully updated!', 'success');
-            navigate('/manage_unit/' + res.id);
-          } catch (error) {
+            notify("Successfully updated!", "success");
+            navigate("/manage_unit/" + res.id);
+        } catch (error) {
             console.log(error);
-          }
+        }
     };
 
-    const deleteHandler = async (event) => {
-        event.preventDefault();
+    const deleteHandler = () => {
+        // event.preventDefault();
 
-        // Properties to exclude from the new data
+        if (unit.name === ""|| unit.details === "" || unit.price === "") {
+            return;
+        }
+        console.log('Hello John')
+        setTerminateModalOpen(true);
+    };
+
+    const handleDeleteConfirm = async () => {
+        setTerminateModalOpen(false);
         const excludeProperties = [
             "landlord",
             "amenities",
@@ -124,24 +133,27 @@ const EditUnit = (props) => {
             "rentals",
         ];
 
-        // Create a filtered version of the object
         const filteredData = filterObject(unit, excludeProperties);
 
-        const id = filteredData.id
-        console.log(id)
+        const id = filteredData.id;
+        console.log(id);
 
         try {
-            const res = await updateUnit(id, {...filteredData, status: 0});
-            // ctx.onLogin(res.user, res.token);
-            notify('Successfully updated!', 'success');
-            navigate('/manage_unit/' + res.id);
-          } catch (error) {
+            const res = await updateUnit(id, { ...filteredData, status: 0 });
+            notify("Successfully updated!", "success");
+            navigate("/manage_unit/" + res.id);
+        } catch (error) {
             console.log(error);
-          }
+        }
     };
 
     return (
         <div className={`${styles["edit-unit-container"]}`}>
+            <TerminateConfirmationModal
+                open={terminateModalOpen}
+                onClose={() => setTerminateModalOpen(false)}
+                onTerminate={handleDeleteConfirm}
+            />
             <Box className={`${styles["top-back-container"]} `}>
                 <AppBar
                     position="static"
@@ -199,6 +211,11 @@ const EditUnit = (props) => {
                         label=""
                         defaultValue={unit.name}
                         onChange={unitNameChangeHandler}
+                        helperText={
+                            unit.name === "" &&
+                            "Please enter valid boarding house name."
+                        }
+                        error
                     />
 
                     <p>Unit Description</p>
@@ -208,6 +225,11 @@ const EditUnit = (props) => {
                         rows={4}
                         multiline
                         onChange={descriptionChangeHandler}
+                        helperText={
+                            unit.details === "" &&
+                            "Please enter your boarding house details."
+                        }
+                        error
                     />
 
                     <div className={styles["hr"]}></div>
@@ -217,9 +239,15 @@ const EditUnit = (props) => {
                     </p>
                     <p>Price</p>
                     <TextField
+                        type="number"
                         label=""
                         defaultValue={unit.price}
                         onChange={unitPriceChangeHandler}
+                        helperText={
+                            unit.price === "" &&
+                            "Please enter the price of your unit."
+                        }
+                        error
                     />
 
                     <CardShadow filled={"false"}>
@@ -337,16 +365,17 @@ const EditUnit = (props) => {
                             />
                         </div>
 
-                        <form onSubmit={deleteHandler}>
+                        <div>
                             <BorderedButton
                                 btnType="danger"
                                 leftIcon={<BsTrashFill />}
+                                onClick={deleteHandler}
                                 isLoading={isLoading}
                                 loadingText="Deleting"
                             >
                                 Delete
                             </BorderedButton>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

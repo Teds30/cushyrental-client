@@ -77,7 +77,7 @@ const EditUnitImages = (props) => {
 
     const makeThumbnailHandler = () => {
         const imageIndex = selectedImage[0];
-s
+
         setImagesData(
             ImagesData.map((data, index) => {
                 if (data.is_thumbnail === 1) {

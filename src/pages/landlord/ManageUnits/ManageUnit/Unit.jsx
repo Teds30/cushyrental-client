@@ -14,25 +14,19 @@ import { useEffect, useState } from "react";
 const Unit = (props) => {
     const { user_unit } = props;
 
+    console.log(user_unit);
+
     const { fetchImage, fetchImages, isLoading } = useImageManager();
     const [image, setImage] = useState();
 
-    let type, gender;
-
-    if (user_unit.subscriptions[0].subscription_id === 1) {
-        type = "Bronze";
-    } else if (user_unit.subscriptions[0].subscription_id === 2) {
-        type = "Silver";
-    } else if (user_unit.subscriptions[0].subscription_id === 3) {
-        type = "Gold";
-    }
+    let gender;
 
     if (user_unit.targte_gender === 1) {
         gender = "Male";
     } else if (user_unit.targte_gender === 1) {
         gender = "Female";
     } else {
-        gender = "Both";
+        gender = "All";
     }
 
     const subscriptions = user_unit.subscriptions.filter((subscription) => {
@@ -48,8 +42,14 @@ const Unit = (props) => {
             formattedDate <= subscription.date_end
         ) {
             return subscription;
+        } else if (subscription.request_status === 0) {
+            return subscription;
         }
     });
+
+    const requestStatus = user_unit.request_status === 0 ? user_unit.request_status : user_unit.request_status === 2 && 3;
+    
+    console.log(requestStatus);
 
     useEffect(() => {
         const handleFetch = async () => {
@@ -88,7 +88,11 @@ const Unit = (props) => {
                     <div className={`${styles["col-data"]}`}>
                         <div>
                             <Status
-                                unitRequestStatus={user_unit.request_status}
+                                unitRequestStatus={
+                                    requestStatus !== false
+                                        ? requestStatus
+                                        : user_unit.is_listed === 0 ? 2 : user_unit.is_listed
+                                }
                             />
                         </div>
                         <div className="title">{user_unit.name}</div>
@@ -127,7 +131,7 @@ const Unit = (props) => {
                     <div className={`${styles["unit-datas"]}`}>
                         <div className="pre-title">Subscription</div>
                         <p className="title">
-                            {type === undefined ? "None" : type}
+                            {subscriptions.length !== 0 ? (subscriptions[0].subscription_id === 1 ? 'Bronze' : subscriptions[0].subscription_id === 2 ? 'Silver' : subscriptions[0].subscription_id === 3 && 'Gold') : 'None'}
                         </p>
                     </div>
 
@@ -139,13 +143,13 @@ const Unit = (props) => {
                     </div>
                 </div>
 
-                {subscriptions.length !== 0 ? (
-                    subscriptions[0].request_status === 1 ? (
+                {requestStatus  === false && (subscriptions.length !== 0 ? (
+                    subscriptions[0].request_status === 0 ? (
                         <BorderedButton width="100%" btnType="danger">
                             Cancel Unit Request
                         </BorderedButton>
                     ) : (
-                        subscriptions[0].request_status === 2 && (
+                        subscriptions[0].request_status === 1 && (
                             <div className={`${styles["unit-button"]}`}>
                                 <Link
                                     to={`/manage_unit/edit/${user_unit.landlord_id}`}
@@ -170,7 +174,7 @@ const Unit = (props) => {
                         </Link>
                         <BorderedButton>Promote</BorderedButton>
                     </div>
-                )}
+                ))}
             </CardPlain>
         </div>
     );

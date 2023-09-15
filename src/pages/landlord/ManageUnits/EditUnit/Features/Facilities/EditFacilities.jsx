@@ -14,19 +14,27 @@ const EditAmenities = (props) => {
 
     const [facilities, setFacilities] = useState([]);
     const [comfortRoom, setComfortRoom] = useState(
-        facilities.filter((facility) => facility.name === "Comfort Room")
+        unitFacilities.filter((facility) => facility.name === "Comfort Room")
     );
     const [kitchenSink, setKitchenSink] = useState(
-        facilities.filter((facility) => facility.name === "Kitchen Sink")
+        unitFacilities.filter((facility) => facility.name === "Kitchen Sink")
     );
-    const [ otherFacilities, setOtherFacilities ] = useState([]);
+    const [otherFacilities, setOtherFacilities] = useState(
+        unitFacilities.filter((facility) => {
+            return (
+                facility.name !== "Kitchen Sink" &&
+                facility.name !== "Kitchen Sink" &&
+                facility
+            );
+        })
+    );
 
     const cRFacilityHandler = (value) => {
+        console.log(value);
         let found = false;
         const updatedComfortRoom = kitchenSink.map((facility) => {
             if (facility.id === value.id) {
                 found = true;
-                // Update the specific item with the matching id
                 return { ...facility, is_shared: value.is_shared };
             }
             return facility;
@@ -40,11 +48,11 @@ const EditAmenities = (props) => {
     };
 
     const kSFacilityHandler = (value) => {
+        console.log(value);
         let found = false;
         const updatedComfortRoom = comfortRoom.map((facility) => {
             if (facility.id === value.id) {
                 found = true;
-                // Update the specific item with the matching id
                 return { ...facility, is_shared: value.is_shared };
             }
             return facility;
@@ -59,7 +67,7 @@ const EditAmenities = (props) => {
 
     const otherFacilityHandler = (value) => {
         setOtherFacilities(value);
-    }
+    };
 
     const saveAmenityHandler = (event) => {
         event.preventDefault();
@@ -84,28 +92,28 @@ const EditAmenities = (props) => {
                     <p className="title">Set up facilities</p>
                 </div>
 
-                <div className={`${styles['feature-main-body']}`}>
+                <div className={`${styles["feature-main-body"]}`}>
                     <div className={`${styles["main-attributes"]}`}>
-                    <FacilityCR
-                        facilityCR={facilities.filter(
-                            (facility) => facility.name === "Comfort Room"
-                        )}
-                        onCRFacility={cRFacilityHandler}
-                        comfortRoom={comfortRoom}
-                    />
-                </div>
+                        <FacilityCR
+                            facilityCR={facilities.filter(
+                                (facility) => facility.name === "Comfort Room"
+                            )}
+                            onCRFacility={cRFacilityHandler}
+                            comfortRoom={comfortRoom}
+                        />
+                    </div>
 
-                <div className={styles["hr"]}></div>
+                    <div className={styles["hr"]}></div>
 
-                <div className={`${styles["main-attributes"]}`}>
-                    <FacilityKS
-                        facilityKS={facilities.filter(
-                            (facility) => facility.name === "Kitchen Sink"
-                        )}
-                        onKSFacility={kSFacilityHandler}
-                        kitchenSink={kitchenSink}
-                    />
-                </div>
+                    <div className={`${styles["main-attributes"]}`}>
+                        <FacilityKS
+                            facilityKS={facilities.filter(
+                                (facility) => facility.name === "Kitchen Sink"
+                            )}
+                            onKSFacility={kSFacilityHandler}
+                            kitchenSink={kitchenSink}
+                        />
+                    </div>
 
                     <div className={styles["hr"]}></div>
 
@@ -117,7 +125,7 @@ const EditAmenities = (props) => {
                                     facility.name !== "Comfort Room"
                             )}
                             onOtherFacilities={otherFacilityHandler}
-                            // others={kitchenSink}
+                            others={otherFacilities}
                         />
                     </div>
                 </div>
