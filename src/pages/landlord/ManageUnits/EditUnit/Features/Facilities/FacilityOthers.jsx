@@ -9,7 +9,7 @@ const FacilityOthers = (props) => {
 
     const { fetchIcon, isLoading } = useImageManager();
     const [otherFacilities, setOtherFacilities] = useState([]);
-    const [selectedFacilities, setSelectedFacilities] = useState(others.map((facility) => {return facility.id}));
+    const [selectedFacilities, setSelectedFacilities] = useState(others.length !== 0? others.map((facility) => {return facility.id}) : []);
 
     useEffect(() => {
         const handleFetch = async () => {
@@ -40,12 +40,12 @@ const FacilityOthers = (props) => {
         : otherFacilities.map((facility, index) => {
               return (
                   <div
+                  key={facility.id}
                       className={`${styles["other-container"]} ${
                           index === 0 && styles["facility-container"]
                       }`}
                   >
                       <div
-                          key={facility.id}
                           className={`${styles["facility-row"]}`}
                       >
                           <div className={`${styles["facility-col"]}`}>

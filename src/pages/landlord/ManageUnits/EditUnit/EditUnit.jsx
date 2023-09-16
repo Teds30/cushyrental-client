@@ -81,7 +81,7 @@ const EditUnit = (props) => {
     const saveHandler = async (event) => {
         event.preventDefault();
 
-        if (unit.name === "" || unit.details === '' && unit.price === "") {
+        if (unit.name === "" || (unit.details === "" && unit.price === "")) {
             return;
         }
 
@@ -99,24 +99,18 @@ const EditUnit = (props) => {
         const filteredData = filterObject(unit, excludeProperties);
 
         const id = filteredData.id;
-        console.log(id);
 
         try {
             const res = await updateUnit(id, filteredData);
-            notify("Successfully updated!", "success");
+            notify("Update successfully!", "success");
             navigate("/manage_unit/" + res.id);
-        } catch (error) {
-            console.log(error);
-        }
+        } catch (error) {}
     };
 
     const deleteHandler = () => {
-        // event.preventDefault();
-
-        if (unit.name === ""|| unit.details === "" || unit.price === "") {
+        if (unit.name === "" || unit.details === "" || unit.price === "") {
             return;
         }
-        console.log('Hello John')
         setTerminateModalOpen(true);
     };
 
@@ -136,15 +130,12 @@ const EditUnit = (props) => {
         const filteredData = filterObject(unit, excludeProperties);
 
         const id = filteredData.id;
-        console.log(id);
 
         try {
             const res = await updateUnit(id, { ...filteredData, status: 0 });
-            notify("Successfully updated!", "success");
+            notify("Deleted successfully!", "success");
             navigate("/manage_unit/" + res.id);
-        } catch (error) {
-            console.log(error);
-        }
+        } catch (error) {}
     };
 
     return (

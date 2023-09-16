@@ -21,7 +21,6 @@ const UserAmenities = () => {
         const handleFetch = async () => {
             try {
                 const res = await fetchUnitAmenities(id);
-                console.log(res);
                 setUnitAmenities(res.map((amenity) => amenity.id));
             } catch (err) {}
         };
@@ -69,7 +68,7 @@ const UserAmenities = () => {
             </Box>
 
             {!isLoading ? (
-                <EditAmenities unitAmenities={unitAmenities} />
+                <EditAmenities unitAmenities={unitAmenities} unitId={id} />
             ) : (
                 ""
             )}

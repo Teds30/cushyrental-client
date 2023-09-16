@@ -1,38 +1,49 @@
 import { useState, useEffect } from "react";
-import ChipBig from "../../../../../../components/Chips/ChipBig";
-import useAttributeManager from "../../../../../../hooks/data/attribute-hook";
+import { useNavigate } from "react-router-dom";
 
-import styles from "./EditFacilities.module.css";
+import useAttributeManager from "../../../../../../hooks/data/attribute-hook";
 import PrimaryButton from "../../../../../../components/Button/PrimaryButton";
 import FacilityCR from "./FacilityCR";
 import FacilityKS from "./FacilityKS";
 import FacilityOthers from "./FacilityOthers";
+import useUserManager from "../../../../../../hooks/data/users-hook";
+import useNotistack from "../../../../../../hooks/notistack-hook";
+
+import styles from "./EditFacilities.module.css";
 
 const EditAmenities = (props) => {
-    const { unitFacilities } = props;
-    const { fetchFacilities, isLoading } = useAttributeManager();
+    const { unitFacilities, unitId } = props;
+    const { fetchFacilities } = useAttributeManager();
+    const { updateUserFacilities, isLoading } = useUserManager();
+    const { notify } = useNotistack();
+    const navigate = useNavigate();
 
     const [facilities, setFacilities] = useState([]);
+
     const [comfortRoom, setComfortRoom] = useState(
-        unitFacilities.filter((facility) => facility.name === "Comfort Room")
+        unitFacilities.filter((facility) => {
+            return facility.name === "Comfort Room";
+        })
     );
     const [kitchenSink, setKitchenSink] = useState(
-        unitFacilities.filter((facility) => facility.name === "Kitchen Sink")
+        unitFacilities.filter((facility) => {
+            return facility.name === "Kitchen Sink";
+        })
     );
     const [otherFacilities, setOtherFacilities] = useState(
         unitFacilities.filter((facility) => {
-            return (
+            if (
                 facility.name !== "Kitchen Sink" &&
-                facility.name !== "Kitchen Sink" &&
-                facility
-            );
+                facility.name !== "Comfort Room"
+            ) {
+                return facility;
+            }
         })
     );
 
     const cRFacilityHandler = (value) => {
-        console.log(value);
         let found = false;
-        const updatedComfortRoom = kitchenSink.map((facility) => {
+        const updatedComfortRoom = comfortRoom.map((facility) => {
             if (facility.id === value.id) {
                 found = true;
                 return { ...facility, is_shared: value.is_shared };
@@ -48,9 +59,8 @@ const EditAmenities = (props) => {
     };
 
     const kSFacilityHandler = (value) => {
-        console.log(value);
         let found = false;
-        const updatedComfortRoom = comfortRoom.map((facility) => {
+        const updatedComfortRoom = kitchenSink.map((facility) => {
             if (facility.id === value.id) {
                 found = true;
                 return { ...facility, is_shared: value.is_shared };
@@ -69,10 +79,57 @@ const EditAmenities = (props) => {
         setOtherFacilities(value);
     };
 
-    const saveAmenityHandler = (event) => {
+    const saveFacilityHandler = (event) => {
         event.preventDefault();
 
-        // save to database here
+        let data = [];
+        let isFinished = true;
+
+        if (comfortRoom.length !== 0) {
+            const temp = comfortRoom.map((facility) => {
+                return {
+                    unit_id: Number(unitId),
+                    facility_id: comfortRoom[0].id,
+                    is_shared: comfortRoom[0].is_shared,
+                };
+            });
+
+            data.push(...temp);
+        }
+
+        if (kitchenSink.length !== 0) {
+            const temp = kitchenSink.map((facility) => {
+                return {
+                    unit_id: Number(unitId),
+                    facility_id: kitchenSink[0].id,
+                    is_shared: kitchenSink[0].is_shared,
+                };
+            });
+
+            data.push(...temp);
+        }
+
+        data = data.concat(
+            otherFacilities.map((facility) => ({
+                unit_id: Number(unitId),
+                facility_id: facility,
+            }))
+        );
+
+        if (data.length === 0) {
+            return;
+        }
+
+        data.forEach(async (element, index) => {
+            try {
+                const res = await updateUserFacilities(element);
+            } catch (error) {}
+
+            if (index === data.length - 1) {
+                navigate("/manage_unit/edit/" + unitId);
+                notify("Facility save successfully", "success");
+            }
+        });
     };
 
     useEffect(() => {
@@ -85,8 +142,8 @@ const EditAmenities = (props) => {
         handleFetch();
     }, []);
 
-    return !isLoading && facilities.length !== 0 ? (
-        <form onSubmit={saveAmenityHandler}>
+    return facilities.length !== 0 ? (
+        <form onSubmit={saveFacilityHandler}>
             <div className={`${styles["feature-main"]}`}>
                 <div className={`${styles["main-feature-title"]}`}>
                     <p className="title">Set up facilities</p>
@@ -132,7 +189,13 @@ const EditAmenities = (props) => {
             </div>
 
             <div className={`${styles["feature-button"]}`}>
-                <PrimaryButton width="100%">Save</PrimaryButton>
+                <PrimaryButton
+                    width="100%"
+                    isLoading={isLoading}
+                    loadingText="Saving"
+                >
+                    Save
+                </PrimaryButton>
             </div>
         </form>
     ) : (

@@ -67,8 +67,8 @@ const UserRules = () => {
                 </AppBar>
             </Box>
 
-            {!isLoading && unitRules.length ? (
-                <EditRules unitRules={unitRules} />
+            {!isLoading ? (
+                <EditRules unitRules={unitRules} unitId={id} />
             ) : (
                 ""
             )}

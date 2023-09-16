@@ -28,8 +28,6 @@ const features = [
 const UnitFeatures = (props) => {
     const { id } = props
 
-    console.log(id);
-
     return (
         <div className={`${styles["feature-container"]}`}>
             <p className={`${styles["unit-details-title"]}`}>Features</p>

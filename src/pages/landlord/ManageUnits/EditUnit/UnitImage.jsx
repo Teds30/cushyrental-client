@@ -11,8 +11,6 @@ import { BiSolidEdit } from "react-icons/bi";
 const UnitImage = (props) => {
     const { unitImages, unitId } = props;
 
-    console.log(unitImages.length)
-
     const { fetchImage } = useImageManager();
     const [image, setImage] = useState(null); // Initialize to null
 
@@ -21,9 +19,7 @@ const UnitImage = (props) => {
             try {
                 const res = await fetchImage(unitImages[0].image);
                 setImage(res);
-            } catch (err) {
-                console.error(err);
-            }
+            } catch (err) {}
         };
         handleFetch();
     }, []);
