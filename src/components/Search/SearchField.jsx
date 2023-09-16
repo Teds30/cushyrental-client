@@ -13,7 +13,11 @@ const SearchField = (props) => {
     // }
 
     return (
-        <div className={styles['search-container']} style={{ width: width }}>
+        <div
+            className={styles['search-container']}
+            style={{ width: width }}
+            {...props}
+        >
             <form className={styles.search}>
                 <div className={styles.icon}>
                     <FiSearch />
