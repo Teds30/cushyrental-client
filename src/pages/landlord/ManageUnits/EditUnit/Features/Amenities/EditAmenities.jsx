@@ -48,11 +48,6 @@ const EditAmenities = (props) => {
                 return
             }
         });
-
-        // if (isFinished === true) {
-
-        //     navigate("/manage_unit/edit/" + unitId);
-        // }
     };
 
     useEffect(() => {

@@ -20,7 +20,7 @@
 }
 
 .image-col {
-    background: none;
+    background: var(--bg-layer4);
     border: none;
     outline: none;
     padding: 0;
