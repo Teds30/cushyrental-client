@@ -12,7 +12,7 @@ import BorderlessButton from "../../../../components/Button/BorderlessButton";
 
 const LocationForm = (props) => {
     const createUnitCtx = useContext(CreateUnitContext);
-    const locationDetails = createUnitCtx.unitData;
+    const locationDetails = createUnitCtx.unitData.location.lat + ' : ' + createUnitCtx.unitData.location.lng;
 
     const { onNext, onBack } = props;
 
@@ -84,7 +84,7 @@ const LocationForm = (props) => {
             <TextField
                 fullWidth
                 label="Location"
-                defaultValue={!enteredLocation ? locationDetails.location : enteredLocation}
+                defaultValue={locationDetails !== undefined ? locationDetails : enteredLocation}
                 onChange={locationChangeHandler}
                 onBlur={locationBlurHandler}
                 required

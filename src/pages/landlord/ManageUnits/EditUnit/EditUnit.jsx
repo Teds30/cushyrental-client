@@ -163,7 +163,7 @@ const EditUnit = (props) => {
                             justifyContent: "space-between",
                         }}
                     >
-                        <Link to={`/manage_unit/${unit.id}`}>
+                        <Link to={`/manage_unit`}>
                             <IconButton
                                 size="large"
                                 edge="start"
