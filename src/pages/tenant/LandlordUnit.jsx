@@ -1,25 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import IconButton from "@mui/material/IconButton";
 import { BsBookmark } from "react-icons/bs";
 import { FaStar } from "react-icons/fa6";
 import styles from "./ViewProfile.module.css";
-import useImageManager from "../../hooks/data/image-hook";
-import Chip from "@mui/material/Chip";
-import Stack from "@mui/material/Stack";
-import FaceIcon from "@mui/icons-material/Face";
+import LandlordUnitAttribute from "./LandlordUnitAttribute.jsx";
 
 const LandlordUnit = (props) => {
     const { unit } = props;
-    const { fetchIcon } = useImageManager();
-
-    useEffect(() => {
-        fetchData(amenity.icon)
-    }, [])
-
-    const fetchData = async (name) => {
-        const res = await fetchIcon(name)
-        setIcon(res)
-    }
 
     return (
         <div
@@ -39,7 +26,6 @@ const LandlordUnit = (props) => {
                     <div>
                         <IconButton
                             size="large"
-                            edge="center"
                             color="inherit"
                             aria-label="menu"
                         >
@@ -70,13 +56,9 @@ const LandlordUnit = (props) => {
                 <div className={styles["hr"]}></div>
 
                 <div className={`${styles["amenities-container"]}`}>
-                    <Stack direction="row" spacing={1}>
-                        <Chip
-                            icon={<FaceIcon />}
-                            label="With Icon"
-                            variant="outlined"
-                        />
-                    </Stack>
+                    {(unit.amenities) && unit.amenities.map((amenity) => (
+                        <LandlordUnitAttribute key = {amenity.id} amenity={amenity} />
+                    ))}
                 </div>
             </div>
         </div>
