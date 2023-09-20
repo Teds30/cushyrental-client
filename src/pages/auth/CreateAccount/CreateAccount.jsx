@@ -1,4 +1,5 @@
 import { useState, useCallback, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import UserToggleButton from "./UserToggleButton";
 import CreateAccountForm from "./CreateAccountForm";
@@ -15,6 +16,7 @@ const CreateAccount = () => {
   const { googleAccountRegistration, googleAuth } = useGoogleAuth();
   const { facebookAccountRegistration } = useFacebookAuth();
   const ctx = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [counter, setCounter] = useState(0);
   const [userType, setUserType] = useState({ user_type_id: "1" });
@@ -27,12 +29,15 @@ const CreateAccount = () => {
   );
 
   const createAccountHandler = async (userData) => {
-    const data = { ...userData, user_type_id: userType.user_type_id };
+    const data = { ...userData, user_type_id: userType.user_type_id, profile_picture_img: 'images/profile_pictures/default/1.jpg', middle_name: 'middle_name' };
+
+    // console.log(data);
 
     try {
       const res = await accountRegistration(data);
       ctx.onLogin(res.user, res.token);
-      console.log(ctx.user);
+      console.log(res);
+      navigate('/profile');
     } catch (error) {
       console.log(error);
     }
