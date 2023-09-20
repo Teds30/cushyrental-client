@@ -8,7 +8,7 @@ const useAttributeManager = () => {
         let responseData
         try {
             responseData = await sendRequest({
-                url: `http://127.0.0.1:8000/api/amenities`,
+                url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/amenities`,
             })
         } catch (err) {
             throw err.message
@@ -22,7 +22,9 @@ const useAttributeManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/amenities/${id}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/amenities/${id}`,
                 })
             } catch (err) {
                 throw err.message
@@ -38,7 +40,9 @@ const useAttributeManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/amenities/`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/amenities/`,
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {
@@ -57,7 +61,9 @@ const useAttributeManager = () => {
         async (id, body) => {
             try {
                 await sendRequest({
-                    url: `http://127.0.0.1:8000/api/amenities/${id}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/amenities/${id}`,
                     method: 'PUT',
                     body: JSON.stringify(body),
                     headers: {
@@ -75,7 +81,9 @@ const useAttributeManager = () => {
         async (id) => {
             try {
                 await sendRequest({
-                    url: `http://127.0.0.1:8000/api/amenities/${id}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/amenities/${id}`,
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -98,7 +106,7 @@ const useAttributeManager = () => {
         let responseData
         try {
             responseData = await sendRequest({
-                url: `http://127.0.0.1:8000/api/facilities`,
+                url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/facilities`,
             })
         } catch (err) {
             throw err.message
@@ -112,7 +120,9 @@ const useAttributeManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/facilities/${id}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/facilities/${id}`,
                 })
             } catch (err) {
                 throw err.message
@@ -128,7 +138,9 @@ const useAttributeManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/facilities/`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/facilities/`,
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {
@@ -147,7 +159,9 @@ const useAttributeManager = () => {
         async (id, body) => {
             try {
                 await sendRequest({
-                    url: `http://127.0.0.1:8000/api/facilities/${id}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/facilities/${id}`,
                     method: 'PUT',
                     body: JSON.stringify(body),
                     headers: {
@@ -165,7 +179,9 @@ const useAttributeManager = () => {
         async (id) => {
             try {
                 await sendRequest({
-                    url: `http://127.0.0.1:8000/api/facilities/${id}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/facilities/${id}`,
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -188,7 +204,7 @@ const useAttributeManager = () => {
         let responseData
         try {
             responseData = await sendRequest({
-                url: `http://127.0.0.1:8000/api/inclusions`,
+                url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/inclusions`,
             })
         } catch (err) {
             throw err.message
@@ -202,7 +218,9 @@ const useAttributeManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/inclusions/${id}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/inclusions/${id}`,
                 })
             } catch (err) {
                 throw err.message
@@ -218,7 +236,9 @@ const useAttributeManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/inclusions/`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/inclusions/`,
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {
@@ -237,7 +257,9 @@ const useAttributeManager = () => {
         async (id, body) => {
             try {
                 await sendRequest({
-                    url: `http://127.0.0.1:8000/api/inclusions/${id}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/inclusions/${id}`,
                     method: 'PUT',
                     body: JSON.stringify(body),
                     headers: {
@@ -255,7 +277,9 @@ const useAttributeManager = () => {
         async (id) => {
             try {
                 await sendRequest({
-                    url: `http://127.0.0.1:8000/api/inclusions/${id}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/inclusions/${id}`,
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -278,7 +302,7 @@ const useAttributeManager = () => {
         let responseData
         try {
             responseData = await sendRequest({
-                url: `http://127.0.0.1:8000/api/rules`,
+                url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/rules`,
             })
         } catch (err) {
             throw err.message
@@ -292,7 +316,9 @@ const useAttributeManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/rules/${id}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/rules/${id}`,
                 })
             } catch (err) {
                 throw err.message
@@ -308,7 +334,7 @@ const useAttributeManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/rules/`,
+                    url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/rules/`,
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {
@@ -327,7 +353,9 @@ const useAttributeManager = () => {
         async (id, body) => {
             try {
                 await sendRequest({
-                    url: `http://127.0.0.1:8000/api/rules/${id}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/rules/${id}`,
                     method: 'PUT',
                     body: JSON.stringify(body),
                     headers: {
@@ -345,12 +373,15 @@ const useAttributeManager = () => {
         async (id) => {
             try {
                 await sendRequest({
-                    url: `http://127.0.0.1:8000/api/rules/${id}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/rules/${id}`,
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                 })
+                console.log
             } catch (err) {
                 throw err.message
             }
