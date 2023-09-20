@@ -57,7 +57,7 @@ const UploadImageForm = (props) => {
     const submitHandler = (event) => {
         event.preventDefault();
 
-        if (unitImages.length >= 3) {
+        if (unitImages.length < 3) {
             return;
         }
 
