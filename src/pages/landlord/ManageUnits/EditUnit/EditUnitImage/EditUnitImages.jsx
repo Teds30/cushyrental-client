@@ -22,6 +22,10 @@ import { BiImageAdd } from "react-icons/bi";
 import { BsTrashFill } from "react-icons/bs";
 
 // import photo from "../../../../../assets/Units/pics.png";
+import ImageIcon from "@mui/icons-material/Image";
+import { BsTrashFill } from "react-icons/bs";
+// BiImageAdd
+import photo from "../../../../../assets/Units/pics.png";
 
 const EditUnitImages = (props) => {
     const { unitImages, unitId } = props;
@@ -33,6 +37,9 @@ const EditUnitImages = (props) => {
 
     const [imagesData, setImagesData] = useState([]);
     const [selectedImage, setSelectedImage] = useState([]);
+    const [imagesDeleted, setImagesDeleted] = useState(false);
+
+    console.log(selectedImage);
     const [imagesDeleted, setImagesDeleted] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
 
@@ -61,38 +68,17 @@ const EditUnitImages = (props) => {
     };
 
     const selectAllHandler = () => {
-        setSelectedImage(imagesData.map((image, index) => index));
-    };
+        setSelectedImage(ImagesData.map((image, index) => index))
+    }
 
     const cancelHandler = () => {
         setSelectedImage([]);
     };
 
-    const deleteImageHandler = async () => {
-        const updatedImages = [];
-
-        for (let index = 0; index < imagesData.length; index++) {
-            const data = imagesData[index];
-
-            if (data.id !== undefined && selectedImage.includes(index)) {
-                try {
-                    const imageData = {
-                        unit_id: Number(unitId),
-                        image_id: data.id,
-                    };
-                    const result = await deleteUserImages(imageData);
-                } catch (error) {
-                }
-            } else {
-                updatedImages.push(data);
-            }
-        }
-
-        setImagesData(updatedImages);
-
-        if (updatedImages.length === 0) {
-            setImagesDeleted(true);
-        }
+    const deleteImageHandler = () => {
+        setImagesData(selectedImage.map((i) => {
+            return ImagesData.filter((data, index) => index !== i)
+        }));
 
         setSelectedImage([]);
     };
@@ -100,18 +86,17 @@ const EditUnitImages = (props) => {
     const makeThumbnailHandler = () => {
         const imageIndex = selectedImage[0];
 
-        setImagesData(
-            imagesData.map((data, index) => {
-                if (data.is_thumbnail === 1) {
-                    return { ...data, is_thumbnail: 0 };
-                } else if (index === imageIndex) {
-                    return { ...data, is_thumbnail: 1 };
-                } else {
-                    return data;
-                }
-            })
-        );
-    };
+        setImagesData(ImagesData.map((data, index) => {
+            if (data.is_thumbnail === 1) {
+                return { ...data, is_thumbnail: 0 };
+            } else if (index === imageIndex) {
+                console.log('pumasok dito');
+                return { ...data, is_thumbnail: 1 };
+            } else {
+                return data;
+            }
+        }));
+    }
 
     const handleFileUpload = async (image, index) => {
         let exit = false;
@@ -197,8 +182,8 @@ const EditUnitImages = (props) => {
         <button
             key={index}
             className={`${styles["image-col"]} ${
-                imagesData.length === 0 ? styles["image-col-hidden"] : ""
-            }`}
+                ImagesData.length === 0 ? styles["image-col-hidden"] : ""
+              }`}
             onClick={() => imageHandler(index)}
         >
             <img
@@ -269,13 +254,7 @@ const EditUnitImages = (props) => {
             </Box>
 
             <div className={`${styles["edit-image-main"]}`}>
-                {isLoading ? (
-                    ""
-                ) : imagesDeleted ? (
-                    <p>No image uploaded</p>
-                ) : (
-                    content
-                )}
+                { isLoading ? 'Loading' : ImagesData.length === 0 ? <p>No image uploaded</p> : content }
 
                 <div className={`${styles["edit-image-button"]}`}>
                     {selectedImage.length === 1 ? (

@@ -6,10 +6,12 @@ const useAuth = () => {
 
     const accountRegistration = useCallback(
         async (body) => {
-            let responseData;
+            let responseData
             try {
-                    responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/register`,
+                responseData = await sendRequest({
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/register`,
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {
@@ -17,7 +19,7 @@ const useAuth = () => {
                     },
                 })
 
-                return responseData;
+                return responseData
             } catch (err) {
                 throw err.message
             }
@@ -27,7 +29,7 @@ const useAuth = () => {
 
     return {
         isLoading,
-        accountRegistration
+        accountRegistration,
     }
 }
 

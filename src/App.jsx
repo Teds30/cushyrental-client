@@ -22,6 +22,7 @@ import UnitImageData from './pages/landlord/ManageUnits/EditUnit/EditUnitImage/U
 import Rules from './pages/Rules'
 import Dashboard from './pages/landlord/Dashboard/Dashboard'
 import Report from './pages/Report/Report'
+import ViewProfile from "./pages/tenant/ViewProfile";
 import Profile from './pages/Profile/Profile'
 // import './App.css'
 
@@ -107,6 +108,10 @@ function App() {
 
             <Route path="/rules" element={<Rules />}></Route>
 
+            <Route
+                path="/viewprofile"
+                element={<ViewProfile />}
+            ></Route>
             <Route
                 path="*"
                 element={<Navigate replace to="/signinpage" />}
