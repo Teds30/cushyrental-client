@@ -6,7 +6,6 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import CheckIcon from "@mui/icons-material/Check";
-import ImageIcon from "@mui/icons-material/Image";
 
 import PrimaryButton from "../../../../../components/Button/PrimaryButton";
 import SecondaryButton from "../../../../../components/Button/SecondaryButton";
@@ -20,12 +19,11 @@ import styles from "./EditUnitImages.module.css";
 import { FiChevronLeft } from "react-icons/fi";
 import { BiImageAdd } from "react-icons/bi";
 import { BsTrashFill } from "react-icons/bs";
+import ImageIcon from "@mui/icons-material/Image";
+
+// import photo from "../../../../../assets/Units/pics.png"
 
 // import photo from "../../../../../assets/Units/pics.png";
-import ImageIcon from "@mui/icons-material/Image";
-import { BsTrashFill } from "react-icons/bs";
-// BiImageAdd
-import photo from "../../../../../assets/Units/pics.png";
 
 const EditUnitImages = (props) => {
     const { unitImages, unitId } = props;
@@ -37,7 +35,7 @@ const EditUnitImages = (props) => {
 
     const [imagesData, setImagesData] = useState([]);
     const [selectedImage, setSelectedImage] = useState([]);
-    const [imagesDeleted, setImagesDeleted] = useState(false);
+    // const [imagesDeleted, setImagesDeleted] = useState(false);
 
     console.log(selectedImage);
     const [imagesDeleted, setImagesDeleted] = useState(false);
