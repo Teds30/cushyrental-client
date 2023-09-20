@@ -22,6 +22,7 @@ import UnitImageData from './pages/landlord/ManageUnits/EditUnit/EditUnitImage/U
 import Rules from './pages/Rules'
 import Dashboard from './pages/landlord/Dashboard/Dashboard'
 import Report from './pages/Report/Report'
+import Profile from './pages/Profile/Profile'
 // import './App.css'
 
 function App() {
@@ -83,12 +84,19 @@ function App() {
             ></Route>
             {/* Manage Landlord Unit */}
 
-            {/* Report text will remove later */}
+            {/* Prodile */}
+            <Route
+                path="/profile"
+                element={<Profile />}
+            ></Route>
+            {/* Profile */}
+
+            {/* Report test will remove later */}
             <Route
                 path="/report_test"
                 element={<Report />}
             ></Route>
-             {/* Report text will remove later */}
+             {/* Report test will remove later */}
 
             <Route path="/myunit-landlord" element={<MyUnit />}></Route>
 
