@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { useLoadScript, LoadScript } from '@react-google-maps/api'
 import AppBar from '@mui/material/AppBar'
@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton'
 
 import PrimaryButton from '../../../../../components/Button/PrimaryButton'
 import SearchField from '../../../../../components/Search/SearchField'
+import CreateUnitContext from '../../../../../context/create-unit-context'
 
 import styles from '../CreateUnit.module.css'
 import photo from '../../../../../assets/Units/pics.png'
@@ -23,6 +24,9 @@ const Location = (props) => {
     // const { isLoaded } = useLoadScript({
     //     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API,
     // })
+    // const history = useHistory();
+    const createUnitCtx = useContext(CreateUnitContext);
+    const navigate = useNavigate();
 
     const { coords, isGeolocationAvailable, isGeolocationEnabled } =
         useGeolocated({
@@ -121,9 +125,20 @@ const Location = (props) => {
         // }
     }
 
-    const saveHandler = () => {
+    const saveHandler = (event) => {
+        event.preventDefault();
+
         const unit_new_location = JSON.stringify(newCenter)
-        console.log(unit_new_location)
+        const location = JSON.parse(unit_new_location);
+
+        createUnitCtx.onUnitData({
+            ...createUnitCtx.unitData,
+            location: {
+                lat: location.lat,
+                lng: location.lng
+            }
+        });
+        navigate('/manage_unit/create_unit')
         // save
     }
 

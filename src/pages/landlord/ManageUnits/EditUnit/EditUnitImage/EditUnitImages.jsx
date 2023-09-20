@@ -130,6 +130,7 @@ const EditUnitImages = (props) => {
 
         if (exit === true) {
             if (index === imagesData.length - 1) {
+                setIsSaving(false)
                 navigate("/manage_unit/edit/" + unitId);
                 notify("Save successfully", "success");
             }
@@ -158,6 +159,7 @@ const EditUnitImages = (props) => {
             const result = await updateUserImages(ImageData);
 
             if (index === imagesData.length - 1) {
+                setIsSaving(false);
                 navigate("/manage_unit/edit/" + unitId);
                 notify("Save successfully", "success");
             }
@@ -259,7 +261,8 @@ const EditUnitImages = (props) => {
                             <p className="title">Edit images</p>
                         </Box>
                         <form onSubmit={saveHandler}>
-                            <PrimaryButton>Save</PrimaryButton>
+                            <PrimaryButton isLoading={isSaving}
+                    loadingText="Saving">Save</PrimaryButton>
                         </form>
                     </Toolbar>
                 </AppBar>

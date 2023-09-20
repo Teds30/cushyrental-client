@@ -24,6 +24,7 @@ import GenderForm from './GenderForm'
 import SlotsForm from './SlotsForm'
 import PricingForm from './PricingForm'
 import UploadImageForm from './UploadImageForm'
+import CreateUnitContext from '../../../../context/create-unit-context'
 
 import styles from './CreateUnit.module.css'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
@@ -85,8 +86,10 @@ function QontoStepIcon(props) {
 }
 
 export default function CreateUnitForm() {
+    const createUnitCtx = React.useContext(CreateUnitContext);
+    console.log(createUnitCtx.unitData.location);
     const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1)
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
 
     const handleBack = () => {

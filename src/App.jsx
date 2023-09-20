@@ -21,6 +21,7 @@ import MyCalendar from './pages/landlord/MyCalendar/MyCalendar'
 import UnitImageData from './pages/landlord/ManageUnits/EditUnit/EditUnitImage/UnitImageData'
 import Rules from './pages/Rules'
 import Dashboard from './pages/landlord/Dashboard/Dashboard'
+import Report from './pages/Report/Report'
 // import './App.css'
 
 function App() {
@@ -81,6 +82,13 @@ function App() {
                 element={<UserRules />}
             ></Route>
             {/* Manage Landlord Unit */}
+
+            {/* Report text will remove later */}
+            <Route
+                path="/report_test"
+                element={<Report />}
+            ></Route>
+             {/* Report text will remove later */}
 
             <Route path="/myunit-landlord" element={<MyUnit />}></Route>
 
