@@ -21,7 +21,7 @@ const UnitImageData = () => {
         handleFetch();
     }, []);
 
-    return !isLoading && unitImages.length !== 0 ? <EditUnitImages unitImages={unitImages} /> : '';
+    return !isLoading && unitImages.length !== 0 ? <EditUnitImages unitImages={unitImages} unitId={id} /> : '';
 };
 
 export default UnitImageData;

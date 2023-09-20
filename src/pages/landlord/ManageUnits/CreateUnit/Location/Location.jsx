@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
-import { useLoadScript } from '@react-google-maps/api'
+import { useLoadScript, LoadScript } from '@react-google-maps/api'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -9,24 +9,42 @@ import IconButton from '@mui/material/IconButton'
 
 import PrimaryButton from '../../../../../components/Button/PrimaryButton'
 import SearchField from '../../../../../components/Search/SearchField'
+import CreateUnitContext from '../../../../../context/create-unit-context'
 
 import styles from '../CreateUnit.module.css'
 import photo from '../../../../../assets/Units/pics.png'
 import { FiChevronLeft } from 'react-icons/fi'
 import BasicMap from './BasicMap'
 
-const Location = (props) => {
-    const { isLoaded } = useLoadScript({
-        googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API,
-    })
+import { useGeolocated } from 'react-geolocated'
 
+const lib = ['places']
+
+const Location = (props) => {
+    // const { isLoaded } = useLoadScript({
+    //     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API,
+    // })
+    // const history = useHistory();
+    const createUnitCtx = useContext(CreateUnitContext);
+    const navigate = useNavigate();
+
+    const { coords, isGeolocationAvailable, isGeolocationEnabled } =
+        useGeolocated({
+            positionOptions: {
+                enableHighAccuracy: true,
+            },
+            userDecisionTimeout: 5000,
+        })
+
+    const [mapref, setMapRef] = React.useState(null)
+    const handleOnLoad = (map) => {
+        setMapRef(map)
+    }
     const [center, setCenter] = useState({
         lat: 13.14457855948287,
         lng: 123.72523867131375,
     })
     const [newCenter, setNewCenter] = useState(center)
-
-    console.log(isLoaded)
 
     const handleCurrentLocation = () => {
         // navigator.geolocation.getCurrentPosition((position) => {
@@ -40,66 +58,96 @@ const Location = (props) => {
             maximumAge: 0,
         }
 
-        // does browser have geo services enabled
-        navigator.permissions.query({ name: 'geolocation' }).then(
-            (result) => {
-                if (result.state === 'granted') {
-                    // you are good
-                    navigator.geolocation.getCurrentPosition(
-                        (position) => {
-                            // alert('granted user location permission')
-                            // console.log(
-                            //     'granted user location permission',
-                            //     position
-                            // )
-
-                            const { latitude, longitude } = position.coords
-                            setCenter({ lat: latitude, lng: longitude })
-
-                            //.. do your stuff
-                        },
-                        (error) => {
-                            alert('Please turn on OS located services')
-                            // OS services are not enabled
-                            console.log(
-                                'Please turn on OS located services',
-                                navigator
-                            )
-                            errorLocation()
-                        },
-                        navigatorLocationOptions
-                    )
-                } else {
-                    // browser issues seriveces
-                    alert('Browser location services disabled')
-                    console.log('Browser location services disabled', navigator)
-                    errorLocation()
-                }
-            },
-            (error) => {
-                /* Browser doesn't support querying for permissions */
-
-                alert('Please turn on BROWSER location services')
-                console.log(
-                    'Please turn on BROWSER location services',
-                    navigator
-                )
-                errorLocation()
+        if (isGeolocationEnabled) {
+            if (isGeolocationAvailable) {
+                const { latitude, longitude } = coords
+                setCenter({ lat: latitude, lng: longitude })
+                setNewCenter({ lat: latitude, lng: longitude })
             }
-        )
-
-        //handle errors
-        function errorLocation() {
-            console.log('error')
         }
+
+        if (!isGeolocationEnabled) {
+            alert('Browser location services disabled')
+        }
+
+        // does browser have geo services enabled
+        // navigator.permissions.query({ name: 'geolocation' }).then(
+        //     (result) => {
+        //         if (result.state === 'granted') {
+        //             // you are good
+        //             navigator.geolocation.getCurrentPosition(
+        //                 (position) => {
+        //                     // alert('granted user location permission')
+        //                     // console.log(
+        //                     //     'granted user location permission',
+        //                     //     position
+        //                     // )
+
+        //                     const { latitude, longitude } = position.coords
+        //                     setCenter({ lat: latitude, lng: longitude })
+        //                     setNewCenter({ lat: latitude, lng: longitude })
+
+        //                     //.. do your stuff
+        //                 },
+        //                 (error) => {
+        //                     alert('Please turn on OS located services')
+        //                     // OS services are not enabled
+        //                     console.log(
+        //                         'Please turn on OS located services',
+        //                         navigator
+        //                     )
+        //                     errorLocation()
+        //                 },
+        //                 navigatorLocationOptions
+        //             )
+        //         } else {
+        //             // browser issues seriveces
+        //             alert('Browser location services disabled')
+        //             console.log('Browser location services disabled', navigator)
+        //             errorLocation()
+        //         }
+        //     },
+        //     (error) => {
+        //         /* Browser doesn't support querying for permissions */
+
+        //         alert('Please turn on BROWSER location services')
+        //         console.log(
+        //             'Please turn on BROWSER location services',
+        //             navigator
+        //         )
+        //         errorLocation()
+        //     }
+        // )
+
+        // //handle errors
+        // function errorLocation() {
+        //     console.log('error')
+        // }
     }
 
-    const saveHandler = (coords) => {
-        console.log(newCenter)
+    const saveHandler = (event) => {
+        event.preventDefault();
+
+        const unit_new_location = JSON.stringify(newCenter)
+        const location = JSON.parse(unit_new_location);
+
+        createUnitCtx.onUnitData({
+            ...createUnitCtx.unitData,
+            location: {
+                lat: location.lat,
+                lng: location.lng
+            }
+        });
+        navigate('/manage_unit/create_unit')
         // save
     }
 
     const handleChangeCenter = (coords) => {
+        // console.log(coords)
+        setCenter(coords)
+    }
+
+    const handleChangeCoords = (coords) => {
         setNewCenter(coords)
     }
 
@@ -148,17 +196,22 @@ const Location = (props) => {
                 </AppBar>
             </Box>
 
-            <div style={{ padding: '0 10px' }}>
-                <SearchField placeholder="Search" />
-            </div>
-
             <div className={`${styles['location-map']}`}>
-                <BasicMap
-                    isLoaded={isLoaded}
-                    center={center}
-                    onChangeCenter={handleChangeCenter}
-                    onUseCurrentLocation={handleCurrentLocation}
-                />
+                <LoadScript
+                    googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAP_API}
+                    libraries={lib}
+                    onLoad={handleOnLoad}
+                >
+                    <BasicMap
+                        mapRef={mapref}
+                        onMapLoad={handleOnLoad}
+                        // isLoaded={isLoaded}
+                        center={center}
+                        onChangeCenter={handleChangeCenter}
+                        onChangeCoords={handleChangeCoords}
+                        onUseCurrentLocation={handleCurrentLocation}
+                    />
+                </LoadScript>
             </div>
         </div>
     )

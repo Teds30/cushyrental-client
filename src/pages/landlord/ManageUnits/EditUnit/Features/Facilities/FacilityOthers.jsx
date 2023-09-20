@@ -5,11 +5,11 @@ import CheckBox from "../../../../../../components/CheckBox/CheckBox";
 import styles from "./EditFacilities.module.css";
 
 const FacilityOthers = (props) => {
-    const { facilityOthers, onOtherFacilities } = props;
+    const { facilityOthers, onOtherFacilities, others } = props;
 
     const { fetchIcon, isLoading } = useImageManager();
     const [otherFacilities, setOtherFacilities] = useState([]);
-    const [selectedFacilities, setSelectedFacilities] = useState([]);
+    const [selectedFacilities, setSelectedFacilities] = useState(others.length !== 0? others.map((facility) => {return facility.id}) : []);
 
     useEffect(() => {
         const handleFetch = async () => {
@@ -40,12 +40,12 @@ const FacilityOthers = (props) => {
         : otherFacilities.map((facility, index) => {
               return (
                   <div
+                  key={facility.id}
                       className={`${styles["other-container"]} ${
                           index === 0 && styles["facility-container"]
                       }`}
                   >
                       <div
-                          key={facility.id}
                           className={`${styles["facility-row"]}`}
                       >
                           <div className={`${styles["facility-col"]}`}>

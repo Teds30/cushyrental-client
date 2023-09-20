@@ -1,0 +1,214 @@
+.brand-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand-label {
+    background: linear-gradient(90deg, #03b077 -2.06%, #7ab73d 104.45%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    font-family: 'PT Serif';
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+.container {
+    padding: 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-inline: 12px;
+
+    /* background: var(--bg); */
+}
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 16px;
+    background: #1d6156;
+}
+
+.card-content {
+    display: flex;
+    gap: 12px;
+    padding: 18px;
+    color: #fff;
+}
+
+.status-container {
+    margin-inline: 10px;
+    border-radius: 8px;
+    background-color: #fff;
+    display: flex;
+    padding: 12px;
+}
+
+.status {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.status p {
+    font-size: 0.85em;
+}
+
+.count {
+    line-height: 0;
+}
+
+.count-container h1 {
+    line-height: 0;
+    color: #fff;
+}
+
+.status-vr {
+    background: var(--border-color);
+    width: 1px;
+    margin: 10px;
+}
+
+.gradient {
+    margin-left: 10px;
+}
+.gradient-shape {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    position: relative;
+}
+
+.green-box {
+    background: var(--accent);
+}
+
+.blue-box {
+    background: #5171e5;
+}
+
+.icon {
+    position: absolute;
+    top: 12px;
+    left: -12px;
+    width: 48px;
+    height: 48px;
+    /* From https://css.glass */
+    /* background: rgba(255, 255, 255, 0.15); */
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    border-radius: 12px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.action {
+    border-top: 1px solid var(--border-color);
+    padding: 12px 24px;
+    margin-top: 12px;
+
+    display: flex;
+    align-items: center;
+
+    color: #fff;
+    fill: #fff;
+}
+
+.action-label {
+    flex: 1;
+    font-weight: 500;
+}
+
+.action span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.events {
+    display: flex;
+}
+
+.event {
+    display: flex;
+    background-color: var(--bg-layer1);
+    border-radius: 16px;
+    flex: 1;
+    padding: 12px;
+    gap: 16px;
+
+    box-shadow: rgb(238, 243, 251) 0px 4px 8px;
+    border: 1px solid #dee6f1;
+}
+
+.event-date {
+    padding-inline: 12px;
+    border-radius: 8px;
+    background-color: var(--bg-layer2);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.day {
+    color: var(--fc-strong);
+    font-size: 1em;
+}
+.date {
+    color: var(--fc-strong);
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.price {
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.tenant {
+    margin-top: 6px;
+    display: flex;
+    gap: 6px;
+}
+
+.tenant-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.tenant-img img {
+    object-fit: cover;
+    width: inherit;
+    height: inherit;
+}

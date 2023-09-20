@@ -10,7 +10,7 @@ const Status = (props) => {
   } else if (unitRequestStatus === 1) {
     status = { type: "success", status: "Listed" };
   } else if (unitRequestStatus === 2) {
-    status = { type: "denied", status: "Unlisted" };
+    status = { type: 'cancel', status: "Unlisted" };
   } else {
     status = { type: "danger", status: "Rejected" };
   }

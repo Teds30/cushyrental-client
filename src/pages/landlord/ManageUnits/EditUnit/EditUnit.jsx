@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
+import useNotistack from "../../../../hooks/notistack-hook";
 
 import PrimaryButton from "../../../../components/Button/PrimaryButton";
 import UnitImage from "./UnitImage";
@@ -13,35 +14,42 @@ import Quantity from "../../../../components/Quantity/Quantity";
 import UnitFeatures from "./UnitFeatures";
 import EditUnitTargetGender from "./EditUnitTargetGender";
 import BorderedButton from "../../../../components/Button/BorderedButton";
+import useUnitManager from "../../../../hooks/data/units-hook";
+import TerminateConfirmationModal from "../../ManageRenters/Modal";
 
 import styles from "./EditUnit.module.css";
 import { FiChevronLeft } from "react-icons/fi";
-import { BsFillSendFill, BsTrashFill } from "react-icons/bs";
+import { BsTrashFill } from "react-icons/bs";
 import { useState } from "react";
 
 const EditUnit = (props) => {
     const { userUnit } = props;
 
+    const { updateUnit, isLoading } = useUnitManager();
+    const { notify } = useNotistack();
+    const navigate = useNavigate();
+
     const [unit, setUnit] = useState(userUnit);
+    const [terminateModalOpen, setTerminateModalOpen] = useState(false);
 
     const unitNameChangeHandler = (event) => {
         setUnit({ ...unit, name: event.target.value });
-    }
+    };
 
     const descriptionChangeHandler = (event) => {
         setUnit({ ...unit, details: event.target.value });
-    }
+    };
 
     const unitPriceChangeHandler = (event) => {
         setUnit({ ...unit, price: event.target.value });
-    }
+    };
 
     const swithDepositHandler = (value) => {
         setUnit({ ...unit, month_deposit: value.value === true ? 1 : 0 });
     };
 
     const quantityPaymentHandler = (value) => {
-        setUnit({ ...unit, month_advance: value.value});
+        setUnit({ ...unit, month_advance: value.value });
     };
 
     const swithAdvanceHandler = (value) => {
@@ -60,18 +68,83 @@ const EditUnit = (props) => {
         setUnit({ ...unit, is_listed: value.value === true ? 1 : 0 });
     };
 
-    const saveHandler = (event) => {
+    function filterObject(obj, excludeProperties) {
+        const filtered = {};
+        for (const key in obj) {
+            if (!excludeProperties.includes(key)) {
+                filtered[key] = obj[key];
+            }
+        }
+        return filtered;
+    }
+
+    const saveHandler = async (event) => {
         event.preventDefault();
-        // delete handler
+
+        if (unit.name === "" || (unit.details === "" && unit.price === "")) {
+            return;
+        }
+
+        const excludeProperties = [
+            "landlord",
+            "amenities",
+            "facilities",
+            "inclusions",
+            "rules",
+            "images",
+            "subscriptions",
+            "rentals",
+        ];
+
+        const filteredData = filterObject(unit, excludeProperties);
+
+        const id = filteredData.id;
+
+        try {
+            const res = await updateUnit(id, filteredData);
+            notify("Update successfully!", "success");
+            navigate("/manage_unit/" + res.id);
+        } catch (error) {}
     };
 
-    const deleteHandler = (event) => {
-        event.preventDefault();
-        // save handler
+    const deleteHandler = () => {
+        if (unit.name === "" || unit.details === "" || unit.price === "") {
+            return;
+        }
+        setTerminateModalOpen(true);
+    };
+
+    const handleDeleteConfirm = async () => {
+        setTerminateModalOpen(false);
+        const excludeProperties = [
+            "landlord",
+            "amenities",
+            "facilities",
+            "inclusions",
+            "rules",
+            "images",
+            "subscriptions",
+            "rentals",
+        ];
+
+        const filteredData = filterObject(unit, excludeProperties);
+
+        const id = filteredData.id;
+
+        try {
+            const res = await updateUnit(id, { ...filteredData, status: 0 });
+            notify("Deleted successfully!", "success");
+            navigate("/manage_unit/" + res.id);
+        } catch (error) {}
     };
 
     return (
         <div className={`${styles["edit-unit-container"]}`}>
+            <TerminateConfirmationModal
+                open={terminateModalOpen}
+                onClose={() => setTerminateModalOpen(false)}
+                onTerminate={handleDeleteConfirm}
+            />
             <Box className={`${styles["top-back-container"]} `}>
                 <AppBar
                     position="static"
@@ -90,7 +163,7 @@ const EditUnit = (props) => {
                             justifyContent: "space-between",
                         }}
                     >
-                        <Link to={`/manage_unit/${unit.id}`}>
+                        <Link to={`/manage_unit`}>
                             <IconButton
                                 size="large"
                                 edge="start"
@@ -109,7 +182,12 @@ const EditUnit = (props) => {
                             <p className="title">Edit Unit</p>
                         </Box>
                         <form onSubmit={saveHandler}>
-                            <PrimaryButton>Save</PrimaryButton>
+                            <PrimaryButton
+                                isLoading={isLoading}
+                                loadingText="Saving"
+                            >
+                                Save
+                            </PrimaryButton>
                         </form>
                     </Toolbar>
                 </AppBar>
@@ -120,7 +198,16 @@ const EditUnit = (props) => {
 
                 <div className={`${styles["unit-details"]}`}>
                     <p>Unit Name</p>
-                    <TextField label="" defaultValue={unit.name} onChange={unitNameChangeHandler} />
+                    <TextField
+                        label=""
+                        defaultValue={unit.name}
+                        onChange={unitNameChangeHandler}
+                        helperText={
+                            unit.name === "" &&
+                            "Please enter valid boarding house name."
+                        }
+                        error
+                    />
 
                     <p>Unit Description</p>
                     <TextField
@@ -129,6 +216,11 @@ const EditUnit = (props) => {
                         rows={4}
                         multiline
                         onChange={descriptionChangeHandler}
+                        helperText={
+                            unit.details === "" &&
+                            "Please enter your boarding house details."
+                        }
+                        error
                     />
 
                     <div className={styles["hr"]}></div>
@@ -137,7 +229,17 @@ const EditUnit = (props) => {
                         Pricing Details
                     </p>
                     <p>Price</p>
-                    <TextField label="" defaultValue={unit.price} onChange={unitPriceChangeHandler} />
+                    <TextField
+                        type="number"
+                        label=""
+                        defaultValue={unit.price}
+                        onChange={unitPriceChangeHandler}
+                        helperText={
+                            unit.price === "" &&
+                            "Please enter the price of your unit."
+                        }
+                        error
+                    />
 
                     <CardShadow filled={"false"}>
                         <div className={`${styles["price-deposit"]}`}>
@@ -254,14 +356,17 @@ const EditUnit = (props) => {
                             />
                         </div>
 
-                        <form onSubmit={deleteHandler}>
+                        <div>
                             <BorderedButton
                                 btnType="danger"
                                 leftIcon={<BsTrashFill />}
+                                onClick={deleteHandler}
+                                isLoading={isLoading}
+                                loadingText="Deleting"
                             >
                                 Delete
                             </BorderedButton>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

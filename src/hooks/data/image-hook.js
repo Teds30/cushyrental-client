@@ -8,7 +8,7 @@ const useImageManager = () => {
         let responseData
         try {
             responseData = await sendRequest({
-                url: `http://127.0.0.1:8000/api/images`,
+                url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/images`,
             })
         } catch (err) {
             throw err.message
@@ -22,7 +22,9 @@ const useImageManager = () => {
             let responseData
             try {
                 const pic = await fetch(
-                    `http://127.0.0.1:8000/api/images/${fileName}`
+                    `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/images/${fileName}`
                 )
                 const imageBlob = await pic.blob()
                 responseData = URL.createObjectURL(imageBlob)
@@ -40,7 +42,9 @@ const useImageManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/attribute_icons/${fileName}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/attribute_icons/${fileName}`,
                     expectText: true,
                 })
             } catch (err) {
@@ -57,7 +61,9 @@ const useImageManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/attribute_icons/${fileName}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/attribute_icons/${fileName}`,
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',

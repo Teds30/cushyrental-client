@@ -6,7 +6,6 @@ import styles from "./EditFacilities.module.css";
 
 const FacilityKS = (props) => {
     const { facilityKS, onKSFacility, kitchenSink } = props;
-
     const { fetchIcon, isLoading } = useImageManager();
     const [kSFacility, setKSFacility] = useState(facilityKS);
     const [icon, setIcon] = useState("");
@@ -18,7 +17,7 @@ const FacilityKS = (props) => {
 
         onKSFacility({
             id: kSFacility[0].id,
-            is_shared: event.target.value === "Owned" ? 1 : 2,
+            is_shared: event.target.value === "Owned" ? 0 : 1,
         });
     };
 
@@ -54,17 +53,16 @@ const FacilityKS = (props) => {
                     label=""
                     selected={
                         kitchenSink.length !== 0
-                            ? kitchenSink[0].is_shared === 1
+                            ? kitchenSink[0].is_shared === 0
                                 ? "Owned"
-                                : kitchenSink[0].is_shared === 2
-                                ? "Shared"
-                                : "Choose"
+                                : kitchenSink[0].is_shared === 1
+                                && "Shared"
                             : "Choose"
                     }
                     items={[
-                        { id: 0, name: "Choose" },
-                        { id: 1, name: "Owned" },
-                        { id: 2, name: "Shared" },
+                        { id: -1, name: "Choose" },
+                        { id: 0, name: "Owned" },
+                        { id: 1, name: "Shared" },
                     ]}
                     handleSelect={handleCRSelect}
                 />

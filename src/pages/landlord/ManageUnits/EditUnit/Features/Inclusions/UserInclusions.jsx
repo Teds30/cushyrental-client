@@ -67,8 +67,8 @@ const UserInclusions = () => {
                 </AppBar>
             </Box>
 
-            {!isLoading && unitInclusions.length ? (
-                <EditInclusions unitInclusions={unitInclusions} />
+            {!isLoading ? (
+                <EditInclusions unitInclusions={unitInclusions} unitId={id} />
             ) : (
                 ""
             )}

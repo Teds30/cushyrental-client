@@ -17,16 +17,17 @@ const ManageUnitTabs = (props) => {
 
     const [value, setValue] = useState(0);
     const [userUnitPending, setUserUnitPending] = useState(
-        userUnits.filter((unit) => unit.request_status === 0)
+        userUnits.filter((unit) => unit.request_status === 0 && unit.is_listed === 1)
     );
+
     const [userUnitListed, setUserUnitListed] = useState(
-        userUnits.filter((unit) => unit.request_status === 1)
+        userUnits.filter((unit) => unit.is_listed === 1 && unit.request_status !== 2 && unit.request_status !== 0)
     );
     const [userUnitUnlisted, setUserUnitUnlisted] = useState(
-        userUnits.filter((unit) => unit.request_status === 2)
+        userUnits.filter((unit) => unit.is_listed === 0 && unit.request_status !== 2 && unit.request_status !== 0)
     );
     const [userUnitRejected, setUserUnitRejected] = useState(
-        userUnits.filter((unit) => unit.request_status === 3)
+        userUnits.filter((unit) => {return unit.request_status === 2 && 3})
     );
 
     const handleChange = (event, newValue) => {
@@ -77,7 +78,7 @@ const ManageUnitTabs = (props) => {
                                 "Unlisted"
                             ) : (
                                 <div className={`${styles["tab-child"]}`}>
-                                    Listed
+                                    Unlisted
                                     <div>{userUnitUnlisted.length}</div>
                                 </div>
                             )

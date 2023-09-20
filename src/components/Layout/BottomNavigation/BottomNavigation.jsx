@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -77,7 +78,18 @@ const nav_data = [
     },
     {
         name: 'Calendar',
-        icon: <IoIosCalendar size={32} style={{ fill: '#fff' }} />,
+        icon: (
+            <Link
+                to="/calendar"
+                style={{
+                    display: 'flex',
+                    justifyContent: 'centers',
+                    alignItems: 'center',
+                }}
+            >
+                <IoIosCalendar size={32} style={{ fill: '#fff' }} />
+            </Link>
+        ),
         main: true,
     },
     {
@@ -100,9 +112,9 @@ const nav_data = [
 ]
 
 const BottomNavigation = (props) => {
-    const { children } = props
+    const { current = 0, children } = props
 
-    const [selected, setSelected] = useState(0)
+    const [selected, setSelected] = useState(current)
 
     const selectHandler = (id) => {
         setSelected(id)
@@ -110,7 +122,7 @@ const BottomNavigation = (props) => {
 
     return (
         <React.Fragment>
-            <CssBaseline />
+            {/* <CssBaseline /> */}
             <HideOnScroll {...props}>
                 <AppBar
                     position="fixed"

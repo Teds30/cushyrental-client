@@ -10,14 +10,17 @@
 }
 
 .edit-image-main {
+    padding-bottom: 90px;
+
     display: flex;
+    justify-content: center;
     gap: 2px;
     flex-wrap: wrap;
     overflow: auto;
 }
 
 .image-col {
-    background: none;
+    background: var(--bg-layer4);
     border: none;
     outline: none;
     padding: 0;
@@ -25,7 +28,6 @@
     position: relative;
 
     flex: 1;
-    /* max-width: 200px; */
     height: 200px;
 }
 
@@ -47,11 +49,14 @@
 }
 
 .edit-image-button {
-    background: var(--bg-layer1);
+    backdrop-filter: blur(1px);
+    background: rgba(255, 255, 255, 0.80);
     position: absolute;
-    bottom: 35px;
+    bottom: 0;
     width: 100%;
     padding: 0 12px;
+    padding-bottom: 35px;
+    padding-top: 10px;
     box-sizing: border-box;
 
     display: flex;
@@ -79,7 +84,7 @@
 }
 
 .selected-image {
-    border: 3px solid white;
+    border: 3px solid var(--bg-layer1);
     border-radius: 50%;
 
     position: absolute;
@@ -92,9 +97,8 @@
     background: var(--accent);
 }
 
-.image-background {
-    opacity: 50%;
-    background: red;
+.image-col-hidden {
+    display: none;
 }
 
 @media (min-width: 640px) {

@@ -67,8 +67,8 @@ const UserAmenities = () => {
                 </AppBar>
             </Box>
 
-            {!isLoading && unitAmenities.length ? (
-                <EditAmenities unitAmenities={unitAmenities} />
+            {!isLoading ? (
+                <EditAmenities unitAmenities={unitAmenities} unitId={id} />
             ) : (
                 ""
             )}

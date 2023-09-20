@@ -21,7 +21,6 @@ const UserFacilities = () => {
         const handleFetch = async () => {
             try {
                 const res = await fetchUnitFacilities(id);
-                console.log(res);
                 setUnitFacilities(res);
             } catch (err) {}
         };
@@ -68,8 +67,8 @@ const UserFacilities = () => {
                 </AppBar>
             </Box>
 
-            {!isLoading && unitFacilities.length ? (
-                <EditFacilities unitFacilities={unitFacilities} />
+            {!isLoading ? (
+                <EditFacilities unitFacilities={unitFacilities} unitId={id} />
             ) : (
                 ""
             )}

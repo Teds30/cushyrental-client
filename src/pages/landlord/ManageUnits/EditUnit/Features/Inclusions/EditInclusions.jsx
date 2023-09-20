@@ -1,32 +1,50 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import ChipBig from "../../../../../../components/Chips/ChipBig";
 import useAttributeManager from "../../../../../../hooks/data/attribute-hook";
+import useNotistack from "../../../../../../hooks/notistack-hook";
+import useUserManager from "../../../../../../hooks/data/users-hook";
 
 import styles from "./EditInclusions.module.css";
 import PrimaryButton from "../../../../../../components/Button/PrimaryButton";
 
 const EditInclusions = (props) => {
-    const { unitInclusions } = props;
-    const { fetchInclusions, isLoading } = useAttributeManager();
+    const { unitInclusions, unitId } = props;
+    const { fetchInclusions } = useAttributeManager();
+    const { updateUserInclusions, isLoading } = useUserManager();
+    const { notify } = useNotistack();
+    const navigate = useNavigate();
 
-    const [ inclusions, setInclusions] = useState([]);
+    const [inclusions, setInclusions] = useState([]);
     const [selectedInclusions, setSelectedInclusions] =
         useState(unitInclusions);
 
     const chipAmenityHandler = (value) => {
-        console.log(value);
         setSelectedInclusions(value);
     };
 
     const saveAmenityHandler = (event) => {
         event.preventDefault();
 
-        if (inclusions.length === 0) {
+        if (selectedInclusions.length === 0) {
             return;
         }
 
-        console.log(selectedInclusions);
-        console.log("save inclusions");
+        selectedInclusions.forEach(async (element, index) => {
+            try {
+                const data = {
+                    unit_id: Number(unitId),
+                    inclusion_id: element,
+                };
+                const res = await updateUserInclusions(data);
+            } catch (error) {}
+
+            if (index === selectedInclusions.length - 1) {
+                navigate("/manage_unit/edit/" + unitId);
+                notify("Inclusions save successfully", "success");
+            }
+        });
     };
 
     useEffect(() => {
@@ -56,7 +74,13 @@ const EditInclusions = (props) => {
             </div>
 
             <div className={`${styles["feature-button"]}`}>
-                <PrimaryButton width="100%">Save</PrimaryButton>
+                <PrimaryButton
+                    width="100%"
+                    isLoading={isLoading}
+                    loadingText="Saving"
+                >
+                    Save
+                </PrimaryButton>
             </div>
         </form>
     );

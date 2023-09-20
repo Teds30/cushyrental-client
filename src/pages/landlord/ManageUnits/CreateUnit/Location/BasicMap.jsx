@@ -5,40 +5,83 @@ import React, {
     useCallback,
     useEffect,
 } from 'react'
-import { GoogleMap, Marker } from '@react-google-maps/api'
+import {
+    GoogleMap,
+    Marker,
+    StandaloneSearchBox,
+    LoadScript,
+} from '@react-google-maps/api'
 
 import { HiOutlineLocationMarker } from 'react-icons/hi'
 
 import styles from './BasicMap.module.css'
 
 import custom_pin from '../../../../../assets/gmap/pin.svg'
+import SearchField from '../../../../../components/Search/SearchField'
 const BasicMap = ({
-    isLoaded,
+    isLoaded = true,
     center = { lat: 13.14457855948287, lng: 123.72523867131375 },
     onChangeCenter,
+    onChangeCoords,
     onUseCurrentLocation,
+    onMapLoad,
+    mapRef,
 }) => {
     // const center = useMemo(() => ({ lat: 12.923675, lng: 124.123983 }), [])
     // const center = useMemo(() => ({ lat: 13.143966, lng: 123.725869 }), [])
-    const [mapref, setMapRef] = React.useState(null)
+    // const [mapref, setMapRef] = React.useState(null)
+
+    const searchRef = useRef()
+    const [searchBox, setSearchBox] = useState(null)
+
+    const onSBLoad = (ref) => {
+        setSearchBox(ref)
+    }
 
     if (!isLoaded) return <div>Loading...</div>
 
-    const handleOnLoad = (map) => {
-        setMapRef(map)
-    }
+    // const handleOnLoad = (map) => {
+    //     setMapRef(map)
+    // }
 
     const handleBoundsChanged = () => {
-        if (mapref) {
-            onChangeCenter({
-                lat: mapref.getCenter().lat(),
-                lng: mapref.getCenter().lng(),
+        if (mapRef) {
+            onChangeCoords({
+                lat: mapRef.getCenter().lat(),
+                lng: mapRef.getCenter().lng(),
             })
         }
     }
 
+    const onPlacesChanged = () => {
+        const places = searchBox.getPlaces()
+        if (places.length === 0) return
+        // Handle the selected place(s) here
+        // console.log(places)
+        onChangeCoords({
+            lat: places[0].geometry.location.lat(),
+            lng: places[0].geometry.location.lng(),
+        })
+        onChangeCenter({
+            lat: places[0].geometry.location.lat(),
+            lng: places[0].geometry.location.lng(),
+        })
+    }
+
     return (
         <div className={styles['container']}>
+            {/* <div className={styles['centerMarker2']}></div> */}
+            <div style={{ marginBottom: '10px', paddingInline: '10px' }}>
+                <StandaloneSearchBox
+                    // onLoad={(ref) => (searchBox = ref)}
+                    ref={searchRef}
+                    onPlacesChanged={onPlacesChanged}
+                    onLoad={onSBLoad}
+                >
+                    <SearchField placeholder="Search" />
+                </StandaloneSearchBox>
+            </div>
+
             <div className={styles['drag']}>
                 Drag map to your unit's exact location
             </div>
@@ -59,7 +102,7 @@ const BasicMap = ({
             <div className={styles['centerMarker']}>
                 <img src={custom_pin} />
             </div>
-            {/* <div className={styles['centerMarker2']}></div> */}
+
             <GoogleMap
                 id="map"
                 zoom={17}
@@ -72,7 +115,7 @@ const BasicMap = ({
                 }}
                 center={center}
                 mapContainerClassName={styles['map-container']}
-                onLoad={handleOnLoad}
+                onLoad={onMapLoad}
                 onDrag={handleBoundsChanged}
             >
                 BasicMap

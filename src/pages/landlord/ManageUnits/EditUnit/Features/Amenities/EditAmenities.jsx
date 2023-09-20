@@ -1,32 +1,54 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import ChipBig from "../../../../../../components/Chips/ChipBig";
 import useAttributeManager from "../../../../../../hooks/data/attribute-hook";
+import useUserManager from "../../../../../../hooks/data/users-hook";
+import PrimaryButton from "../../../../../../components/Button/PrimaryButton";
+import useNotistack from "../../../../../../hooks/notistack-hook";
 
 import styles from "./EditAmenities.module.css";
-import PrimaryButton from "../../../../../../components/Button/PrimaryButton";
 
 const EditAmenities = (props) => {
-    const { unitAmenities } = props;
-    const { fetchAmenities, isLoading } = useAttributeManager();
+    const { unitAmenities, unitId } = props;
+    const { fetchAmenities } = useAttributeManager();
+    const { notify } = useNotistack();
+    const navigate = useNavigate();
 
     const [amenities, setAmenities] = useState([]);
     const [selectedAmenities, setSelectedAmenities] = useState(unitAmenities);
 
+    const { updateUserAmenities, isLoading } = useUserManager();
+
     const chipAmenityHandler = (value) => {
-        console.log(value);
         setSelectedAmenities(value);
     };
 
     const saveAmenityHandler = (event) => {
-        event.preventDefault()
+        event.preventDefault();
 
-        if (amenities.length === 0) {
+        let isFinished = false;
+
+        if (selectedAmenities.length === 0) {
             return;
         }
 
-        console.log(selectedAmenities);
-        console.log("save amenities");
-    } 
+        selectedAmenities.forEach(async (element, index) => {
+            try {
+                const data = {
+                    unit_id: Number(unitId),
+                    amenity_id: element.toString(),
+                };
+                const res = await updateUserAmenities(data);
+            } catch (error) {}
+
+            if (index === selectedAmenities.length - 1) {
+                navigate("/manage_unit/edit/" + unitId);
+                notify("Amenities save successfully", "success");
+                return
+            }
+        });
+    };
 
     useEffect(() => {
         const handleFetch = async () => {
@@ -55,7 +77,13 @@ const EditAmenities = (props) => {
             </div>
 
             <div className={`${styles["feature-button"]}`}>
-                <PrimaryButton width="100%">Save</PrimaryButton>
+                <PrimaryButton
+                    width="100%"
+                    isLoading={isLoading}
+                    loadingText="Saving"
+                >
+                    Save
+                </PrimaryButton>
             </div>
         </form>
     );
