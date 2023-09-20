@@ -22,7 +22,7 @@ const ManageRenters = () => {
     const fetchTenantsData = async () => {
         try {
             const response = await fetch(
-                "http://127.0.0.1:8000/api/landlord-rentals/1"
+                `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/landlord-rentals/1`
             );
             const data = await response.json();
             const availableRentals = data.filter(rental => rental.rental_status === 1);
@@ -36,7 +36,7 @@ const ManageRenters = () => {
         const fetchInquiriesData = async () => {
             try {
                 const response = await fetch(
-                    "http://127.0.0.1:4000/inquiries/1"
+                    `${import.meta.env.VITE_BACKEND_LOCALHOST}/inquiries/1`
                 );
                 const data = await response.json();
                 setInquiriesData(data);

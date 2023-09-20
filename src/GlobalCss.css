@@ -10,6 +10,9 @@
     border-radius: 10px !important;
 }
 
+.MuiFormControlLabel-root {
+    margin-right: 0px !important;
+} 
 .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
     /* border-color: var(--input-border-color); */
     border-color: var(--fc-body) !important;

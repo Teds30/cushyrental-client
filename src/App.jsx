@@ -20,6 +20,7 @@ import UserRules from "./pages/landlord/ManageUnits/EditUnit/Features/Rules/User
 import MyCalendar from './pages/landlord/MyCalendar/MyCalendar'
 import UnitImageData from "./pages/landlord/ManageUnits/EditUnit/EditUnitImage/UnitImageData";
 import Rules from './pages/Rules'
+import ViewProfile from "./pages/tenant/ViewProfile";
 // import './App.css'
 
 function App() {
@@ -99,6 +100,10 @@ function App() {
                 element={<Rules />}
             ></Route>
 
+            <Route
+                path="/viewprofile"
+                element={<ViewProfile />}
+            ></Route>
             <Route
                 path="*"
                 element={<Navigate replace to="/signinpage" />}
