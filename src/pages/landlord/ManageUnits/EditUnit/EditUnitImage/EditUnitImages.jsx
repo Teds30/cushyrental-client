@@ -38,8 +38,6 @@ const EditUnitImages = (props) => {
     // const [imagesDeleted, setImagesDeleted] = useState(false);
 
     console.log(selectedImage);
-    const [imagesDeleted, setImagesDeleted] = useState(false);
-    const [isSaving, setIsSaving] = useState(false);
 
     const imageHandler = (index) => {
         const isIncluded = selectedImage.includes(index);
@@ -66,17 +64,26 @@ const EditUnitImages = (props) => {
     };
 
     const selectAllHandler = () => {
-        setSelectedImage(ImagesData.map((image, index) => index))
-    }
+        setSelectedImage(ImagesData.map((image, index) => index));
+    };
 
     const cancelHandler = () => {
         setSelectedImage([]);
     };
 
     const deleteImageHandler = () => {
-        setImagesData(selectedImage.map((i) => {
-            return ImagesData.filter((data, index) => index !== i)
-        }));
+        const updatedImages = ImagesData.filter(
+            (data, index) => !selectedImage.includes(index)
+        );
+        setImagesData(updatedImages);
+
+        // Check if all images are deleted
+        if (updatedImages.length === 0) {
+            setImagesDeleted(true);
+        }
+        // setImagesData(selectedImage.map((i) => {
+        //     return ImagesData.filter((data, index) => index !== i)
+        // }));
 
         setSelectedImage([]);
     };
@@ -84,17 +91,19 @@ const EditUnitImages = (props) => {
     const makeThumbnailHandler = () => {
         const imageIndex = selectedImage[0];
 
-        setImagesData(ImagesData.map((data, index) => {
-            if (data.is_thumbnail === 1) {
-                return { ...data, is_thumbnail: 0 };
-            } else if (index === imageIndex) {
-                console.log('pumasok dito');
-                return { ...data, is_thumbnail: 1 };
-            } else {
-                return data;
-            }
-        }));
-    }
+        setImagesData(
+            ImagesData.map((data, index) => {
+                if (data.is_thumbnail === 1) {
+                    return { ...data, is_thumbnail: 0 };
+                } else if (index === imageIndex) {
+                    console.log("pumasok dito");
+                    return { ...data, is_thumbnail: 1 };
+                } else {
+                    return data;
+                }
+            })
+        );
+    };
 
     const handleFileUpload = async (image, index) => {
         let exit = false;
@@ -181,7 +190,7 @@ const EditUnitImages = (props) => {
             key={index}
             className={`${styles["image-col"]} ${
                 ImagesData.length === 0 ? styles["image-col-hidden"] : ""
-              }`}
+            }`}
             onClick={() => imageHandler(index)}
         >
             <img
@@ -252,7 +261,13 @@ const EditUnitImages = (props) => {
             </Box>
 
             <div className={`${styles["edit-image-main"]}`}>
-                { isLoading ? 'Loading' : ImagesData.length === 0 ? <p>No image uploaded</p> : content }
+                {isLoading ? (
+                    "Loading"
+                ) : imagesDeleted ? (
+                    <p>No image uploaded</p>
+                ) : (
+                    content
+                )}
 
                 <div className={`${styles["edit-image-button"]}`}>
                     {selectedImage.length === 1 ? (
