@@ -17,8 +17,6 @@ const ViewProfile = () => {
     const [units, setUnits] = useState([]);
     const [isPriceAscending, setIsPriceAscending] = useState(true);
 
-    
-
     useEffect(() => {
         const fetchUsers = async () => {
             try {
@@ -111,7 +109,11 @@ const ViewProfile = () => {
                         </p>
                     </div>
                     <div className={`${styles["profile-details-type"]} `}>
-                        <p>{user?.user_type_id  }</p>
+                        <p>
+                            {user?.user_type_id === 2
+                                ? "Landlord"
+                                : user?.user_type_id}
+                        </p>
                     </div>
                     <div className={`${styles["profile-details-rating"]} `}>
                         <FaStar
@@ -160,14 +162,12 @@ const ViewProfile = () => {
             </div>
             <div className={`${styles["main-unit-container"]} `}>
                 {units.map((unit) => (
-                     <LandlordUnit key={unit.id} unit={unit} />
+                    <LandlordUnit key={unit.id} unit={unit} />
                 ))}
             </div>
             <div className={`${styles["bottom-text-container"]}`}>
                 <p>No more units found.</p>
             </div>
-
-
         </div>
     );
 };

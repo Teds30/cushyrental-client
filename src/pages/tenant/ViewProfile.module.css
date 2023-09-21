@@ -139,8 +139,8 @@
 
 .text-container {
     display: flex;
-    padding: 7px 8px 0px 8px;
-    gap: 5px;
+    padding: 7px 0px 0px 8px;
+    justify-content: space-between;
 }
 
 .left-side {
@@ -148,6 +148,12 @@
     flex-direction: column;
     gap: 6px;
 }
+
+.bookmark-container {
+    display: flex;
+    padding: 0 8px;
+}
+
 .price {
     font-family: Inter;
     font-size: 15px;

@@ -29,14 +29,14 @@ const LandlordUnitAttribute = (props) => {
                                 __html: icon,
                             }}
                             style={{
-                                backgroundColor: "#D9D9D9",  // Circle fill color
-                                borderRadius: "50%",       // Creates a circle
-                                width: "24px",             // Adjust width to control circle size
-                                height: "24px",            // Adjust height to control circle size
+                                backgroundColor: "#D9D9D9",
+                                borderRadius: "50%",      
+                                width: "24px",          
+                                height: "24px",          
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                color: "#5C6173",          // Icon color
+                                color: "#5C6173",          
                             }}
                             
                         />
