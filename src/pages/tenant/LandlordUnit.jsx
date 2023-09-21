@@ -9,6 +9,8 @@ import LandlordUnitImage from "./LandlordUnitImage";
 const LandlordUnit = (props) => {
     const { unit } = props;
 
+    console.log(unit.images[0])
+
     return (
         <div
             key={unit.id}
@@ -16,7 +18,7 @@ const LandlordUnit = (props) => {
             id={`user-${unit.id}`}
         >
             <div className={`${styles["image-unit-container"]} `}>
-                {unit.images !== undefined && <LandlordUnitImage images={unit.images[0]} />}
+                <LandlordUnitImage images={unit.images[0]} />
                 
                     {/* // unit.images.map((image, index) => {
                     //     if (index === 0) {
