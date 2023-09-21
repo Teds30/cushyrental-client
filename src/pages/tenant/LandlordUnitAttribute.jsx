@@ -28,10 +28,23 @@ const LandlordUnitAttribute = (props) => {
                             dangerouslySetInnerHTML={{
                                 __html: icon,
                             }}
+                            style={{
+                                backgroundColor: "#D9D9D9",  // Circle fill color
+                                borderRadius: "50%",       // Creates a circle
+                                width: "24px",             // Adjust width to control circle size
+                                height: "24px",            // Adjust height to control circle size
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                color: "#5C6173",          // Icon color
+                            }}
+                            
                         />
                     }
                     label={amenity.amenity.name}
+                    style={{ color: "#8A93A6" }}
                     variant="outlined"
+                    sx={{ padding: "3px", border: "2px solid #E4E9ED"}}
                 />
             </Stack>
         </div>

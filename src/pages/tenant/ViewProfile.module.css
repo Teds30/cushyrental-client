@@ -169,11 +169,18 @@
     padding: 5px 0;
 }
 
-
 .star-container {
     display: flex;
     gap: 3px;
     margin-top: 2px;
+}
+
+.amenities-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    gap: 5px;
+    margin-top: 6px;
 }
 
 .bottom-text-container {
