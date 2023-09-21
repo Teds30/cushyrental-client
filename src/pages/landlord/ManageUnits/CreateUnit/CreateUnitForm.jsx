@@ -87,7 +87,6 @@ function QontoStepIcon(props) {
 
 export default function CreateUnitForm() {
     const createUnitCtx = React.useContext(CreateUnitContext);
-    console.log(createUnitCtx.unitData.location);
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }

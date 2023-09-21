@@ -12,7 +12,7 @@ import BorderlessButton from "../../../../components/Button/BorderlessButton";
 
 const LocationForm = (props) => {
     const createUnitCtx = useContext(CreateUnitContext);
-    const locationDetails = createUnitCtx.unitData.location.lat + ' : ' + createUnitCtx.unitData.location.lng;
+    const locationDetails = createUnitCtx.unitData.location;
 
     const { onNext, onBack } = props;
 
@@ -31,16 +31,18 @@ const LocationForm = (props) => {
         formIsValid = true;
     }
 
-    const draftPricing = () => {
+    const draftLocation = () => {
         if (formIsValid) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
                 location: enteredLocation,
+                address: 'address'
             });
         } else if (locationDetails !== undefined) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
                 location: createUnitCtx.unitData.location,
+                address: 'address'
             });
         }
     };
@@ -48,7 +50,7 @@ const LocationForm = (props) => {
     const backHandler = (event) => {
         event.preventDefault();
 
-        draftPricing();
+        draftLocation();
 
         onBack();
     }
@@ -59,12 +61,13 @@ const LocationForm = (props) => {
         if (formIsValid) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
-                location: enteredLocation
+                address: 'address'
             });
         } else if (locationDetails !== undefined) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
                 location: createUnitCtx.unitData.location,
+                address: 'adress'
             });
         } else {
             return;
