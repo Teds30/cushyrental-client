@@ -1,0 +1,14 @@
+.background-img-1 {
+    /* border: 1px solid red; */
+    position: absolute;
+    /* height: 18px; */
+    width: 100%;
+    /* margin-top: -1px; */
+  }
+  
+  .background-img-1 svg{
+    width: 100%;
+    /* height: 190px; */
+    max-height: 190px;
+    min-height: 190px;
+  }

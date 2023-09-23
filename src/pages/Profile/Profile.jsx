@@ -9,7 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import AuthContext from "../../context/auth-context";
 import ProfileDesign from "./ProfileDesign";
 import BorderedButton from "../../components/Button/BorderedButton";
-import LandLordProfile from "../landlord/LandProfile/LandLordProdile";
+import ProfileOption from "../landlord/LandProfile/ProfileOption";
 
 import styles from "./Profile.module.css";
 import VerifiedIcon from "@mui/icons-material/Verified";
@@ -87,7 +87,7 @@ const Profile = () => {
                     </div>
 
                     <div className={`${styles["user-menu"]}`}>
-                        <LandLordProfile />
+                        <ProfileOption className={`${styles['profile-option']}`} />
                     </div>
                 </div>
 
@@ -106,7 +106,7 @@ const Profile = () => {
                             <p className="smaller-text">CushyRental</p>
                         </Link>
 
-                        <Link to='/rules' className={`${styles["about-col"]}`}>
+                        <Link to="/rules" className={`${styles["about-col"]}`}>
                             <div className={`${styles["about-rule"]}`}>
                                 <div className={`${styles["rule"]}`}>
                                     <LiaScrollSolid
@@ -125,7 +125,9 @@ const Profile = () => {
 
                 <div className={`${styles["profile-button"]}`}>
                     <Link>
-                        <BorderedButton btnType="danger" width='100%'>Logout</BorderedButton>
+                        <BorderedButton btnType="danger" width="100%">
+                            Logout
+                        </BorderedButton>
                     </Link>
                 </div>
             </div>
