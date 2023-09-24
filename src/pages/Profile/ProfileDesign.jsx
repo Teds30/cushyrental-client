@@ -38,11 +38,11 @@ const ProfileDesign = (props) => {
                             y2="19.9849"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop stop-color="#1D6156" />
+                            <stop stopColor="#1D6156" />
                             <stop
                                 offset="1"
-                                stop-color="#1D6156"
-                                stop-opacity="0"
+                                stopColor="#1D6156"
+                                stopOpacity="0"
                             />
                         </linearGradient>
                     </defs>

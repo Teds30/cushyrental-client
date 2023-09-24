@@ -6,7 +6,6 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import CheckIcon from "@mui/icons-material/Check";
-import ImageIcon from "@mui/icons-material/Image";
 
 import PrimaryButton from "../../../../../components/Button/PrimaryButton";
 import SecondaryButton from "../../../../../components/Button/SecondaryButton";
@@ -20,12 +19,11 @@ import styles from "./EditUnitImages.module.css";
 import { FiChevronLeft } from "react-icons/fi";
 import { BiImageAdd } from "react-icons/bi";
 import { BsTrashFill } from "react-icons/bs";
+import ImageIcon from "@mui/icons-material/Image";
+
+// import photo from "../../../../../assets/Units/pics.png"
 
 // import photo from "../../../../../assets/Units/pics.png";
-import ImageIcon from "@mui/icons-material/Image";
-import { BsTrashFill } from "react-icons/bs";
-// BiImageAdd
-import photo from "../../../../../assets/Units/pics.png";
 
 const EditUnitImages = (props) => {
     const { unitImages, unitId } = props;
@@ -37,9 +35,6 @@ const EditUnitImages = (props) => {
 
     const [imagesData, setImagesData] = useState([]);
     const [selectedImage, setSelectedImage] = useState([]);
-    const [imagesDeleted, setImagesDeleted] = useState(false);
-
-    console.log(selectedImage);
     const [imagesDeleted, setImagesDeleted] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
 
@@ -68,54 +63,76 @@ const EditUnitImages = (props) => {
     };
 
     const selectAllHandler = () => {
-        setSelectedImage(ImagesData.map((image, index) => index))
-    }
+        setSelectedImage(imagesData.map((image, index) => index));
+    };
 
     const cancelHandler = () => {
         setSelectedImage([]);
     };
 
-    const deleteImageHandler = () => {
-        setImagesData(selectedImage.map((i) => {
-            return ImagesData.filter((data, index) => index !== i)
-        }));
+    const deleteImageHandler = async () => {
+        const updatedImages = [];
 
+        for (let index = 0; index < imagesData.length; index++) {
+            const data = imagesData[index];
+
+            if (data.id !== undefined && selectedImage.includes(index)) {
+                try {
+                    const imageData = {
+                        unit_id: Number(unitId),
+                        image_id: data.id,
+                    };
+                    const result = await deleteUserImages(imageData);
+                } catch (error) {
+                }
+            } else {
+                updatedImages.push(data);
+            }
+        }
+
+        setImagesData(updatedImages);
+
+        if (updatedImages.length === 0) {
+            setImagesDeleted(true);
+        }
         setSelectedImage([]);
     };
 
     const makeThumbnailHandler = () => {
         const imageIndex = selectedImage[0];
 
-        setImagesData(ImagesData.map((data, index) => {
-            if (data.is_thumbnail === 1) {
-                return { ...data, is_thumbnail: 0 };
-            } else if (index === imageIndex) {
-                console.log('pumasok dito');
-                return { ...data, is_thumbnail: 1 };
-            } else {
-                return data;
-            }
-        }));
-    }
+        setImagesData(
+            imagesData.map((data, index) => {
+                if (data.is_thumbnail === 1) {
+                    return { ...data, is_thumbnail: 0 };
+                } else if (index === imageIndex) {
+                    console.log("pumasok dito");
+                    return { ...data, is_thumbnail: 1 };
+                } else {
+                    return data;
+                }
+            })
+        );
+    };
 
     const handleFileUpload = async (image, index) => {
         let exit = false;
 
         if (image.id !== undefined) {
             try {
-                const ImageData = {
+                const imageData = {
                     unit_id: Number(unitId),
                     image_id: image.id,
                     is_thumbnail: image.is_thumbnail,
                 };
-                const result = await updateUserImages(ImageData);
+                const result = await updateUserImages(imageData);
                 exit = true;
             } catch (error) {}
         }
 
         if (exit === true) {
             if (index === imagesData.length - 1) {
-                setIsSaving(false)
+                setIsSaving(false);
                 navigate("/manage_unit/edit/" + unitId);
                 notify("Save successfully", "success");
             }
@@ -136,12 +153,12 @@ const EditUnitImages = (props) => {
 
             const data = await res.json();
 
-            const ImageData = {
+            const imageData = {
                 unit_id: Number(unitId),
                 image_id: data.image.id,
                 is_thumbnail: image.is_thumbnail,
             };
-            const result = await updateUserImages(ImageData);
+            const result = await updateUserImages(imageData);
 
             if (index === imagesData.length - 1) {
                 setIsSaving(false);
@@ -153,6 +170,10 @@ const EditUnitImages = (props) => {
 
     const saveHandler = (event) => {
         event.preventDefault();
+
+        if (imagesData.length === 0) {
+            return;
+        }
 
         setIsSaving(true);
 
@@ -182,8 +203,8 @@ const EditUnitImages = (props) => {
         <button
             key={index}
             className={`${styles["image-col"]} ${
-                ImagesData.length === 0 ? styles["image-col-hidden"] : ""
-              }`}
+                imagesData.length === 0 ? styles["image-col-hidden"] : ""
+            }`}
             onClick={() => imageHandler(index)}
         >
             <img
@@ -246,15 +267,25 @@ const EditUnitImages = (props) => {
                             <p className="title">Edit images</p>
                         </Box>
                         <form onSubmit={saveHandler}>
-                            <PrimaryButton isLoading={isSaving}
-                    loadingText="Saving">Save</PrimaryButton>
+                            <PrimaryButton
+                                isLoading={isSaving}
+                                loadingText="Saving"
+                            >
+                                Save
+                            </PrimaryButton>
                         </form>
                     </Toolbar>
                 </AppBar>
             </Box>
 
             <div className={`${styles["edit-image-main"]}`}>
-                { isLoading ? 'Loading' : ImagesData.length === 0 ? <p>No image uploaded</p> : content }
+                {isLoading ? (
+                    "Loading"
+                ) : imagesDeleted ? (
+                    <p>No image uploaded</p>
+                ) : (
+                    content
+                )}
 
                 <div className={`${styles["edit-image-button"]}`}>
                     {selectedImage.length === 1 ? (

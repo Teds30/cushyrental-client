@@ -1,24 +1,24 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useEffect, useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import { useLoadScript, LoadScript } from '@react-google-maps/api'
-import AppBar from '@mui/material/AppBar'
-import Box from '@mui/material/Box'
-import Toolbar from '@mui/material/Toolbar'
-import IconButton from '@mui/material/IconButton'
+import { useLoadScript, LoadScript } from "@react-google-maps/api";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
 
-import PrimaryButton from '../../../../../components/Button/PrimaryButton'
-import SearchField from '../../../../../components/Search/SearchField'
-import CreateUnitContext from '../../../../../context/create-unit-context'
+import PrimaryButton from "../../../../../components/Button/PrimaryButton";
+import SearchField from "../../../../../components/Search/SearchField";
+import CreateUnitContext from "../../../../../context/create-unit-context";
 
-import styles from '../CreateUnit.module.css'
-import photo from '../../../../../assets/Units/pics.png'
-import { FiChevronLeft } from 'react-icons/fi'
-import BasicMap from './BasicMap'
+import styles from "../CreateUnit.module.css";
+import photo from "../../../../../assets/Units/pics.png";
+import { FiChevronLeft } from "react-icons/fi";
+import BasicMap from "./BasicMap";
 
-import { useGeolocated } from 'react-geolocated'
+import { useGeolocated } from "react-geolocated";
 
-const lib = ['places']
+const lib = ["places"];
 
 const Location = (props) => {
     // const { isLoaded } = useLoadScript({
@@ -34,17 +34,17 @@ const Location = (props) => {
                 enableHighAccuracy: true,
             },
             userDecisionTimeout: 5000,
-        })
+        });
 
-    const [mapref, setMapRef] = React.useState(null)
+    const [mapref, setMapRef] = React.useState(null);
     const handleOnLoad = (map) => {
-        setMapRef(map)
-    }
+        setMapRef(map);
+    };
     const [center, setCenter] = useState({
         lat: 13.14457855948287,
         lng: 123.72523867131375,
-    })
-    const [newCenter, setNewCenter] = useState(center)
+    });
+    const [newCenter, setNewCenter] = useState(center);
 
     const handleCurrentLocation = () => {
         // navigator.geolocation.getCurrentPosition((position) => {
@@ -56,18 +56,18 @@ const Location = (props) => {
             enableHighAccuracy: true,
             timeout: 7000,
             maximumAge: 0,
-        }
+        };
 
         if (isGeolocationEnabled) {
             if (isGeolocationAvailable) {
-                const { latitude, longitude } = coords
-                setCenter({ lat: latitude, lng: longitude })
-                setNewCenter({ lat: latitude, lng: longitude })
+                const { latitude, longitude } = coords;
+                setCenter({ lat: latitude, lng: longitude });
+                setNewCenter({ lat: latitude, lng: longitude });
             }
         }
 
         if (!isGeolocationEnabled) {
-            alert('Browser location services disabled')
+            alert("Browser location services disabled");
         }
 
         // does browser have geo services enabled
@@ -123,52 +123,50 @@ const Location = (props) => {
         // function errorLocation() {
         //     console.log('error')
         // }
-    }
+    };
 
     const saveHandler = (event) => {
         event.preventDefault();
 
-        const unit_new_location = JSON.stringify(newCenter)
+        const unit_new_location = JSON.stringify(newCenter);
         const location = JSON.parse(unit_new_location);
 
         createUnitCtx.onUnitData({
             ...createUnitCtx.unitData,
-            location: {
-                lat: location.lat,
-                lng: location.lng
-            }
+            location: location.lat + ", " + location.lng,
+            // address: mapRef
         });
-        navigate('/manage_unit/create_unit')
+        navigate("/manage_unit/create_unit");
         // save
-    }
+    };
 
     const handleChangeCenter = (coords) => {
         // console.log(coords)
-        setCenter(coords)
-    }
+        setCenter(coords);
+    };
 
     const handleChangeCoords = (coords) => {
-        setNewCenter(coords)
-    }
+        setNewCenter(coords);
+    };
 
     return (
-        <div className={`${styles['location-map-container']}`}>
-            <Box className={`${styles['top-back-container']} `}>
+        <div className={`${styles["location-map-container"]}`}>
+            <Box className={`${styles["top-back-container"]} `}>
                 <AppBar
                     position="static"
                     sx={{
                         margin: 0,
-                        backgroundColor: '#fff',
-                        color: 'var(--fc-body)',
-                        fontFamily: 'Inter',
-                        boxShadow: 'none',
-                        borderBottom: '1px solid var(--border-color)',
+                        backgroundColor: "#fff",
+                        color: "var(--fc-body)",
+                        fontFamily: "Inter",
+                        boxShadow: "none",
+                        borderBottom: "1px solid var(--border-color)",
                     }}
                 >
                     <Toolbar
                         sx={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
+                            display: "flex",
+                            justifyContent: "space-between",
                         }}
                     >
                         <Link>
@@ -180,8 +178,8 @@ const Location = (props) => {
                             >
                                 <FiChevronLeft
                                     style={{
-                                        color: 'var(--fc-strong)',
-                                        fill: 'transparent',
+                                        color: "var(--fc-strong)",
+                                        fill: "transparent",
                                     }}
                                 />
                             </IconButton>
@@ -196,7 +194,7 @@ const Location = (props) => {
                 </AppBar>
             </Box>
 
-            <div className={`${styles['location-map']}`}>
+            <div className={`${styles["location-map"]}`}>
                 <LoadScript
                     googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAP_API}
                     libraries={lib}
@@ -214,7 +212,7 @@ const Location = (props) => {
                 </LoadScript>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Location
+export default Location;

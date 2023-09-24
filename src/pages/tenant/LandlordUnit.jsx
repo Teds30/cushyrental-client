@@ -4,9 +4,12 @@ import { BsBookmark } from "react-icons/bs";
 import { FaStar } from "react-icons/fa6";
 import styles from "./ViewProfile.module.css";
 import LandlordUnitAttribute from "./LandlordUnitAttribute.jsx";
+import LandlordUnitImage from "./LandlordUnitImage";
 
 const LandlordUnit = (props) => {
     const { unit } = props;
+
+    console.log(unit.images[0])
 
     return (
         <div
@@ -15,7 +18,15 @@ const LandlordUnit = (props) => {
             id={`user-${unit.id}`}
         >
             <div className={`${styles["image-unit-container"]} `}>
-                <img src={unit.images.id} alt="Unit" />
+                <LandlordUnitImage images={unit.images[0]} />
+                
+                    {/* // unit.images.map((image, index) => {
+                    //     if (index === 0) {
+                    //         <LandlordUnitImage key={image.id} images={image} />;
+                    //     } else {
+                    //         return;
+                    //     }
+                    // })} */}
             </div>
             <div className={`${styles["content-container"]} `}>
                 <div className={`${styles["text-container"]} `}>
@@ -23,7 +34,7 @@ const LandlordUnit = (props) => {
                         <p className={styles["price"]}>Php {unit.price}</p>
                         <p>{unit.name}</p>
                     </div>
-                    <div>
+                    <div className={`${styles["bookmark-container"]}`}>
                         <IconButton
                             size="large"
                             color="inherit"
@@ -32,6 +43,7 @@ const LandlordUnit = (props) => {
                             <BsBookmark
                                 style={{
                                     marginRight: "-16px",
+                                    marginTop: "-16px",
                                     color: "var(--fc-strong)",
                                     fill: "var(--accent)",
                                 }}
@@ -56,9 +68,13 @@ const LandlordUnit = (props) => {
                 <div className={styles["hr"]}></div>
 
                 <div className={`${styles["amenities-container"]}`}>
-                    {(unit.amenities) && unit.amenities.map((amenity) => (
-                        <LandlordUnitAttribute key = {amenity.id} amenity={amenity} />
-                    ))}
+                    {unit.amenities &&
+                        unit.amenities.map((amenity) => (
+                            <LandlordUnitAttribute
+                                key={amenity.id}
+                                amenity={amenity}
+                            />
+                        ))}
                 </div>
             </div>
         </div>
