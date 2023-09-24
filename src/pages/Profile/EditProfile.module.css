@@ -66,7 +66,7 @@
 }
 
 .user-data {
-    margin: 55px 45px 50px 45px;
+    margin: 55px 45px 32px 45px;
 
     display: flex;
     flex-direction: column;
@@ -83,6 +83,7 @@
     border-radius: 4px;
     background: rgba(235, 88, 88, 0.04);
     padding: 8px 0;
+    cursor: pointer;
 
     display: flex;
     justify-content: center;
@@ -92,7 +93,6 @@
 .verify-account p, svg {
     color: var(--fc-body);
 }
-
 
 .verify-account p {
     text-decoration: none;

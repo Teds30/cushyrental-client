@@ -1,0 +1,157 @@
+.account-verification-container {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.top-back-container {
+    /* background: var(--accent-dark); */
+    position: absolute;
+    top: 0;
+    /* right: 0; */
+}
+
+.account-verification-process {
+    border: 1px solid red;
+    margin-top: 11px;
+}
+
+.verification-form-main {
+    /* border: 1px solid red; */
+    padding: 0 15px;
+}
+
+.personal-information-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.personal-information-section-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.personal-information-row {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.personal-information-form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.personal-information-col {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.identification-card {
+    position: relative;
+    width: 295px;
+    padding-top: 20px;
+    padding-bottom: 18px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    border-radius: 4px;
+    border: 1px dashed var(--border, #E0E4F5);
+}
+
+.outer {
+    position: relative;
+    width: 96px;
+    height: 96px;
+}
+
+.inner {
+    position: relative;
+    height: inherit;
+    width: inherit;
+    border-radius: 50%;
+    background-color: rgba(3, 176, 119, 0.1);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-icon-one {
+    fill: var(--accent);
+    color: var(--accent);
+    height: 55px;
+    width: 55px;
+}
+
+.card-icon-two {
+    width: 24px;
+    height: 24px;
+    background: var(--accent);
+    fill: var(--bg-layer1);
+    border-radius: 4px;
+
+    position: absolute;
+    right: 15px;
+    bottom: 21px;
+}
+
+
+.personal-information-col .add-photo {
+    border: 1px solid red;
+    
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+}
+
+.privacy-and-agreement {
+    text-indent: 5%;
+    text-align: justify;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.hr {
+    width: 100%;
+    height: 1px;
+    background-color: var(--border-color);
+}
+
+.privacy-information-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.approve {
+    display: flex;
+    align-items: center;
+}
+
+@media (min-width: 640px) {
+    .account-verification-container {
+        max-width: 768px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 375px) {
+    .identification-card {
+        width: 100%;
+    }
+}

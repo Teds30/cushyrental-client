@@ -1,0 +1,16 @@
+.design {
+    width: 360px;
+    height: 164px;
+
+    width: 100%;
+    background: var(--accent-dark);
+
+    /* position: absolute;
+    right: 0; */
+}
+
+.design-one {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
