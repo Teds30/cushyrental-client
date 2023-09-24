@@ -35,9 +35,8 @@ const EditUnitImages = (props) => {
 
     const [imagesData, setImagesData] = useState([]);
     const [selectedImage, setSelectedImage] = useState([]);
-    // const [imagesDeleted, setImagesDeleted] = useState(false);
-
-    console.log(selectedImage);
+    const [imagesDeleted, setImagesDeleted] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
 
     const imageHandler = (index) => {
         const isIncluded = selectedImage.includes(index);
@@ -64,27 +63,38 @@ const EditUnitImages = (props) => {
     };
 
     const selectAllHandler = () => {
-        setSelectedImage(ImagesData.map((image, index) => index));
+        setSelectedImage(imagesData.map((image, index) => index));
     };
 
     const cancelHandler = () => {
         setSelectedImage([]);
     };
 
-    const deleteImageHandler = () => {
-        const updatedImages = ImagesData.filter(
-            (data, index) => !selectedImage.includes(index)
-        );
+    const deleteImageHandler = async () => {
+        const updatedImages = [];
+
+        for (let index = 0; index < imagesData.length; index++) {
+            const data = imagesData[index];
+
+            if (data.id !== undefined && selectedImage.includes(index)) {
+                try {
+                    const imageData = {
+                        unit_id: Number(unitId),
+                        image_id: data.id,
+                    };
+                    const result = await deleteUserImages(imageData);
+                } catch (error) {
+                }
+            } else {
+                updatedImages.push(data);
+            }
+        }
+
         setImagesData(updatedImages);
 
-        // Check if all images are deleted
         if (updatedImages.length === 0) {
             setImagesDeleted(true);
         }
-        // setImagesData(selectedImage.map((i) => {
-        //     return ImagesData.filter((data, index) => index !== i)
-        // }));
-
         setSelectedImage([]);
     };
 
@@ -92,7 +102,7 @@ const EditUnitImages = (props) => {
         const imageIndex = selectedImage[0];
 
         setImagesData(
-            ImagesData.map((data, index) => {
+            imagesData.map((data, index) => {
                 if (data.is_thumbnail === 1) {
                     return { ...data, is_thumbnail: 0 };
                 } else if (index === imageIndex) {
@@ -110,19 +120,19 @@ const EditUnitImages = (props) => {
 
         if (image.id !== undefined) {
             try {
-                const ImageData = {
+                const imageData = {
                     unit_id: Number(unitId),
                     image_id: image.id,
                     is_thumbnail: image.is_thumbnail,
                 };
-                const result = await updateUserImages(ImageData);
+                const result = await updateUserImages(imageData);
                 exit = true;
             } catch (error) {}
         }
 
         if (exit === true) {
             if (index === imagesData.length - 1) {
-                setIsSaving(false)
+                setIsSaving(false);
                 navigate("/manage_unit/edit/" + unitId);
                 notify("Save successfully", "success");
             }
@@ -143,12 +153,12 @@ const EditUnitImages = (props) => {
 
             const data = await res.json();
 
-            const ImageData = {
+            const imageData = {
                 unit_id: Number(unitId),
                 image_id: data.image.id,
                 is_thumbnail: image.is_thumbnail,
             };
-            const result = await updateUserImages(ImageData);
+            const result = await updateUserImages(imageData);
 
             if (index === imagesData.length - 1) {
                 setIsSaving(false);
@@ -160,6 +170,10 @@ const EditUnitImages = (props) => {
 
     const saveHandler = (event) => {
         event.preventDefault();
+
+        if (imagesData.length === 0) {
+            return;
+        }
 
         setIsSaving(true);
 
@@ -189,7 +203,7 @@ const EditUnitImages = (props) => {
         <button
             key={index}
             className={`${styles["image-col"]} ${
-                ImagesData.length === 0 ? styles["image-col-hidden"] : ""
+                imagesData.length === 0 ? styles["image-col-hidden"] : ""
             }`}
             onClick={() => imageHandler(index)}
         >
@@ -253,8 +267,12 @@ const EditUnitImages = (props) => {
                             <p className="title">Edit images</p>
                         </Box>
                         <form onSubmit={saveHandler}>
-                            <PrimaryButton isLoading={isSaving}
-                    loadingText="Saving">Save</PrimaryButton>
+                            <PrimaryButton
+                                isLoading={isSaving}
+                                loadingText="Saving"
+                            >
+                                Save
+                            </PrimaryButton>
                         </form>
                     </Toolbar>
                 </AppBar>

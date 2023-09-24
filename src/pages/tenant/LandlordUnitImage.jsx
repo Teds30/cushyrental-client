@@ -5,15 +5,15 @@ const LandlordUnitImage = (props) => {
     const { images } = props;
     const { fetchImages, fetchImage } = useImageManager();
     const [imagesData, setImagesData] = useState([]);
-
-    console.log(images);
+    
+    // console.log(images);
 
     useEffect(() => {
         const fetchImagesData = async () => {
             try {
                 const responseData = await fetchImages();
                 const filteredImages = responseData.filter((image) => image.id === images.image_id);
-                const responseImage = await fetchImage(filteredImages[0].image);
+                const responseImage = await fetchImage(filteredImages[0].name); 
                 console.log(responseImage);
                 setImagesData(responseImage);
                 

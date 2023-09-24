@@ -15,7 +15,7 @@ import google from "../../../assets/google.svg";
 const CreateAccountForm = (props) => {
   const { onCreateAccount, isLoading, onGoogleAuth, onfacebookAuth } = props;
 
-  const regex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+const regex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
   const {
     value: enteredFirstName,
@@ -230,7 +230,6 @@ const CreateAccountForm = (props) => {
       <div className={`${styles["sign-up-btn"]}`}>
         <PrimaryButton
           width="100%"
-          disabled={!formIsValid}
           isLoading={isLoading}
           loadingText="SIGNING UP"
         >
