@@ -42,13 +42,13 @@
 }
 
 .edit-profile {
-    color: #8A93A6;
+    color: #8a93a6;
     width: 24px;
     height: 24px;
     position: absolute;
     right: 4px;
     bottom: 8px;
-    cursor:pointer;
+    cursor: pointer;
 
     display: flex;
 }
@@ -89,10 +89,10 @@
     gap: 4px;
 }
 
-.verify-account p, svg {
+.verify-account p,
+.verify-account svg {
     color: var(--fc-body);
 }
-
 
 .verify-account p {
     text-decoration: none;
