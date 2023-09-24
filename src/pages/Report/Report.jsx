@@ -77,27 +77,31 @@ export default function Report({ openModal = false }) {
                                     violations provided below:
                                 </p>
                                 <p className="caption">
-                                    <span>Scam.</span> The user has requested
-                                    for a certain quantity of units. However,
-                                    there has been no further update or
-                                    communication regarding the matter. There
-                                    may be several reasons provided by the user
-                                    for the delay, or the user may have
-                                    disappeared without any notice, leaving the
-                                    unit availed unused. Moreover, it appears
-                                    that the system has been utilized not in the
-                                    appropriate manner, but rather for deceitful
-                                    purposes.:
+                                    <span className={`${"caption-title"}`}>
+                                        Scam.
+                                    </span>{" "}
+                                    The user has requested for a certain
+                                    quantity of units. However, there has been
+                                    no further update or communication regarding
+                                    the matter. There may be several reasons
+                                    provided by the user for the delay, or the
+                                    user may have disappeared without any
+                                    notice, leaving the unit availed unused.
+                                    Moreover, it appears that the system has
+                                    been utilized not in the appropriate manner,
+                                    but rather for deceitful purposes.:
                                 </p>
 
                                 <p className="caption">
-                                    <span>Unrelated Uploads.</span> User posted
-                                    irrelevant photo and is not related to
-                                    rental of boarding house.{" "}
+                                    <span className={`${"caption-title"}`}>
+                                        Unrelated Uploads.
+                                    </span>{" "}
+                                    User posted irrelevant photo and is not
+                                    related to rental of boarding house.{" "}
                                 </p>
 
                                 <p className="caption">
-                                    <span>
+                                    <span className={`${"caption-title"}`}>
                                         Errelevant Reviews and Profanity.
                                     </span>{" "}
                                     The user submits reviews that include

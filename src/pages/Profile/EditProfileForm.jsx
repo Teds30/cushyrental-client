@@ -1,14 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import TextField from "../../components/TextField/TextField";
 import Dropdown from "../../components/Dropdown/Dropdown";
-import { Link } from "@mui/material";
 import PrimaryButton from "../../components/Button/PrimaryButton";
 
 import styles from "./EditProfile.module.css";
 import photo from "../../assets/Units/pics.png";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
 const EditProfileForm = (props) => {
     return (
@@ -52,14 +52,18 @@ const EditProfileForm = (props) => {
                         // selectedValue={enteredGender}
                     />
 
-                    <Link className={`${styles['verify-account']}`} style={{textDecoration: 'none'}}>
-                        <ErrorOutlineIcon/>
+                    <Link
+                        to="/profile/user_profile/verify/1"
+                        className={`${styles["verify-account"]}`}
+                        style={{ textDecoration: "none" }}
+                    >
+                        <ErrorOutlineIcon />
                         <p>Verifying you account</p>
                     </Link>
                 </div>
 
-                <div className={`${styles['edit-profile-button']}`}>
-                    <PrimaryButton width='100%'>Save</PrimaryButton>
+                <div className={`${styles["edit-profile-button"]}`}>
+                    <PrimaryButton width="100%">Save</PrimaryButton>
                 </div>
             </form>
         </div>

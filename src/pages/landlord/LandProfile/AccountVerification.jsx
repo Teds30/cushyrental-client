@@ -4,33 +4,31 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 
-import styles from "./EditProfile.module.css";
+import AccountVerificationDesign from './AccountVerificationDesign';
+import AccountVerificationProcess from "./AccountVerificationProcess";
+
+import styles from './AccountVerification.module.css';
 import { FiChevronLeft } from "react-icons/fi";
-import EditProfileDesign from "./EditProfileDesign";
-import EditProfileForm from "./EditProfileForm";
 
-import photo from "../../assets/Units/pics.png";
-import CameraAltIcon from "@mui/icons-material/CameraAlt";
-
-const EditProfile = () => {
+const AccountVerification = () => {
     return (
-        <div className={`${styles["edit-profile-container"]}`}>
-            <EditProfileDesign className={`${styles["edit-profile-design"]}`} />
+        <div className={`${styles['account-verification-container']}`}>
+            <AccountVerificationDesign/>
             <Box className={`${styles["top-back-container"]} `}>
                 <AppBar
                     position="static"
                     sx={{
                         margin: 0,
-                        backgroundColor: "#fff",
+                        backgroundColor: "var(--accent-dark)",
                         color: "var(--fc-body)",
                         fontFamily: "Inter",
                         boxShadow: "none",
-                        borderBottom: "1px solid var(--border-color)",
+                        // borderBottom: "1px solid var(--border-color)",
                     }}
                 >
                     <Toolbar className={`${styles["toolbar-container"]}`}>
                         <Link
-                            to={`/profile`}
+                            to={`/profile/user_profile/1`}
                             className={`${styles["link-button"]}`}
                         >
                             <IconButton
@@ -52,16 +50,16 @@ const EditProfile = () => {
                                 className="title"
                                 style={{ color: "var(--bg-layer1)" }}
                             >
-                                PROFILE
+                                Account Verification
                             </p>
                         </Box>
                     </Toolbar>
                 </AppBar>
             </Box>
 
-            <EditProfileForm/>
+            <AccountVerificationProcess className={`${styles['account-verification-process']}`}/>
         </div>
     );
-};
+}
 
-export default EditProfile;
+export default AccountVerification;

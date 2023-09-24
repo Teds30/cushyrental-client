@@ -27,6 +27,7 @@ import Profile from './pages/Profile/Profile'
 import EditProfile from './pages/Profile/EditProfile'
 import Subscriptions from './pages/landlord/Subscriptions/Subscriptions'
 import ManageSubscriptions from './pages/landlord/ManageSubscriptions/ManageSubscriptions'
+import AccountVerification from './pages/landlord/LandProfile/AccountVerification'
 // import './App.css'
 
 function App() {
@@ -101,7 +102,12 @@ function App() {
             <Route path="/profile" element={<Profile />}></Route>
 
             {/* Landlord Profile */}
-            <Route path="/profile/edit/:id" element={<EditProfile />}></Route>
+            <Route path="/profile/user_profile/:id" element={<EditProfile />}></Route>
+
+            <Route
+                path="/profile/user_profile/verify/:id"
+                element={<AccountVerification />}
+            ></Route>
             {/* Landlord Profile */}
             {/* Profile */}
 
