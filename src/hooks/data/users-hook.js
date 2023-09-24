@@ -8,7 +8,7 @@ const useUserManager = () => {
         let responseData
         try {
             responseData = await sendRequest({
-                url: `http://127.0.0.1:8000/api/users`,
+                url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/users`,
             })
         } catch (err) {
             throw err.message
@@ -22,7 +22,9 @@ const useUserManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/users/${id}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/users/${id}`,
                 })
             } catch (err) {
                 throw err.message
@@ -38,7 +40,9 @@ const useUserManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/user_units/${user_id}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/user_units/${user_id}`,
                 })
             } catch (err) {
                 throw err.message
@@ -54,7 +58,9 @@ const useUserManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/unit_amenities`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/unit_amenities`,
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {
@@ -75,7 +81,9 @@ const useUserManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/unit_inclusions`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/unit_inclusions`,
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {
@@ -96,7 +104,9 @@ const useUserManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/unit_rules`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/unit_rules`,
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {
@@ -117,7 +127,9 @@ const useUserManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/unit_facilities`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/unit_facilities`,
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {
@@ -138,7 +150,9 @@ const useUserManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/unit_images`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/unit_images`,
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {
@@ -159,7 +173,9 @@ const useUserManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/unit_images`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/unit_images`,
                     method: 'DELETE',
                     body: JSON.stringify(body),
                     headers: {
@@ -185,7 +201,7 @@ const useUserManager = () => {
         updateUserInclusions,
         updateUserFacilities,
         updateUserImages,
-        deleteUserImages
+        deleteUserImages,
     }
 }
 

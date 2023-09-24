@@ -8,7 +8,9 @@ const useVerificationManager = () => {
         let responseData
         try {
             responseData = await sendRequest({
-                url: `http://127.0.0.1:8000/api/landlord_verifications`,
+                url: `${
+                    import.meta.env.VITE_BACKEND_LOCALHOST
+                }/api/landlord_verifications`,
             })
         } catch (err) {
             throw err.message
@@ -22,7 +24,9 @@ const useVerificationManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/landlord_verifications/${id}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/landlord_verifications/${id}`,
                 })
             } catch (err) {
                 throw err.message

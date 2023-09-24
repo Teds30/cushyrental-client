@@ -17,8 +17,12 @@
     gap: 0;
 }
 
-@media (max-width: 358px) {
+.col p {
+    font-size: 12px;
+}
+
+@media (max-width: 375px) {
     .col p {
-        font-size: 8px;
+        font-size: 10px;
     }
 }

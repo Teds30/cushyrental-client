@@ -24,6 +24,8 @@ import Dashboard from './pages/landlord/Dashboard/Dashboard'
 import Report from './pages/Report/Report'
 import ViewProfile from "./pages/tenant/ViewProfile";
 import Profile from './pages/Profile/Profile'
+import EditProfile from './pages/Profile/EditProfile'
+import AccountVerification from './pages/landlord/LandProfile/AccountVerification'
 // import './App.css'
 
 function App() {
@@ -85,11 +87,23 @@ function App() {
             ></Route>
             {/* Manage Landlord Unit */}
 
-            {/* Prodile */}
+            {/* Profile */}
             <Route
                 path="/profile"
                 element={<Profile />}
             ></Route>
+
+            {/* Landlord Profile */}
+            <Route
+                path="/profile/user_profile/:id"
+                element={<EditProfile />}
+            ></Route>
+
+            <Route
+                path="/profile/user_profile/verify/:id"
+                element={<AccountVerification />}
+            ></Route>
+            {/* Landlord Profile */}
             {/* Profile */}
 
             {/* Report test will remove later */}
