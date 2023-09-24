@@ -27,7 +27,9 @@ const useGoogleAuth = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: 'http://127.0.0.1:8000/api/google/auth',
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/google/auth`,
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {
@@ -48,7 +50,9 @@ const useGoogleAuth = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: 'http://127.0.0.1:8000/api/google/login',
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/google/login`,
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {
