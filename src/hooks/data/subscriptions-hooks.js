@@ -8,7 +8,9 @@ const useSubscriptionManager = () => {
         let responseData
         try {
             responseData = await sendRequest({
-                url: `http://127.0.0.1:8000/api/subscriptions`,
+                url: `${
+                    import.meta.env.VITE_BACKEND_LOCALHOST
+                }/api/subscriptions`,
             })
         } catch (err) {
             throw err.message
@@ -17,12 +19,32 @@ const useSubscriptionManager = () => {
         return responseData
     }, [sendRequest])
 
+    const fetchUserSubscriptions = useCallback(
+        async (landlord_id) => {
+            let responseData
+            try {
+                responseData = await sendRequest({
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/user_subscriptions/${landlord_id}`,
+                })
+            } catch (err) {
+                throw err.message
+            }
+
+            return responseData
+        },
+        [sendRequest]
+    )
+
     const fetchSubscription = useCallback(
         async (id) => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/subscriptions/${id}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/subscriptions/${id}`,
                 })
             } catch (err) {
                 throw err.message
@@ -37,7 +59,9 @@ const useSubscriptionManager = () => {
         async (id, body) => {
             try {
                 await sendRequest({
-                    url: `http://127.0.0.1:8000/api/subscriptions/${id}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/subscriptions/${id}`,
                     method: 'PUT',
                     body: JSON.stringify(body),
                     headers: {
@@ -54,6 +78,7 @@ const useSubscriptionManager = () => {
     return {
         isLoading,
         fetchSubscription,
+        fetchUserSubscriptions,
         fetchSubscriptions,
         updateSubscription,
     }

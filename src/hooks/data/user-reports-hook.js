@@ -8,7 +8,9 @@ const useUserReports = () => {
         let responseData
         try {
             responseData = await sendRequest({
-                url: `http://127.0.0.1:8000/api/user_reports`,
+                url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/user_reports`,
             })
         } catch (err) {
             throw err.message
@@ -22,7 +24,9 @@ const useUserReports = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `http://127.0.0.1:8000/api/user_reports/${id}`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/user_reports/${id}`,
                 })
             } catch (err) {
                 throw err.message
