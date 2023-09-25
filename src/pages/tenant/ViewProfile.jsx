@@ -7,15 +7,19 @@ import IconButton from "@mui/material/IconButton";
 import { FiChevronLeft } from "react-icons/fi";
 import LandlordUnit from "./LandlordUnit";
 
-import SecondaryButton from "../../components/Button/SecondaryButton";
 import styles from "./ViewProfile.module.css";
 import { FaStar } from "react-icons/fa6";
-import { TbSortDescending } from "react-icons/tb";
+import { TbSortDescending, TbSortAscending } from "react-icons/tb";
+import { BiSolidBadgeCheck } from "react-icons/bi";
+import LandlordProfileImage from "./LandlordProfileImage";
 
 const ViewProfile = () => {
     const [user, setUser] = useState(null);
     const [units, setUnits] = useState([]);
-    const [isPriceAscending, setIsPriceAscending] = useState(true);
+    const [isPriceAscending, setIsPriceAscending] = useState(false);
+    const [isReviewAscending, setIsReviewAscending] = useState(false);
+
+    console.log(units);
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -60,115 +64,171 @@ const ViewProfile = () => {
         });
     };
 
+    const handleReviewSort = () => {
+        setUnits((prevReviews) => {
+            const sortedReviews = [...prevReviews].sort((unit1, unit2) => {
+                if (isReviewAscending) {
+                    return unit1.average_ratings - unit2.average_ratings;
+                } else {
+                    return unit2.average_ratings - unit1.average_ratings;
+                }
+            });
+            setIsReviewAscending(!isReviewAscending);
+            return sortedReviews;
+        });
+    };
+
     return (
-        <div className={`${styles["main-container"]} `}>
-            <Box className={`${styles["top-back-container"]} `}>
-                <AppBar
-                    position="static"
-                    sx={{
-                        margin: 0,
-                        backgroundColor: "#fff",
-                        color: "var(--fc-body)",
-                        fontFamily: "Inter",
-                        boxShadow: "none",
-                        borderBottom: "1px solid var(--border-color)",
-                    }}
-                >
-                    <Toolbar>
-                        <Link>
-                            <IconButton
-                                size="large"
-                                edge="start"
-                                color="inherit"
-                                aria-label="menu"
-                            >
-                                <FiChevronLeft
+        user !== null && (
+            <div className={`${styles["main-container"]} `}>
+                <Box className={`${styles["top-back-container"]} `}>
+                    <AppBar
+                        position="static"
+                        sx={{
+                            margin: 0,
+                            backgroundColor: "#fff",
+                            color: "var(--fc-body)",
+                            fontFamily: "Inter",
+                            boxShadow: "none",
+                            borderBottom: "1px solid var(--border-color)",
+                        }}
+                    >
+                        <Toolbar>
+                            <Link>
+                                <IconButton
+                                    size="large"
+                                    edge="start"
+                                    color="inherit"
+                                    aria-label="menu"
+                                >
+                                    <FiChevronLeft
+                                        style={{
+                                            color: "var(--fc-strong)",
+                                            fill: "transparent",
+                                        }}
+                                    />
+                                </IconButton>
+                            </Link>
+                            <Box sx={{ flexGrow: 1 }}>
+                                <p className="title">Back</p>
+                            </Box>
+                        </Toolbar>
+                    </AppBar>
+                </Box>
+
+                <div className={`${styles["profile-container"]} `}>
+                    <div className={`${styles["image-container"]} `}>
+                        <LandlordProfileImage
+                            image={user !== null && user.profile_picture_img}
+                        />
+                    </div>
+                    <div className={`${styles["profile-details-container"]} `}>
+                        <div className={`${styles["profile-details-name"]} `}>
+                            <p>
+                                {user.first_name} {user.middle_name}{" "}
+                                {user.last_name}
+                                {user.is_verified && (
+                                    <BiSolidBadgeCheck
+                                        size={20}
+                                        style={{
+                                            fill: "var(--accent)",
+                                            marginLeft: "3px",
+                                            marginTop: "-3px",
+                                        }}
+                                    />
+                                )}
+                            </p>
+                        </div>
+                        <div className={`${styles["profile-details-type"]} `}>
+                            <p>
+                                {user.user_type_id === 2
+                                    ? "Landlord"
+                                    : user?.user_type_id}
+                            </p>
+                        </div>
+                        <div className={`${styles["profile-details-rating"]} `}>
+                            <FaStar
+                                style={{
+                                    fill: "#03b077",
+                                    marginTop: "-2px",
+                                }}
+                            />
+                            <p className="caption">4.5/5.0</p>
+                            {/* <p className="caption">{user.average_ratings}/5.0</p> */}
+                            {/* <p className="caption">{units.length > 0 ? `${units[0].average_ratings}/5.0` : 'N/A'}</p> */}
+                        </div>
+                    </div>
+                </div>
+
+                <div className={styles["hr"]}></div>
+
+                <div className={`${styles["filter-container"]}`}>
+                    <div>
+                    <button
+                            className={`${styles["filter-button"]}`}
+                            onClick={handlePriceSort}
+                        >
+                            {isPriceAscending ? (
+                                <TbSortAscending
                                     style={{
-                                        color: "var(--fc-strong)",
                                         fill: "transparent",
+                                        color: "var(--fc-body)",
                                     }}
                                 />
-                            </IconButton>
-                        </Link>
-                        <Box sx={{ flexGrow: 1 }}>
-                            <p className="title">Back</p>
-                        </Box>
-                    </Toolbar>
-                </AppBar>
-            </Box>
-
-            <div className={`${styles["profile-container"]} `}>
-                <div className={`${styles["image-container"]} `}>
-                    <img src={user?.profile_picture_img} alt="" />
-                </div>
-                <div className={`${styles["profile-details-container"]} `}>
-                    <div className={`${styles["profile-details-name"]} `}>
-                        <p>
-                            {user?.first_name} {user?.middle_name}{" "}
-                            {user?.last_name}
-                        </p>
+                            ) : (
+                                <TbSortDescending
+                                    style={{
+                                        fill: "transparent",
+                                        color: "var(--fc-body)",
+                                    }}
+                                />
+                            )}
+                            <p className="caption">Price</p>
+                        </button>
                     </div>
-                    <div className={`${styles["profile-details-type"]} `}>
-                        <p>
-                            {user?.user_type_id === 2
-                                ? "Landlord"
-                                : user?.user_type_id}
-                        </p>
-                    </div>
-                    <div className={`${styles["profile-details-rating"]} `}>
-                        <FaStar
-                            style={{
-                                fill: "#03b077",
-                                marginTop: "-2px",
-                            }}
-                        />
-                        <p className="caption">4.5/5.0</p>
+                    <div>
+                        <button
+                            className={`${styles["filter-button"]}`}
+                            onClick={handleReviewSort}
+                        >
+                            {isReviewAscending ? (
+                                <TbSortAscending
+                                    style={{
+                                        fill: "transparent",
+                                        color: "var(--fc-body)",
+                                    }}
+                                />
+                            ) : (
+                                <TbSortDescending
+                                    style={{
+                                        fill: "transparent",
+                                        color: "var(--fc-body)",
+                                    }}
+                                />
+                            )}
+                            <p className="caption"> Reviews</p>
+                        </button>
                     </div>
                 </div>
-            </div>
-
-            <div className={styles["hr"]}></div>
-
-            <div className={`${styles["filter-container"]}`}>
-                <div>
-                    <SecondaryButton
-                        leftIcon={
-                            <TbSortDescending
-                                style={{
-                                    fill: "transparent",
-                                    color: "#959CB0",
-                                }}
-                            />
-                        }
-                        onClick={handlePriceSort}
-                    >
-                        <p className="caption">Price</p>
-                    </SecondaryButton>
+                <div className={`${styles["main-unit-container"]} `}>
+                    {units.length === 0 ? (
+                        <div className={`${styles["bottom-text-container"]}`}>
+                            <p>No units found.</p>
+                        </div>
+                    ) : (
+                        units.map((unit) => (
+                            <LandlordUnit key={unit.id} unit={unit} />
+                        ))
+                    )}
                 </div>
-                <div>
-                    <SecondaryButton
-                        leftIcon={
-                            <TbSortDescending
-                                style={{
-                                    fill: "transparent",
-                                    color: "#959CB0",
-                                }}
-                            />
-                        }
-                    >
-                        <p className="caption"> Reviews</p>
-                    </SecondaryButton>
-                </div>
+
+                {units.length > 0 && (
+                    <div className={`${styles["bottom-text-container"]}`}>
+                        <p>No more units found.</p>
+                    </div>
+                )}
             </div>
-            <div className={`${styles["main-unit-container"]} `}>
-                {units.map((unit) => (
-                    <LandlordUnit key={unit.id} unit={unit} />
-                ))}
-            </div>
-            <div className={`${styles["bottom-text-container"]}`}>
-                <p>No more units found.</p>
-            </div>
-        </div>
+        )
     );
 };
 
