@@ -5,6 +5,7 @@
     flex-direction: column;
     background: var(--bg-layer1);
     position: relative;
+    transition: max-width 0.3s ease-in-out;
 }
 
 .top-back-container {
@@ -18,6 +19,7 @@
     padding: 0;
     background: var(--bg-layer1);
     z-index: 100;
+    transition: max-width 0.3s ease-in-out;
 }
 
 .profile-container {
@@ -107,6 +109,7 @@
     background-color: transparent;
     border-radius: 20px;
     border: 1px solid var(--border-color);
+    cursor: pointer;
 }
 
 .filter-button p {
@@ -114,13 +117,10 @@
     color: var(--fc-body);
 }
 
-/* .filter-container p {
-    color: #959CB0;
-    font-family: Inter;
-    font-size: 12px;
-    font-style: normal;
-    line-height: normal;
-} */
+.filter-button:hover,
+.filter-button:active {
+  cursor: pointer;
+}
 
 .main-unit-container {
     display: flex;
@@ -241,13 +241,34 @@
     margin-top: 20px;
 }
 
+@media (max-width: 367px) {
+    .main-container {
+        max-width: 100%;
+    }
+    .top-back-container {
+        max-width: 100%;
+        min-height: 64px;
+    }
+
+    .unit-container {
+        width: 270px;
+    }
+}
+
 @media (max-width: 768px) {
+    .main-container {
+        max-width: 100%;
+        transition: all 0.15s ease-in-out;
+    }
+    .top-back-container {
+        max-width: 100%;
+        min-height: 64px;
+    }
 }
 
 @media (min-width: 375px) {
     .main-container {
         max-width: 375px;
-        transition: all 0.25s ease-in-out;
     }
     .top-back-container {
         max-width: 375px;

@@ -4,14 +4,13 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import { FiChevronLeft } from "react-icons/fi";
-import LandlordUnit from "./LandlordUnit";
-
 import styles from "./ViewProfile.module.css";
+import { FiChevronLeft } from "react-icons/fi";
 import { FaStar } from "react-icons/fa6";
 import { TbSortDescending, TbSortAscending } from "react-icons/tb";
 import { BiSolidBadgeCheck } from "react-icons/bi";
 import LandlordProfileImage from "./LandlordProfileImage";
+import LandlordUnit from "./LandlordUnit";
 
 const ViewProfile = () => {
     const [user, setUser] = useState(null);
@@ -19,13 +18,11 @@ const ViewProfile = () => {
     const [isPriceAscending, setIsPriceAscending] = useState(false);
     const [isReviewAscending, setIsReviewAscending] = useState(false);
 
-    console.log(units);
-
     useEffect(() => {
         const fetchUsers = async () => {
             try {
                 const response = await fetch(
-                    `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/users/2`
+                    `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/users/1`
                 );
                 const data = await response.json();
                 setUser(data);
@@ -153,9 +150,7 @@ const ViewProfile = () => {
                                     marginTop: "-2px",
                                 }}
                             />
-                            <p className="caption">4.5/5.0</p>
-                            {/* <p className="caption">{user.average_ratings}/5.0</p> */}
-                            {/* <p className="caption">{units.length > 0 ? `${units[0].average_ratings}/5.0` : 'N/A'}</p> */}
+                            <p className="caption">{user.total_ratings.toFixed(2)}/5.0</p>
                         </div>
                     </div>
                 </div>
