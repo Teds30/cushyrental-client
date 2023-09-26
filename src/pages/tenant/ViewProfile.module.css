@@ -1,11 +1,11 @@
 .main-container {
     max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
     display: flex;
     flex-direction: column;
     background: var(--bg-layer1);
     position: relative;
+    transition: max-width 0.3s ease-in-out;
 }
 
 .top-back-container {
@@ -19,6 +19,7 @@
     padding: 0;
     background: var(--bg-layer1);
     z-index: 100;
+    transition: max-width 0.3s ease-in-out;
 }
 
 .profile-container {
@@ -59,11 +60,17 @@
 }
 
 .profile-details-name {
-    font-style: normal;
+    display: flex;
     font-weight: 600;
     font-size: 16px;
     line-height: 19px;
     color: #222736;
+}
+
+.profile-details-name p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .profile-details-type {
@@ -93,43 +100,73 @@
     gap: 10px;
 }
 
-/* .filter-container p {
-    color: #959CB0;
-    font-family: Inter;
-    font-size: 12px;
-    font-style: normal;
-    line-height: normal;
-} */
+.filter-button {
+    display: flex;
+    gap: 2px;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 12px;
+    background-color: transparent;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+}
+
+.filter-button p {
+    font-weight: 500;
+    color: var(--fc-body);
+}
+
+.filter-button:hover,
+.filter-button:active {
+  cursor: pointer;
+}
 
 .main-unit-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-wrap: wrap;
-    padding: 0 12px;
+    padding: 0;
     width: 100%;
+    gap: 8px;
 }
 
 .unit-container {
     background: var(--bg-layer1);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    width: 180px;
     border-radius: 10px;
-    margin-bottom: 12px;
-    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.bookmark-container {
+    position: absolute;
+    display: flex;
+    padding: 0px;
+    right: 8px;
+    top: 8px;
+    background-color: #f6f8fc;
+    border-radius: 8px;
 }
 
 .image-unit-container {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
     position: relative;
-    height: 123px;
-    border: 2px solid red;
+    padding-bottom: 75%;
 }
 
-/* .image-unit-container img {
+.image-unit-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    border-radius: 10px 10px 0 0;
-} */
+    border-radius: 10px 10px 0px 0px;
+}
 
 .content-container {
     display: flex;
@@ -139,28 +176,32 @@
 
 .text-container {
     display: flex;
-    padding: 7px 0px 0px 8px;
+    flex-direction: column;
     justify-content: space-between;
+}
+
+.name-container p {
+    color: var(--fc-body);
+}
+
+.top-text-container {
+    display: flex;
 }
 
 .left-side {
     display: flex;
-    flex-direction: column;
     gap: 6px;
 }
 
-.bookmark-container {
-    display: flex;
-    padding: 0 8px;
+.left-side p {
+    color: var(--fc-strong);
+    font-weight: 600;
 }
 
-.price {
-    font-family: Inter;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-}
+/* .price {
+    color: var(--fc-strong);
+} */
+
 .hr {
     width: 100%;
     border-bottom: 2px solid var(--border-color);
@@ -171,8 +212,12 @@
 .rating-container {
     display: flex;
     justify-content: space-between;
-    font-weight: bold;
-    padding: 5px 0;
+}
+
+.rating-container p {
+    color: var(--fc-body);
+    font-weight: 600;
+    font-size: 12px;
 }
 
 .star-container {
@@ -183,19 +228,42 @@
 
 .amenities-container {
     display: flex;
-    justify-content: center;
-    align-items: center;    
-    gap: 5px;
+    align-items: center;
+    justify-content: space-between;
     margin-top: 6px;
 }
 
 .bottom-text-container {
     display: flex;
     justify-content: center;
+    align-items: center;
+    width: 100%;
     margin-top: 20px;
 }
 
+@media (max-width: 367px) {
+    .main-container {
+        max-width: 100%;
+    }
+    .top-back-container {
+        max-width: 100%;
+        min-height: 64px;
+    }
+
+    .unit-container {
+        width: 270px;
+    }
+}
+
 @media (max-width: 768px) {
+    .main-container {
+        max-width: 100%;
+        transition: all 0.15s ease-in-out;
+    }
+    .top-back-container {
+        max-width: 100%;
+        min-height: 64px;
+    }
 }
 
 @media (min-width: 375px) {
@@ -206,6 +274,7 @@
         max-width: 375px;
         min-height: 64px;
     }
+
 }
 
 @media (min-width: 475px) {

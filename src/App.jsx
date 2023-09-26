@@ -22,9 +22,11 @@ import UnitImageData from './pages/landlord/ManageUnits/EditUnit/EditUnitImage/U
 import Rules from './pages/Rules'
 import Dashboard from './pages/landlord/Dashboard/Dashboard'
 import Report from './pages/Report/Report'
-import ViewProfile from "./pages/tenant/ViewProfile";
+import ViewProfile from './pages/tenant/ViewProfile'
 import Profile from './pages/Profile/Profile'
 import EditProfile from './pages/Profile/EditProfile'
+// import Subscriptions from './pages/landlord/Subscriptions/Subscriptions'
+import ManageSubscriptions from './pages/landlord/ManageSubscriptions/ManageSubscriptions'
 import AccountVerification from './pages/landlord/LandProfile/AccountVerification'
 // import './App.css'
 
@@ -53,6 +55,15 @@ function App() {
             ></Route>
 
             <Route path="/register" element={<CreateAccount />}></Route>
+
+            {/* Manage Landlord Subscriptions */}
+            {/* <Route path="/subscriptions" element={<Subscriptions />}></Route> */}
+
+            {/* Manage Landlord Subscriptions */}
+            <Route
+                path="/manage_subscriptions"
+                element={<ManageSubscriptions />}
+            ></Route>
 
             {/* Manage Landlord Unit */}
             <Route path="/manage_unit" element={<ManageUnit />}></Route>
@@ -88,16 +99,10 @@ function App() {
             {/* Manage Landlord Unit */}
 
             {/* Profile */}
-            <Route
-                path="/profile"
-                element={<Profile />}
-            ></Route>
+            <Route path="/profile" element={<Profile />}></Route>
 
             {/* Landlord Profile */}
-            <Route
-                path="/profile/user_profile/:id"
-                element={<EditProfile />}
-            ></Route>
+            <Route path="/profile/user_profile/:id" element={<EditProfile />}></Route>
 
             <Route
                 path="/profile/user_profile/verify/:id"
@@ -107,11 +112,8 @@ function App() {
             {/* Profile */}
 
             {/* Report test will remove later */}
-            <Route
-                path="/report_test"
-                element={<Report />}
-            ></Route>
-             {/* Report test will remove later */}
+            <Route path="/report_test" element={<Report />}></Route>
+            {/* Report test will remove later */}
 
             <Route path="/myunit-landlord" element={<MyUnit />}></Route>
 
@@ -122,10 +124,7 @@ function App() {
 
             <Route path="/rules" element={<Rules />}></Route>
 
-            <Route
-                path="/viewprofile"
-                element={<ViewProfile />}
-            ></Route>
+            <Route path="/viewprofile" element={<ViewProfile />}></Route>
             <Route
                 path="*"
                 element={<Navigate replace to="/signinpage" />}
