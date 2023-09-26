@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import FacebookLogin, { FacebookLoginResponse } from "rc-facebook-login";
 
 import styles from "../Login/SignInPage.module.css";
@@ -9,6 +9,7 @@ import CheckBox from "../../components/CheckBox/CheckBox";
 import Logo from "../../assets/cushyrental.svg";
 import useLogin from "../../hooks/data/login-hook";
 import SocialMediaLogin from "./SocialMedia";
+import AuthContext from "../../context/auth-context";
 
 const SignInPage = () => {
   const { loginUser, isLoading } = useLogin();
@@ -17,6 +18,8 @@ const SignInPage = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [checkBoxItems, setCheckBoxItems] = useState([]);
+  const userCtx = useContext(AuthContext)
+  const navigate = useNavigate();
 
   const handleEmailChange = (event) => {
     setEmailInput(event.target.value);
@@ -72,6 +75,8 @@ const SignInPage = () => {
         password: passwordInput,
       });
       console.log(res);
+      userCtx.onLogin(res.user, res.token);
+      navigate('/profile');
     } catch (error) {
       console.log(error);
     }
@@ -117,10 +122,10 @@ const SignInPage = () => {
 
         <div className={`${styles["remember-forgot"]} `}>
           <div className={`${styles["remember-me"]} `}>
-            <CheckBox
+            {/* <CheckBox
               items={[{ id: 1, name: "Remember Me" }]}
               onCheckBox={checkBoxHandler}
-            />
+            /> */}
           </div>
           <div className={`${styles["remember-me"]} `}>
             <Link
