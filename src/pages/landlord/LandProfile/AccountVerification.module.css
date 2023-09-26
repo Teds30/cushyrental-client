@@ -57,6 +57,7 @@
 .identification-card {
     position: relative;
     width: 295px;
+    height: 184px;
     padding-top: 20px;
     padding-bottom: 18px;
 
@@ -68,6 +69,12 @@
 
     border-radius: 4px;
     border: 1px dashed var(--border, #E0E4F5);
+}
+
+.identification-card img {
+    height: inherit;
+    width: inherit;
+    object-fit: cover;
 }
 
 .outer {

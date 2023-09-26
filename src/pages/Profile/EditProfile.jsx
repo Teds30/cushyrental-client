@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -8,11 +10,30 @@ import styles from "./EditProfile.module.css";
 import { FiChevronLeft } from "react-icons/fi";
 import EditProfileDesign from "./EditProfileDesign";
 import EditProfileForm from "./EditProfileForm";
+import AuthContext from "../../context/auth-context";
+import useImageManager from "../../hooks/data/image-hook";
 
 import photo from "../../assets/Units/pics.png";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import { useContext, useState } from "react";
 
 const EditProfile = () => {
+    const userCtx = useContext(AuthContext);
+    const { fetchImage, isLoading } = useImageManager();
+
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+        const handleFetch = async () => {
+            try {
+                // const image = userCtx.user.profile_picture_img.replace("images/", "");
+                const res = await fetchImage(userCtx.user.profile_picture_img);
+                setUser({ ...userCtx.user, profile_picture_img: res });
+            } catch (err) {}
+        };
+        handleFetch();
+    }, []);
+
     return (
         <div className={`${styles["edit-profile-container"]}`}>
             <EditProfileDesign className={`${styles["edit-profile-design"]}`} />
@@ -59,7 +80,9 @@ const EditProfile = () => {
                 </AppBar>
             </Box>
 
-            <EditProfileForm/>
+            {!isLoading && Object.keys(user).length !== 0 && (
+                <EditProfileForm userData={user} />
+            )}
         </div>
     );
 };

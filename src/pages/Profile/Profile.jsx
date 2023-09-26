@@ -1,6 +1,5 @@
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useContext, useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -10,6 +9,7 @@ import AuthContext from "../../context/auth-context";
 import ProfileDesign from "./ProfileDesign";
 import BorderedButton from "../../components/Button/BorderedButton";
 import ProfileOption from "../landlord/LandProfile/ProfileOption";
+import useImageManager from "../../hooks/data/image-hook";
 
 import styles from "./Profile.module.css";
 import VerifiedIcon from "@mui/icons-material/Verified";
@@ -19,8 +19,29 @@ import photo from "../../assets/Units/pics.png";
 import logo from "../../assets/cushyrental.svg";
 
 const Profile = () => {
-    // const userCtx = useContext(AuthContext);
+    const userCtx = useContext(AuthContext);
+    const { fetchImage, isLoading } = useImageManager();
     const navigate = useNavigate();
+
+    const [user, setUser] = useState(userCtx.user);
+
+    const logoutHandler = (event) => {
+        event.preventDefault();
+        userCtx.onLogout();
+        navigate("/signinpage");
+    };
+
+    useEffect(() => {
+        const handleFetch = async () => {
+            try {
+                const image = user.profile_picture_img.split("/").pop();
+                const res = await fetchImage(image);
+                setUser({ ...user, profile_picture_img: res });
+                // setUser({...user, profile_picture_img: res})
+            } catch (err) {}
+        };
+        handleFetch();
+    }, []);
 
     return (
         <div className={`${styles["profile-container"]}`}>
@@ -68,7 +89,10 @@ const Profile = () => {
                 <div className={`${styles["profile-user"]}`}>
                     <div className={`${styles["user-profile"]}`}>
                         <div className={`${styles["photo"]}`}>
-                            <img src={photo} alt="CushyRental" />
+                            <img
+                                src={user.profile_picture_img}
+                                alt={user.first_name}
+                            />
                         </div>
                         <div className={`${styles["user"]}`}>
                             <div className={styles.name}>
@@ -76,18 +100,29 @@ const Profile = () => {
                                     className="title"
                                     style={{ fontSize: "16px" }}
                                 >
-                                    Teddy Marc Enaje
+                                    {user.first_name}{" "}
+                                    {user.middle_name !== "middle_name" &&
+                                        user.middle_name}{" "}
+                                    {user.last_name}
                                 </p>
-                                <VerifiedIcon
-                                    style={{ color: "var(--accent)" }}
-                                />
+                                {user.is_verified !== false && (
+                                    <VerifiedIcon
+                                        style={{ color: "var(--accent)" }}
+                                    />
+                                )}
                             </div>
-                            <p>Landlord</p>
+                            {user.user_type_id === 1 ? (
+                                <p>Tenant</p>
+                            ) : (
+                                <p>Landlord</p>
+                            )}
                         </div>
                     </div>
 
                     <div className={`${styles["user-menu"]}`}>
-                        <ProfileOption className={`${styles['profile-option']}`} />
+                        <ProfileOption
+                            className={`${styles["profile-option"]}`}
+                        />
                     </div>
                 </div>
 
@@ -125,7 +160,11 @@ const Profile = () => {
 
                 <div className={`${styles["profile-button"]}`}>
                     <Link>
-                        <BorderedButton btnType="danger" width="100%">
+                        <BorderedButton
+                            onClick={logoutHandler}
+                            btnType="danger"
+                            width="100%"
+                        >
                             Logout
                         </BorderedButton>
                     </Link>

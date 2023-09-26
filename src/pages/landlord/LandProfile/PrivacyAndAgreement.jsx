@@ -2,19 +2,40 @@ import CardShadow from "../../../components/Card/CardShadow";
 import TextField from "../../../components/TextField/TextField";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import CheckBox from "../../../components/CheckBox/CheckBox";
+import useVerificationManager from "../../../hooks/data/verifications-hook";
+import VerifyAccountContext from "../../../context/verify-account-context";
+import AuthContext from "../../../context/auth-context";
 
 import styles from "./AccountVerification.module.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 const PrivacyAndAgreement = (props) => {
     const { onNext } = props;
+    const { accountVerification, isLoading } = useVerificationManager();
+    const verifyCtx = useContext(VerifyAccountContext);
+    const userCtx = useContext(AuthContext);
 
     const [selected, setSelected] = useState([]);
+    const [isSaving, setIsSaving] = useState(false);
 
-    const submitHandler = (event) => {
+    const submitHandler = async (event) => {
         event.preventDefault();
 
-        onNext();
+        if (selected.length === 0) {
+            return;
+        }
+
+        const data = {
+            ...verifyCtx.userAccount,
+            user_id: userCtx.user.id,
+        };
+
+        try {
+            const res = await accountVerification(data);
+            onNext();
+        } catch (err) {}
+
+        //
     };
 
     return (
@@ -83,7 +104,7 @@ const PrivacyAndAgreement = (props) => {
                                 agreement in verifying your account.
                             </p>
 
-                            <div className={`${styles['approve']}`}>
+                            <div className={`${styles["approve"]}`}>
                                 <CheckBox
                                     items={[{ id: 1, name: "" }]}
                                     selectedValue={selected}
@@ -95,7 +116,9 @@ const PrivacyAndAgreement = (props) => {
                     </CardShadow>
                 </div>
 
-                <PrimaryButton>Save</PrimaryButton>
+                <PrimaryButton isLoading={isLoading} loadingText="Saving">
+                    Save
+                </PrimaryButton>
             </form>
         </div>
     );
