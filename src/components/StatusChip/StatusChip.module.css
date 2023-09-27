@@ -8,8 +8,8 @@
     max-width: fit-content;
 
     letter-spacing: 0.05em;
-    font-weight: 600;
-    font-size: 0.85em;
+    font-weight: 500;
+    font-size: 10px;
 }
 
 .status-chip-pending {
@@ -22,12 +22,17 @@
     color: #fff;
 }
 
+.status-chip-complete {
+    background: #e58f51;
+    color: #fff;
+}
+
 .status-chip-danger {
     background: #af2003;
     color: #fff;
 }
 
 .status-chip-cancel {
-    background: #BB5500;
+    background: #bb5500;
     color: #fff;
 }
