@@ -20,7 +20,6 @@ const ManageSubscriptions = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.log('irun:')
         const handleFetch = async () => {
             try {
                 const res = await fetchUserSubscriptions(userId)

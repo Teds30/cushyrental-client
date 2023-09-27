@@ -13,6 +13,15 @@ import styles from './Subscriptions.module.css'
 import SubscriptionCard from './SubscriptionCard'
 
 const Subscriptions = () => {
+    const settings = {
+        centerMode: true,
+        infinite: true,
+        centerPadding: '0',
+        slidesToShow: 3,
+        speed: 500,
+        focusOnSelect: true,
+        variableWidth: true,
+    }
     return (
         <div className={styles['container']}>
             <div className={styles['nav-container']}>
@@ -46,9 +55,29 @@ const Subscriptions = () => {
             </div>
             <div className={styles['subscriptions-container']}>
                 <div className={styles['cards-container']}>
-                    <SubscriptionCard />
-                    <SubscriptionCard />
-                    <SubscriptionCard />
+                    <Swiper
+                        spaceBetween={0}
+                        effect={'coverflow'}
+                        grabCursor={true}
+                        centeredSlides={true}
+                        slidesPerView={'auto'}
+                        coverflowEffect={{
+                            rotate: 0,
+                            stretch: 0,
+                            depth: 100,
+                            modifier: 2.5,
+                        }}
+                    >
+                        <SwiperSlide>
+                            <SubscriptionCard />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <SubscriptionCard />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <SubscriptionCard />
+                        </SwiperSlide>
+                    </Swiper>
                 </div>
             </div>
         </div>
