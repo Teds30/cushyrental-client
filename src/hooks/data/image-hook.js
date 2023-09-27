@@ -4,6 +4,31 @@ import useHttp from '../http-hook'
 const useImageManager = () => {
     const { sendRequest, isLoading } = useHttp()
 
+    const uploadImage = useCallback(
+        async ({ file = null, name = '', path = 'images' }) => {
+            let responseData
+            const formData = new FormData()
+
+            formData.append('image', file)
+            formData.append('name', name)
+            formData.append('path', path)
+            try {
+                responseData = await sendRequest({
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/image-upload`,
+                    method: 'POST',
+                    body: formData,
+                })
+            } catch (err) {
+                throw err.message
+            }
+
+            return responseData
+        },
+        [sendRequest]
+    )
+
     const fetchImages = useCallback(async () => {
         let responseData
         try {
@@ -79,6 +104,7 @@ const useImageManager = () => {
     )
 
     return {
+        uploadImage,
         isLoading,
         fetchImages,
         fetchImage,
