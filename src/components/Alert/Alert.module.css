@@ -1,0 +1,12 @@
+.container {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+
+    padding: 1em 2em;
+    border: 1px solid #ff4949;
+    color: #ff4949;
+    background-color: #ff49491a;
+    border-radius: 7px;
+    gap: 0.5em;
+}
