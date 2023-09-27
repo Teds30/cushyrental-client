@@ -191,6 +191,29 @@ const useUserManager = () => {
         [sendRequest]
     )
 
+    const updateUser = useCallback(
+        async (body, id) => {
+            let responseData
+            try {
+                responseData = await sendRequest({
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/users/update/${id}`,
+                    method: 'PUT',
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+            } catch (err) {
+                throw err.message
+            }
+
+            return responseData
+        },
+        [sendRequest]
+    )
+
     return {
         isLoading,
         fetchUser,
@@ -202,6 +225,7 @@ const useUserManager = () => {
         updateUserFacilities,
         updateUserImages,
         deleteUserImages,
+        updateUser
     }
 }
 

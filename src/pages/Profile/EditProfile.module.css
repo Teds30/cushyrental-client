@@ -30,7 +30,6 @@
     height: 100px;
     position: relative;
     padding: 6px;
-    z-index: 1;
 }
 
 .photo img {
@@ -51,6 +50,10 @@
     cursor: pointer;
 
     display: flex;
+}
+
+.edit-profile .camera-icon {
+    fill: #8A93A6;
 }
 
 .edit-input {

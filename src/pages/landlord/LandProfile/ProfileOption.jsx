@@ -18,7 +18,7 @@ const ProfileOption = (props) => {
                 <p className='smaller-text'>Subscription</p>
             </Link>
 
-            <Link className={styles.col}>
+            <Link to='/manage_unit' className={styles.col}>
                 <BiBuildingHouse style={{color: 'var(--fc-strong)', height: '30px', width: '30px'}} />
                 <p className='smaller-text'>My Unit</p>
             </Link>

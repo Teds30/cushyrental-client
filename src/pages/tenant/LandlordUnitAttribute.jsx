@@ -10,7 +10,6 @@ const LandlordUnitAttribute = (props) => {
 
     useEffect(() => {
         fetchData(amenity.amenity.icon)
-        console.log(amenity)
     }, [])
 
     const fetchData = async (name) => {
@@ -31,8 +30,8 @@ const LandlordUnitAttribute = (props) => {
                             style={{
                                 backgroundColor: "#D9D9D9",
                                 borderRadius: "50%",      
-                                width: "24px",          
-                                height: "24px",          
+                                width: "18px",          
+                                height: "18px",          
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
@@ -44,7 +43,7 @@ const LandlordUnitAttribute = (props) => {
                     label={amenity.amenity.name}
                     style={{ color: "#8A93A6" }}
                     variant="outlined"
-                    sx={{ padding: "3px", border: "2px solid #E4E9ED"}}
+                    sx={{ padding: "2px", border: "2px solid #E4E9ED", fontSize: "10px"}}
                 />
             </Stack>
         </div>
