@@ -19,7 +19,8 @@ import AuthContext from '../../context/auth-context'
 
 const Chats = () => {
     const authCtx = useContext(AuthContext)
-    const user_id = authCtx.user.id
+    console.log(authCtx.user)
+    const user_id = 1
 
     const [initialRooms, setInitialRooms] = useState([])
     const [rooms, setRooms] = useState(initialRooms)
