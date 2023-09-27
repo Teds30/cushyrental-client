@@ -48,6 +48,7 @@
 }
 
 .status-container {
+    margin-top: 12px;
     margin-inline: 10px;
     border-radius: 8px;
     background-color: #fff;
