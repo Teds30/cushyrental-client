@@ -29,7 +29,7 @@ const CreateAccount = () => {
   );
 
   const createAccountHandler = async (userData) => {
-    const data = { ...userData, user_type_id: userType.user_type_id, profile_picture_img: '1691778741.jpg', middle_name: 'middle_name' };
+    const data = { ...userData, user_type_id: userType.user_type_id, profile_picture_img: '1691778741.jpg' };
 
     // console.log(data);
 

@@ -34,7 +34,7 @@ const Profile = () => {
     useEffect(() => {
         const handleFetch = async () => {
             try {
-                const image = user.profile_picture_img.split("/").pop();
+                const image = user.profile_picture_img;
                 const res = await fetchImage(image);
                 setUser({ ...user, profile_picture_img: res });
                 // setUser({...user, profile_picture_img: res})
