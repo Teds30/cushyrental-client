@@ -45,11 +45,13 @@
 }
 
 .cards-container {
-    /* border: 1px solid red; */
+    border: 1px solid red;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    padding-inline: 16px;
 
     gap: 16px;
+    overflow: auto;
 }
 
 .card {

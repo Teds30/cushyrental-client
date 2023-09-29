@@ -6,10 +6,6 @@ import styles from './SubscriptionsList.module.css'
 const SubscriptionsList = (props) => {
     const { userSubscriptions = [] } = props
 
-    useEffect(() => {
-        console.log(userSubscriptions)
-    }, [userSubscriptions])
-
     const content = userSubscriptions ? (
         userSubscriptions.map((subscription) => (
             <Subscription key={subscription.id} subscription={subscription} />

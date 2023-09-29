@@ -10,6 +10,7 @@ const StatusChip = (props) => {
     if (type === 'pending') status_style = styles['status-chip-pending']
     if (type === 'danger') status_style = styles['status-chip-danger']
     if (type === 'cancel') status_style = styles['status-chip-cancel']
+    if (type === 'complete') status_style = styles['status-chip-complete']
     return (
         <div className={`${styles['status-chip']} ${status_style}`}>
             {children}

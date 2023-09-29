@@ -197,6 +197,7 @@ const Conversation = (props) => {
                 </AppBar>
                 {socket && (
                     <AvailModal
+                        unit={unit}
                         user_id={user_id}
                         socket={socket}
                         room={room}

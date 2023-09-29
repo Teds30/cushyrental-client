@@ -15,15 +15,14 @@ import { TbCircleCheck } from 'react-icons/tb'
 import styles from './AvailModal.module.css'
 
 const AvailModal = (props) => {
-    const { user_id, socket, room_id, room } = props
+    const { user_id, socket, room_id, room, unit } = props
     const { sendRequest, isLoading } = useHttp()
 
     const [roomDetails, setRoomDetails] = useState({
         request: 'none',
-        slots: 0,
-        unit: null,
+        req_slots: 0,
     })
-    const [quantity, setQuantity] = useState(0)
+    const [quantity, setQuantity] = useState({ value: 0 })
     const [availToggle, setAvailToggle] = useState(false)
 
     useEffect(() => {
@@ -33,18 +32,14 @@ const AvailModal = (props) => {
             )
             const data = await res.json()
 
-            const res2 = await fetch(
-                `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/units/${
-                    data.unit_id
-                }`
-            )
-            const data2 = await res2.json()
-
-            setRoomDetails({ request: data.request_status, unit: data2 })
+            setRoomDetails({
+                request: data.request_status,
+                req_slots: data.slots,
+            })
         }
 
         fetchData(room_id)
-    }, [])
+    }, [unit])
 
     const addRental = async () => {
         try {
@@ -60,13 +55,19 @@ const AvailModal = (props) => {
             // Format the date as "YYYY-MM-DD"
             const formattedDate = `${year}-${month}-${day}`
 
+            const res1 = await fetch(
+                `${import.meta.env.VITE_CHAT_LOCALHOST}/rooms/${room_id}`
+            )
+            const data1 = await res1.json()
+
             const res = await sendRequest({
                 url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/rentals/`,
                 method: 'POST',
                 body: JSON.stringify({
                     user_id: room.tenant_id,
-                    unit_id: roomDetails.unit.id,
-                    monthly_amount: roomDetails.unit.price,
+                    unit_id: unit.id,
+                    slots: data1.slots,
+                    monthly_amount: unit.price,
                     due_date: 28,
                     date_start: formattedDate,
                     date_end: '',
@@ -98,6 +99,7 @@ const AvailModal = (props) => {
 
     const handleAvail = () => {
         socket.emit('unit-avail', {
+            slots: quantity.value,
             room_id: room_id,
             request_status: 'avail',
             name: 'Tya Els',
@@ -154,9 +156,7 @@ const AvailModal = (props) => {
                     <div className={styles['avail-content']}>
                         <div className={styles['quantity']}>
                             <Quantity
-                                maxValue={
-                                    roomDetails.unit && roomDetails.unit.slots
-                                }
+                                maxValue={unit && unit.slots}
                                 onQuantity={setQuantity}
                             />
                             <p>Occupancies</p>
@@ -165,9 +165,7 @@ const AvailModal = (props) => {
                             <div className={styles['vr']}></div>
                         </div>
                         <div className={styles['slots']}>
-                            <h2>
-                                {roomDetails.unit && roomDetails.unit.slots}
-                            </h2>
+                            <h2>{unit && unit.slots}</h2>
                             <p className="title">SLOTS</p>
                         </div>
                     </div>
@@ -189,7 +187,11 @@ const AvailModal = (props) => {
                     >
                         Cancel
                     </SecondaryButton>
-                    <PrimaryButton width="100%" onClick={handleAvail}>
+                    <PrimaryButton
+                        width="100%"
+                        disabled={quantity.value > 0 ? false : true}
+                        onClick={handleAvail}
+                    >
                         Avail Unit
                     </PrimaryButton>
                 </Box>

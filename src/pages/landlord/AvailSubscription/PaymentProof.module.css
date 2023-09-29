@@ -1,0 +1,137 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.card {
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+
+    border-radius: 10px;
+    background-color: var(--bg-layer1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+}
+
+.card h3 {
+    margin: 0;
+}
+
+.form-container {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.identification-card {
+    position: relative;
+    width: 300px;
+    height: 190px;
+    /* padding-top: 20px;
+    padding-bottom: 18px; */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+
+    border-radius: 4px;
+    border: 1px dashed var(--border, #e0e4f5);
+}
+
+.outer {
+    position: relative;
+    width: 96px;
+    height: 96px;
+}
+
+.inner {
+    position: relative;
+    height: inherit;
+    width: inherit;
+    border-radius: 50%;
+    background-color: rgba(3, 176, 119, 0.1);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-icon-one {
+    fill: var(--accent);
+    color: var(--accent);
+    height: 55px;
+    width: 55px;
+}
+
+.card-icon-two {
+    width: 24px;
+    height: 24px;
+    background: var(--accent);
+    fill: var(--bg-layer1);
+    border-radius: 4px;
+
+    position: absolute;
+    right: 15px;
+    bottom: 21px;
+}
+
+.uploaded-preview {
+    position: relative;
+    width: 300px;
+    height: 190px;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 4px;
+    border: 1px dashed var(--border, #e0e4f5);
+}
+
+.uploaded-preview img {
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
+}
+
+.uploaded-preview span {
+    position: absolute;
+    bottom: 12px;
+    background: #fff;
+    padding: 4px 12px;
+    border-radius: 24px;
+    font-size: 10px;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+.actions {
+    margin-top: 16px;
+    display: flex;
+    gap: 12px;
+}
+.uploaded-error {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+
+    padding: 1em 2em;
+    border: 1px solid #ff4949;
+    color: #ff4949;
+    background-color: #ff49491a;
+    border-radius: 7px;
+    gap: 0.5em;
+}
+
+.uploading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}

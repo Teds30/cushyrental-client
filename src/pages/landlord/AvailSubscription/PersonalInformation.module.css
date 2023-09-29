@@ -1,0 +1,90 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.card {
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+
+    border-radius: 10px;
+    background-color: var(--bg-layer1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+}
+
+.card h3 {
+    margin: 0;
+}
+
+.form-container {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.swipeable-edge-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    justify-content: space-between;
+    height: 100%;
+    padding: 16px;
+    padding-top: 0;
+}
+
+.units-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    margin-top: 24px;
+}
+
+.unit {
+    display: flex;
+    gap: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+.unit-selected {
+    border-color: var(--accent);
+    background-color: rgba(var(--accent-rgb), 0.03);
+}
+
+.unit-picture {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 64px;
+    height: 64px;
+    background-color: var(--bg-layer2);
+    border-radius: 4px;
+}
+
+.preview-chosen-unit {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.promoting-unit {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.actions {
+    margin-top: 16px;
+    display: flex;
+    gap: 12px;
+}

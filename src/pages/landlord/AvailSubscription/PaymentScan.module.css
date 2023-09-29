@@ -1,0 +1,50 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.card {
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    border-radius: 10px;
+    background-color: var(--bg-layer1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+}
+
+.card h3 {
+    margin: 0;
+}
+
+.qr_code {
+    width: 250px;
+    height: 250px;
+}
+.qr_code img {
+    width: inherit;
+    height: inherit;
+}
+
+.option_label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.option_label .hr {
+    flex: 1;
+
+    height: 2px;
+    width: 100px;
+    background-color: var(--border-color);
+}
+
+.actions {
+    margin-top: 16px;
+    display: flex;
+    gap: 12px;
+}

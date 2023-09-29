@@ -25,9 +25,10 @@ import Report from './pages/Report/Report'
 import ViewProfile from './pages/tenant/ViewProfile'
 import Profile from './pages/Profile/Profile'
 import EditProfile from './pages/Profile/EditProfile'
-// import Subscriptions from './pages/landlord/Subscriptions/Subscriptions'
+import Subscriptions from './pages/landlord/Subscriptions/Subscriptions'
 import ManageSubscriptions from './pages/landlord/ManageSubscriptions/ManageSubscriptions'
 import AccountVerification from './pages/landlord/LandProfile/AccountVerification'
+import AvailSubscription from './pages/landlord/AvailSubscription/AvailSubscription'
 // import './App.css'
 
 function App() {
@@ -56,10 +57,13 @@ function App() {
 
             <Route path="/register" element={<CreateAccount />}></Route>
 
-            {/* Manage Landlord Subscriptions */}
-            {/* <Route path="/subscriptions" element={<Subscriptions />}></Route> */}
+            <Route path="/subscriptions" element={<Subscriptions />}></Route>
 
-            {/* Manage Landlord Subscriptions */}
+            <Route
+                path="/avail_subscriptions"
+                element={<AvailSubscription />}
+            ></Route>
+
             <Route
                 path="/manage_subscriptions"
                 element={<ManageSubscriptions />}
@@ -102,7 +106,10 @@ function App() {
             <Route path="/profile" element={<Profile />}></Route>
 
             {/* Landlord Profile */}
-            <Route path="/profile/user_profile/:id" element={<EditProfile />}></Route>
+            <Route
+                path="/profile/user_profile/:id"
+                element={<EditProfile />}
+            ></Route>
 
             <Route
                 path="/profile/user_profile/verify/:id"
