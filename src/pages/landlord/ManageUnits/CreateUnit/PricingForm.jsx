@@ -39,12 +39,10 @@ const PricingForm = (props) => {
     }
 
     const monthDepositHandler = (value) => {
-        console.log(value.value);
         setMonthlyDeposit(value.value);
     };
 
     const monthAdvanceHandler = (value) => {
-        console.log(value.value);
         setMonthlyAdvancePayment(value.value);
     };
 

@@ -11,9 +11,11 @@ import EastIcon from "@mui/icons-material/East";
 
 const RulesForm = (props) => {
     const createUnitCtx = useContext(CreateUnitContext);
-    const rulesData = createUnitCtx.unitData.rules ? createUnitCtx.unitData.rules : [];
+    const rulesData = createUnitCtx.unitData.rules
+        ? createUnitCtx.unitData.rules
+        : [];
 
-    const { onBack, onNext} = props;
+    const { onBack, onNext } = props;
 
     const { isLoading, fetchRules } = useAttributeManager();
     const [ruleValue, setRuleValue] = useState([]);
@@ -29,14 +31,14 @@ const RulesForm = (props) => {
         if (ruleValue) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
-                rules: ruleValue
+                rules: ruleValue,
             });
         }
 
         onBack();
     };
 
-    const submitHandler = (event) => {
+    const submitHandler = async (event) => {
         event.preventDefault();
 
         if (ruleValue.length === 0) {
@@ -45,10 +47,8 @@ const RulesForm = (props) => {
 
         createUnitCtx.onUnitData({
             ...createUnitCtx.unitData,
-            rules: ruleValue
+            rules: ruleValue,
         });
-
-        setRuleValue([]);
 
         onNext();
     };
@@ -61,9 +61,7 @@ const RulesForm = (props) => {
 
                 if (res.length !== 0 && rulesData.length !== 0) {
                     const selectedRules = rulesData.filter((id) => {
-                        return res.some(
-                            (ruleFetch) => ruleFetch.id === id
-                        );
+                        return res.some((ruleFetch) => ruleFetch.id === id);
                     });
 
                     setRuleValue(selectedRules);
@@ -87,17 +85,13 @@ const RulesForm = (props) => {
                     items={rules}
                     selected={ruleValue}
                     onChipValue={chipValueHandler}
-                    background={'danger'}
+                    background={"danger"}
                 />
             )}
 
             <div className={`${styles["basic-details-button"]}`}>
                 <BorderlessButton onClick={backHandler}>Back</BorderlessButton>
-                <PrimaryButton
-                    rightIcon={<EastIcon />}
-                >
-                    Next
-                </PrimaryButton>
+                <PrimaryButton rightIcon={<EastIcon />}>Next</PrimaryButton>
             </div>
         </form>
     );

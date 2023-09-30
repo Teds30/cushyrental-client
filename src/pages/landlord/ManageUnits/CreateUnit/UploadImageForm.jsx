@@ -4,6 +4,8 @@ import BorderlessButton from "../../../../components/Button/BorderlessButton";
 import PrimaryButton from "../../../../components/Button/PrimaryButton";
 import SecondaryButton from "../../../../components/Button/SecondaryButton";
 import CreateUnitContext from "../../../../context/create-unit-context";
+import useUnitManager from "../../../../hooks/data/units-hook";
+import AuthContext from "../../../../context/auth-context";
 
 import styles from "./CreateUnit.module.css";
 import EastIcon from "@mui/icons-material/East";
@@ -13,17 +15,20 @@ import MenuButton from "../../../../components/Menu/MenuButton";
 
 const UploadImageForm = (props) => {
     const { onNext, onBack } = props;
+    const { createUnit } = useUnitManager();
+    const imageData = [];
 
     const createUnitCtx = useContext(CreateUnitContext);
+    const userCtx = useContext(AuthContext);
     const uploadImageDetails =
         createUnitCtx.unitData.images === undefined
             ? []
             : createUnitCtx.unitData.images;
+    const [isSaving, setIsSaving] = useState(false);
 
-    const [unitImages, setUnitImages] = useState(uploadImageDetails); // Use an array to store multiple images
+    const [unitImages, setUnitImages] = useState(uploadImageDetails);
 
     const addImageChangeHandler = (event) => {
-        console.log(URL.createObjectURL(event.target.files[0]))
         setUnitImages([...unitImages, event.target.files[0]]);
     };
 
@@ -54,6 +59,46 @@ const UploadImageForm = (props) => {
         onBack();
     };
 
+    const handleFileUpload = async (image, index) => {
+        const formData = new FormData();
+
+        formData.append("image", image);
+        formData.append("name", image.name);
+        formData.append("path", "images");
+
+        try {
+            const res = await fetch("http://127.0.0.1:8000/api/image-upload", {
+                method: "POST",
+                body: formData,
+            });
+
+            const data = await res.json();
+
+            if (index === 0) {
+                imageData.push({ image_id: data.image.id, is_thumbnail: 1 });
+            } else {
+                imageData.push({ image_id: data.image.id, is_thumbnail: 0 });
+            }
+
+            if (imageData.length === unitImages.length) {
+                try {
+                    const toSave = {
+                        ...createUnitCtx.unitData,
+                        images: imageData,
+                        landlord_id: userCtx.user.id,
+                        target_gender: Number(
+                            createUnitCtx.unitData.target_gender[0]
+                        ),
+                    };
+                    const res = await createUnit(toSave);
+                    setIsSaving(false); 
+                    createUnitCtx.onReset();
+                    onNext();
+                } catch (err) {}
+            }
+        } catch (err) {}
+    };
+
     const submitHandler = (event) => {
         event.preventDefault();
 
@@ -61,22 +106,18 @@ const UploadImageForm = (props) => {
             return;
         }
 
-        createUnitCtx.onUnitData({
-            ...createUnitCtx.unitData,
-            images: unitImages,
-        });
+        setIsSaving(true);
 
-        onNext();
+        unitImages.forEach((image, index) => {
+            handleFileUpload(image, index);
+        });
     };
 
     const unitImagesContent =
         unitImages.length !== 0 &&
         unitImages.map((image, index) => {
             return (
-                <div
-                    key={image.name}
-                    className={`${styles["upload-image-size"]}`}
-                >
+                <div key={index} className={`${styles["upload-image-size"]}`}>
                     {index === 0 && (
                         <div className={styles.thumbnail}>
                             <p className="pre-title">THUMBNAIL</p>
@@ -106,7 +147,9 @@ const UploadImageForm = (props) => {
                     gap: "12px",
                 }}
             >
-                <div className={`${styles.title}`}>Showcase your unit's layout</div>
+                <div className={`${styles.title}`}>
+                    Showcase your unit's layout
+                </div>
                 <div className="caption">
                     Upload at least 3 images of your unit.
                 </div>
@@ -130,7 +173,11 @@ const UploadImageForm = (props) => {
 
             <div className={`${styles["basic-details-button"]}`}>
                 <BorderlessButton onClick={backHandler}>Back</BorderlessButton>
-                <PrimaryButton leftIcon={<CheckCircleOutlineIcon />}>
+                <PrimaryButton
+                    leftIcon={<CheckCircleOutlineIcon />}
+                    isLoading={isSaving}
+                    loadingText="Finishing"
+                >
                     Finish
                 </PrimaryButton>
             </div>

@@ -5,6 +5,7 @@ import ChipBig from "../../../../components/Chips/ChipBig";
 import PrimaryButton from "../../../../components/Button/PrimaryButton";
 import BorderlessButton from "../../../../components/Button/BorderlessButton";
 import CreateUnitContext from "../../../../context/create-unit-context";
+import useUnitManager from "../../../../hooks/data/units-hook";
 
 import styles from "./CreateUnit.module.css";
 import EastIcon from "@mui/icons-material/East";
@@ -12,7 +13,11 @@ import EastIcon from "@mui/icons-material/East";
 const AmenitiesForm = (props) => {
     const { onBack, onNext } = props;
     const createUnitCtx = useContext(CreateUnitContext);
-    const amenityData = createUnitCtx.unitData.amenities ? createUnitCtx.unitData.amenities : [];
+    const amenityData = createUnitCtx.unitData.amenities
+        ? createUnitCtx.unitData.amenities
+        : [];
+    const { createUnit } = useUnitManager();
+    const id = 1;
 
     const { isLoading, fetchAmenities } = useAttributeManager();
     const [amenityValue, setAmenityValue] = useState([]);
@@ -28,7 +33,7 @@ const AmenitiesForm = (props) => {
         if (amenityValue) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
-                amenities: amenityValue
+                amenities: amenityValue,
             });
         }
 
@@ -44,7 +49,7 @@ const AmenitiesForm = (props) => {
 
         createUnitCtx.onUnitData({
             ...createUnitCtx.unitData,
-            amenities: amenityValue
+            amenities: amenityValue,
         });
 
         setAmenityValue([]);
@@ -65,8 +70,6 @@ const AmenitiesForm = (props) => {
                         );
                     });
 
-                    console.log(selectedAmenities);
-
                     setAmenityValue(selectedAmenities);
                 }
             } catch (err) {}
@@ -79,7 +82,9 @@ const AmenitiesForm = (props) => {
             className={`${styles["basic-details-form"]}`}
             onSubmit={submitHandler}
         >
-            <div className={`${styles.title}`}>What amenities do your unit offer?</div>
+            <div className={`${styles.title}`}>
+                What amenities do your unit offer?
+            </div>
 
             {isLoading ? (
                 "Loading..."
@@ -93,11 +98,7 @@ const AmenitiesForm = (props) => {
 
             <div className={`${styles["basic-details-button"]}`}>
                 <BorderlessButton onClick={backHandler}>Back</BorderlessButton>
-                <PrimaryButton
-                    rightIcon={<EastIcon />}
-                >
-                    Next
-                </PrimaryButton>
+                <PrimaryButton rightIcon={<EastIcon />}>Next</PrimaryButton>
             </div>
         </form>
     );

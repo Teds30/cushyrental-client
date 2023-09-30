@@ -103,23 +103,23 @@ export default function CreateUnitForm() {
         {
             label: "AMENITIES",
             description: (
-                <AmenitiesForm onBack={handleBack} onNext={handleNext}/>
+                <AmenitiesForm onBack={handleBack} onNext={handleNext} />
             ),
         },
         {
-            label: 'INCLUSIONS',
+            label: "INCLUSIONS",
             description: (
                 <InclusionsForm onBack={handleBack} onNext={handleNext} />
             ),
         },
         {
-            label: 'FACILITIES',
+            label: "FACILITIES",
             description: (
                 <FacilitiesForm onBack={handleBack} onNext={handleNext} />
             ),
         },
         {
-            label: 'RULES',
+            label: "RULES",
             description: <RulesForm onBack={handleBack} onNext={handleNext} />,
         },
         {
@@ -143,7 +143,7 @@ export default function CreateUnitForm() {
             ),
         },
         {
-            label: 'UPLOAD IMAGES',
+            label: "UPLOAD IMAGES",
             description: (
                 <UploadImageForm onBack={handleBack} onNext={handleNext} />
             ),
@@ -218,7 +218,10 @@ export default function CreateUnitForm() {
 
                         <div>
                             <PrimaryButton>
-                                <Link style={{ color: "white" }}>
+                                <Link
+                                    to={`/profile`}
+                                    style={{ color: "white" }}
+                                >
                                     Go back to profile
                                 </Link>
                             </PrimaryButton>

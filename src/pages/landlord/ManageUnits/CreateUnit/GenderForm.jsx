@@ -9,17 +9,17 @@ import EastIcon from "@mui/icons-material/East";
 
 const genders = [
     {
-        id: '1',
+        id: "1",
         name: "Male",
         icon: "male.svg",
     },
     {
-        id: '2',
+        id: "2",
         name: "Female",
         icon: "female.svg",
     },
     {
-        id: '3',
+        id: "3",
         name: "Both",
         icon: "both.svg",
     },
@@ -27,9 +27,10 @@ const genders = [
 
 const GenderForm = (props) => {
     const createUnitCtx = useContext(CreateUnitContext);
-    const genderData = createUnitCtx.unitData.gender !== undefined
-        ? createUnitCtx.unitData.gender
-        : '';
+    const genderData =
+        createUnitCtx.unitData.target_gender !== undefined
+            ? createUnitCtx.unitData.target_gender
+            : "";
 
     const { onBack, onNext } = props;
 
@@ -37,7 +38,6 @@ const GenderForm = (props) => {
     const [gender, setGender] = useState(genders);
 
     const chipValueHandler = (genderValue) => {
-        console.log(genderValue);
         setGenderValue(genderValue);
     };
 
@@ -47,7 +47,7 @@ const GenderForm = (props) => {
         if (genderValue) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
-                gender: genderValue,
+                target_gender: genderValue,
             });
         }
 
@@ -63,7 +63,7 @@ const GenderForm = (props) => {
 
         createUnitCtx.onUnitData({
             ...createUnitCtx.unitData,
-            gender: genderValue,
+            target_gender: genderValue,
         });
 
         setGenderValue("");
@@ -82,7 +82,7 @@ const GenderForm = (props) => {
                 items={gender}
                 selected={genderValue}
                 onChipValue={chipValueHandler}
-                button={'radio'}
+                button={"radio"}
             />
 
             <div className={`${styles["basic-details-button"]}`}>

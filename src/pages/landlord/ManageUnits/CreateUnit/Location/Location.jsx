@@ -169,7 +169,7 @@ const Location = (props) => {
                             justifyContent: "space-between",
                         }}
                     >
-                        <Link>
+                        <Link to='/manage_unit/create_unit'>
                             <IconButton
                                 size="large"
                                 edge="start"
