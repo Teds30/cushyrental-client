@@ -17,7 +17,8 @@ const UnitImage = (props) => {
     useEffect(() => {
         const handleFetch = async () => {
             try {
-                const res = await fetchImage(unitImages[0].image);
+                const data = unitImages.filter(image => image.is_thumbnail === 1)
+                const res = await fetchImage(data[0].image.replace("images/", ""));
                 setImage(res);
             } catch (err) {}
         };
