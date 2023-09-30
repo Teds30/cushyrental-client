@@ -51,11 +51,11 @@ const ManageUnit = () => {
                                 className={`${styles["toolbar-container"]}`}
                             >
                                 <Link
-                                    to="/myunit-landlord"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        navigate(-1);
-                                    }}
+                                    to={`/profile`}
+                                    // onClick={(e) => {
+                                    //     e.preventDefault();
+                                    //     navigate(-1);
+                                    // }}
                                     className={`${styles["link-button"]}`}
                                 >
                                     <IconButton

@@ -61,8 +61,9 @@
 }
 
 .unit-images img {
-    width: 100px;
-    height: 100px;
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
     border-radius: 8px;
 }
 

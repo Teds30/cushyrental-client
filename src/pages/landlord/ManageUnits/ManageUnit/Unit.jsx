@@ -14,10 +14,9 @@ import { useEffect, useState } from "react";
 const Unit = (props) => {
     const { user_unit } = props;
 
-    console.log(user_unit);
-
     const { fetchImage, fetchImages, isLoading } = useImageManager();
-    const [image, setImage] = useState();
+    const [image, setImage] = useState(user_unit.images.filter(image => image.is_thumbnail === 1));
+    const [ unitPhoto, setUnitPhoto ] = useState('');
 
     let gender;
 
@@ -48,19 +47,18 @@ const Unit = (props) => {
     });
 
     const requestStatus = user_unit.request_status === 0 ? user_unit.request_status : user_unit.request_status === 2 && 3;
-    
-    console.log(requestStatus);
 
     useEffect(() => {
         const handleFetch = async () => {
             try {
                 const res = await fetchImages();
-                const filteredImages = user_unit.images.map((image) => {
+                const filteredImages = image.map((image) => {
                     return res.find((photo) => photo.id === image.id) || null;
                 });
 
-                const resImage = await fetchImage(filteredImages[0].image);
-                setImage(resImage);
+                const imagePhoto = await fetchImage(filteredImages[0].image.replace("images/", ""));
+
+                setUnitPhoto(imagePhoto);
             } catch (err) {}
         };
         handleFetch();
@@ -80,8 +78,8 @@ const Unit = (props) => {
                 <div className={`${styles["unit-col"]}`}>
                     <div className={`${styles["unit-images"]}`}>
                         <img
-                            src={image === undefined ? photo : image}
-                            alt="photo"
+                            src={unitPhoto === '' ? photo : unitPhoto}
+                            alt={user_unit.name}
                         />
                     </div>
 
@@ -116,7 +114,7 @@ const Unit = (props) => {
                 <div className={`${styles["col-data-2"]}`}>
                     <div className={`${styles["unit-datas"]}`}>
                         <div className="pre-title">Rating</div>
-                        <p className="title">5.0</p>
+                        <p className="title">{user_unit.average_ratings}</p>
                     </div>
 
                     <div className={`${styles["hr-horizontal"]}`}></div>
