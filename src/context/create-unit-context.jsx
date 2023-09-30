@@ -23,7 +23,7 @@ export const CreateUnitContextProvider = (props) => {
             value={{
                 unitData: unitData,
                 onUnitData: unitDataHandler,
-                onResetFunction: resetUnitDataHandler,
+                onReset: resetUnitDataHandler,
             }}
         >
             {props.children}
