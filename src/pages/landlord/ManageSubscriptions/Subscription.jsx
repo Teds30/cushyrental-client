@@ -10,6 +10,8 @@ import Status from './Status'
 import { WiTime4 } from 'react-icons/wi'
 import BorderedButton from '../../../components/Button/BorderedButton'
 
+import no_img from '../../../assets/cushyrental.svg'
+
 const Subscription = (props) => {
     const { subscription } = props
 
@@ -19,13 +21,16 @@ const Subscription = (props) => {
     const now = moment()
 
     useEffect(() => {
-        const handleFetch = async () => {
+        const handleFetch = async (image) => {
             try {
-                const resImage = await fetchImage(subscription.unit.image)
+                const resImage = await fetchImage(image)
+
                 setImage(resImage)
             } catch (err) {}
         }
-        handleFetch()
+
+        if (subscription.unit.image) handleFetch(subscription.unit.image)
+        else setImage(no_img)
     }, [subscription])
 
     return (
