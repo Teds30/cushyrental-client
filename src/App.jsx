@@ -29,6 +29,7 @@ import Subscriptions from './pages/landlord/Subscriptions/Subscriptions'
 import ManageSubscriptions from './pages/landlord/ManageSubscriptions/ManageSubscriptions'
 import AccountVerification from './pages/landlord/LandProfile/AccountVerification'
 import AvailSubscription from './pages/landlord/AvailSubscription/AvailSubscription'
+import ViewUnitDetails from './pages/tenant/ViewUnitDetails/ViewUnitDetails'
 // import './App.css'
 
 function App() {
@@ -57,7 +58,7 @@ function App() {
 
             <Route path="/register" element={<CreateAccount />}></Route>
 
-            <Route path="/subscriptions" element={<Subscriptions />}></Route>
+            <Route path=" " element={<Subscriptions />}></Route>
 
             <Route
                 path="/avail_subscriptions"
@@ -121,6 +122,10 @@ function App() {
             {/* Report test will remove later */}
             <Route path="/report_test" element={<Report />}></Route>
             {/* Report test will remove later */}
+
+            {/* View unit details for landlord */}
+            <Route path="/unit/:id" element={<ViewUnitDetails />}></Route>
+            {/* View unit details for landlord */}
 
             <Route path="/myunit-landlord" element={<MyUnit />}></Route>
 
