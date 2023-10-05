@@ -5,10 +5,14 @@ import UnitPhoto from "./UnitPhoto";
 import CardShadow from "../../../components/Card/CardShadow";
 import ChipBig from "../../../components/Chips/ChipBig";
 import BorderlessButton from "../../../components/Button/BorderlessButton";
+import Facilities from "./Facilities";
 
 import styles from "./ViewUnitDetails.module.css";
 import { CiLocationOn } from "react-icons/ci";
 import { useState } from "react";
+import Amenities from "./Amenities";
+import Rules from "./Rules";
+import PaymentAndInclusion from "./PaymentsAndInclusion";
 
 const genders = [
     {
@@ -34,11 +38,13 @@ const UnitDetails = (props) => {
     const [gender, setGender] = useState(
         unit.gender === 1 ? "Male" : unit.gender === 2 ? "Female" : "Both"
     );
-    const [readMore, setReadMore] = useState(true);
+    const [readMore, setReadMore] = useState(false);
 
     const readMoreChangeHandler = () => {
-        setReadMore(prevReadMore => !prevReadMore);
+        setReadMore((prevReadMore) => !prevReadMore);
     };
+
+    console.log(unit);
 
     return (
         <div className={`${styles["unit-details-main"]}`}>
@@ -67,9 +73,14 @@ const UnitDetails = (props) => {
                         <div className={styles.ratings}>
                             <Rating
                                 name="disabled"
-                                value={unit.average_ratings}
+                                value={0}
                                 disabled
-                                sx={{ color: "var(--accent)" }}
+                                sx={{
+                                    color: "var(--accent)",
+                                    "& svg": {
+                                        fill: "var(--accent)",
+                                    },
+                                }}
                             />
                             <p>{unit.average_ratings.toFixed(1)}</p>
                             <div className={`${styles["vertical-line"]}`}></div>
@@ -131,12 +142,48 @@ const UnitDetails = (props) => {
                         </p>
                         <div>
                             {/* Use onClick instead of onChange */}
-                            <BorderlessButton
-                                onClick={readMoreChangeHandler}
-                            >
+                            <BorderlessButton onClick={readMoreChangeHandler}>
                                 Read More
                             </BorderlessButton>
                         </div>
+                    </div>
+                </CardShadow>
+
+                <CardShadow>
+                    <div className={`${styles["unit-detials-col"]}`}>
+                        <p className="title">Amenities</p>
+
+                        <Amenities amenities={unit.amenities} />
+                    </div>
+                </CardShadow>
+
+                <CardShadow>
+                    <div className={`${styles["unit-detials-col"]}`}>
+                        <p className="title">Facilities</p>
+
+                        <Facilities facilities={unit.facilities} />
+                    </div>
+                </CardShadow>
+
+                <CardShadow>
+                    <div className={`${styles["unit-detials-col"]}`}>
+                        <p className="title">Rules</p>
+
+                        <Rules rules={unit.rules} />
+                    </div>
+                </CardShadow>
+
+                <CardShadow>
+                    <div className={`${styles["unit-detials-col"]}`}>
+                        <p className="title">Payment & Inclusions</p>
+
+                        <PaymentAndInclusion
+                            paymentAndInclusions={{
+                                month_advance: unit.month_advance,
+                                month_deposit: unit.month_deposit,
+                                inclusions: unit.inclusions,
+                            }}
+                        />
                     </div>
                 </CardShadow>
             </div>
