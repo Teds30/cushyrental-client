@@ -58,7 +58,7 @@ function App() {
 
             <Route path="/register" element={<CreateAccount />}></Route>
 
-            <Route path=" " element={<Subscriptions />}></Route>
+            <Route path="/subscriptions" element={<Subscriptions />}></Route>
 
             <Route
                 path="/avail_subscriptions"
