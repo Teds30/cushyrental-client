@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { useState, useEffect, useContext, Fragment } from 'react'
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import CreateAccount from './pages/auth/CreateAccount/CreateAccount'
 import SignInPage from './pages/Login/SignInPage'
 import ForgotPassword from './pages/Login/ForgotPassword'
@@ -31,112 +31,155 @@ import AccountVerification from './pages/landlord/LandProfile/AccountVerificatio
 import AvailSubscription from './pages/landlord/AvailSubscription/AvailSubscription'
 // import './App.css'
 
+import AuthContext from './context/auth-context'
+import useAuth from './hooks/data/auth-hook'
+
 function App() {
+    const { user, token, loginHandler, logoutHandler, isLoggedIn } = useAuth()
+    const navigate = useNavigate()
+
+    let routes
+
+    if (!token) {
+        routes = (
+            <Routes>
+                <Route
+                    path="/login"
+                    element={
+                        <>
+                            <h1>Login</h1>
+                        </>
+                    }
+                ></Route>
+                <Route path="/signin" element={<SignInPage />}></Route>
+                <Route
+                    path="/signin/forgotpassword"
+                    element={<ForgotPassword />}
+                ></Route>
+                <Route
+                    path="*"
+                    element={<Navigate replace to="/signin" />}
+                ></Route>
+            </Routes>
+        )
+    } else {
+        let home
+
+        if (user && user.user_type_id === 2) {
+            console.log('landlord')
+        } else if (user && user.user_type_id === 3) {
+            console.log('tenant')
+        }
+
+        routes = (
+            <Routes>
+                <Route
+                    path="/"
+                    element={<Navigate replace to="/landlord-home" />}
+                />
+                <Route path="/landlord-home" element={<Dashboard />}></Route>
+                <Route
+                    path="/tenant-home"
+                    element={
+                        <>
+                            <h1>Tenant</h1>
+                        </>
+                    }
+                ></Route>
+                <Route path="/register" element={<CreateAccount />}></Route>
+                <Route path="/chats/" element={<Chats />}></Route>
+                <Route
+                    path="/chats/:room_id"
+                    element={<Conversation />}
+                ></Route>
+                <Route path="/calendar" element={<MyCalendar />}></Route>
+                <Route
+                    path="/subscriptions"
+                    element={<Subscriptions />}
+                ></Route>
+                <Route
+                    path="/avail_subscriptions"
+                    element={<AvailSubscription />}
+                ></Route>
+                <Route
+                    path="/manage_subscriptions"
+                    element={<ManageSubscriptions />}
+                ></Route>
+                {/* Manage Landlord Unit */}
+                <Route path="/manage_unit" element={<ManageUnit />}></Route>
+                <Route
+                    path="/manage_unit/create_unit"
+                    element={<CreateUnit />}
+                ></Route>
+                <Route
+                    path="/manage_unit/create_unit/location"
+                    element={<Location />}
+                ></Route>
+                <Route
+                    path="/manage_unit/edit/:id"
+                    element={<UnitData />}
+                ></Route>
+                <Route
+                    path="/manage_unit/edit/images/:id"
+                    element={<UnitImageData />}
+                ></Route>
+                <Route
+                    path="/manage_unit/edit/amenities/:id"
+                    element={<UserAmenities />}
+                ></Route>
+                <Route
+                    path="/manage_unit/edit/facilities/:id"
+                    element={<UserFacilities />}
+                ></Route>
+                <Route
+                    path="/manage_unit/edit/inclusions/:id"
+                    element={<UserInclusions />}
+                ></Route>
+                <Route
+                    path="/manage_unit/edit/rules/:id"
+                    element={<UserRules />}
+                ></Route>
+                {/* Manage Landlord Unit */}
+                {/* Profile */}
+                <Route path="/profile" element={<Profile />}></Route>
+                {/* Landlord Profile */}
+                <Route
+                    path="/profile/user_profile/:id"
+                    element={<EditProfile />}
+                ></Route>
+                <Route
+                    path="/profile/user_profile/verify/:id"
+                    element={<AccountVerification />}
+                ></Route>
+                {/* Landlord Profile */}
+                {/* Profile */}
+                {/* Report test will remove later */}
+                <Route path="/report_test" element={<Report />}></Route>
+                {/* Report test will remove later */}
+                <Route path="/myunit-landlord" element={<MyUnit />}></Route>
+                <Route
+                    path="/myunit-landlord/managerenters"
+                    element={<ManageRenters />}
+                ></Route>
+                <Route path="/rules" element={<Rules />}></Route>
+                <Route path="/viewprofile" element={<ViewProfile />}></Route>
+                <Route path="*" element={<Navigate replace to="/" />}></Route>
+            </Routes>
+        )
+    }
+
     return (
-        <Routes>
-            <Route
-                path="/login"
-                element={
-                    <>
-                        <h1>Login</h1>
-                    </>
-                }
-            ></Route>
-
-            <Route path="/landlord-home" element={<Dashboard />}></Route>
-
-            <Route path="/chats/" element={<Chats />}></Route>
-            <Route path="/chats/:room_id" element={<Conversation />}></Route>
-            <Route path="/calendar" element={<MyCalendar />}></Route>
-
-            <Route path="/signinpage" element={<SignInPage />}></Route>
-            <Route
-                path="/signinpage/forgotpassword"
-                element={<ForgotPassword />}
-            ></Route>
-
-            <Route path="/register" element={<CreateAccount />}></Route>
-
-            <Route path="/subscriptions" element={<Subscriptions />}></Route>
-
-            <Route
-                path="/avail_subscriptions"
-                element={<AvailSubscription />}
-            ></Route>
-
-            <Route
-                path="/manage_subscriptions"
-                element={<ManageSubscriptions />}
-            ></Route>
-
-            {/* Manage Landlord Unit */}
-            <Route path="/manage_unit" element={<ManageUnit />}></Route>
-            <Route
-                path="/manage_unit/create_unit"
-                element={<CreateUnit />}
-            ></Route>
-            <Route
-                path="/manage_unit/create_unit/location"
-                element={<Location />}
-            ></Route>
-            <Route path="/manage_unit/edit/:id" element={<UnitData />}></Route>
-            <Route
-                path="/manage_unit/edit/images/:id"
-                element={<UnitImageData />}
-            ></Route>
-            <Route
-                path="/manage_unit/edit/amenities/:id"
-                element={<UserAmenities />}
-            ></Route>
-            <Route
-                path="/manage_unit/edit/facilities/:id"
-                element={<UserFacilities />}
-            ></Route>
-            <Route
-                path="/manage_unit/edit/inclusions/:id"
-                element={<UserInclusions />}
-            ></Route>
-            <Route
-                path="/manage_unit/edit/rules/:id"
-                element={<UserRules />}
-            ></Route>
-            {/* Manage Landlord Unit */}
-
-            {/* Profile */}
-            <Route path="/profile" element={<Profile />}></Route>
-
-            {/* Landlord Profile */}
-            <Route
-                path="/profile/user_profile/:id"
-                element={<EditProfile />}
-            ></Route>
-
-            <Route
-                path="/profile/user_profile/verify/:id"
-                element={<AccountVerification />}
-            ></Route>
-            {/* Landlord Profile */}
-            {/* Profile */}
-
-            {/* Report test will remove later */}
-            <Route path="/report_test" element={<Report />}></Route>
-            {/* Report test will remove later */}
-
-            <Route path="/myunit-landlord" element={<MyUnit />}></Route>
-
-            <Route
-                path="/myunit-landlord/managerenters"
-                element={<ManageRenters />}
-            ></Route>
-
-            <Route path="/rules" element={<Rules />}></Route>
-
-            <Route path="/viewprofile" element={<ViewProfile />}></Route>
-            <Route
-                path="*"
-                element={<Navigate replace to="/signinpage" />}
-            ></Route>
-        </Routes>
+        <AuthContext.Provider
+            value={{
+                user: user,
+                token: token,
+                isLoggedIn: isLoggedIn,
+                onLogout: logoutHandler,
+                onLogin: loginHandler,
+            }}
+        >
+            {routes}
+        </AuthContext.Provider>
     )
 }
 
