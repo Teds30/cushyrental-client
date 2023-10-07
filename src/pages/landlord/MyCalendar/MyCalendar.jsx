@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import AppBar from '@mui/material/AppBar'
@@ -28,8 +28,11 @@ import './MyCalendar.css'
 import styles from './MyCalendarComponent.module.css'
 import MonthEvents from './MonthEvents'
 import SwipeableEdge from './SwipeableEdge'
+import AuthContext from '../../../context/auth-context'
 
 const MyCalendar = ({ window }) => {
+    const authCtx = useContext(AuthContext)
+
     const { sendRequest, isLoading } = useHttp()
     const [selectedDate, setSelectedDate] = useState({
         m: moment().month(),
@@ -99,8 +102,8 @@ const MyCalendar = ({ window }) => {
             }
         }
 
-        fetchEvents()
-    }, [])
+        if (authCtx.user) fetchEvents()
+    }, [authCtx.user])
 
     const handleDateClick = (arg) => {
         const date = arg.dateStr

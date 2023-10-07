@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import useHttp from '../../../hooks/http-hook'
 import { TbBuildingCommunity, TbArrowRight } from 'react-icons/tb'
@@ -13,15 +13,19 @@ import styles from './Dashboard.module.css'
 import profile from '../../../assets/Units/pics.png'
 import { Link } from 'react-router-dom'
 
-const Dashboard = () => {
-    const userId = 1
-    const { sendRequest } = useHttp()
+import AuthContext from '../../../context/auth-context'
 
-    const [unitStats, setUnitStats] = useState()
-    const [upcomingDues, setUpcomingDues] = useState()
+const Dashboard = () => {
+    const authCtx = useContext(AuthContext)
 
     useEffect(() => {
-        const fetchData = async () => {
+        const changeUser = () => {
+            if (authCtx.user) {
+                fetchData(authCtx.user.id)
+            }
+        }
+
+        const fetchData = async (userId) => {
             const res = await sendRequest({
                 url: `${
                     import.meta.env.VITE_BACKEND_LOCALHOST
@@ -39,8 +43,13 @@ const Dashboard = () => {
             setUpcomingDues(res2)
         }
 
-        fetchData()
-    }, [])
+        changeUser()
+    }, [authCtx])
+
+    const { sendRequest } = useHttp()
+
+    const [unitStats, setUnitStats] = useState()
+    const [upcomingDues, setUpcomingDues] = useState()
 
     return (
         <React.Fragment>
