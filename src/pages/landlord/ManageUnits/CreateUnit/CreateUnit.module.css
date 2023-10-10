@@ -120,18 +120,23 @@
 
 .upload-image {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content:space-evenly;
     gap: 10px;
 }
 
 .upload-image-size {
     height: 220px;
+    width: 300px;
     position: relative;
+    display: flex;
 }
 
 .upload-image-size img {
-    width: 100%;
-    height: 220px;
+    flex: 1;
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
 }
 
 .upload-image-button {
@@ -205,5 +210,11 @@
     .location-container {
         max-width: 768px;
         margin: 0 auto;
+    }
+}
+
+@media (max-width: 369px) {
+    .upload-image-size {
+        width: 240px;
     }
 }

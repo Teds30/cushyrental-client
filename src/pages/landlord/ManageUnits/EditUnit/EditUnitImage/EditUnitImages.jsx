@@ -146,7 +146,7 @@ const EditUnitImages = (props) => {
         formData.append("path", "images");
 
         try {
-            const res = await fetch("http://127.0.0.1:8000/api/image-upload", {
+            const res = await fetch(`${import.meta.env.VITE_BACKEND_LOCALHOST}/api/image-upload`, {
                 method: "POST",
                 body: formData,
             });

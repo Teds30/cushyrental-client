@@ -18,9 +18,8 @@ import SearchField from '../../components/Search/SearchField'
 import AuthContext from '../../context/auth-context'
 
 const Chats = () => {
+    const navigate = useNavigate()
     const authCtx = useContext(AuthContext)
-    console.log(authCtx.user)
-    const user_id = 1
 
     const [initialRooms, setInitialRooms] = useState([])
     const [rooms, setRooms] = useState(initialRooms)
@@ -28,10 +27,17 @@ const Chats = () => {
 
     const { sendRequest, isLoading } = useHttp()
 
-    const fetchRooms = async () => {
+    const fetchRooms = async (userId) => {
         const res = await sendRequest({
             url: `${import.meta.env.VITE_CHAT_LOCALHOST}/rooms`,
+            method: 'POST',
+            body: JSON.stringify({ userId: userId }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
         })
+
+        console.log('asd: ', userId)
 
         setRooms(res.rooms)
         setInitialRooms(res.rooms)
@@ -43,8 +49,9 @@ const Chats = () => {
             })
         )
 
-        fetchRooms()
-    }, [])
+        console.log(authCtx.user)
+        if (authCtx.user) fetchRooms(authCtx.user.id)
+    }, [authCtx.user])
 
     const handleSearch = (e) => {
         const keywords = e.target.value
@@ -55,6 +62,7 @@ const Chats = () => {
     }
 
     const chatRooms =
+        authCtx.user &&
         rooms &&
         rooms.map((room) => {
             socket.emit('room-join', { room_id: room._id })
@@ -62,7 +70,7 @@ const Chats = () => {
                 <ChatRoom
                     key={room._id}
                     room={room}
-                    user_id={user_id}
+                    user_id={authCtx.user.id}
                     socket={socket}
                 />
             )
@@ -72,7 +80,9 @@ const Chats = () => {
         <div className={styles['container']}>
             <div className={styles['header']}>
                 <div className={styles['col1']}>
-                    <Link to="/chats">
+                    <Link
+                        to="/home"
+                    >
                         <IconButton
                             size="large"
                             edge="start"
@@ -90,14 +100,7 @@ const Chats = () => {
                     <h2>Chats</h2>
                 </div>
                 <div className={styles['col2']}>
-                    <div
-                        className={styles['profile-pic']}
-                        onClick={() => {
-                            user_id === 1
-                                ? authCtx.onLogin({ id: 2 })
-                                : authCtx.onLogin({ id: 1 })
-                        }}
-                    >
+                    <div className={styles['profile-pic']}>
                         <img src="" alt="" />
                     </div>
                 </div>

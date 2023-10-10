@@ -43,8 +43,8 @@ const SlotsForm = (props) => {
         if (formIsValid) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
-                total_slots: enteredTotalSlots,
-                available_slots: enteredAvailableSlots,
+                total_slots: Number(enteredTotalSlots),
+                slots: Number(enteredAvailableSlots),
             });
         } else if (slotDetails !== undefined) {
             createUnitCtx.onUnitData({
@@ -52,9 +52,9 @@ const SlotsForm = (props) => {
                 total_slots: enteredTotalSlotsIsValid
                     ? enteredTotalSlots
                     : slotDetails.total_slots,
-                available_slots: enteredAvailableSlotsIsValid
+                slots: enteredAvailableSlotsIsValid
                     ? enteredAvailableSlots
-                    : slotDetails.available_slots,
+                    : slotDetails.slots,
             });
         }
     };
@@ -73,8 +73,8 @@ const SlotsForm = (props) => {
         if (formIsValid) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
-                total_slots: enteredTotalSlots,
-                available_slots: enteredAvailableSlots,
+                total_slots: Number(enteredTotalSlots),
+                slots: Number(enteredAvailableSlots),
             });
         } else if (slotDetails !== undefined) {
             createUnitCtx.onUnitData({
@@ -82,9 +82,9 @@ const SlotsForm = (props) => {
                 total_slots: enteredTotalSlotsIsValid
                     ? enteredTotalSlots
                     : slotDetails.total_slots,
-                available_slots: enteredAvailableSlotsIsValid
+                slots: enteredAvailableSlotsIsValid
                     ? enteredAvailableSlots
-                    : slotDetails.available_slots,
+                    : slotDetails.slots,
             });
         } else {
             return;
@@ -98,7 +98,9 @@ const SlotsForm = (props) => {
             className={`${styles["basic-details-form"]}`}
             onSubmit={submitHandler}
         >
-            <div className={`${styles.title}`}>How many tenants can stay in the unit?</div>
+            <div className={`${styles.title}`}>
+                How many tenants can stay in the unit?
+            </div>
 
             <TextField
                 fullWidth
@@ -120,7 +122,7 @@ const SlotsForm = (props) => {
                 type="number"
                 defaultValue={
                     !enteredAvailableSlots
-                        ? slotDetails.available_slots
+                        ? slotDetails.slots
                         : enteredAvailableSlots
                 }
                 onChange={availableSlotsChangeHandler}

@@ -55,8 +55,19 @@ const Conversation = (props) => {
                 url: `${import.meta.env.VITE_CHAT_LOCALHOST}/rooms/${room_id}`,
             })
 
+            const landlord = await fetchUserDetails(res.landlord_id)
+            const tenant = await fetchUserDetails(res.tenant_id)
             fetchUnit(res.unit_id)
-            setRoom(res)
+            setRoom({ ...res, landlord: landlord, tenant: tenant })
+        }
+
+        const fetchUserDetails = async (userId) => {
+            const res = await sendRequest({
+                url: `${
+                    import.meta.env.VITE_BACKEND_LOCALHOST
+                }/api/users/${userId}`,
+            })
+            return res
         }
 
         fetchRoomDetails(room_id)
@@ -132,6 +143,13 @@ const Conversation = (props) => {
         }
     })
 
+    let recipient
+    if (room && user_id === room.landlord_id) {
+        recipient = `${room.tenant.first_name} ${room.tenant.last_name}`
+    } else if (room && user_id === room.tenant_id) {
+        recipient = `${room.landlord.first_name} ${room.landlord.last_name}`
+    }
+
     return (
         <div className={styles['container']}>
             <Box sx={{ position: 'fixed', top: 0, width: '100%' }}>
@@ -171,10 +189,7 @@ const Conversation = (props) => {
                         </Link>
                         <Box sx={{ flexGrow: 1 }}>
                             <p className="title">{unit && unit.name}</p>
-                            <p>
-                                {unit && unit.landlord.first_name}{' '}
-                                {unit && unit.landlord.last_name}
-                            </p>
+                            <p>{room && recipient}</p>
                         </Box>
 
                         <IconButton

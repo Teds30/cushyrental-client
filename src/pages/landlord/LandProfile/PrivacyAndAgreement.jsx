@@ -30,12 +30,14 @@ const PrivacyAndAgreement = (props) => {
             user_id: userCtx.user.id,
         };
 
+        console.log(data);
+
         try {
             const res = await accountVerification(data);
             onNext();
         } catch (err) {}
 
-        //
+        
     };
 
     return (

@@ -70,10 +70,32 @@ const nav_data = [
     {
         name: 'Chats',
         icon: (
-            <BsChatSquare style={{ fill: 'inherit' }} color="red" size={24} />
+            <Link
+                to="/chats"
+                style={{
+                    display: 'flex',
+                    justifyContent: 'centers',
+                    alignItems: 'center',
+                }}
+            >
+                <BsChatSquare
+                    style={{ fill: 'inherit' }}
+                    color="red"
+                    size={24}
+                />
+            </Link>
         ),
         selectedIcon: (
-            <BsChatSquareFill style={{ fill: 'inherit' }} size={24} />
+            <Link
+                to="/chats"
+                style={{
+                    display: 'flex',
+                    justifyContent: 'centers',
+                    alignItems: 'center',
+                }}
+            >
+                <BsChatSquareFill style={{ fill: 'inherit' }} size={24} />
+            </Link>
         ),
     },
     {
@@ -100,13 +122,23 @@ const nav_data = [
     {
         name: 'Profile',
         icon: (
-            <BiUser
+            <Link
+                to="/profile"
                 style={{
-                    fill: 'inherit',
+                    display: 'flex',
+                    justifyContent: 'centers',
+                    alignItems: 'center',
                 }}
-                size={24}
-            />
+            >
+                <BiUser
+                    style={{
+                        fill: 'inherit',
+                    }}
+                    size={24}
+                />
+            </Link>
         ),
+
         selectedIcon: <BiSolidUser style={{ fill: 'inherit' }} size={24} />,
     },
 ]

@@ -15,12 +15,12 @@ const BasicDetailsForm = (props) => {
     const { onNext } = props;
 
     const {
-        value: enteredTitle,
-        isValid: enteredTitleIsValid,
-        hasError: enteredTitleHasError,
-        valueChangeHandler: titleChangeHandler,
-        inputBlurHandler: titleBlurHandler,
-        reset: titleReset,
+        value: enteredName,
+        isValid: enteredNameIsValid,
+        hasError: enteredNameHasError,
+        valueChangeHandler: nameChangeHandler,
+        inputBlurHandler: nameBlurHandler,
+        reset: nameReset,
     } = useValidate((value) => value.trim() !== "");
     const {
         value: enteredDetails,
@@ -33,7 +33,7 @@ const BasicDetailsForm = (props) => {
 
     let formIsValid = false;
 
-    if (enteredTitleIsValid && enteredDetailsIsValid) {
+    if (enteredNameIsValid && enteredDetailsIsValid) {
         formIsValid = true;
     }
 
@@ -43,15 +43,13 @@ const BasicDetailsForm = (props) => {
         if (formIsValid) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
-                title: enteredTitle,
+                name: enteredName,
                 details: enteredDetails,
             });
         } else if (unitDetails !== undefined) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
-                title: enteredTitleIsValid
-                    ? enteredTitle
-                    : unitDetails.title,
+                name: enteredNameIsValid ? enteredName : unitDetails.name,
                 details: enteredDetailsIsValid
                     ? enteredDetails
                     : unitDetails.details,
@@ -73,9 +71,9 @@ const BasicDetailsForm = (props) => {
             <TextField
                 fullWidth
                 label="Title"
-                defaultValue={!enteredTitle ? unitDetails.title : enteredTitle}
-                onChange={titleChangeHandler}
-                onBlur={titleBlurHandler}
+                defaultValue={!enteredName ? unitDetails.name : enteredName}
+                onChange={nameChangeHandler}
+                onBlur={nameBlurHandler}
                 required
             />
 

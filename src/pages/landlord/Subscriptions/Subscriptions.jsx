@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { Pagination } from 'swiper/modules'
 // Import Swiper styles
 import 'swiper/css'
+import 'swiper/css/pagination'
 
 import { Link } from 'react-router-dom'
 import { IconButton } from '@mui/material'
@@ -12,16 +14,22 @@ import { FiChevronLeft } from 'react-icons/fi'
 import styles from './Subscriptions.module.css'
 import SubscriptionCard from './SubscriptionCard'
 
+import useSubscriptionManager from '../../../hooks/data/subscriptions-hooks'
+
 const Subscriptions = () => {
-    const settings = {
-        centerMode: true,
-        infinite: true,
-        centerPadding: '0',
-        slidesToShow: 3,
-        speed: 500,
-        focusOnSelect: true,
-        variableWidth: true,
-    }
+    const { fetchSubscriptions } = useSubscriptionManager()
+    const [subscriptions, setSubscriptions] = useState([])
+
+    useEffect(() => {
+        const handleFetch = async () => {
+            try {
+                const res = await fetchSubscriptions()
+                setSubscriptions(res)
+            } catch (err) {}
+        }
+        handleFetch()
+    }, [])
+
     return (
         <div className={styles['container']}>
             <div className={styles['nav-container']}>
@@ -56,27 +64,40 @@ const Subscriptions = () => {
             <div className={styles['subscriptions-container']}>
                 <div className={styles['cards-container']}>
                     <Swiper
-                        spaceBetween={0}
-                        effect={'coverflow'}
-                        grabCursor={true}
+                        slidesPerView={1}
                         centeredSlides={true}
-                        slidesPerView={'auto'}
-                        coverflowEffect={{
-                            rotate: 0,
-                            stretch: 0,
-                            depth: 100,
-                            modifier: 2.5,
+                        spaceBetween={30}
+                        pagination={{
+                            clickable: true,
+                        }}
+                        modules={[Pagination]}
+                        breakpoints={{
+                            '@0.00': {
+                                slidesPerView: 1,
+                                spaceBetween: 100,
+                            },
+                            '@0.75': {
+                                slidesPerView: 2,
+                                spaceBetween: 250,
+                            },
+                            '@1.00': {
+                                slidesPerView: 3,
+                                spaceBetween: 250,
+                            },
                         }}
                     >
-                        <SwiperSlide>
-                            <SubscriptionCard />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <SubscriptionCard />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <SubscriptionCard />
-                        </SwiperSlide>
+                        {subscriptions &&
+                            subscriptions.map((sub) => (
+                                <SwiperSlide
+                                    key={sub.id}
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <SubscriptionCard subscription={sub} />
+                                </SwiperSlide>
+                            ))}
                     </Swiper>
                 </div>
             </div>

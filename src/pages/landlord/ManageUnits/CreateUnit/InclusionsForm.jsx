@@ -11,9 +11,11 @@ import EastIcon from "@mui/icons-material/East";
 
 const InclusionsForm = (props) => {
     const createUnitCtx = useContext(CreateUnitContext);
-    const inclusionData = createUnitCtx.unitData.inclusions ? createUnitCtx.unitData.inclusions : [];
+    const inclusionData = createUnitCtx.unitData.inclusions
+        ? createUnitCtx.unitData.inclusions
+        : [];
 
-    const { onBack, onNext} = props;
+    const { onBack, onNext } = props;
 
     const { isLoading, fetchInclusions } = useAttributeManager();
     const [inclusionValue, setInclusionValue] = useState([]);
@@ -29,7 +31,7 @@ const InclusionsForm = (props) => {
         if (inclusionValue) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
-                inclusions: inclusionValue
+                inclusions: inclusionValue,
             });
         }
 
@@ -45,10 +47,8 @@ const InclusionsForm = (props) => {
 
         createUnitCtx.onUnitData({
             ...createUnitCtx.unitData,
-            inclusions: inclusionValue
+            inclusions: inclusionValue,
         });
-
-        setInclusionValue([]);
 
         onNext();
     };
@@ -66,8 +66,6 @@ const InclusionsForm = (props) => {
                         );
                     });
 
-                    // console.log(selectedAmenities);
-
                     setInclusionValue(selectedAmenities);
                 }
             } catch (err) {}
@@ -80,7 +78,9 @@ const InclusionsForm = (props) => {
             className={`${styles["basic-details-form"]}`}
             onSubmit={submitHandler}
         >
-            <div className={`${styles.title}`}>What inclusions do your unit offer?</div>
+            <div className={`${styles.title}`}>
+                What inclusions do your unit offer?
+            </div>
 
             {isLoading ? (
                 "Loading..."
@@ -94,11 +94,7 @@ const InclusionsForm = (props) => {
 
             <div className={`${styles["basic-details-button"]}`}>
                 <BorderlessButton onClick={backHandler}>Back</BorderlessButton>
-                <PrimaryButton
-                    rightIcon={<EastIcon />}
-                >
-                    Next
-                </PrimaryButton>
+                <PrimaryButton rightIcon={<EastIcon />}>Next</PrimaryButton>
             </div>
         </form>
     );

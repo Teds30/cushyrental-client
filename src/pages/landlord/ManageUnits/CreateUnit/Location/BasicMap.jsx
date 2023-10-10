@@ -4,6 +4,7 @@ import React, {
     useRef,
     useCallback,
     useEffect,
+    useContext,
 } from 'react'
 import {
     GoogleMap,
@@ -11,6 +12,7 @@ import {
     StandaloneSearchBox,
     LoadScript,
 } from '@react-google-maps/api'
+import CreateUnitContext from '../../../../../context/create-unit-context'
 
 import { HiOutlineLocationMarker } from 'react-icons/hi'
 
@@ -33,16 +35,23 @@ const BasicMap = ({
 
     const searchRef = useRef()
     const [searchBox, setSearchBox] = useState(null)
-
     const onSBLoad = (ref) => {
         setSearchBox(ref)
     }
+    const createUnitCtx = useContext(CreateUnitContext);
 
     if (!isLoaded) return <div>Loading...</div>
 
     // const handleOnLoad = (map) => {
     //     setMapRef(map)
     // }
+
+    const addressChangeHandler = (event) => {
+        createUnitCtx.onUnitData({
+            ...createUnitCtx.unitData,
+            address: event.target.value
+        })
+    }
 
     const handleBoundsChanged = () => {
         if (mapRef) {
@@ -78,7 +87,7 @@ const BasicMap = ({
                     onPlacesChanged={onPlacesChanged}
                     onLoad={onSBLoad}
                 >
-                    <SearchField placeholder="Search" />
+                    <SearchField placeholder="Search" onChange={addressChangeHandler} />
                 </StandaloneSearchBox>
             </div>
 

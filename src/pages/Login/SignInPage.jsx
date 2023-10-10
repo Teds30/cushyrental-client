@@ -1,167 +1,172 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import FacebookLogin, { FacebookLoginResponse } from "rc-facebook-login";
+import React, { useState, useEffect, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import FacebookLogin, { FacebookLoginResponse } from 'rc-facebook-login'
 
-import styles from "../Login/SignInPage.module.css";
-import PrimaryButton from "../../components/Button/PrimaryButton";
-import TextField from "../../components/TextField/TextField";
-import CheckBox from "../../components/CheckBox/CheckBox";
-import Logo from "../../assets/cushyrental.svg";
-import useLogin from "../../hooks/data/login-hook";
-import SocialMediaLogin from "./SocialMedia";
-import AuthContext from "../../context/auth-context";
+import styles from '../Login/SignInPage.module.css'
+import PrimaryButton from '../../components/Button/PrimaryButton'
+import TextField from '../../components/TextField/TextField'
+import CheckBox from '../../components/CheckBox/CheckBox'
+import Logo from '../../assets/cushyrental.svg'
+import useLogin from '../../hooks/data/login-hook'
+import SocialMediaLogin from './SocialMedia'
+import AuthContext from '../../context/auth-context'
 
 const SignInPage = () => {
-  const { loginUser, isLoading } = useLogin();
-  const [emailInput, setEmailInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [checkBoxItems, setCheckBoxItems] = useState([]);
-  const userCtx = useContext(AuthContext)
-  const navigate = useNavigate();
+    const { loginUser, isLoading } = useLogin()
+    const [emailInput, setEmailInput] = useState('')
+    const [passwordInput, setPasswordInput] = useState('')
+    const [emailError, setEmailError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
+    const [checkBoxItems, setCheckBoxItems] = useState([])
+    const userCtx = useContext(AuthContext)
+    const navigate = useNavigate()
 
-  const handleEmailChange = (event) => {
-    setEmailInput(event.target.value);
-    setEmailError("");
-  };
-
-  const handlePasswordChange = (event) => {
-    setPasswordInput(event.target.value);
-    setPasswordError("");
-  };
-
-  const handleEmailBlur = () => {
-    if (emailInput === "") {
-      setEmailError("Email is required.");
-    }
-  };
-
-  const handlePasswordBlur = () => {
-    if (passwordInput === "") {
-      setPasswordError("Password is required.");
-    }
-  };
-
-  const checkBoxHandler = (items) => {
-    setCheckBoxItems(items);
-  };
-
-  useEffect(() => {
-    checkBoxHandler;
-    console.log(checkBoxItems);
-  }, [checkBoxItems]);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    setEmailError("");
-    setPasswordError("");
-
-    if (emailInput === "") {
-      setEmailError("Email is required.");
+    const handleEmailChange = (event) => {
+        setEmailInput(event.target.value)
+        setEmailError('')
     }
 
-    if (passwordInput === "") {
-      setPasswordError("Password is required.");
+    const handlePasswordChange = (event) => {
+        setPasswordInput(event.target.value)
+        setPasswordError('')
     }
 
-    if (emailInput !== "" && passwordInput !== "") {
+    const handleEmailBlur = () => {
+        if (emailInput === '') {
+            setEmailError('Email is required.')
+        }
     }
 
-    try {
-      const res = await loginUser({
-        email: emailInput,
-        password: passwordInput,
-      });
-      console.log(res);
-      userCtx.onLogin(res.user, res.token);
-      navigate('/profile');
-    } catch (error) {
-      console.log(error);
+    const handlePasswordBlur = () => {
+        if (passwordInput === '') {
+            setPasswordError('Password is required.')
+        }
     }
-  };
 
-  return (
-    <form className={`${styles["main-container"]} `} onSubmit={handleSubmit}>
-      <div>
-        <div className="logo">
-          <img src={Logo} alt="Cushy Rental Icon" />{" "}
-        </div>
+    const checkBoxHandler = (items) => {
+        setCheckBoxItems(items)
+    }
 
-        <div className={`${styles["component-title"]} `}>
-          <h2>Sign In to</h2>
-          <h2>Cushy Rental</h2>
-        </div>
-      </div>
+    useEffect(() => {
+        checkBoxHandler
+        console.log(checkBoxItems)
+    }, [checkBoxItems])
 
-      <div className={`${styles["sign-in"]} `}>
-        <div className={`${styles["custom__inputs"]} `}>
-          <TextField
-            fullWidth
-            label="Email"
-            type="email"
-            value={emailInput}
-            onChange={handleEmailChange}
-            onBlur={handleEmailBlur}
-          />
-          <p className={styles["error"]}>{emailError}</p>
-        </div>
+    const handleSubmit = async (event) => {
+        event.preventDefault()
 
-        <div className={`${styles["custom__inputs"]} `}>
-          <TextField
-            fullWidth
-            label="Password"
-            type="password"
-            value={passwordInput}
-            onChange={handlePasswordChange}
-            onBlur={handlePasswordBlur}
-          />
-          <div className={styles["error"]}>{passwordError}</div>
-        </div>
+        setEmailError('')
+        setPasswordError('')
 
-        <div className={`${styles["remember-forgot"]} `}>
-          <div className={`${styles["remember-me"]} `}>
-            {/* <CheckBox
+        if (emailInput === '') {
+            setEmailError('Email is required.')
+        }
+
+        if (passwordInput === '') {
+            setPasswordError('Password is required.')
+        }
+
+        if (emailInput !== '' && passwordInput !== '') {
+        }
+
+        try {
+            const res = await loginUser({
+                email: emailInput,
+                password: passwordInput,
+            })
+            userCtx.onLogin({ user: res.user, token: res.token })
+            navigate('/')
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    return (
+        <form
+            className={`${styles['main-container']} `}
+            onSubmit={handleSubmit}
+        >
+            <div>
+                <div className="logo">
+                    <img src={Logo} alt="Cushy Rental Icon" />{' '}
+                </div>
+
+                <div className={`${styles['component-title']} `}>
+                    <h2>Sign In to</h2>
+                    <h2>Cushy Rental</h2>
+                </div>
+            </div>
+
+            <div className={`${styles['sign-in']} `}>
+                <div className={`${styles['custom__inputs']} `}>
+                    <TextField
+                        fullWidth
+                        label="Email"
+                        type="email"
+                        value={emailInput}
+                        onChange={handleEmailChange}
+                        onBlur={handleEmailBlur}
+                    />
+                    <p className={styles['error']}>{emailError}</p>
+                </div>
+
+                <div className={`${styles['custom__inputs']} `}>
+                    <TextField
+                        fullWidth
+                        label="Password"
+                        type="password"
+                        value={passwordInput}
+                        onChange={handlePasswordChange}
+                        onBlur={handlePasswordBlur}
+                    />
+                    <div className={styles['error']}>{passwordError}</div>
+                </div>
+
+                <div className={`${styles['remember-forgot']} `}>
+                    <div className={`${styles['remember-me']} `}>
+                        {/* <CheckBox
               items={[{ id: 1, name: "Remember Me" }]}
               onCheckBox={checkBoxHandler}
             /> */}
-          </div>
-          <div className={`${styles["remember-me"]} `}>
-            <Link
-              to="/SignInPage/ForgotPassword"
-              className={`${styles["forgot-password"]} `}
-            >
-              Forgot Password?
-            </Link>
-          </div>
-        </div>
+                    </div>
+                    <div className={`${styles['remember-me']} `}>
+                        <Link
+                            to="/SignInPage/ForgotPassword"
+                            className={`${styles['forgot-password']} `}
+                        >
+                            Forgot Password?
+                        </Link>
+                    </div>
+                </div>
 
-        <PrimaryButton type="submit" isLoading={isLoading}>
-          LOG IN
-        </PrimaryButton>
+                <PrimaryButton type="submit" isLoading={isLoading}>
+                    LOG IN
+                </PrimaryButton>
 
-        <div>
-          <div className={`${styles["sign-up__container"]}`}>
-            <div className={styles.hr}></div>
-            <div className={styles.option}>Or Sign Up with</div>
-            <div className={styles.hr}></div>
-          </div>
+                <div>
+                    <div className={`${styles['sign-up__container']}`}>
+                        <div className={styles.hr}></div>
+                        <div className={styles.option}>Or Sign Up with</div>
+                        <div className={styles.hr}></div>
+                    </div>
 
-          <SocialMediaLogin />
-        </div>
+                    <SocialMediaLogin />
+                </div>
 
-        <div className={`${styles["login-option"]}`}>
-          <span>Don't have an account? </span>
-          <span className={`${styles["signup-link"]}`}>
-            <Link to="/register" className={`${styles["signup-word"]}`}>
-              Sign Up
-            </Link>
-          </span>
-        </div>
-      </div>
-    </form>
-  );
-};
+                <div className={`${styles['login-option']}`}>
+                    <span>Don't have an account? </span>
+                    <span className={`${styles['signup-link']}`}>
+                        <Link
+                            to="/register"
+                            className={`${styles['signup-word']}`}
+                        >
+                            Sign Up
+                        </Link>
+                    </span>
+                </div>
+            </div>
+        </form>
+    )
+}
 
-export default SignInPage;
+export default SignInPage

@@ -150,6 +150,29 @@ const useUnitManager = () => {
         [sendRequest]
     )
 
+    const createUnit = useCallback(
+        async (body) => {
+            let responseData
+            try {
+                responseData = await sendRequest({
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/units`,
+                    method: 'POST',
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+
+                return responseData
+            } catch (err) {
+                throw err.message
+            }
+        },
+        [sendRequest]
+    )
+
     return {
         isLoading,
         fetchUnits,
@@ -159,6 +182,7 @@ const useUnitManager = () => {
         fetchUnitInclusions,
         fetchUnitRules,
         updateUnit,
+        createUnit
     }
 }
 

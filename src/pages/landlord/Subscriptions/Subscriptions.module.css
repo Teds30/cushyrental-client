@@ -6,6 +6,8 @@
     width: 100%;
     height: 100vh;
 
+    margin: 0 auto;
+
     /* background: var(--bg); */
 }
 
@@ -15,6 +17,7 @@
 }
 
 .header-container {
+    align-self: stretch;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -22,7 +25,6 @@
     /* gap: 16px; */
     /* border: 1px solid red; */
     padding-inline: 24px;
-    max-width: 425px;
 }
 
 .header-container h1 {
@@ -42,15 +44,10 @@
 
 .header-container p {
     text-align: center;
+    max-width: 425px;
 }
 
 .cards-container {
-    border: 1px solid red;
-    display: flex;
-    justify-content: flex-start;
-    padding-inline: 16px;
-
-    gap: 16px;
     overflow: auto;
 }
 
@@ -59,7 +56,7 @@
     box-shadow: rgb(238, 243, 251) 0px 4px 8px;
     border: 1px solid #dee6f1;
     padding: 24px;
-    width: 280px;
+    min-width: 280px;
     border-radius: 16px;
     display: flex;
     flex-direction: column;

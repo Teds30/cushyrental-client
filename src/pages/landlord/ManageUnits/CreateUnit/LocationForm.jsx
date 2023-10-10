@@ -12,7 +12,7 @@ import BorderlessButton from "../../../../components/Button/BorderlessButton";
 
 const LocationForm = (props) => {
     const createUnitCtx = useContext(CreateUnitContext);
-    const locationDetails = createUnitCtx.unitData.location;
+    const locationDetails = createUnitCtx.unitData.address;
 
     const { onNext, onBack } = props;
 
@@ -35,14 +35,12 @@ const LocationForm = (props) => {
         if (formIsValid) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
-                location: enteredLocation,
-                address: 'address'
+                address: enteredLocation,
             });
         } else if (locationDetails !== undefined) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
-                location: createUnitCtx.unitData.location,
-                address: 'address'
+                address: createUnitCtx.unitData.address,
             });
         }
     };
@@ -53,7 +51,7 @@ const LocationForm = (props) => {
         draftLocation();
 
         onBack();
-    }
+    };
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -61,13 +59,12 @@ const LocationForm = (props) => {
         if (formIsValid) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
-                address: 'address'
+                address: enteredLocation,
             });
         } else if (locationDetails !== undefined) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
-                location: createUnitCtx.unitData.location,
-                address: 'adress'
+                address: createUnitCtx.unitData.address,
             });
         } else {
             return;
@@ -83,16 +80,25 @@ const LocationForm = (props) => {
         >
             <div className={`${styles.title}`}>Basic Details</div>
 
-            <div className={`${styles['location-form-container']}`}>
-            <TextField
-                fullWidth
-                label="Location"
-                defaultValue={locationDetails !== undefined ? locationDetails : enteredLocation}
-                onChange={locationChangeHandler}
-                onBlur={locationBlurHandler}
-                required
-            />
-            <Link to='/manage_unit/create_unit/location' style={{padding: '0 5px', color: 'var(--accent)'}}>Change</Link>
+            <div className={`${styles["location-form-container"]}`}>
+                <TextField
+                    fullWidth
+                    label="Location"
+                    defaultValue={
+                        locationDetails !== undefined
+                            ? locationDetails
+                            : enteredLocation
+                    }
+                    onChange={locationChangeHandler}
+                    onBlur={locationBlurHandler}
+                    required
+                />
+                <Link
+                    to="/manage_unit/create_unit/location"
+                    style={{ padding: "0 5px", color: "var(--accent)" }}
+                >
+                    Change
+                </Link>
             </div>
 
             <div className={`${styles["basic-details-button"]}`}>

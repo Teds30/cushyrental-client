@@ -6,6 +6,7 @@ import BorderlessButton from "../../../../components/Button/BorderlessButton";
 import CreateUnitContext from "../../../../context/create-unit-context";
 import ComfortRoom from "./FacilityComponent/ComfortRoom";
 import Others from "./FacilityComponent/Others";
+import useUnitManager from "../../../../hooks/data/units-hook";
 
 import styles from "./CreateUnit.module.css";
 import EastIcon from "@mui/icons-material/East";
@@ -13,7 +14,8 @@ import KitchenSink from "./FacilityComponent/KitchenSink";
 
 const FacilitiesForm = (props) => {
     const { onBack, onNext } = props;
-    let cRData;
+    const { createUnit } = useUnitManager();
+    // let cRData;
 
     const createUnitCtx = useContext(CreateUnitContext);
     const facilityData = createUnitCtx.unitData.facilities
@@ -24,29 +26,34 @@ const FacilitiesForm = (props) => {
 
     const [facilities, setFacilities] = useState([]);
 
-    const [cRSelectedValue, setCRSelectedValue] = useState('1');
+    const [cRSelectedValue, setCRSelectedValue] = useState("1");
     const [kSSelectedValue, setKSSelectedValue] = useState("1");
     const [otherFacility, setOtherFacility] = useState([]);
 
     const comfortRoomHandler = (data) => {
-        console.log(data);
         setCRSelectedValue(data);
     };
 
     const kitchenSinkHandler = (data) => {
-        console.log(data);
         setKSSelectedValue(data);
     };
 
     const otherHandler = (data) => {
         setOtherFacility(data);
-        console.log(data);
     };
 
     const backHandler = (event) => {
         event.preventDefault();
 
-        const data = [
+        const otherFacilityArray =
+            otherFacility.length !== 0
+                ? otherFacility.map((facility) => ({
+                      id: Number(facility),
+                      is_shared: 0,
+                  }))
+                : [];
+
+        let data = [
             {
                 id: facilities
                     .filter((cr) => cr.name === "Comfort Room")
@@ -63,17 +70,12 @@ const FacilitiesForm = (props) => {
             },
         ];
 
-        if (otherFacility.length !== 0) {
-            createUnitCtx.onUnitData({
-                ...createUnitCtx.unitData,
-                facilities: [...otherFacility, data],
-            });
-        } else {
-            createUnitCtx.onUnitData({
-                ...createUnitCtx.unitData,
-                facilities: data,
-            });
-        }
+        data = data.concat(otherFacilityArray);
+
+        createUnitCtx.onUnitData({
+            ...createUnitCtx.unitData,
+            facilities: data,
+        });
 
         onBack();
     };
@@ -81,7 +83,15 @@ const FacilitiesForm = (props) => {
     const submitHandler = (event) => {
         event.preventDefault();
 
-        const data = [
+        const otherFacilityArray =
+            otherFacility.length !== 0
+                ? otherFacility.map((facility) => ({
+                      id: Number(facility),
+                      is_shared: 0,
+                  }))
+                : [];
+
+        let data = [
             {
                 id: facilities
                     .filter((cr) => cr.name === "Comfort Room")
@@ -98,17 +108,12 @@ const FacilitiesForm = (props) => {
             },
         ];
 
-        if (otherFacility.length !== 0) {
-            createUnitCtx.onUnitData({
-                ...createUnitCtx.unitData,
-                facilities: [...otherFacility, data]
-            });
-        } else {
-            createUnitCtx.onUnitData({
-                ...createUnitCtx.unitData,
-                facilities: data,
-            });
-        }
+        data = data.concat(otherFacilityArray);
+
+        createUnitCtx.onUnitData({
+            ...createUnitCtx.unitData,
+            facilities: data,
+        });
 
         onNext();
     };
