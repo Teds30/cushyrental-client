@@ -47,11 +47,6 @@ const SignInPage = () => {
         setCheckBoxItems(items)
     }
 
-    useEffect(() => {
-        checkBoxHandler
-        console.log(checkBoxItems)
-    }, [checkBoxItems])
-
     const handleSubmit = async (event) => {
         event.preventDefault()
 
@@ -75,7 +70,9 @@ const SignInPage = () => {
                 password: passwordInput,
             })
             userCtx.onLogin({ user: res.user, token: res.token })
-            navigate('/')
+            console.log(res.user.user_type_id)
+            if (res.user.user_type_id === 2) navigate('/landlord-home')
+            if (res.user.user_type_id === 3) navigate('/tenant-home')
         } catch (error) {
             console.log(error)
         }
