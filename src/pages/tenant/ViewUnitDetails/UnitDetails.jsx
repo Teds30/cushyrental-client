@@ -6,13 +6,17 @@ import CardShadow from "../../../components/Card/CardShadow";
 import ChipBig from "../../../components/Chips/ChipBig";
 import BorderlessButton from "../../../components/Button/BorderlessButton";
 import Facilities from "./Facilities";
+import Amenities from "./Amenities";
+import Rules from "./Rules";
+import PaymentAndInclusion from "./PaymentsAndInclusion";
+import SimilarUnits from "./SimilarUnits";
+import LandlordProfile from "./LandlordProfile";
+import TenantReviews from "./TenantReviews";
+import BorderedButton from "../../../components/Button/BorderedButton";
 
 import styles from "./ViewUnitDetails.module.css";
 import { CiLocationOn } from "react-icons/ci";
 import { useState } from "react";
-import Amenities from "./Amenities";
-import Rules from "./Rules";
-import PaymentAndInclusion from "./PaymentsAndInclusion";
 
 const genders = [
     {
@@ -35,6 +39,8 @@ const genders = [
 const UnitDetails = (props) => {
     const { unit } = props;
 
+    console.log(unit);
+
     const [gender, setGender] = useState(
         unit.gender === 1 ? "Male" : unit.gender === 2 ? "Female" : "Both"
     );
@@ -43,8 +49,6 @@ const UnitDetails = (props) => {
     const readMoreChangeHandler = () => {
         setReadMore((prevReadMore) => !prevReadMore);
     };
-
-    console.log(unit);
 
     return (
         <div className={`${styles["unit-details-main"]}`}>
@@ -142,12 +146,23 @@ const UnitDetails = (props) => {
                         </p>
                         <div>
                             {/* Use onClick instead of onChange */}
-                            <BorderlessButton onClick={readMoreChangeHandler}>
-                                Read More
-                            </BorderlessButton>
+                            {unit.details.length > 300 && (
+                                <BorderlessButton
+                                    onClick={readMoreChangeHandler}
+                                >
+                                    {!readMore ? "Read More" : "Read Less"}
+                                </BorderlessButton>
+                            )}
                         </div>
                     </div>
                 </CardShadow>
+
+                <div className={`${styles['reviews']}`}>
+                    <p className="title">Reviews</p>
+
+                    <TenantReviews userId={unit.id}/>
+                    {/* <BorderedButton>See More Reviews</BorderedButton> */}
+                </div>
 
                 <CardShadow>
                     <div className={`${styles["unit-detials-col"]}`}>
@@ -186,6 +201,20 @@ const UnitDetails = (props) => {
                         />
                     </div>
                 </CardShadow>
+
+                <CardShadow>
+                    <div className={`${styles["unit-detials-col"]}`}>
+                        <LandlordProfile
+                            user={{ ...unit.landlord, address: unit.address }}
+                        />
+                    </div>
+                </CardShadow>
+                
+                <div className={`${styles['similar-units']}`}>
+                    <p className="title">Similar Units</p>
+                    <SimilarUnits />
+                </div>
+
             </div>
         </div>
     );

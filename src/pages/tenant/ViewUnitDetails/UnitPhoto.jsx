@@ -10,7 +10,7 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 
-import "./styles.css";
+import "./UnitPhoto.css";
 
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 
@@ -21,7 +21,20 @@ export default function UnitPhoto(props) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const [unitImages, setUnitImages] = useState([]);
 
-    console.log(images);
+    const imageContent1 =
+        !isLoading &&
+        unitImages.map((image, index) => (
+            <SwiperSlide key={index}>
+                <img src={image} />
+            </SwiperSlide>
+        ));
+    const imageContent2 =
+        !isLoading &&
+        unitImages.map((image, index) => (
+            <SwiperSlide key={index}>
+                <img src={image} />
+            </SwiperSlide>
+        ));
 
     useEffect(() => {
         const handleFetch = async () => {
@@ -39,21 +52,6 @@ export default function UnitPhoto(props) {
         };
         handleFetch();
     }, []);
-
-    const imageContent1 =
-        !isLoading &&
-        unitImages.map((image, index) => (
-            <SwiperSlide key={index}>
-                <img src={image} />
-            </SwiperSlide>
-        ));
-    const imageContent2 =
-        !isLoading &&
-        unitImages.map((image, index) => (
-            <SwiperSlide key={index}>
-                <img src={image} />
-            </SwiperSlide>
-        ));
 
     return (
         <Fragment>

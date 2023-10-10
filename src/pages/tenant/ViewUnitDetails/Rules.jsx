@@ -6,8 +6,6 @@ import ChipOutlined from "../../../components/Chips/ChipOutlined";
 const Amenities = (props) => {
     const { rules } = props;
 
-    console.log(rules);
-
     return (
         <ChipOutlined
             items={rules}

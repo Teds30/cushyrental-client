@@ -4,10 +4,9 @@ import ChipBig from "../../../components/Chips/ChipBig";
 const PaymentAndInclusion = (props) => {
     const { paymentAndInclusions } = props;
 
-    console.log(paymentAndInclusions);
-
     const paymentOptions = [
         {
+            id: -1,
             icon: "advance_deposit.svg",
             name: (
                 <>
@@ -18,11 +17,12 @@ const PaymentAndInclusion = (props) => {
             ),
         },
         {
+            id: -2,
             icon: "advance_payment.svg",
             name: (
                 <>
                     Advance Payment
-                    <br />+ {paymentAndInclusions.month_advance} Month/s
+                    <br /> {paymentAndInclusions.month_advance} Month/s
                 </>
             ),
         },
@@ -31,8 +31,6 @@ const PaymentAndInclusion = (props) => {
     paymentAndInclusions.inclusions.forEach((inclusion) => {
         paymentOptions.push(inclusion);
     });
-
-    console.log(paymentOptions); // Corrected to log paymentOptions
 
     return <ChipBig items={paymentOptions} clickable={false} />;
 };

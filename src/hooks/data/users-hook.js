@@ -214,6 +214,19 @@ const useUserManager = () => {
         [sendRequest]
     )
 
+    const fetchReviews = useCallback(async () => {
+        let responseData
+        try {
+            responseData = await sendRequest({
+                url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/reviews`,
+            })
+        } catch (err) {
+            throw err.message
+        }
+
+        return responseData
+    }, [sendRequest])
+
     return {
         isLoading,
         fetchUser,
@@ -225,7 +238,8 @@ const useUserManager = () => {
         updateUserFacilities,
         updateUserImages,
         deleteUserImages,
-        updateUser
+        updateUser,
+        fetchReviews
     }
 }
 

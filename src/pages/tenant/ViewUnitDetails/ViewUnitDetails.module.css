@@ -3,6 +3,7 @@
 
     display: flex;
     flex-direction: column;
+    padding-bottom: 93px;
 }
 
 .top-back-container {
@@ -90,6 +91,49 @@
 .address {
     display: flex;
     align-items: center;
+}
+
+.profile {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.photo img {
+    height: inherit;
+    width: inherit;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.user-data {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.landlord-address {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.view-profile {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.view-profile-button {
+    color: var(--accent);
 }
 
 @media (min-width: 640px) {
