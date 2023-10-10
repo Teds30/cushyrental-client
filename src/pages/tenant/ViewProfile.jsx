@@ -22,7 +22,7 @@ const ViewProfile = () => {
         const fetchUsers = async () => {
             try {
                 const response = await fetch(
-                    `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/users/1`
+                    `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/users/3`
                 );
                 const data = await response.json();
                 setUser(data);
@@ -150,7 +150,7 @@ const ViewProfile = () => {
                                     marginTop: "-2px",
                                 }}
                             />
-                            <p className="caption">{user.total_ratings.toFixed(2)}/5.0</p>
+                            {/* <p className="caption">{user.total_ratings.toFixed(2)}/5.0</p> */}
                         </div>
                     </div>
                 </div>

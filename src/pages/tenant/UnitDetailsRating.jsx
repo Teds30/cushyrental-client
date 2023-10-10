@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 
-const RentedUnitRating = (props) => {
+const UnitDetailsRating = (props) => {
     const { average_ratings } = props;
     const [starsToShow, setStarsToShow] = useState(5);
 
@@ -24,11 +24,10 @@ const RentedUnitRating = (props) => {
                 size="small"
                 max={5}
                 value={starsToShow}
-                precision={0.5}
                 sx={{ color: "var(--accent)" }}
             />
         </Stack>
     );
 };
 
-export default RentedUnitRating
+export default UnitDetailsRating
