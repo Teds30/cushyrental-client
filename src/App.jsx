@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, Fragment } from 'react'
+import { useState, useEffect, useContext, Fragment, useCallback } from 'react'
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import CreateAccount from './pages/auth/CreateAccount/CreateAccount'
 import SignInPage from './pages/Login/SignInPage'
@@ -34,6 +34,7 @@ import ViewUnitDetails from './pages/tenant/ViewUnitDetails/ViewUnitDetails'
 
 import AuthContext from './context/auth-context'
 import useAuth from './hooks/data/auth-hook'
+import Homepage from './pages/tenant/Homepage/Homepage'
 
 function App() {
     const { user, token, loginHandler, logoutHandler, isLoggedIn } = useAuth()
@@ -44,23 +45,16 @@ function App() {
     if (!token) {
         routes = (
             <Routes>
-                <Route
-                    path="/login"
-                    element={
-                        <>
-                            <h1>Login</h1>
-                        </>
-                    }
-                ></Route>
                 <Route path="/signin" element={<SignInPage />}></Route>
                 <Route
                     path="/signin/forgotpassword"
                     element={<ForgotPassword />}
                 ></Route>
-                <Route
+                <Route path="/register" element={<CreateAccount />}></Route>
+                {/* <Route
                     path="*"
                     element={<Navigate replace to="/signin" />}
-                ></Route>
+                ></Route> */}
             </Routes>
         )
     } else {
@@ -74,20 +68,9 @@ function App() {
 
         routes = (
             <Routes>
-                <Route
-                    path="/"
-                    element={<Navigate replace to="/landlord-home" />}
-                />
+                {/* <Route path="/" element={<RedirectPage />} /> */}
                 <Route path="/landlord-home" element={<Dashboard />}></Route>
-                <Route
-                    path="/tenant-home"
-                    element={
-                        <>
-                            <h1>Tenant</h1>
-                        </>
-                    }
-                ></Route>
-                <Route path="/register" element={<CreateAccount />}></Route>
+                <Route path="/tenant-home" element={<Homepage />}></Route>
                 <Route path="/chats/" element={<Chats />}></Route>
                 <Route
                     path="/chats/:room_id"
@@ -158,9 +141,9 @@ function App() {
                 <Route path="/report_test" element={<Report />}></Route>
                 {/* Report test will remove later */}
 
-            {/* View unit details for landlord */}
-            <Route path="/unit/:id" element={<ViewUnitDetails />}></Route>
-            {/* View unit details for landlord */}
+                {/* View unit details for landlord */}
+                <Route path="/unit/:id" element={<ViewUnitDetails />}></Route>
+                {/* View unit details for landlord */}
                 <Route path="/myunit-landlord" element={<MyUnit />}></Route>
                 <Route
                     path="/myunit-landlord/managerenters"
@@ -168,7 +151,7 @@ function App() {
                 ></Route>
                 <Route path="/rules" element={<Rules />}></Route>
                 <Route path="/viewprofile" element={<ViewProfile />}></Route>
-                <Route path="*" element={<Navigate replace to="/" />}></Route>
+                {/* <Route path="*" element={<Navigate replace to="/" />}></Route> */}
             </Routes>
         )
     }
