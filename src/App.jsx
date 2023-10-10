@@ -29,6 +29,8 @@ import Subscriptions from './pages/landlord/Subscriptions/Subscriptions'
 import ManageSubscriptions from './pages/landlord/ManageSubscriptions/ManageSubscriptions'
 import AccountVerification from './pages/landlord/LandProfile/AccountVerification'
 import AvailSubscription from './pages/landlord/AvailSubscription/AvailSubscription'
+import RentedUnit from './pages/tenant/RentedUnit'
+import UnitDetails from './pages/tenant/UnitDetails'
 // import './App.css'
 
 function App() {
@@ -132,6 +134,10 @@ function App() {
             <Route path="/rules" element={<Rules />}></Route>
 
             <Route path="/viewprofile" element={<ViewProfile />}></Route>
+
+            <Route path="/rentedunit" element={<RentedUnit />}></Route>
+
+            <Route path="/unitdetails" element={<UnitDetails />}></Route>
             <Route
                 path="*"
                 element={<Navigate replace to="/signinpage" />}
