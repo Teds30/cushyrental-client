@@ -62,6 +62,31 @@ const useImageManager = () => {
         [sendRequest]
     )
 
+    const fetchAvatar = useCallback(
+        async (image_path) => {
+            let responseData
+            try {
+                const pic = await fetch(
+                    `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/avatar/`,
+                    {
+                        method: 'POST',
+                        body: JSON.stringify({ image_path: image_path }),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                )
+                const imageBlob = await pic.blob()
+                responseData = URL.createObjectURL(imageBlob)
+            } catch (err) {
+                throw err.message
+            }
+
+            return responseData
+        },
+        [sendRequest]
+    )
+
     const fetchIcon = useCallback(
         async (fileName) => {
             let responseData
@@ -108,6 +133,7 @@ const useImageManager = () => {
         isLoading,
         fetchImages,
         fetchImage,
+        fetchAvatar,
         fetchIcon,
         deleteIcon,
     }

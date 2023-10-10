@@ -11,7 +11,7 @@ import AuthContext from "../../context/auth-context";
 
 
 const SocialMediaLogin = () => {
-    const { googleAccountRegistration, googleAuth } = useGoogleAuth();
+    const { googleAccountLogin, googleAuth } = useGoogleAuth();
     const { facebookAccountRegistration } = useFacebookAuth();
     const ctx = useContext(AuthContext);
 
@@ -20,14 +20,10 @@ const SocialMediaLogin = () => {
           const res = await googleAuth(credentialResponse);
     
           const data = {
-            first_name: res.given_name,
-            last_name: res.family_name,
             email: res.email,
-            profile_picture_img: res.picture,
-            user_type_id: 1, // Replace with the correct user type ID
           };
     
-          const registerGoogleRes = await googleAccountRegistration(data);
+          const registerGoogleRes = await googleAccountLogin(data);
           ctx.onLogin(registerGoogleRes.user, registerGoogleRes.token);
           console.log(registerGoogleRes.user);
         } catch (error) {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 
 const AuthContext = React.createContext({
     user: {},
@@ -9,22 +9,7 @@ const AuthContext = React.createContext({
 })
 
 export const AuthContextProvider = (props) => {
-    const [user, setUser] = useState({ id: 1 })
-    const [token, setToken] = useState('')
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
-
-    const logoutHandler = () => {
-        setIsLoggedIn(false)
-        setToken('')
-        setUser({})
-    }
-
-    const loginHandler = (user, token) => {
-        console.log(user)
-        setToken(token)
-        setUser(user)
-        setIsLoggedIn(true)
-    }
+    const { user, token, loginHandler, logoutHandler, isLoggedIn } = useAuth()
 
     return (
         <AuthContext.Provider

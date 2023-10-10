@@ -1,58 +1,58 @@
-import { useEffect } from "react";
+import { useEffect } from 'react'
 
-import { Link } from "react-router-dom";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
+import { Link } from 'react-router-dom'
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
 
-import styles from "./EditProfile.module.css";
-import { FiChevronLeft } from "react-icons/fi";
-import EditProfileDesign from "./EditProfileDesign";
-import EditProfileForm from "./EditProfileForm";
-import AuthContext from "../../context/auth-context";
-import useImageManager from "../../hooks/data/image-hook";
+import styles from './EditProfile.module.css'
+import { FiChevronLeft } from 'react-icons/fi'
+import EditProfileDesign from './EditProfileDesign'
+import EditProfileForm from './EditProfileForm'
+import AuthContext from '../../context/auth-context'
+import useImageManager from '../../hooks/data/image-hook'
 
-import photo from "../../assets/Units/pics.png";
-import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import { useContext, useState } from "react";
+import photo from '../../assets/Units/pics.png'
+import CameraAltIcon from '@mui/icons-material/CameraAlt'
+import { useContext, useState } from 'react'
 
 const EditProfile = () => {
-    const userCtx = useContext(AuthContext);
-    const { fetchImage, isLoading } = useImageManager();
+    const userCtx = useContext(AuthContext)
+    const { fetchImage, fetchAvatar, isLoading } = useImageManager()
 
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({})
 
     useEffect(() => {
         const handleFetch = async () => {
             try {
-                // const image = userCtx.user.profile_picture_img.replace("images/", "");
-                const res = await fetchImage(userCtx.user.profile_picture_img);
-                setUser({ ...userCtx.user, profile_picture_img: res });
+                const res = await fetchAvatar('/default/1.png')
+                // const res = await fetchImage(userCtx.user.profile_picture_img)
+                setUser({ ...userCtx.user, profile_picture_img: res })
             } catch (err) {}
-        };
-        handleFetch();
-    }, []);
+        }
+        handleFetch()
+    }, [])
 
     return (
-        <div className={`${styles["edit-profile-container"]}`}>
-            <EditProfileDesign className={`${styles["edit-profile-design"]}`} />
-            <Box className={`${styles["top-back-container"]} `}>
+        <div className={`${styles['edit-profile-container']}`}>
+            <EditProfileDesign className={`${styles['edit-profile-design']}`} />
+            <Box className={`${styles['top-back-container']} `}>
                 <AppBar
                     position="static"
                     sx={{
                         margin: 0,
-                        backgroundColor: "#fff",
-                        color: "var(--fc-body)",
-                        fontFamily: "Inter",
-                        boxShadow: "none",
-                        borderBottom: "1px solid var(--border-color)",
+                        backgroundColor: '#fff',
+                        color: 'var(--fc-body)',
+                        fontFamily: 'Inter',
+                        boxShadow: 'none',
+                        borderBottom: '1px solid var(--border-color)',
                     }}
                 >
-                    <Toolbar className={`${styles["toolbar-container"]}`}>
+                    <Toolbar className={`${styles['toolbar-container']}`}>
                         <Link
                             to={`/profile`}
-                            className={`${styles["link-button"]}`}
+                            className={`${styles['link-button']}`}
                         >
                             <IconButton
                                 size="large"
@@ -62,16 +62,16 @@ const EditProfile = () => {
                             >
                                 <FiChevronLeft
                                     style={{
-                                        color: "var(--bg-layer1)",
-                                        fill: "transparent",
+                                        color: 'var(--bg-layer1)',
+                                        fill: 'transparent',
                                     }}
                                 />
                             </IconButton>
                         </Link>
-                        <Box className={`${styles["edit-feature-title"]}`}>
+                        <Box className={`${styles['edit-feature-title']}`}>
                             <p
                                 className="title"
-                                style={{ color: "var(--bg-layer1)" }}
+                                style={{ color: 'var(--bg-layer1)' }}
                             >
                                 PROFILE
                             </p>
@@ -84,7 +84,7 @@ const EditProfile = () => {
                 <EditProfileForm userData={user} />
             )}
         </div>
-    );
-};
+    )
+}
 
-export default EditProfile;
+export default EditProfile
