@@ -46,6 +46,7 @@
     overflow-x: auto;
     white-space: nowrap;
     justify-content: center;
+    padding-left: 100px; 
   }
   
   /* .sort-container button {

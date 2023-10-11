@@ -114,18 +114,17 @@ const RentedUnit = () => {
             const data = await res.json();
             setSubmittedReview(data);
             console.log("Submitted review data:", data);
+
+            setOpen(false);
+
+            setInputValue("");
+            setEnvironmentRating(5);
+            setBoardingHouseRating(5);
+            setLandlordRating(5);
         } catch (err) {
             console.error("Error submitting review:", err);
         }
     };
-
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     console.log("Environment Rating:", environmentRating);
-    //     console.log("Boarding House Rating:", boardingHouseRating);
-    //     console.log("Landlord Rating:", landlordRating);
-    //     console.log("Review:", inputValue);
-    // };
 
     return (
         <div className={`${styles["main-container"]} `}>

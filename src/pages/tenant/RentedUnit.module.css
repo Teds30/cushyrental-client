@@ -49,10 +49,16 @@
 
 .image-unit_data {
     display: flex;
-    width: 120px;
-    height: 104px;
+    width: 100px;
+    height: 100px;
     border: 2px solid red;
     border-radius: 10px;
+}
+
+.image-unit_data img {
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
 }
 
 .text-unit_data {
@@ -122,11 +128,10 @@
 }
 
 .image-swipe-container img {
-    width: 50px; 
+    width: 50px;
     height: 50px;
     object-fit: cover;
-  }
-
+}
 
 .text-swipe-container {
     overflow: hidden;
@@ -134,9 +139,9 @@
 }
 
 .details-text-container {
-    white-space: nowrap; 
+    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; 
+    text-overflow: ellipsis;
 }
 
 .rating-swipe-container {

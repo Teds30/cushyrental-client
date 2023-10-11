@@ -6,11 +6,10 @@ import BorderedButton from "../../components/Button/BorderedButton";
 import useAuth from "../../hooks/data/auth-hook";
 import UnitReply from "./UnitReply";
 
-
 const UnitDetails = () => {
     const [reviews, setReviews] = useState([]);
     const [open, setOpen] = useState();
-    const [showLandlordReply, setShowLandlordReply] = useState(true);
+    const [showLandlordReply, setShowLandlordReply] = useState({});
     const [selectedSort, setSelectedSort] = useState("all");
     const { user } = useAuth();
 
@@ -18,7 +17,6 @@ const UnitDetails = () => {
 
     // console.log(loggedInUserId);
     // console.log(user);
-
 
     useEffect(() => {
         const fetchReviews = async () => {
@@ -38,6 +36,46 @@ const UnitDetails = () => {
         fetchReviews();
     }, []);
 
+    const handleSendClick = async (reviewId, landlordReply) => {
+
+        const replyData = {
+            review_id: reviewId,
+            landlord_reply: landlordReply,
+        };
+
+        console.log(landlordReply);
+        try {
+            const response = await fetch(
+                `${
+                    import.meta.env.VITE_BACKEND_LOCALHOST
+                }/api/reviews-landlord-reply`,
+                {
+                    method: "POST",
+                    body: JSON.stringify(replyData),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            if (response.ok) {
+                console.log("Reply sent successfully!");
+            } else {
+                console.error("Failed to send reply");
+            }
+        } catch (error) {
+            console.error("Error sending reply:", error);
+        }
+    };
+
+
+
+    const toggleShowLandlordReply = (reviewId) => {
+        setShowLandlordReply((prev) => ({
+            ...prev,
+            [reviewId]: !prev[reviewId],
+        }));
+    };
 
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
@@ -45,14 +83,6 @@ const UnitDetails = () => {
 
     const handleCloseDrawer = () => {
         setOpen(false);
-    };
-
-    const handleSendClick = () => {
-        console.log("Send button clicked!");
-    };
-
-    const toggleShowLandlordReply = () => {
-        setShowLandlordReply((prev) => !prev);
     };
 
     const handleSortClick = (value) => {
@@ -74,7 +104,8 @@ const UnitDetails = () => {
         })
         .sort((a, b) => {
             if (selectedSort === "all") {
-                return b.star - a.star;
+                // return a.star - b.star;
+                return moment(b.created_at).unix() - moment(a.created_at).unix();
             }
             return 0;
         });
@@ -180,16 +211,14 @@ const UnitDetails = () => {
                                 ) : (
                                     filteredReviews.map((review) => (
                                         <UnitReply
-                                            review={review}
-                                            showLandlordReply={
-                                                showLandlordReply
-                                            }
-                                            toggleShowLandlordReply={
-                                                toggleShowLandlordReply
-                                            }
-                                            handleSendClick={handleSendClick}
-                                            loggedInUserId={loggedInUserId}
-                                            key={review.id}
+                                        key={review.id}
+                                        review={review}
+                                        showLandlordReply={showLandlordReply [review.id] ||  false}
+                                        toggleShowLandlordReply={() => toggleShowLandlordReply(review.id)}
+                                        handleSendClick={(reviewId, landlordReply) =>
+                                            handleSendClick(reviewId, landlordReply)
+                                        }
+                                        loggedInUserId={loggedInUserId}
                                         />
                                     ))
                                 )}
