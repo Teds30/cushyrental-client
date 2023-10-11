@@ -60,7 +60,9 @@ const UnitDetails = (props) => {
                 <CardShadow>
                     <div className={`${styles["unit-detials-col"]}`}>
                         <div className={styles.price}>
-                            <p className="title">PHP {unit.price} </p>
+                            <p className="title" style={{ fontSize: "16px" }}>
+                                PHP {unit.price}{" "}
+                            </p>
                             <p
                                 className="smaller-text"
                                 style={{
@@ -86,9 +88,9 @@ const UnitDetails = (props) => {
                                     },
                                 }}
                             />
-                            <p>{unit.average_ratings.toFixed(1)}</p>
+                            <p>{unit.average_ratings}</p>
                             <div className={`${styles["vertical-line"]}`}></div>
-                            <p>{unit.slots}</p>
+                            <p>{unit.slots} Slots</p>
                         </div>
                     </div>
                 </CardShadow>
@@ -111,7 +113,7 @@ const UnitDetails = (props) => {
                                     {unit.address}
                                 </p>
                             </div>
-                            <Link style={{ color: "var(--accent)" }}>
+                            <Link to={`/unit/unit_address/${unit.id}`} style={{ color: "var(--accent)" }}>
                                 View on Map
                             </Link>
                         </div>
@@ -157,11 +159,10 @@ const UnitDetails = (props) => {
                     </div>
                 </CardShadow>
 
-                <div className={`${styles['reviews']}`}>
+                <div className={`${styles["reviews"]}`}>
                     <p className="title">Reviews</p>
 
-                    <TenantReviews userId={unit.id}/>
-                    {/* <BorderedButton>See More Reviews</BorderedButton> */}
+                    <TenantReviews userId={unit.id} />
                 </div>
 
                 <CardShadow>
@@ -209,12 +210,11 @@ const UnitDetails = (props) => {
                         />
                     </div>
                 </CardShadow>
-                
-                <div className={`${styles['similar-units']}`}>
-                    <p className="title">Similar Units</p>
-                    <SimilarUnits />
-                </div>
 
+                <div className={`${styles["similar-units"]}`}>
+                    <p className="title">Similar Units</p>
+                    <SimilarUnits unitPrice={unit.price} />
+                </div>
             </div>
         </div>
     );

@@ -6,15 +6,17 @@ import FaceIcon from "@mui/icons-material/Face";
 export default function InclusionChip(props) {
     const { inclusions } = props;
 
+    let randomNumber = Math.floor(Math.random() * (inclusions.length - 1));
+
     return (
         <Stack direction="row" spacing={1}>
             <Chip
                 icon={<div
                     dangerouslySetInnerHTML={{
-                        __html: inclusions[0].icon,
+                        __html: inclusions[randomNumber].icon,
                     }}
                 />}
-                label={inclusions[0].name}
+                label={inclusions[randomNumber].name}
                 variant="outlined"
                 sx={{
                     padding: "10px 3px",

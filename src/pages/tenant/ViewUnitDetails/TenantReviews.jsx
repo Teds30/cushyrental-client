@@ -11,6 +11,8 @@ import Rating from "@mui/material/Rating";
 
 import CardShadow from "../../../components/Card/CardShadow";
 import useUserManager from "../../../hooks/data/users-hook";
+import useImageManager from "../../../hooks/data/image-hook";
+import BorderedButton from "../../../components/Button/BorderedButton";
 
 import { EffectCoverflow } from "swiper/modules";
 
@@ -26,89 +28,103 @@ import Bookmark from "./Bookmark";
 export default function TenantReviews(props) {
     const { userId } = props;
 
-    // console.log(userId);
-
     const { fetchReviews, isLoading } = useUserManager();
+    const { fetchImage } = useImageManager();
     const [reviews, setReviews] = useState([]);
 
     useEffect(() => {
         const handleFetch = async () => {
             try {
                 const res = await fetchReviews();
-                // console.log(res.filter(review => review.user_id === userId));
-                setReviews(res.filter((review) => review.user_id === userId));
+
+                let reviews = res.filter((review) => review.user_id === userId);
+
+                const promises = reviews.map(async (review) => {
+                    const image = await fetchImage(
+                        review.user.profile_picture_img.replace("images/", "")
+                    );
+                    return {
+                        ...review,
+                        user: { ...review?.user, profilePictureImg: image },
+                    };
+                });
+
+                reviews = await Promise.all(promises);
+                setReviews(reviews);
             } catch (err) {}
         };
         handleFetch();
     }, []);
 
-    // const content =
-    //     reviews.length !== 0 &&
-    //     reviews.map((unit) => (
-    //         <SwiperSlide key={unit.id} className="tenant-review-swiper-slide">
-    //             <CardShadow>
-    //                 <div className="review-detials-col">
-    //                     <div className="review-user-profile">
-    //                         <div className="review-image">
-    //                             <img src={photo} alt="" />
-    //                         </div>
-    //                         <div className="review-user-data">
-    //                             <p
-    //                                 className="title"
-    //                                 style={{
-    //                                     fontSize: "12px",
-    //                                     fontWeight: "500",
-    //                                 }}
-    //                             >
-    //                                 Jano Otilla
-    //                             </p>
-    //                             <p
-    //                                 className="smaller-text"
-    //                                 style={{
-    //                                     fontSize: "6px",
-    //                                     fontWeight: "500",
-    //                                 }}
-    //                             >
-    //                                 Landlord
-    //                             </p>
-    //                         </div>
-    //                     </div>
+    const content = reviews.map((review) => (
+        <SwiperSlide key={review.id} className="tenant-review-swiper-slide">
+            <CardShadow>
+                <div className="review-detials-col">
+                    <div className="review-user-profile">
+                        <div className="review-image">
+                            <img src={review.user.profilePictureImg} alt="" />
+                        </div>
+                        <div className="review-user-data">
+                            <p
+                                className="title"
+                                style={{
+                                    fontSize: "12px",
+                                    fontWeight: "500",
+                                }}
+                            >
+                                {review.user.first_name}{" "}
+                                {review.user.middle_name}{" "}
+                                {review.user.last_name}
+                            </p>
+                            <p
+                                className="smaller-text"
+                                style={{
+                                    fontSize: "6px",
+                                    fontWeight: "500",
+                                }}
+                            >
+                                {review.user.user_type_id === 1
+                                    ? "Tenant"
+                                    : "Landlord"}
+                            </p>
+                        </div>
+                    </div>
 
-    //                     <div className="review-main">
-    //                         <div className="review-rating">
-    //                             <Rating
-    //                                 name="disabled"
-    //                                 value={4}
-    //                                 disabled
-    //                                 sx={{
-    //                                     color: "var(--accent)",
-    //                                     fontSize: "10px",
-    //                                     "& svg": {
-    //                                         fill: "var(--accent)",
-    //                                     },
-    //                                 }}
-    //                             />
-    //                             <span
-    //                                 className="smaller-text"
-    //                                 style={{
-    //                                     fontSize: "9px",
-    //                                     fontWeight: "600",
-    //                                 }}
-    //                             >
-    //                                 Excellent
-    //                             </span>
-    //                         </div>
+                    <div className="review-main">
+                        <div className="review-rating">
+                            <Rating
+                                name="disabled"
+                                value={review.star}
+                                disabled
+                                sx={{
+                                    color: "var(--accent)",
+                                    fontSize: "10px",
+                                    "& svg": {
+                                        fill: "var(--accent)",
+                                    },
+                                }}
+                            />
+                            <span
+                                className="smaller-text"
+                                style={{
+                                    fontSize: "9px",
+                                    fontWeight: "600",
+                                }}
+                            >
+                                Excellent
+                            </span>
+                        </div>
 
-    //                         <div className="review-message">
-    //                             <p>Hello this is a message..</p>
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //             </CardShadow>
-    //         </SwiperSlide>
-    //     ));
+                        <div className="review-message">
+                            <p>Hello this is a message..</p>
+                        </div>
+                    </div>
+                </div>
+            </CardShadow>
+        </SwiperSlide>
+    ));
 
-    return (
+    return reviews.length !== 0 ? (
         <Fragment>
             <Swiper
                 effect={"coverflow"}
@@ -127,138 +143,14 @@ export default function TenantReviews(props) {
                 className="tenant-review-swiper"
                 style={{ transform: "0" }}
             >
-                {/* {content} */}
-
-                <SwiperSlide
-                    // key={unit.id}
-                    className="tenant-review-swiper-slide"
-                >
-                    <CardShadow>
-                        <div className="review-detials-col">
-                            <div className="review-user-profile">
-                                <div className="review-image">
-                                    <img src={photo} alt="" />
-                                </div>
-                                <div className="review-user-data">
-                                    <p
-                                        className="title"
-                                        style={{
-                                            fontSize: "12px",
-                                            fontWeight: "500",
-                                        }}
-                                    >
-                                        Jano Otilla
-                                    </p>
-                                    <p
-                                        className="smaller-text"
-                                        style={{
-                                            fontSize: "6px",
-                                            fontWeight: "500",
-                                        }}
-                                    >
-                                        Landlord
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className="review-main">
-                                <div className="review-rating">
-                                    <Rating
-                                        name="disabled"
-                                        value={4}
-                                        disabled
-                                        sx={{
-                                            color: "var(--accent)",
-                                            fontSize: "10px",
-                                            "& svg": {
-                                                fill: "var(--accent)",
-                                            },
-                                        }}
-                                    />
-                                    <span
-                                        className="smaller-text"
-                                        style={{
-                                            fontSize: "9px",
-                                            fontWeight: "600",
-                                        }}
-                                    >
-                                        Excellent
-                                    </span>
-                                </div>
-
-                                <div className="review-message">
-                                    Hello this is a message..
-                                </div>
-                            </div>
-                        </div>
-                    </CardShadow>
-                </SwiperSlide>
-
-                <SwiperSlide
-                    // key={unit.id}
-                    className="tenant-review-swiper-slide"
-                >
-                    <CardShadow>
-                        <div className="review-detials-col">
-                            <div className="review-user-profile">
-                                <div className="review-image">
-                                    <img src={photo} alt="" />
-                                </div>
-                                <div className="review-user-data">
-                                    <p
-                                        className="title"
-                                        style={{
-                                            fontSize: "12px",
-                                            fontWeight: "500",
-                                        }}
-                                    >
-                                        Jano Otilla
-                                    </p>
-                                    <p
-                                        className="smaller-text"
-                                        style={{
-                                            fontSize: "6px",
-                                            fontWeight: "500",
-                                        }}
-                                    >
-                                        Landlord
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className="review-main">
-                                <div className="review-rating">
-                                    <Rating
-                                        name="disabled"
-                                        value={4}
-                                        disabled
-                                        sx={{
-                                            color: "var(--accent)",
-                                            fontSize: "10px",
-                                            "& svg": {
-                                                fill: "var(--accent)",
-                                            },
-                                        }}
-                                    />
-                                    <span
-                                        className="smaller-text"
-                                        style={{
-                                            fontSize: "9px",
-                                            fontWeight: "600",
-                                        }}
-                                    >
-                                        Excellent
-                                    </span>
-                                </div>
-
-                                <div className="review-message">
-                                    Hello this is a message..
-                                </div>
-                            </div>
-                        </div>
-                    </CardShadow>
-                </SwiperSlide>
+                {content}
             </Swiper>
+
+            <BorderedButton>See More Reviews</BorderedButton>
         </Fragment>
+    ) : (
+        <p className="cpation" style={{ textAlign: "center" }}>
+            No reviews to fecth.
+        </p>
     );
 }
