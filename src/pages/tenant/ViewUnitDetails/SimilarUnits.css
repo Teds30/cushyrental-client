@@ -4,6 +4,8 @@
 
 .similar-unit-swiper {
   width: 100%;
+  height: auto;
+  padding: 0 0 3px 0;
 }
 
 .swiper-3d .swiper-wrapper {
@@ -19,8 +21,8 @@
 }
 
 .swiper-pagination-bullets.swiper-pagination-horizontal {
-  position: absolute;
-  bottom: 0;
+  position: relative;
+  top: 8px;
 }
 
 .similar-unit-swiper-slide {

@@ -1,0 +1,13 @@
+.manage-unit-title {
+    flex: 1;
+    text-align: center;
+}
+
+.toolbar-container {
+    display: flex;
+    position: relative;
+}
+
+.link-button {
+    position: absolute;
+}

@@ -3,16 +3,31 @@
 
     display: flex;
     flex-direction: column;
-    padding-bottom: 93px;
+    /* padding-bottom: 93px; */
 }
 
 .top-back-container {
-    z-index: 2;
+    position: fixed;
+    width: 100%;
+    background: none;
+    z-index: 100;
+    transition: background 0.5s ease;
+}
+
+.top-back-container.scrolling {
+    background: white;
+    transition: background 0.5s ease;
+}
+
+.app-bar-container {
+    margin: 0;
+    box-shadow: none;
+    display: flex;
+    background: transparent;
 }
 
 .toolbar-container {
-    background: transparent;
-
+    background: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,6 +35,10 @@
 
 .app-bar-title p {
     color: var(--bg-layer1);
+}
+
+.top-back-container.scrolling .app-bar-title p {
+    color: black;
 }
 
 .back-button {
@@ -136,9 +155,51 @@
     color: var(--accent);
 }
 
+.reviews {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.similar-units {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-bottom: 15px;
+}
+
+.view-details-botton-section {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+
+    box-sizing: border-box;
+    width:auto;
+    z-index: 10;
+}
+
+.view-details-botton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* width: 100%; */
+    gap: 7px;
+}
+
+.view-details-botton a {
+    color: var(--accent);
+}
+
 @media (min-width: 640px) {
     .unit-details-container {
         width: 768px;
         margin: 0 auto;
+        position: relative;
+    }
+}
+
+@media (min-width: 775px) {
+    .top-back-container {
+        width: 768px;
     }
 }
