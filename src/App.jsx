@@ -32,6 +32,7 @@ import AvailSubscription from './pages/landlord/AvailSubscription/AvailSubscript
 // import RentedUnit from './pages/tenant/RentedUnit'
 // import UnitDetails from './pages/tenant/UnitDetails
 import ViewUnitDetails from './pages/tenant/ViewUnitDetails/ViewUnitDetails'
+import UnitLocation from './pages/tenant/ViewUnitDetails/Location/UnitLocation'
 // import './App.css'
 
 import AuthContext from './context/auth-context'
@@ -145,6 +146,7 @@ function App() {
 
                 {/* View unit details for landlord */}
                 <Route path="/unit/:id" element={<ViewUnitDetails />}></Route>
+                <Route path="/unit/unit_address/:id" element={<UnitLocation />}></Route>
                 {/* View unit details for landlord */}
                 <Route path="/myunit-landlord" element={<MyUnit />}></Route>
                 <Route
@@ -171,6 +173,7 @@ function App() {
             {routes}
         </AuthContext.Provider>
     )
+    
 }
 
 export default App
