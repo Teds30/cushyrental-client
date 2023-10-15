@@ -37,6 +37,7 @@ import ViewUnitDetails from './pages/tenant/ViewUnitDetails/ViewUnitDetails'
 import AuthContext from './context/auth-context'
 import useAuth from './hooks/data/auth-hook'
 import Homepage from './pages/tenant/Homepage/Homepage'
+import UnitLocation from './pages/tenant/ViewUnitDetails/Location/UnitLocation'
 
 function App() {
     const { user, token, loginHandler, logoutHandler, isLoggedIn } = useAuth()
@@ -44,7 +45,12 @@ function App() {
 
     let routes
 
-    if (!token) {
+    useEffect(() => {
+        console.log('login? ', isLoggedIn)
+        console.log(user)
+    }, [])
+
+    if (!isLoggedIn) {
         routes = (
             <Routes>
                 <Route path="/signin" element={<SignInPage />}></Route>
@@ -54,23 +60,14 @@ function App() {
                 ></Route>
                 <Route path="/register" element={<CreateAccount />}></Route>
                 {/* <Route
-                    path="*"
-                    element={<Navigate replace to="/signin" />}
-                ></Route> */}
+                        path="*"
+                        element={<Navigate replace to="/signin" />}
+                    ></Route> */}
             </Routes>
         )
     } else {
-        let home
-
-        if (user && user.user_type_id === 2) {
-            console.log('landlord')
-        } else if (user && user.user_type_id === 3) {
-            console.log('tenant')
-        }
-
         routes = (
             <Routes>
-                {/* <Route path="/" element={<RedirectPage />} /> */}
                 <Route path="/landlord-home" element={<Dashboard />}></Route>
                 <Route path="/tenant-home" element={<Homepage />}></Route>
                 <Route path="/chats/" element={<Chats />}></Route>
@@ -130,7 +127,7 @@ function App() {
                 <Route path="/profile" element={<Profile />}></Route>
                 {/* Landlord Profile */}
                 <Route
-                    path="/profile/user_profile/:id"
+                    path="/profile/user_profile"
                     element={<EditProfile />}
                 ></Route>
                 <Route
@@ -145,6 +142,10 @@ function App() {
 
                 {/* View unit details for landlord */}
                 <Route path="/unit/:id" element={<ViewUnitDetails />}></Route>
+                <Route
+                    path="/unit/unit_address/:id"
+                    element={<UnitLocation />}
+                ></Route>
                 {/* View unit details for landlord */}
                 <Route path="/myunit-landlord" element={<MyUnit />}></Route>
                 <Route
@@ -153,7 +154,10 @@ function App() {
                 ></Route>
                 <Route path="/rules" element={<Rules />}></Route>
                 <Route path="/viewprofile" element={<ViewProfile />}></Route>
-                {/* <Route path="*" element={<Navigate replace to="/" />}></Route> */}
+                {/* <Route
+                    path="*"
+                    element={<Navigate replace to="/signin" />}
+                ></Route> */}
             </Routes>
         )
     }
