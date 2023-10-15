@@ -32,11 +32,12 @@ import AvailSubscription from './pages/landlord/AvailSubscription/AvailSubscript
 import RentedUnit from './pages/tenant/RentedUnit'
 import UnitDetails from './pages/tenant/UnitDetails'
 import ViewUnitDetails from './pages/tenant/ViewUnitDetails/ViewUnitDetails'
+import Homepage from './pages/tenant/Homepage/Homepage'
 // import './App.css'
 
 import AuthContext from './context/auth-context'
 import useAuth from './hooks/data/auth-hook'
-import UnitAfterSearch from './pages/tenant/UnitAfterSearch/UnitAfterSearch'
+// import UnitAfterSearch from './pages/tenant/UnitAfterSearch/UnitAfterSearch'
 // import Homepage from './pages/tenant/Homepage/Homepage'
 import UnitLocation from './pages/tenant/ViewUnitDetails/Location/UnitLocation'
 
@@ -70,7 +71,7 @@ function App() {
         routes = (
             <Routes>
                 <Route path="/landlord-home" element={<Dashboard />}></Route>
-                {/* <Route path="/tenant-home" element={<Homepage />}></Route> */}
+                <Route path="/tenant-home" element={<Homepage />}></Route>
                 <Route path="/chats/" element={<Chats />}></Route>
                 <Route
                     path="/chats/:room_id"
@@ -163,7 +164,7 @@ function App() {
 
                 <Route path="/unitdetails" element={<UnitDetails />}></Route>
 
-                <Route path="/unitaftersearch" element={<UnitAfterSearch />}></Route>
+                {/* <Route path="/unitaftersearch" element={<UnitAfterSearch />}></Route> */}
             </Routes>
         )
     }
