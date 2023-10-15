@@ -88,13 +88,12 @@ const UnitDetails = (props) => {
                         <p className={styles.details}>{unit.name}</p>
                         <div className={styles.ratings}>
                             <Rating
-                                name="disabled"
-                                value={0}
-                                disabled
+                                value={unit.average_ratings}
                                 sx={{
-                                    color: 'var(--accent)',
-                                    '& svg': {
-                                        fill: 'var(--accent)',
+                                    fontSize: "14px",
+                                    color: "var(--accent)",
+                                    "& svg": {
+                                        fill: "var(--accent)",
                                     },
                                 }}
                             />

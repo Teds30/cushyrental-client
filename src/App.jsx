@@ -33,6 +33,7 @@ import RentedUnit from './pages/tenant/RentedUnit'
 import UnitDetails from './pages/tenant/UnitDetails'
 import ViewUnitDetails from './pages/tenant/ViewUnitDetails/ViewUnitDetails'
 import Homepage from './pages/tenant/Homepage/Homepage'
+import UnitLocation from './pages/tenant/ViewUnitDetails/Location/UnitLocation'
 // import './App.css'
 
 import AuthContext from './context/auth-context'
@@ -182,6 +183,7 @@ function App() {
             {routes}
         </AuthContext.Provider>
     )
+    
 }
 
 export default App

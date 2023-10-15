@@ -5,6 +5,7 @@ import Stack from "@mui/material/Stack";
 import useImageManager from "../../hooks/data/image-hook";
 
 import styles from "./ChipButton.module.css";
+import "./chips.css";
 
 const ChipFilled = (props) => {
     const {

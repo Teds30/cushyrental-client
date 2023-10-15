@@ -193,6 +193,12 @@
     color: var(--accent);
 }
 
+.user-data-name {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
 @media (min-width: 640px) {
     .unit-details-container {
         width: 768px;
