@@ -5,6 +5,7 @@ import Stack from "@mui/material/Stack";
 import useImageManager from "../../hooks/data/image-hook";
 
 import styles from "./ChipButton.module.css";
+import "./chips.css";
 
 const ChipOutlined = (props) => {
     const {
@@ -58,7 +59,6 @@ const ChipOutlined = (props) => {
 
     const content = items.map((item) => {
         return (
-
             <Chip
                 key={item.id}
                 variant="outlined"
@@ -72,11 +72,11 @@ const ChipOutlined = (props) => {
                 label={item.name}
                 sx={{
                     padding: "8px 18px",
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '10px',
-                    justifyContent: 'center',
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "10px",
+                    justifyContent: "center",
                     fontWeight: "500",
                     fontSize: "16px",
                     background: chips.includes(item.id)
@@ -84,21 +84,20 @@ const ChipOutlined = (props) => {
                         : "inherit",
                     color: chips.includes(item.id)
                         ? "var(--accent)"
-                        : '#8A93A6',
+                        : "#8A93A6",
                     border: chips.includes(item.id)
                         ? "1px solid var(--accent)"
                         : "1px solid inherit",
-                    '& svg': {
-                      fill: chips.includes(item.id) ? 'var(--accent)' : '#8A93A6',
-                      height: '16px',
-                      width: '16px'
-                    }, 
-                    '& span' : {
-                      padding: '0'
+                    "& svg": {
+                        fill: chips.includes(item.id)
+                            ? "var(--accent)"
+                            : "#8A93A6",
+                        height: "16px",
+                        width: "16px",
                     },
-                    '& MuiChip-icon' : {
-                      margin: '0'
-                    }
+                    "& span": {
+                        padding: "0",
+                    },
                 }}
                 onClick={clickable ? () => handleClick(item.id) : undefined}
             />
