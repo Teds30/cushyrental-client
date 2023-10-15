@@ -29,14 +29,15 @@ import Subscriptions from './pages/landlord/Subscriptions/Subscriptions'
 import ManageSubscriptions from './pages/landlord/ManageSubscriptions/ManageSubscriptions'
 import AccountVerification from './pages/landlord/LandProfile/AccountVerification'
 import AvailSubscription from './pages/landlord/AvailSubscription/AvailSubscription'
-// import RentedUnit from './pages/tenant/RentedUnit'
-// import UnitDetails from './pages/tenant/UnitDetails
+import RentedUnit from './pages/tenant/RentedUnit'
+import UnitDetails from './pages/tenant/UnitDetails'
 import ViewUnitDetails from './pages/tenant/ViewUnitDetails/ViewUnitDetails'
 // import './App.css'
 
 import AuthContext from './context/auth-context'
 import useAuth from './hooks/data/auth-hook'
-import Homepage from './pages/tenant/Homepage/Homepage'
+import UnitAfterSearch from './pages/tenant/UnitAfterSearch/UnitAfterSearch'
+// import Homepage from './pages/tenant/Homepage/Homepage'
 import UnitLocation from './pages/tenant/ViewUnitDetails/Location/UnitLocation'
 
 function App() {
@@ -69,7 +70,7 @@ function App() {
         routes = (
             <Routes>
                 <Route path="/landlord-home" element={<Dashboard />}></Route>
-                <Route path="/tenant-home" element={<Homepage />}></Route>
+                {/* <Route path="/tenant-home" element={<Homepage />}></Route> */}
                 <Route path="/chats/" element={<Chats />}></Route>
                 <Route
                     path="/chats/:room_id"
@@ -158,6 +159,11 @@ function App() {
                     path="*"
                     element={<Navigate replace to="/signin" />}
                 ></Route> */}
+                <Route path="/rentedunit" element={<RentedUnit />}></Route>
+
+                <Route path="/unitdetails" element={<UnitDetails />}></Route>
+
+                <Route path="/unitaftersearch" element={<UnitAfterSearch />}></Route>
             </Routes>
         )
     }
