@@ -32,6 +32,8 @@ export default function TenantReviews(props) {
     const { fetchImage } = useImageManager();
     const [reviews, setReviews] = useState([]);
 
+    let reviewRating;
+
     useEffect(() => {
         const handleFetch = async () => {
             try {
@@ -56,73 +58,100 @@ export default function TenantReviews(props) {
         handleFetch();
     }, []);
 
-    const content = reviews.map((review) => (
-        <SwiperSlide key={review.id} className="tenant-review-swiper-slide">
-            <CardShadow>
-                <div className="review-detials-col">
-                    <div className="review-user-profile">
-                        <div className="review-image">
-                            <img src={review.user.profilePictureImg} alt="" />
-                        </div>
-                        <div className="review-user-data">
-                            <p
-                                className="title"
-                                style={{
-                                    fontSize: "12px",
-                                    fontWeight: "500",
-                                }}
-                            >
-                                {review.user.first_name}{" "}
-                                {review.user.middle_name}{" "}
-                                {review.user.last_name}
-                            </p>
-                            <p
-                                className="smaller-text"
-                                style={{
-                                    fontSize: "6px",
-                                    fontWeight: "500",
-                                }}
-                            >
-                                {review.user.user_type_id === 1
-                                    ? "Tenant"
-                                    : "Landlord"}
-                            </p>
-                        </div>
-                    </div>
+    const content = reviews.map((review) => {
+        if (Math.trunc(review.star) === 1) {
+            reviewRating = "Terrible";
+        } else if (Math.trunc(review.star) === 2) {
+            reviewRating = "Poor";
+        } else if (Math.trunc(review.star) === 3) {
+            reviewRating = "Fair";
+        } else if (Math.trunc(review.star) === 4) {
+            reviewRating = "Good";
+        } else {
+            reviewRating = "Excellent";
+        }
 
-                    <div className="review-main">
-                        <div className="review-rating">
-                            <Rating
-                                name="disabled"
-                                value={review.star}
-                                disabled
-                                sx={{
-                                    color: "var(--accent)",
-                                    fontSize: "10px",
-                                    "& svg": {
-                                        fill: "var(--accent)",
-                                    },
-                                }}
-                            />
-                            <span
-                                className="smaller-text"
-                                style={{
-                                    fontSize: "9px",
-                                    fontWeight: "600",
-                                }}
-                            >
-                                Excellent
-                            </span>
+        return (
+            <SwiperSlide key={review.id} className="tenant-review-swiper-slide">
+                <CardShadow>
+                    <div className="review-detials-col">
+                        <div className="review-user-profile">
+                            <div className="review-image">
+                                <img
+                                    src={review.user.profilePictureImg}
+                                    alt=""
+                                />
+                            </div>
+                            <div className="review-user-data">
+                                <p
+                                    className="title"
+                                    style={{
+                                        fontSize: "12px",
+                                        fontWeight: "500",
+                                    }}
+                                >
+                                    {review.user.first_name}{" "}
+                                    {review.user.middle_name}{" "}
+                                    {review.user.last_name}
+                                </p>
+                                <p
+                                    className="smaller-text"
+                                    style={{
+                                        fontSize: "6px",
+                                        fontWeight: "500",
+                                    }}
+                                >
+                                    {review.user.user_type_id === 1
+                                        ? "Tenant"
+                                        : "Landlord"}
+                                </p>
+                            </div>
                         </div>
 
-                        <div className="review-message">
-                            <p>Hello this is a message..</p>
+                        <div className="review-main">
+                            <div className="review-rating">
+                                <Rating
+                                    value={review.star}
+                                    sx={{
+                                        fontSize: "10px",
+                                        color: "var(--accent)",
+                                        "& svg": {
+                                            fill: "var(--accent)",
+                                        },
+                                    }}
+                                />
+                                {/* <Rating
+                                    name="disabled"
+                                    value={review.star}
+                                    disabled
+                                    sx={{
+                                        color: "var(--accent)",
+                                        fontSize: "10px",
+                                        "& svg": {
+                                            fill: "var(--accent)",
+                                        },
+                                    }}
+                                /> */}
+                                <span
+                                    className="smaller-text"
+                                    style={{
+                                        fontSize: "9px",
+                                        fontWeight: "600",
+                                    }}
+                                >
+                                    {reviewRating}
+                                </span>
+                            </div>
+
+                            <div className="review-message">
+                                <p>Hello this is a message..</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </CardShadow>
-        </SwiperSlide>
-    ));
+                </CardShadow>
+            </SwiperSlide>
+        );
+    });
 
     return reviews.length !== 0 ? (
         <Fragment>

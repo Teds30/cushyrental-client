@@ -78,10 +78,9 @@ const UnitDetails = (props) => {
                         <p className={styles.details}>{unit.name}</p>
                         <div className={styles.ratings}>
                             <Rating
-                                name="disabled"
-                                value={0}
-                                disabled
+                                value={unit.average_ratings}
                                 sx={{
+                                    fontSize: "14px",
                                     color: "var(--accent)",
                                     "& svg": {
                                         fill: "var(--accent)",
@@ -113,7 +112,10 @@ const UnitDetails = (props) => {
                                     {unit.address}
                                 </p>
                             </div>
-                            <Link to={`/unit/unit_address/${unit.id}`} style={{ color: "var(--accent)" }}>
+                            <Link
+                                to={`/unit/unit_address/${unit.id}`}
+                                style={{ color: "var(--accent)" }}
+                            >
                                 View on Map
                             </Link>
                         </div>

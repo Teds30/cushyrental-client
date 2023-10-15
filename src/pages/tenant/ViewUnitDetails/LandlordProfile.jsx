@@ -11,8 +11,6 @@ const LandlordProfile = (props) => {
     const { user } = props;
     const { fetchImage, isLoading } = useImageManager();
 
-    console.log(user);
-
     const [landlord, setLandlord] = useState({});
 
     const [lastActiveTimestamp, setLastActiveTimestamp] = useState(
