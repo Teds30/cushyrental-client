@@ -40,20 +40,30 @@ import AuthContext from './context/auth-context'
 import useAuth from './hooks/data/auth-hook'
 // import UnitAfterSearch from './pages/tenant/UnitAfterSearch/UnitAfterSearch'
 // import Homepage from './pages/tenant/Homepage/Homepage'
-import UnitLocation from './pages/tenant/ViewUnitDetails/Location/UnitLocation'
 
 function App() {
     const { user, token, loginHandler, logoutHandler, isLoggedIn } = useAuth()
     const navigate = useNavigate()
 
+    const storedData = JSON.parse(localStorage.getItem('userData'))
+
     let routes
 
     useEffect(() => {
         console.log('login? ', isLoggedIn)
-        console.log(user)
-    }, [])
+        console.log('hello: ', user)
+        // if (user && user.user_type_id === 3) {
+        //     navigate('/tenant-home')
+        // } else if (user && user.user_type_id === 2) {
+        //     navigate('/landlord-home')
+        // }
 
-    if (!isLoggedIn) {
+        // if (!isLoggedIn) {
+        //     navigate('/signin')
+        // }
+    }, [isLoggedIn, user])
+
+    if (!storedData) {
         routes = (
             <Routes>
                 <Route path="/signin" element={<SignInPage />}></Route>
@@ -62,17 +72,27 @@ function App() {
                     element={<ForgotPassword />}
                 ></Route>
                 <Route path="/register" element={<CreateAccount />}></Route>
-                {/* <Route
-                        path="*"
-                        element={<Navigate replace to="/signin" />}
-                    ></Route> */}
+                <Route
+                    path="*"
+                    element={<Navigate replace to="/signin" />}
+                ></Route>
             </Routes>
         )
     } else {
         routes = (
             <Routes>
-                <Route path="/landlord-home" element={<Dashboard />}></Route>
-                <Route path="/tenant-home" element={<Homepage />}></Route>
+                {/* <Route path="/landlord-home" element={<Dashboard />}></Route>
+                <Route path="/tenant-home" element={<Homepage />}></Route> */}
+                <Route
+                    path="/"
+                    element={
+                        user && user.user_type_id === 2 ? (
+                            <Dashboard />
+                        ) : (
+                            <Homepage />
+                        )
+                    }
+                ></Route>
                 <Route path="/chats/" element={<Chats />}></Route>
                 <Route
                     path="/chats/:room_id"
@@ -166,6 +186,12 @@ function App() {
                 <Route path="/unitdetails" element={<UnitDetails />}></Route>
 
                 {/* <Route path="/unitaftersearch" element={<UnitAfterSearch />}></Route> */}
+                <Route
+                    path="*"
+                    element={<div>
+                            <h1>404! Page not found.</h1>
+                    </div>}
+                ></Route>
             </Routes>
         )
     }
@@ -183,7 +209,6 @@ function App() {
             {routes}
         </AuthContext.Provider>
     )
-    
 }
 
 export default App
