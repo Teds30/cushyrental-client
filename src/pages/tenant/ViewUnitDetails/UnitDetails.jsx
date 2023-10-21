@@ -31,8 +31,8 @@ const genders = [
     },
     {
         id: "3",
-        name: "Both",
-        icon: "both.svg",
+        name: "All",
+        icon: "allgender.svg",
     },
 ];
 
