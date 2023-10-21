@@ -55,6 +55,16 @@
 
     --subscription-silver: #c0c0c0;
     --subscription-silver-bg: #c0c0c026;
+
+    --swiper-pagination-color: var(--accent);
+    --swiper-pagination-bullet-size: 8px;
+    --swiper-pagination-bullet-width: 8px;
+    --swiper-pagination-bullet-height: 8px;
+    --swiper-pagination-bullet-inactive-color: #fff;
+    --swiper-pagination-bullet-inactive-opacity: 0.5;
+    --swiper-pagination-bullet-opacity: 1;
+    --swiper-pagination-bullet-horizontal-gap: 4px;
+    --swiper-pagination-bullet-vertical-gap: 6px;
 }
 
 a {
@@ -140,6 +150,15 @@ h1 {
 h2 {
     font-size: 24px;
     line-height: calc(24px * 1.618);
+    color: var(--fc-strong);
+    font-weight: 700;
+    letter-spacing: 2%;
+    margin: 0;
+}
+
+h3 {
+    font-size: 18px;
+    line-height: calc(18px * 1.618);
     color: var(--fc-strong);
     font-weight: 700;
     letter-spacing: 2%;
