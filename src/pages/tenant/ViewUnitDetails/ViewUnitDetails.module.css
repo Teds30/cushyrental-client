@@ -9,9 +9,11 @@
 .top-back-container {
     position: fixed;
     width: 100%;
-    background: none;
+    /* background: none; */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
     z-index: 100;
     transition: background 0.5s ease;
+    box-shadow: 'none';
 }
 
 .top-back-container.scrolling {
@@ -27,7 +29,6 @@
 }
 
 .toolbar-container {
-    background: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -48,9 +49,11 @@
 }
 
 .bookmark {
-    background: none;
-    border: none;
-    outline: none;
+    display: flex;
+    padding: 0px;
+    /* background-color: #f6f8fc; */
+    border-radius: 8px;
+    color: var(--fc-body);
 }
 
 .unit-details-main {
@@ -86,7 +89,7 @@
 .unit-detials-col {
     display: flex;
     flex-direction: column;
-    gap: 13px;
+    gap: 12px;
 }
 
 .ratings {
@@ -97,8 +100,8 @@
 
 .vertical-line {
     height: 14px;
-    border: 1px solid #E0E4F5;
-    background: #E0E4F5;
+    border: 1px solid #e0e4f5;
+    background: #e0e4f5;
 }
 
 .location {
@@ -174,7 +177,7 @@
     left: 0;
 
     box-sizing: border-box;
-    width:auto;
+    width: auto;
     z-index: 10;
 }
 
@@ -188,6 +191,12 @@
 
 .view-details-botton a {
     color: var(--accent);
+}
+
+.user-data-name {
+    display: flex;
+    align-items: center;
+    gap: 3px;
 }
 
 @media (min-width: 640px) {

@@ -32,20 +32,39 @@ import AvailSubscription from './pages/landlord/AvailSubscription/AvailSubscript
 import RentedUnit from './pages/tenant/RentedUnit'
 import UnitDetails from './pages/tenant/UnitDetails'
 import ViewUnitDetails from './pages/tenant/ViewUnitDetails/ViewUnitDetails'
+import Homepage from './pages/tenant/Homepage/Homepage'
+import UnitLocation from './pages/tenant/ViewUnitDetails/Location/UnitLocation'
 // import './App.css'
 
 import AuthContext from './context/auth-context'
 import useAuth from './hooks/data/auth-hook'
-import UnitAfterSearch from './pages/tenant/UnitAfterSearch/UnitAfterSearch'
+// import UnitAfterSearch from './pages/tenant/UnitAfterSearch/UnitAfterSearch'
+import SearchUnit from './pages/tenant/SearchUnit/SearchUnit'
 // import Homepage from './pages/tenant/Homepage/Homepage'
 
 function App() {
     const { user, token, loginHandler, logoutHandler, isLoggedIn } = useAuth()
     const navigate = useNavigate()
 
+    const storedData = JSON.parse(localStorage.getItem('userData'))
+
     let routes
 
-    if (!token) {
+    useEffect(() => {
+        console.log('login? ', isLoggedIn)
+        console.log('hello: ', user)
+        // if (user && user.user_type_id === 3) {
+        //     navigate('/tenant-home')
+        // } else if (user && user.user_type_id === 2) {
+        //     navigate('/landlord-home')
+        // }
+
+        // if (!isLoggedIn) {
+        //     navigate('/signin')
+        // }
+    }, [isLoggedIn, user])
+
+    if (!storedData) {
         routes = (
             <Routes>
                 <Route path="/signin" element={<SignInPage />}></Route>
@@ -54,26 +73,27 @@ function App() {
                     element={<ForgotPassword />}
                 ></Route>
                 <Route path="/register" element={<CreateAccount />}></Route>
-                {/* <Route
+                <Route
                     path="*"
                     element={<Navigate replace to="/signin" />}
-                ></Route> */}
+                ></Route>
             </Routes>
         )
     } else {
-        let home
-
-        if (user && user.user_type_id === 2) {
-            console.log('landlord')
-        } else if (user && user.user_type_id === 3) {
-            console.log('tenant')
-        }
-
         routes = (
             <Routes>
-                {/* <Route path="/" element={<RedirectPage />} /> */}
-                <Route path="/landlord-home" element={<Dashboard />}></Route>
-                {/* <Route path="/tenant-home" element={<Homepage />}></Route> */}
+                {/* <Route path="/landlord-home" element={<Dashboard />}></Route>
+                <Route path="/tenant-home" element={<Homepage />}></Route> */}
+                <Route
+                    path="/"
+                    element={
+                        user && user.user_type_id === 2 ? (
+                            <Dashboard />
+                        ) : (
+                            <Homepage />
+                        )
+                    }
+                ></Route>
                 <Route path="/chats/" element={<Chats />}></Route>
                 <Route
                     path="/chats/:room_id"
@@ -131,7 +151,7 @@ function App() {
                 <Route path="/profile" element={<Profile />}></Route>
                 {/* Landlord Profile */}
                 <Route
-                    path="/profile/user_profile/:id"
+                    path="/profile/user_profile"
                     element={<EditProfile />}
                 ></Route>
                 <Route
@@ -146,7 +166,16 @@ function App() {
 
                 {/* View unit details for landlord */}
                 <Route path="/unit/:id" element={<ViewUnitDetails />}></Route>
+                <Route
+                    path="/unit/unit_address/:id"
+                    element={<UnitLocation />}
+                ></Route>
                 {/* View unit details for landlord */}
+
+                {/* Unit Search */}
+                <Route path="/search" element={<SearchUnit />}></Route>
+                {/* Unit Search */}
+
                 <Route path="/myunit-landlord" element={<MyUnit />}></Route>
                 <Route
                     path="/myunit-landlord/managerenters"
@@ -154,12 +183,21 @@ function App() {
                 ></Route>
                 <Route path="/rules" element={<Rules />}></Route>
                 <Route path="/viewprofile" element={<ViewProfile />}></Route>
-                {/* <Route path="*" element={<Navigate replace to="/" />}></Route> */}
+                {/* <Route
+                    path="*"
+                    element={<Navigate replace to="/signin" />}
+                ></Route> */}
                 <Route path="/rentedunit" element={<RentedUnit />}></Route>
 
                 <Route path="/unitdetails" element={<UnitDetails />}></Route>
 
-                <Route path="/unitaftersearch" element={<UnitAfterSearch />}></Route>
+                {/* <Route path="/unitaftersearch" element={<UnitAfterSearch />}></Route> */}
+                <Route
+                    path="*"
+                    element={<div>
+                            <h1>404! Page not found.</h1>
+                    </div>}
+                ></Route>
             </Routes>
         )
     }

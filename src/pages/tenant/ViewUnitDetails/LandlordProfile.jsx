@@ -5,6 +5,7 @@ import useImageManager from "../../../hooks/data/image-hook";
 import styles from "./ViewUnitDetails.module.css";
 import { CiLocationOn } from "react-icons/ci";
 import { Link } from "react-router-dom";
+import VerifiedIcon from '@mui/icons-material/Verified'
 
 const LandlordProfile = (props) => {
     const { user } = props;
@@ -61,10 +62,13 @@ const LandlordProfile = (props) => {
                 </div>
 
                 <div className={`${styles["user-data"]}`}>
-                    <p className="title" style={{ color: "var(--fc-strong)" }}>
-                        {landlord.first_name} {landlord.middle_name}{" "}
-                        {landlord.last_name}
-                    </p>
+                    <div className={`${styles['user-data-name']}`}>
+                        <p className="title" style={{ color: "var(--fc-strong)" }}>
+                            {landlord.first_name} {landlord.middle_name}{" "}
+                            {landlord.last_name}
+                        </p>
+                        {landlord.is_verified && <VerifiedIcon sx={{height: '18px', width: '18px', fill: 'var(--accent)'}}/>}
+                    </div>
 
                     <p className="smaller-text" style={{ fontSize: "10px" }}>
                         {timeElapsed}

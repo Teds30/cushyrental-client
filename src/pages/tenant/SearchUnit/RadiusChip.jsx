@@ -2,45 +2,20 @@ import React, { useState, useEffect } from "react";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 
-import useImageManager from "../../hooks/data/image-hook";
+// import useImageManager from "../../hooks/data/image-hook";
 
-import styles from "./ChipButton.module.css";
-import "./chips.css";
+import styles from "../../../components/Chips/ChipButton.module.css";
+// import "../../../components/Chips/chip.css";
 
-const ChipOutlined = (props) => {
+const RadiusChip = (props) => {
     const {
-        items: originalItems = [],
+        items = [],
         button = "checkbox",
         clickable = true,
         selected = [],
     } = props;
 
-    const { fetchIcon } = useImageManager();
-
     const [chips, setChips] = useState(selected.length !== 0 ? selected : []);
-    const [items, setItems] = useState([]); // Use state for items
-
-    useEffect(() => {
-        const fetchIcons = async () => {
-            const iconPromises = originalItems.map(async (item) => {
-                try {
-                    const res = await fetchIcon(item.icon);
-                    return {
-                        ...item,
-                        icon: res,
-                    };
-                } catch (error) {
-                    console.log(error);
-                    return null;
-                }
-            });
-
-            const newItems = await Promise.all(iconPromises);
-            setItems(newItems);
-        };
-
-        fetchIcons();
-    }, [originalItems, fetchIcon]);
 
     const handleClick = (id) => {
         if (button === "checkbox") {
@@ -62,13 +37,13 @@ const ChipOutlined = (props) => {
             <Chip
                 key={item.id}
                 variant="outlined"
-                icon={
-                    <div
-                        dangerouslySetInnerHTML={{
-                            __html: item.icon,
-                        }}
-                    />
-                }
+                // icon={
+                //     <div
+                //         dangerouslySetInnerHTML={{
+                //             __html: item.icon,
+                //         }}
+                //     />
+                // }
                 label={item.name}
                 sx={{
                     padding: "8px 18px",
@@ -111,4 +86,4 @@ const ChipOutlined = (props) => {
     );
 };
 
-export default ChipOutlined;
+export default RadiusChip;
