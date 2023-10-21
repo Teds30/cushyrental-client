@@ -38,6 +38,7 @@ import UnitLocation from './pages/tenant/ViewUnitDetails/Location/UnitLocation'
 
 import AuthContext from './context/auth-context'
 import useAuth from './hooks/data/auth-hook'
+import Notifications from './pages/notifications/Notifications'
 // import UnitAfterSearch from './pages/tenant/UnitAfterSearch/UnitAfterSearch'
 // import Homepage from './pages/tenant/Homepage/Homepage'
 
@@ -88,10 +89,16 @@ function App() {
                     element={
                         user && user.user_type_id === 2 ? (
                             <Dashboard />
-                        ) : (
+                        ) : user && user.user_type_id === 3 ? (
                             <Homepage />
+                        ) : (
+                            <></>
                         )
                     }
+                ></Route>
+                <Route
+                    path="/notifications"
+                    element={<Notifications />}
                 ></Route>
                 <Route path="/chats/" element={<Chats />}></Route>
                 <Route
@@ -188,9 +195,11 @@ function App() {
                 {/* <Route path="/unitaftersearch" element={<UnitAfterSearch />}></Route> */}
                 <Route
                     path="*"
-                    element={<div>
+                    element={
+                        <div>
                             <h1>404! Page not found.</h1>
-                    </div>}
+                        </div>
+                    }
                 ></Route>
             </Routes>
         )
