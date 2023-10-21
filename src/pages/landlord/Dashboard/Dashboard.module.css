@@ -69,7 +69,8 @@
 }
 
 .count {
-    line-height: 0;
+    /* line-height: 0; */
+    color: var(--fc-body);
 }
 
 .count-container h1 {

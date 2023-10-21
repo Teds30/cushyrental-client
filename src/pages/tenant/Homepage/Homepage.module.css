@@ -1,0 +1,25 @@
+.container {
+    max-width: 425px;
+}
+.brand-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand-label {
+    background: linear-gradient(90deg, #03b077 -2.06%, #7ab73d 104.45%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    font-family: 'PT Serif';
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.carousel-container {
+    position: relative;
+}
