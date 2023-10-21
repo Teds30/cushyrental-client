@@ -40,6 +40,7 @@ import AuthContext from './context/auth-context'
 import useAuth from './hooks/data/auth-hook'
 import Notifications from './pages/notifications/Notifications'
 // import UnitAfterSearch from './pages/tenant/UnitAfterSearch/UnitAfterSearch'
+import SearchUnit from './pages/tenant/SearchUnit/SearchUnit'
 // import Homepage from './pages/tenant/Homepage/Homepage'
 
 function App() {
@@ -177,6 +178,11 @@ function App() {
                     element={<UnitLocation />}
                 ></Route>
                 {/* View unit details for landlord */}
+
+                {/* Unit Search */}
+                <Route path="/search" element={<SearchUnit />}></Route>
+                {/* Unit Search */}
+
                 <Route path="/myunit-landlord" element={<MyUnit />}></Route>
                 <Route
                     path="/myunit-landlord/managerenters"
