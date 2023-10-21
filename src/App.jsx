@@ -38,6 +38,7 @@ import UnitLocation from './pages/tenant/ViewUnitDetails/Location/UnitLocation'
 import AuthContext from './context/auth-context'
 import useAuth from './hooks/data/auth-hook'
 import UnitAfterSearch from './pages/tenant/UnitAfterSearch/UnitAfterSearch'
+import SearchUnit from './pages/tenant/SearchUnit/SearchUnit'
 // import Homepage from './pages/tenant/Homepage/Homepage'
 
 function App() {
@@ -149,6 +150,11 @@ function App() {
                 <Route path="/unit/:id" element={<ViewUnitDetails />}></Route>
                 <Route path="/unit/unit_address/:id" element={<UnitLocation />}></Route>
                 {/* View unit details for landlord */}
+
+                {/* Unit Search */}
+                <Route path="/search" element={<SearchUnit />}></Route>
+                {/* Unit Search */}
+
                 <Route path="/myunit-landlord" element={<MyUnit />}></Route>
                 <Route
                     path="/myunit-landlord/managerenters"
