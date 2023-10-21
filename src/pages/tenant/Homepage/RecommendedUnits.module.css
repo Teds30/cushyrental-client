@@ -1,0 +1,12 @@
+.units-container {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 0;
+    width: 100%;
+    gap: 8px;
+}
+
+.container {
+    padding-inline: 8px;
+}

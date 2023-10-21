@@ -1,0 +1,51 @@
+.unit-swiper {
+    position: relative;
+    height: fit-content;
+    overflow: hidden;
+    /* border: 1px solid red; */
+    /* background: var(--accent-dark); */
+    /* background: linear-gradient(
+        180deg,
+        rgba(29, 97, 86, 0.5) 0%,
+        rgba(29, 97, 86, 0.25) 50%,
+        rgba(29, 97, 86, 0) 100%
+    ); */
+}
+.unit-swiper-slide {
+    background-color: transparent;
+    width: 90%;
+    /* max-height: 150px; */
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.wave1 {
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+}
+.wave1 svg {
+    width: 100%;
+    height: inherit;
+    position: relative;
+    margin-bottom: -2px;
+}
+
+.wave1 svg path {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
+.wave2 {
+    /* overflow: hidden; */
+    margin-top: -2px;
+    width: 100%;
+}
+
+.wave2 svg {
+    /* overflow: hidden; */
+    width: 100%;
+    height: inherit;
+    fill: linear-gradient(180deg, #1d6156 0%, rgba(29, 97, 86, 0) 100%);
+}

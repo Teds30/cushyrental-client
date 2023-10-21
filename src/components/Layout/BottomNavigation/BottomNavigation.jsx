@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import AppBar from '@mui/material/AppBar'
@@ -21,6 +21,9 @@ import {
 } from 'react-icons/bs'
 import { IoIosCalendar } from 'react-icons/io'
 import { PiHouseFill, PiHouseLight } from 'react-icons/pi'
+import { FiSearch } from 'react-icons/fi'
+
+import useAuth from '../../../hooks/data/auth-hook'
 
 function HideOnScroll(props) {
     const { children } = props
@@ -99,25 +102,31 @@ const nav_data = [
         ),
     },
     {
-        name: 'Calendar',
+        name: 'Notification',
         icon: (
             <Link
-                to="/calendar"
+                to="/notifications"
                 style={{
                     display: 'flex',
                     justifyContent: 'centers',
                     alignItems: 'center',
                 }}
             >
-                <IoIosCalendar size={32} style={{ fill: '#fff' }} />
+                <BsBell style={{ fill: 'inherit' }} size={24} />
             </Link>
         ),
-        main: true,
-    },
-    {
-        name: 'Notification',
-        icon: <BsBell size={24} style={{ fill: 'inherit' }} />,
-        selectedIcon: <BsBellFill style={{ fill: 'inherit' }} size={24} />,
+        selectedIcon: (
+            <Link
+                to="/notifications"
+                style={{
+                    display: 'flex',
+                    justifyContent: 'centers',
+                    alignItems: 'center',
+                }}
+            >
+                <BsBellFill style={{ fill: 'inherit' }} size={24} />
+            </Link>
+        ),
     },
     {
         name: 'Profile',
@@ -144,84 +153,129 @@ const nav_data = [
 ]
 
 const BottomNavigation = (props) => {
-    const { current = 0, children } = props
+    const { current = 0, children, isTenant = false } = props
 
     const [selected, setSelected] = useState(current)
+    const [navData, setNavData] = useState(nav_data)
+    const { user } = useAuth()
 
     const selectHandler = (id) => {
         setSelected(id)
     }
 
+    useEffect(() => {
+        const mainNav = !isTenant
+            ? {
+                  name: 'Calendar',
+                  icon: (
+                      <Link
+                          to="/calendar"
+                          style={{
+                              display: 'flex',
+                              justifyContent: 'centers',
+                              alignItems: 'center',
+                          }}
+                      >
+                          <IoIosCalendar size={32} style={{ fill: '#fff' }} />
+                      </Link>
+                  ),
+                  main: true,
+              }
+            : {
+                  name: 'Search',
+                  icon: (
+                      <Link
+                          to="/search"
+                          style={{
+                              display: 'flex',
+                              justifyContent: 'centers',
+                              alignItems: 'center',
+                          }}
+                      >
+                          <FiSearch
+                              size={32}
+                              style={{ color: '#fff', fill: 'transparent' }}
+                          />
+                      </Link>
+                  ),
+                  main: true,
+              }
+
+        setNavData([...nav_data.slice(0, 2), mainNav, ...nav_data.slice(2)])
+    }, [])
+
     return (
         <React.Fragment>
             {/* <CssBaseline /> */}
-            <HideOnScroll {...props}>
-                <AppBar
-                    position="fixed"
-                    sx={{
-                        background: 'var(--bg-layer1)',
-                        color: 'var(--fc-body-light)',
-                        top: 'auto',
-                        bottom: 0,
-                    }}
-                >
-                    <Toolbar
+            {
+                <HideOnScroll {...props}>
+                    <AppBar
+                        position="fixed"
                         sx={{
+                            background: 'var(--bg-layer1)',
+                            color: 'var(--fc-body-light)',
                             top: 'auto',
                             bottom: 0,
-                            padding: 0,
                         }}
                     >
-                        {nav_data.map((data, index) => {
-                            const nav_style =
-                                index === selected
-                                    ? {
-                                          ...itemStyles,
-                                          color: 'var(--accent)',
-                                          fill: 'var(--accent)',
-                                      }
-                                    : {
-                                          ...itemStyles,
-                                          color: 'var(--fc-body-light)',
-                                          fill: 'var(--fc-body-light)',
-                                      }
+                        <Toolbar
+                            sx={{
+                                top: 'auto',
+                                bottom: 0,
+                                padding: 0,
+                            }}
+                        >
+                            {navData.map((data, index) => {
+                                const nav_style =
+                                    index === selected
+                                        ? {
+                                              ...itemStyles,
+                                              color: 'var(--accent)',
+                                              fill: 'var(--accent)',
+                                          }
+                                        : {
+                                              ...itemStyles,
+                                              color: 'var(--fc-body-light)',
+                                              fill: 'var(--fc-body-light)',
+                                          }
 
-                            return data.main === true ? (
-                                <div key={index} style={{ flex: '1' }}>
-                                    <StyledFab
-                                        color="secondary"
-                                        aria-label="add"
+                                return data.main === true ? (
+                                    <div key={index} style={{ flex: '1' }}>
+                                        <StyledFab
+                                            color="secondary"
+                                            aria-label="add"
+                                        >
+                                            {data.icon}
+                                        </StyledFab>
+                                        <Box sx={itemStyles}>
+                                            <Box
+                                                sx={{
+                                                    width: '24px',
+                                                    height: '24px',
+                                                }}
+                                            />
+                                            {data.name}
+                                        </Box>
+                                    </div>
+                                ) : (
+                                    <Box
+                                        sx={nav_style}
+                                        key={index}
+                                        onClick={() => {
+                                            selectHandler(index)
+                                        }}
                                     >
-                                        {data.icon}
-                                    </StyledFab>
-                                    <Box sx={itemStyles}>
-                                        <Box
-                                            sx={{
-                                                width: '24px',
-                                                height: '24px',
-                                            }}
-                                        />
+                                        {index === selected
+                                            ? data.selectedIcon
+                                            : data.icon}
                                         {data.name}
                                     </Box>
-                                </div>
-                            ) : (
-                                <Box
-                                    sx={nav_style}
-                                    key={index}
-                                    onClick={() => {
-                                        selectHandler(index)
-                                    }}
-                                >
-                                    {index === selected
-                                        ? data.selectedIcon
-                                        : data.icon}
-                                    {data.name}
-                                </Box>
-                            )
-                        })}
-                    </Toolbar>
-                </AppBar>
-            </HideOnScroll>
+                                )
+                            })}
+                        </Toolbar>
+                    </AppBar>
+                </HideOnScroll>
+            }
             <Toolbar />
             <Container>{children}</Container>
         </React.Fragment>
