@@ -90,10 +90,10 @@ const UnitDetails = (props) => {
                             <Rating
                                 value={unit.average_ratings}
                                 sx={{
-                                    fontSize: "14px",
-                                    color: "var(--accent)",
-                                    "& svg": {
-                                        fill: "var(--accent)",
+                                    fontSize: '14px',
+                                    color: 'var(--accent)',
+                                    '& svg': {
+                                        fill: 'var(--accent)',
                                     },
                                 }}
                             />
