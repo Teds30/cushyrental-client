@@ -32,7 +32,7 @@ const Profile = () => {
     useEffect(() => {
         const handleFetch = async () => {
             try {
-                const res = await fetchAvatar('/default/1.png')
+                const res = await fetchAvatar(userCtx.user.profile_picture_img)
                 setImage(res)
             } catch (err) {}
         }
@@ -56,7 +56,12 @@ const Profile = () => {
                 >
                     <Toolbar className={`${styles['toolbar-container']}`}>
                         <Link
-                            to={`/manage_unit/edit/`}
+                            to={`/manage_unit/`}
+                            onClick={(e) => {
+                                e.preventDefault()
+                                navigate('/')
+                                // navigate(-1)
+                            }}
                             className={`${styles['link-button']}`}
                         >
                             <IconButton
@@ -116,6 +121,9 @@ const Profile = () => {
 
                     <div className={`${styles['user-menu']}`}>
                         <ProfileOption
+                            user_type_id={
+                                userCtx.user && userCtx.user.user_type_id
+                            }
                             className={`${styles['profile-option']}`}
                         />
                     </div>
