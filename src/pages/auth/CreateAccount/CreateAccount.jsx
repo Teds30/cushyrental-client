@@ -19,7 +19,7 @@ const CreateAccount = () => {
     const navigate = useNavigate()
 
     const [counter, setCounter] = useState(0)
-    const [userType, setUserType] = useState({ user_type_id: '1' })
+    const [userType, setUserType] = useState({ user_type_id: '2' })
 
     const userTypeHandler = useCallback(
         (userType) => {
@@ -32,7 +32,6 @@ const CreateAccount = () => {
         const data = {
             ...userData,
             user_type_id: userType.user_type_id,
-            profile_picture_img: '1691778741.jpg',
         }
 
         // console.log(data);
