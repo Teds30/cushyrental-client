@@ -51,9 +51,12 @@
 .bookmark {
     display: flex;
     padding: 0px;
-    /* background-color: #f6f8fc; */
+    /* background-color: none; */
+    background: transparent;
+    border: none;
     border-radius: 8px;
     color: var(--fc-body);
+    /* z-index: ; */
 }
 
 .unit-details-main {

@@ -21,9 +21,11 @@
     margin-right: auto;
   }
   
-  .swiper-slide {
+  .mySwiper2 .swiper-slide {
+    height: 100%;
     background-size: cover;
     background-position: center;
+    opacity:inherit;
   }
   
   .mySwiper2 {
@@ -68,6 +70,10 @@
     object-fit: cover;
   }
 
-  .swiper-button-prev, .swiper-button-next {
+  .mySwiper2 .swiper-button-prev {
+    display: none;
+  }
+
+  .mySwiper2 .swiper-button-next {
     display: none;
   }
