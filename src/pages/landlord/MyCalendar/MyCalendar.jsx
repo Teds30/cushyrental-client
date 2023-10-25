@@ -66,7 +66,7 @@ const MyCalendar = ({ window }) => {
                 responseData = await sendRequest({
                     url: `${
                         import.meta.env.VITE_BACKEND_LOCALHOST
-                    }/api/landlord-rentals/1`,
+                    }/api/landlord-rentals/${authCtx.user.id}`,
                 })
 
                 if (responseData) {
