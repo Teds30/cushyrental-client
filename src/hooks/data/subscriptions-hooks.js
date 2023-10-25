@@ -97,6 +97,34 @@ const useSubscriptionManager = () => {
         [sendRequest]
     )
 
+    const fetchGoldUnits = useCallback(async () => {
+        let responseData
+        try {
+            responseData = await sendRequest({
+                url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/gold_units`,
+            })
+        } catch (err) {
+            throw err.message
+        }
+
+        return responseData
+    }, [sendRequest])
+
+    const fetchSilverUnits = useCallback(async () => {
+        let responseData
+        try {
+            responseData = await sendRequest({
+                url: `${
+                    import.meta.env.VITE_BACKEND_LOCALHOST
+                }/api/silver_units`,
+            })
+        } catch (err) {
+            throw err.message
+        }
+
+        return responseData
+    }, [sendRequest])
+
     return {
         isLoading,
         fetchSubscription,
@@ -104,6 +132,8 @@ const useSubscriptionManager = () => {
         fetchSubscriptions,
         updateSubscription,
         subscribeUnit,
+        fetchSilverUnits,
+        fetchGoldUnits,
     }
 }
 

@@ -17,7 +17,7 @@ const useAuth = () => {
 
     const loginHandler = useCallback(({ user = {}, token = '' }) => {
         setToken(token)
-        // setUser(user)
+        setUser(user)
         setIsLoggedIn(true)
         localStorage.setItem(
             'userData',
@@ -30,15 +30,18 @@ const useAuth = () => {
 
     const fetchUserData = useCallback(async (token) => {
         try {
+            console.log('tioke: ', token)
             const response = await sendRequest({
                 url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/user_data`,
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             })
+            console.log('resspons: ', response)
             setUser(response) // Set the user data in the component state
         } catch (error) {
             // Handle errors if needed
+            console.log(error)
         }
     }, [])
 
@@ -46,8 +49,12 @@ const useAuth = () => {
         const storedData = JSON.parse(localStorage.getItem('userData'))
 
         if (storedData) {
-            fetchUserData(storedData.token)
-            setToken(storedData.token)
+            const loadData = async () => {
+                await fetchUserData(storedData.token)
+                setToken(storedData.token)
+                setIsLoggedIn(true)
+            }
+            loadData()
         }
     }, [])
 
