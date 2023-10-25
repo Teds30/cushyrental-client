@@ -69,6 +69,12 @@
     border-radius: 4px;
 }
 
+.unit-picture img {
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
+}
+
 .preview-chosen-unit {
     display: flex;
     gap: 12px;

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useContext, useEffect, useState } from 'react'
 
 import useHttp from '../../../hooks/http-hook'
 
@@ -10,11 +10,14 @@ import PrimaryButton from '../../../components/Button/PrimaryButton'
 import BorderedButton from '../../../components/Button/BorderedButton'
 import { BsArrowRight } from 'react-icons/bs'
 import SwipeableCard from '../../../components/SwipeableCard/SwipeableCard'
+import AuthContext from '../../../context/auth-context'
+import PromoteUnitImage from './PromoteUnitImage'
 
 const PersonalInformation = (props) => {
     const { form, setForm, handleNext, handleBack } = props
 
-    const userId = 1
+    const authCtx = useContext(AuthContext)
+    const userId = authCtx.user.id
     const { sendRequest } = useHttp()
     const [initialSelect, setInitialSelect] = useState(form.selectedUnit)
 
@@ -106,7 +109,9 @@ const PersonalInformation = (props) => {
                             {form.selectedUnit.unitId ? (
                                 <div className={styles['preview-chosen-unit']}>
                                     <div className={styles['unit-picture']}>
-                                        <img src="" alt="" />
+                                        <PromoteUnitImage
+                                            image={form.selectedUnit.unitImage}
+                                        />
                                     </div>
                                     <div className={styles['unit-details']}>
                                         <p className="title">
@@ -225,11 +230,19 @@ const PersonalInformation = (props) => {
                                                 unitId: unit.id,
                                                 unitName: unit.name,
                                                 unitAddress: unit.address,
+                                                unitImage:
+                                                    unit.images[0] &&
+                                                    unit.images[0].image.image,
                                             })
                                         }}
                                     >
                                         <div className={styles['unit-picture']}>
-                                            <img src="" alt="" />
+                                            <PromoteUnitImage
+                                                image={
+                                                    unit.images[0] &&
+                                                    unit.images[0].image.image
+                                                }
+                                            />
                                         </div>
                                         <div className={styles['unit-details']}>
                                             <p className="title">{unit.name}</p>
