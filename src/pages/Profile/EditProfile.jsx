@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 import { Link } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar'
@@ -19,15 +19,15 @@ import { useContext, useState } from 'react'
 
 const EditProfile = () => {
     const userCtx = useContext(AuthContext)
-    const { fetchImage, fetchAvatar, isLoading } = useImageManager()
+    const { fetchAvatar, isLoading } = useImageManager()
 
     const [user, setUser] = useState({})
 
     useEffect(() => {
         const handleFetch = async () => {
             try {
-                const res = await fetchAvatar('/default/1.png')
-                // const res = await fetchImage(userCtx.user.profile_picture_img)
+                // const res = await fetchAvatar('/default/1.png')
+                const res = await fetchAvatar(userCtx.user.profile_picture_img)
                 setUser({ ...userCtx.user, profile_picture_img: res })
             } catch (err) {}
         }
