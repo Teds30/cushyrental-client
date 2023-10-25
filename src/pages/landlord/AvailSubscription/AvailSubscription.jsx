@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import styles from './AvailSubscription.module.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
     IconButton,
     Step,
@@ -76,6 +76,7 @@ function QontoStepIcon(props) {
 }
 
 const AvailSubscription = () => {
+    const navigate = useNavigate()
     const [activeStep, setActiveStep] = useState(0)
     const [form, setForm] = useState({
         gcash_name: '',

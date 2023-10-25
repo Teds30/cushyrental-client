@@ -82,6 +82,10 @@ const Chats = () => {
                 <div className={styles['col1']}>
                     <Link
                         to="/home"
+                        onClick={(e) => {
+                            e.preventDefault()
+                            navigate(-1)
+                        }}
                     >
                         <IconButton
                             size="large"
