@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useContext, useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
@@ -12,8 +12,11 @@ import ManageTabs from './ManageTabs.jsx'
 
 import useSubscriptionManager from '../../../hooks/data/subscriptions-hooks'
 
+import AuthContext from '../../../context/auth-context'
+
 const ManageSubscriptions = () => {
-    const userId = 1
+    const authCtx = useContext(AuthContext)
+    const userId = authCtx.user.id
     const { fetchUserSubscriptions, isLoading } = useSubscriptionManager()
 
     const [userSubscriptions, setUserSubscriptions] = useState([])
