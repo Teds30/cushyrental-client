@@ -122,17 +122,6 @@
     color: var(--accent-danger);
 }
 
-.password-col {
-    position: relative;
-
-    display: flex;
-}
-
-.password-icon {
-    font-size: 24px;
-    color: var(--fc-body-light);
-}
-
 @media (min-width: 640px) {
     .container {
         max-width: 768px;
