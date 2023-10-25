@@ -1,7 +1,8 @@
 .search-container {
-    padding: 0 11px;
     height: auto;
     padding-bottom: 38px;
+
+    position: relative;
 
     display: flex;
     flex-direction: column;
@@ -9,12 +10,19 @@
 }
 
 .search-nav {
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
 .location-main, .filter-main {
+    margin-top: 48px;
+    padding: 0 11px;
+
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -68,5 +76,9 @@
     .search-container {
         max-width: 768px;
         margin: 0 auto;
+    }
+
+    .search-nav {
+        width: 768px;
     }
 }

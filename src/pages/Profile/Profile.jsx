@@ -10,6 +10,7 @@ import ProfileDesign from './ProfileDesign'
 import BorderedButton from '../../components/Button/BorderedButton'
 import ProfileOption from '../landlord/LandProfile/ProfileOption'
 import useImageManager from '../../hooks/data/image-hook'
+import TenantProfileOption from '../tenant/TenantProfile/TenantProfileOption'
 
 import styles from './Profile.module.css'
 import VerifiedIcon from '@mui/icons-material/Verified'
@@ -22,6 +23,8 @@ const Profile = () => {
     const { fetchAvatar, fetchImage, isLoading } = useImageManager()
     const [image, setImage] = useState()
     const navigate = useNavigate()
+
+    console.log(userCtx.user.profile_picture_img)
 
     const logoutHandler = (event) => {
         event.preventDefault()
@@ -90,7 +93,7 @@ const Profile = () => {
                     {userCtx.user && (
                         <div className={`${styles['user-profile']}`}>
                             <div className={`${styles['photo']}`}>
-                                <img src={image} alt={'profile_picture'} />
+                                <img src={image} alt={userCtx.user.first_name + ' ' + userCtx.user.last_name} />
                             </div>
                             <div className={`${styles['user']}`}>
                                 <div className={styles.name}>
@@ -110,7 +113,7 @@ const Profile = () => {
                                         />
                                     )}
                                 </div>
-                                {userCtx.user.user_type_id === 3 ? (
+                                {userCtx.user.user_type_id === 2 ? (
                                     <p>Tenant</p>
                                 ) : (
                                     <p>Landlord</p>

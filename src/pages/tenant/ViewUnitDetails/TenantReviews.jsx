@@ -179,7 +179,7 @@ export default function TenantReviews(props) {
         </Fragment>
     ) : (
         <p className="cpation" style={{ textAlign: "center" }}>
-            No reviews to fecth.
+            Ano nga yung nandito?
         </p>
     );
 }

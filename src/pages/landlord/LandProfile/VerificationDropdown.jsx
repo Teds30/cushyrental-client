@@ -57,6 +57,7 @@ export default function VerificationDropdown(props) {
                         border: "none",
                         outline: "none",
                     }}
+                    required
                     // Use InputProps to add the icon
                 >
                     {cardIdentification.map((card) => {

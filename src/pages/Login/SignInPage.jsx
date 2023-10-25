@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import FacebookLogin, { FacebookLoginResponse } from 'rc-facebook-login'
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import FacebookLogin, { FacebookLoginResponse } from "rc-facebook-login";
 
 import styles from '../Login/SignInPage.module.css'
 import PrimaryButton from '../../components/Button/PrimaryButton'
@@ -24,46 +24,46 @@ const SignInPage = () => {
     const navigate = useNavigate()
 
     const handleEmailChange = (event) => {
-        setEmailInput(event.target.value)
-        setEmailError('')
-    }
+        setEmailInput(event.target.value);
+        setEmailError("");
+    };
 
     const handlePasswordChange = (event) => {
-        setPasswordInput(event.target.value)
-        setPasswordError('')
-    }
+        setPasswordInput(event.target.value);
+        setPasswordError("");
+    };
 
     const handleEmailBlur = () => {
-        if (emailInput === '') {
-            setEmailError('Email is required.')
+        if (emailInput === "") {
+            setEmailError("Email is required.");
         }
-    }
+    };
 
     const handlePasswordBlur = () => {
-        if (passwordInput === '') {
-            setPasswordError('Password is required.')
+        if (passwordInput === "") {
+            setPasswordError("Password is required.");
         }
-    }
+    };
 
     const checkBoxHandler = (items) => {
-        setCheckBoxItems(items)
-    }
+        setCheckBoxItems(items);
+    };
 
     const handleSubmit = async (event) => {
-        event.preventDefault()
+        event.preventDefault();
 
-        setEmailError('')
-        setPasswordError('')
+        setEmailError("");
+        setPasswordError("");
 
-        if (emailInput === '') {
-            setEmailError('Email is required.')
+        if (emailInput === "") {
+            setEmailError("Email is required.");
         }
 
-        if (passwordInput === '') {
-            setPasswordError('Password is required.')
+        if (passwordInput === "") {
+            setPasswordError("Password is required.");
         }
 
-        if (emailInput !== '' && passwordInput !== '') {
+        if (emailInput !== "" && passwordInput !== "") {
         }
 
         try {
@@ -82,21 +82,21 @@ const SignInPage = () => {
                 setIsInvalid(true)
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-    }
+    };
 
     return (
         <form
-            className={`${styles['main-container']} `}
+            className={`${styles["main-container"]} `}
             onSubmit={handleSubmit}
         >
             <div>
                 <div className="logo">
-                    <img src={Logo} alt="Cushy Rental Icon" />{' '}
+                    <img src={Logo} alt="Cushy Rental Icon" />{" "}
                 </div>
 
-                <div className={`${styles['component-title']} `}>
+                <div className={`${styles["component-title"]} `}>
                     <h2>Sign In to</h2>
                     <h2>Cushy Rental</h2>
                 </div>
@@ -113,32 +113,34 @@ const SignInPage = () => {
                         onChange={handleEmailChange}
                         onBlur={handleEmailBlur}
                     />
-                    <p className={styles['error']}>{emailError}</p>
+                    <p className={styles["error"]}>{emailError}</p>
                 </div>
 
-                <div className={`${styles['custom__inputs']} `}>
-                    <TextField
-                        fullWidth
+                <div className={`${styles["custom__inputs"]} `}>
+                    <TextFieldAdornedPassword
                         label="Password"
                         type="password"
                         value={passwordInput}
                         onChange={handlePasswordChange}
                         onBlur={handlePasswordBlur}
+                        helperText={
+                            passwordError && "Please confirm your password."
+                        }
                     />
-                    <div className={styles['error']}>{passwordError}</div>
+                    {/* <div className={styles['error']}>{passwordError}</div> */}
                 </div>
 
-                <div className={`${styles['remember-forgot']} `}>
-                    <div className={`${styles['remember-me']} `}>
+                <div className={`${styles["remember-forgot"]} `}>
+                    <div className={`${styles["remember-me"]} `}>
                         {/* <CheckBox
               items={[{ id: 1, name: "Remember Me" }]}
               onCheckBox={checkBoxHandler}
             /> */}
                     </div>
-                    <div className={`${styles['remember-me']} `}>
+                    <div className={`${styles["remember-me"]} `}>
                         <Link
                             to="/SignInPage/ForgotPassword"
-                            className={`${styles['forgot-password']} `}
+                            className={`${styles["forgot-password"]} `}
                         >
                             Forgot Password?
                         </Link>
@@ -150,7 +152,7 @@ const SignInPage = () => {
                 </PrimaryButton>
 
                 <div>
-                    <div className={`${styles['sign-up__container']}`}>
+                    <div className={`${styles["sign-up__container"]}`}>
                         <div className={styles.hr}></div>
                         <div className={styles.option}>Or Sign Up with</div>
                         <div className={styles.hr}></div>
@@ -159,12 +161,12 @@ const SignInPage = () => {
                     <SocialMediaLogin />
                 </div>
 
-                <div className={`${styles['login-option']}`}>
+                <div className={`${styles["login-option"]}`}>
                     <span>Don't have an account? </span>
-                    <span className={`${styles['signup-link']}`}>
+                    <span className={`${styles["signup-link"]}`}>
                         <Link
                             to="/register"
-                            className={`${styles['signup-word']}`}
+                            className={`${styles["signup-word"]}`}
                         >
                             Sign Up
                         </Link>
@@ -172,7 +174,7 @@ const SignInPage = () => {
                 </div>
             </div>
         </form>
-    )
-}
+    );
+};
 
-export default SignInPage
+export default SignInPage;

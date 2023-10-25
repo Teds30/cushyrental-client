@@ -5,6 +5,21 @@
     flex-direction: column;
 }
 
+.top-back-container {
+    position: fixed;
+    width: 100%;
+    z-index: 99;
+}
+
+.top-back-container.scrolling {
+    background: var(--bg-layer1);
+    transition: background 0.5s ease;
+}
+
+.top-back-container.scrolling p {
+    color: var(--fc-strong);
+}
+
 .edit-profile-design {
     border: 1px solid red;
     position: absolute;
@@ -13,8 +28,8 @@
 }
 
 .edit-profile-main {
-    margin-top: 61px;
-    z-index: 1;
+    margin-top: 117px;
+    /* z-index: 1; */
 }
 
 .user-details {

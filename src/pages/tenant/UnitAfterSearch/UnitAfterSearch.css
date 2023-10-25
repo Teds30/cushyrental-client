@@ -1,9 +1,9 @@
-  .swiper {
+.unitSwiperImag .swiper {
     width: 100%;
     height: 100%;
   }
   
-  .swiper-slide {
+  .unitSwiperImag .swiper-slide {
     text-align: center;
     font-size: 18px;
     background: #fff;
@@ -14,14 +14,14 @@
     align-items: center;
   }
   
-  .swiper-slide img {
+  .unitSwiperImag .swiper-slide img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
   
-  .swiper {
+  .unitSwiperImag .swiper {
     margin-left: auto;
     margin-right: auto;
   }
