@@ -54,15 +54,6 @@ function App() {
     useEffect(() => {
         console.log('login? ', isLoggedIn)
         console.log('hello: ', user)
-        // if (user && user.user_type_id === 3) {
-        //     navigate('/tenant-home')
-        // } else if (user && user.user_type_id === 2) {
-        //     navigate('/landlord-home')
-        // }
-
-        // if (!isLoggedIn) {
-        //     navigate('/signin')
-        // }
     }, [isLoggedIn, user])
 
     if (!storedData) {
