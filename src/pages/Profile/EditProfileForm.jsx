@@ -30,7 +30,7 @@ const EditProfileForm = (props) => {
     const [lastName, setLastName] = useState(userData.last_name);
     const [isSaving, setISaving] = useState(false);
 
-    console.log(user);
+    console.log(user.user_type_id);
 
     const addImageChangeHandler = (event) => {
         const image = URL.createObjectURL(event.target.files[0]);
@@ -245,7 +245,7 @@ const EditProfileForm = (props) => {
                         // selectedValue={user.gender}
                     />
 
-                    {user.is_verfified === 1 ? (
+                    { user.user_type_id === 2 && (user.is_verfified === 1 ? (
                         <div
                             // to="/profile/user_profile/verify/1"
                             className={`${styles["verify-account"]}`}
@@ -276,7 +276,7 @@ const EditProfileForm = (props) => {
                                 Verify your account
                             </p>
                         </Link>
-                    )}
+                    )) }
                 </div>
 
                 <div className={`${styles["edit-profile-button"]}`}>

@@ -10,6 +10,7 @@ import ProfileDesign from './ProfileDesign'
 import BorderedButton from '../../components/Button/BorderedButton'
 import ProfileOption from '../landlord/LandProfile/ProfileOption'
 import useImageManager from '../../hooks/data/image-hook'
+import TenantProfileOption from '../tenant/TenantProfile/TenantProfileOption'
 
 import styles from './Profile.module.css'
 import VerifiedIcon from '@mui/icons-material/Verified'
@@ -109,7 +110,7 @@ const Profile = () => {
                                         />
                                     )}
                                 </div>
-                                {userCtx.user.user_type_id === 3 ? (
+                                {userCtx.user.user_type_id === 2 ? (
                                     <p>Tenant</p>
                                 ) : (
                                     <p>Landlord</p>
@@ -119,9 +120,14 @@ const Profile = () => {
                     )}
 
                     <div className={`${styles['user-menu']}`}>
-                        <ProfileOption
+                        { userCtx.user.user_type_id === 1 ? <TenantProfileOption
                             className={`${styles['profile-option']}`}
-                        />
+                        /> : <ProfileOption
+                        className={`${styles['profile-option']}`}
+                    /> }
+                        {/* <ProfileOption
+                            className={`${styles['profile-option']}`}
+                        /> */}
                     </div>
                 </div>
 
