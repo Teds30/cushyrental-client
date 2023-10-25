@@ -32,12 +32,13 @@
 }
 
 .image-col img {
-    object-fit:contain;
+    object-fit: contain;
     width: inherit;
     height: inherit;
 }
 
 .thumbnail {
+    z-index: 100;
     background-color: var(--accent);
     color: var(--bg-layer1);
     padding: 4px 10px;
@@ -50,7 +51,7 @@
 
 .edit-image-button {
     backdrop-filter: blur(1px);
-    background: rgba(255, 255, 255, 0.80);
+    background: rgba(255, 255, 255, 0.8);
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -83,13 +84,25 @@
     height: 100%;
 }
 
+.image-background {
+    position: relative;
+}
+.image-background-opacity {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+}
 .selected-image {
+    z-index: 100;
     border: 3px solid var(--bg-layer1);
     border-radius: 50%;
 
     position: absolute;
-    bottom: 17px;
-    right: 19px;
+    bottom: 18px;
+    right: 20px;
 
     display: flex;
     align-items: center;
