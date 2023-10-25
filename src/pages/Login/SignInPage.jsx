@@ -72,7 +72,7 @@ const SignInPage = () => {
             userCtx.onLogin({ user: res.user, token: res.token })
             console.log(res.user.user_type_id)
             if (res.user.user_type_id === 2) navigate('/landlord-home')
-            if (res.user.user_type_id === 3) navigate('/tenant-home')
+            if (res.user.user_type_id === 1) navigate('/tenant-home')
         } catch (error) {
             console.log(error)
         }
