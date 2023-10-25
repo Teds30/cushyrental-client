@@ -7,8 +7,6 @@ import styles from "./Quantity.module.css";
 const Quantity = (props) => {
     const { maxValue = 0, setQuantityvalue = 0, styled = false } = props;
 
-    console.log(setQuantityvalue);
-
     const [value, setValue] = useState(setQuantityvalue);
 
     const incrementHandler = () => {
