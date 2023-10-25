@@ -1,55 +1,60 @@
-import { useState, useEffect } from "react";
-import useImageManager from "../../../../../../hooks/data/image-hook";
-import CheckBox from "../../../../../../components/CheckBox/CheckBox";
+import { useState, useEffect } from 'react'
+import useImageManager from '../../../../../../hooks/data/image-hook'
+import CheckBox from '../../../../../../components/CheckBox/CheckBox'
 
-import styles from "./EditFacilities.module.css";
+import styles from './EditFacilities.module.css'
 
 const FacilityOthers = (props) => {
-    const { facilityOthers, onOtherFacilities, others } = props;
+    const { facilityOthers, onOtherFacilities, others } = props
 
-    const { fetchIcon, isLoading } = useImageManager();
-    const [otherFacilities, setOtherFacilities] = useState([]);
-    const [selectedFacilities, setSelectedFacilities] = useState(others.length !== 0? others.map((facility) => {return facility.id}) : []);
+    const { fetchIcon, isLoading } = useImageManager()
+    const [otherFacilities, setOtherFacilities] = useState([])
+    const [selectedFacilities, setSelectedFacilities] = useState(
+        others.length !== 0
+            ? others.map((facility) => {
+                  return facility.id
+              })
+            : []
+    )
 
     useEffect(() => {
         const handleFetch = async () => {
             try {
                 const promise = facilityOthers.map(async (facility) => {
-                    const res = await fetchIcon(facility.icon);
-                    return { ...facility, icon: res };
-                });
+                    const res = await fetchIcon(facility.icon)
+                    return { ...facility, icon: res }
+                })
 
-                const newOtherUpdate = await Promise.all(promise);
-                setOtherFacilities(newOtherUpdate);
+                const newOtherUpdate = await Promise.all(promise)
+                console.log(newOtherUpdate)
+                setOtherFacilities(newOtherUpdate)
             } catch (err) {}
-        };
-        handleFetch();
-    }, []);
+        }
+        handleFetch()
+    }, [])
 
     useEffect(() => {
         const toParentComponent = () => {
-            onOtherFacilities(selectedFacilities);
-            return;
-        };
+            onOtherFacilities(selectedFacilities)
+            return
+        }
 
-        toParentComponent();
-    }, [selectedFacilities]);
+        toParentComponent()
+    }, [selectedFacilities])
 
     return isLoading && otherFacilities.length === 0
-        ? "adsfdsf"
+        ? 'adsfdsf'
         : otherFacilities.map((facility, index) => {
               return (
                   <div
-                  key={facility.id}
-                      className={`${styles["other-container"]} ${
-                          index === 0 && styles["facility-container"]
+                      key={facility.id}
+                      className={`${styles['other-container']} ${
+                          index === 0 && styles['facility-container']
                       }`}
                   >
-                      <div
-                          className={`${styles["facility-row"]}`}
-                      >
-                          <div className={`${styles["facility-col"]}`}>
-                              <div className={`${styles["facility-icon"]}`}>
+                      <div className={`${styles['facility-row']}`}>
+                          <div className={`${styles['facility-col']}`}>
+                              <div className={`${styles['facility-icon']}`}>
                                   <div
                                       dangerouslySetInnerHTML={{
                                           __html: facility.icon,
@@ -60,16 +65,16 @@ const FacilityOthers = (props) => {
                               <p>{facility.name}</p>
                           </div>
                           <CheckBox
-                              items={[{ id: facility.id, name: "" }]}
+                              items={[{ id: facility.id, name: '' }]}
                               selectedValue={selectedFacilities}
                               onSelectedUsers={setSelectedFacilities}
                           />
                       </div>
 
-                      <div className={styles["hr"]}></div>
+                      <div className={styles['hr']}></div>
                   </div>
-              );
-          });
-};
+              )
+          })
+}
 
-export default FacilityOthers;
+export default FacilityOthers
