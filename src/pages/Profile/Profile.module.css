@@ -5,6 +5,11 @@
     flex-direction: column;
 }
 
+.top-back-container {
+    position: fixed;
+    width: 100%;
+}
+
 .profile-design {
     position: absolute;
     right: 0;
@@ -25,6 +30,7 @@
 
 .profile-main {
     padding: 0 13px;
+    margin-top: 56px;
 }
 
 .profile-user {
@@ -143,5 +149,9 @@
     .profile-container {
         max-width: 768px;
         margin: 0 auto;
+    }
+
+    .top-back-container {
+        width: 768px;
     }
 }

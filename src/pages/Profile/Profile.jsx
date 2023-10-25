@@ -23,6 +23,8 @@ const Profile = () => {
     const [image, setImage] = useState()
     const navigate = useNavigate()
 
+    console.log(userCtx.user.profile_picture_img)
+
     const logoutHandler = (event) => {
         event.preventDefault()
         userCtx.onLogout()
@@ -32,7 +34,9 @@ const Profile = () => {
     useEffect(() => {
         const handleFetch = async () => {
             try {
-                const res = await fetchAvatar('/default/1.png')
+                // console.log(userCtx.user.profile_picture_img)
+                const res = await fetchImage(userCtx.user.profile_picture_img);
+                console.log(res);
                 setImage(res)
             } catch (err) {}
         }
@@ -85,7 +89,7 @@ const Profile = () => {
                     {userCtx.user && (
                         <div className={`${styles['user-profile']}`}>
                             <div className={`${styles['photo']}`}>
-                                <img src={image} alt={'profile_picture'} />
+                                <img src={image} alt={userCtx.user.first_name + ' ' + userCtx.user.last_name} />
                             </div>
                             <div className={`${styles['user']}`}>
                                 <div className={styles.name}>
