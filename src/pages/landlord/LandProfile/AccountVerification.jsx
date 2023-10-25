@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -12,25 +14,44 @@ import styles from "./AccountVerification.module.css";
 import { FiChevronLeft } from "react-icons/fi";
 
 const AccountVerification = () => {
+    const [scrolling, setScrolling] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 20) {
+                setScrolling(true);
+            } else {
+                setScrolling(false);
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, [scrolling]);
+
     return (
         <VerifyAccountContextProvider>
             <div className={`${styles["account-verification-container"]}`}>
                 <AccountVerificationDesign />
-                <Box className={`${styles["top-back-container"]} `}>
+                <Box className={`${styles["top-back-container"]} ${
+                    scrolling ? styles["scrolling"] : ""
+                }`}>
                     <AppBar
                         position="static"
                         sx={{
                             margin: 0,
-                            backgroundColor: "var(--accent-dark)",
+                            background: 'transparent',
                             color: "var(--fc-body)",
                             fontFamily: "Inter",
                             boxShadow: "none",
-                            // borderBottom: "1px solid var(--border-color)",
                         }}
                     >
                         <Toolbar className={`${styles["toolbar-container"]}`}>
                             <Link
-                                to={`/profile/user_profile/1`}
+                                to={`/profile/user_profile`}
                                 className={`${styles["link-button"]}`}
                             >
                                 <IconButton
@@ -43,6 +64,7 @@ const AccountVerification = () => {
                                         style={{
                                             color: "var(--bg-layer1)",
                                             fill: "transparent",
+                                            color: scrolling ? "black" : "white",
                                         }}
                                     />
                                 </IconButton>
@@ -50,7 +72,7 @@ const AccountVerification = () => {
                             <Box className={`${styles["edit-feature-title"]}`}>
                                 <p
                                     className="title"
-                                    style={{ color: "var(--bg-layer1)" }}
+                                    style={{ color: !scrolling ? "var(--bg-layer1)" : 'black' }}
                                 >
                                     Account Verification
                                 </p>

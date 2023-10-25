@@ -34,8 +34,11 @@ const PrivacyAndAgreement = (props) => {
 
         try {
             const res = await accountVerification(data);
+            console.log(res);
             onNext();
-        } catch (err) {}
+        } catch (err) {
+            console.log(err);
+        }
 
         
     };

@@ -8,7 +8,7 @@ import { BiBuildingHouse } from "react-icons/bi";
 const ProfileOption = (props) => {
     return (
         <div {...props} className={`${styles['profile-container']}`}>
-            <Link to='/profile/user_profile/1' className={styles.col}>
+            <Link to='/profile/user_profile' className={styles.col}>
                 <PersonOutlineIcon style={{color: 'var(--fc-strong)', height: '30px', width: '30px'}} />
                 <p className='smaller-text'>My Profile</p>
             </Link>
