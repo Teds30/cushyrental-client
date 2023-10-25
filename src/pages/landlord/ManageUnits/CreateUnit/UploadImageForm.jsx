@@ -1,83 +1,86 @@
-import { useState, useContext } from "react";
+import { useState, useContext } from 'react'
 
-import BorderlessButton from "../../../../components/Button/BorderlessButton";
-import PrimaryButton from "../../../../components/Button/PrimaryButton";
-import SecondaryButton from "../../../../components/Button/SecondaryButton";
-import CreateUnitContext from "../../../../context/create-unit-context";
-import useUnitManager from "../../../../hooks/data/units-hook";
-import AuthContext from "../../../../context/auth-context";
+import BorderlessButton from '../../../../components/Button/BorderlessButton'
+import PrimaryButton from '../../../../components/Button/PrimaryButton'
+import SecondaryButton from '../../../../components/Button/SecondaryButton'
+import CreateUnitContext from '../../../../context/create-unit-context'
+import useUnitManager from '../../../../hooks/data/units-hook'
+import AuthContext from '../../../../context/auth-context'
 
-import styles from "./CreateUnit.module.css";
-import EastIcon from "@mui/icons-material/East";
-import AddIcon from "@mui/icons-material/Add";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import MenuButton from "../../../../components/Menu/MenuButton";
+import styles from './CreateUnit.module.css'
+import EastIcon from '@mui/icons-material/East'
+import AddIcon from '@mui/icons-material/Add'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
+import MenuButton from '../../../../components/Menu/MenuButton'
 
 const UploadImageForm = (props) => {
-    const { onNext, onBack } = props;
-    const { createUnit } = useUnitManager();
-    const imageData = [];
+    const { onNext, onBack } = props
+    const { createUnit } = useUnitManager()
+    const imageData = []
 
-    const createUnitCtx = useContext(CreateUnitContext);
-    const userCtx = useContext(AuthContext);
+    const createUnitCtx = useContext(CreateUnitContext)
+    const userCtx = useContext(AuthContext)
     const uploadImageDetails =
         createUnitCtx.unitData.images === undefined
             ? []
-            : createUnitCtx.unitData.images;
-    const [isSaving, setIsSaving] = useState(false);
+            : createUnitCtx.unitData.images
+    const [isSaving, setIsSaving] = useState(false)
 
-    const [unitImages, setUnitImages] = useState(uploadImageDetails);
+    const [unitImages, setUnitImages] = useState(uploadImageDetails)
 
     const addImageChangeHandler = (event) => {
-        setUnitImages([...unitImages, event.target.files[0]]);
-    };
+        setUnitImages([...unitImages, event.target.files[0]])
+    }
 
     const removeHandler = (id) => {
-        const newUnitImages = unitImages.filter((image, index) => index !== id);
+        const newUnitImages = unitImages.filter((image, index) => index !== id)
         // setUnitImages(newUnitImages);
         if (newUnitImages.length === 0) {
-            setUnitImages([]);
-            return;
+            setUnitImages([])
+            return
         }
 
-        setUnitImages(newUnitImages);
-    };
+        setUnitImages(newUnitImages)
+    }
 
     const locationDraft = () => {
         if (unitImages) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
                 images: unitImages,
-            });
+            })
         }
-    };
+    }
     const backHandler = (event) => {
-        event.preventDefault();
+        event.preventDefault()
 
-        locationDraft();
+        locationDraft()
 
-        onBack();
-    };
+        onBack()
+    }
 
     const handleFileUpload = async (image, index) => {
-        const formData = new FormData();
+        const formData = new FormData()
 
-        formData.append("image", image);
-        formData.append("name", image.name);
-        formData.append("path", "images");
+        formData.append('image', image)
+        formData.append('name', image.name)
+        formData.append('path', 'images')
 
         try {
-            const res = await fetch("http://127.0.0.1:8000/api/image-upload", {
-                method: "POST",
-                body: formData,
-            });
+            const res = await fetch(
+                `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/image-upload`,
+                {
+                    method: 'POST',
+                    body: formData,
+                }
+            )
 
-            const data = await res.json();
+            const data = await res.json()
 
             if (index === 0) {
-                imageData.push({ image_id: data.image.id, is_thumbnail: 1 });
+                imageData.push({ image_id: data.image.id, is_thumbnail: 1 })
             } else {
-                imageData.push({ image_id: data.image.id, is_thumbnail: 0 });
+                imageData.push({ image_id: data.image.id, is_thumbnail: 0 })
             }
 
             if (imageData.length === unitImages.length) {
@@ -89,35 +92,36 @@ const UploadImageForm = (props) => {
                         target_gender: Number(
                             createUnitCtx.unitData.target_gender[0]
                         ),
-                    };
-                    const res = await createUnit(toSave);
-                    setIsSaving(false); 
-                    createUnitCtx.onReset();
-                    onNext();
+                    }
+                    console.log(toSave)
+                    const res = await createUnit(toSave)
+                    setIsSaving(false)
+                    createUnitCtx.onReset()
+                    onNext()
                 } catch (err) {}
             }
         } catch (err) {}
-    };
+    }
 
     const submitHandler = (event) => {
-        event.preventDefault();
+        event.preventDefault()
 
         if (unitImages.length < 3) {
-            return;
+            return
         }
 
-        setIsSaving(true);
+        setIsSaving(true)
 
         unitImages.forEach((image, index) => {
-            handleFileUpload(image, index);
-        });
-    };
+            handleFileUpload(image, index)
+        })
+    }
 
     const unitImagesContent =
         unitImages.length !== 0 &&
         unitImages.map((image, index) => {
             return (
-                <div key={index} className={`${styles["upload-image-size"]}`}>
+                <div key={index} className={`${styles['upload-image-size']}`}>
                     {index === 0 && (
                         <div className={styles.thumbnail}>
                             <p className="pre-title">THUMBNAIL</p>
@@ -125,26 +129,26 @@ const UploadImageForm = (props) => {
                     )}
                     <div className={styles.menu}>
                         <MenuButton
-                            options={["Remove"]}
+                            options={['Remove']}
                             id={index}
                             onRemove={removeHandler}
                         />
                     </div>
                     <img src={URL.createObjectURL(image)} alt="CushyRental" />
                 </div>
-            );
-        });
+            )
+        })
 
     return (
         <form
-            className={`${styles["basic-details-form"]}`}
+            className={`${styles['basic-details-form']}`}
             onSubmit={submitHandler}
         >
             <div
                 style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "12px",
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '12px',
                 }}
             >
                 <div className={`${styles.title}`}>
@@ -155,11 +159,11 @@ const UploadImageForm = (props) => {
                 </div>
             </div>
 
-            <div className={`${styles["upload-image"]}`}>
+            <div className={`${styles['upload-image']}`}>
                 {unitImagesContent}
             </div>
 
-            <div className={`${styles["upload-image-button"]}`}>
+            <div className={`${styles['upload-image-button']}`}>
                 <input
                     type="file"
                     accept="image/jpeg, image/png"
@@ -167,11 +171,11 @@ const UploadImageForm = (props) => {
                     multiple={false}
                 />
                 <SecondaryButton width="100%" leftIcon={<AddIcon />}>
-                    {unitImages.length >= 1 ? "Add More" : "Add Image"}
+                    {unitImages.length >= 1 ? 'Add More' : 'Add Image'}
                 </SecondaryButton>
             </div>
 
-            <div className={`${styles["basic-details-button"]}`}>
+            <div className={`${styles['basic-details-button']}`}>
                 <BorderlessButton onClick={backHandler}>Back</BorderlessButton>
                 <PrimaryButton
                     leftIcon={<CheckCircleOutlineIcon />}
@@ -182,7 +186,7 @@ const UploadImageForm = (props) => {
                 </PrimaryButton>
             </div>
         </form>
-    );
-};
+    )
+}
 
-export default UploadImageForm;
+export default UploadImageForm
