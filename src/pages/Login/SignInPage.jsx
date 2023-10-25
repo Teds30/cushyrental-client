@@ -10,9 +10,11 @@ import Logo from '../../assets/cushyrental.svg'
 import useLogin from '../../hooks/data/login-hook'
 import SocialMediaLogin from './SocialMedia'
 import AuthContext from '../../context/auth-context'
+import Alert from '../../components/Alert/Alert'
 
 const SignInPage = () => {
     const { loginUser, isLoading } = useLogin()
+    const [isInvalid, setIsInvalid] = useState(false)
     const [emailInput, setEmailInput] = useState('')
     const [passwordInput, setPasswordInput] = useState('')
     const [emailError, setEmailError] = useState('')
@@ -69,10 +71,16 @@ const SignInPage = () => {
                 email: emailInput,
                 password: passwordInput,
             })
-            userCtx.onLogin({ user: res.user, token: res.token })
-            console.log(res.user.user_type_id)
-            if (res.user.user_type_id === 2) navigate('/landlord-home')
-            if (res.user.user_type_id === 3) navigate('/tenant-home')
+
+            if (res.token) {
+                setIsInvalid(false)
+                userCtx.onLogin({ user: res.user, token: res.token })
+                // if (res.user.user_type_id === 2) navigate('/landlord-home')
+                // if (res.user.user_type_id === 3) navigate('/tenant-home')
+                navigate('/')
+            } else {
+                setIsInvalid(true)
+            }
         } catch (error) {
             console.log(error)
         }
@@ -95,6 +103,7 @@ const SignInPage = () => {
             </div>
 
             <div className={`${styles['sign-in']} `}>
+                {isInvalid && <Alert />}
                 <div className={`${styles['custom__inputs']} `}>
                     <TextField
                         fullWidth
