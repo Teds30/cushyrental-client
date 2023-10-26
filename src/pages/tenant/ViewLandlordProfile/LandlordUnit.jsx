@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack'
 import IconButton from '@mui/material/IconButton'
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
 import styles from './ViewProfile.module.css'
-import LandlordUnitAttribute from './LandlordUnitAttribute.jsx'
+import LandlordUnitAttribute from './LandlordUnitAttribute'
 import LandlordUnitImage from './LandlordUnitImage'
 import LandlordUnitRating from './LandlordUnitRating'
 

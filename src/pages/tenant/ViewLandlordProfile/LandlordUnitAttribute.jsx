@@ -9,7 +9,7 @@ const LandlordUnitAttribute = (props) => {
     const { fetchIcon } = useImageManager()
 
     useEffect(() => {
-        fetchData(amenity.icon)
+        fetchData(amenity.amenity.icon)
     }, [amenity])
 
     const fetchData = async (name) => {
@@ -17,6 +17,7 @@ const LandlordUnitAttribute = (props) => {
         setIcon(res)
     }
 
+    console.log(amenity)
     return (
         <div>
             {' '}
@@ -39,7 +40,7 @@ const LandlordUnitAttribute = (props) => {
                             }}
                         />
                     }
-                    label={amenity.name}
+                    label={amenity.amenity.name}
                     style={{ color: '#8A93A6' }}
                     variant="outlined"
                     sx={{
