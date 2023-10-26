@@ -3,7 +3,7 @@
     margin: auto;
     display: flex;
     flex-direction: column;
-    background: var(--bg-layer1);
+    background: var(--bg-layer2);
     position: relative;
     transition: max-width 0.3s ease-in-out;
 }
@@ -41,8 +41,19 @@
     background-color: var(--bg-layer1);
 }
 
+.top-text-container {
+    color: var(--fc-strong);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.top-text2-container {
+    color: var(--fc-body);
+    font-size: 10px;
+}
+
 .padding-top-container {
-    padding-top: 110px;
+    padding-top: 105px;
 }
 
 .main-unit-container {
@@ -52,6 +63,7 @@
     margin-bottom: 12px;
     margin-top: 12px;
     /* margin-top: 110px; */
+    background-color: #fff;
 }
 .top-unit-container {
     display: flex;
@@ -65,7 +77,13 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: 2px solid red;
+}
+
+.top-image-container img {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .top-unit-container p {
@@ -117,7 +135,7 @@
     border-radius: 8px;
     padding: 8px 10px;
     background: rgba(255, 255, 255, 0.85);
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 
 .distance-container p {
@@ -130,10 +148,27 @@
     flex-direction: row;
     padding: 4px 12px 6px 12px;
     gap: 4px;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+        /* width: 95%; */
+    /* flex-direction: column; */
+    /* border: 2px solid red; */
+}
+
+.main-text-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    /* border: 2px solid red; */
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
 }
 
 .name-container p {
+    /* width: calc(100% - 10px); */
     color: var(--fc-strong);
     font-size: 16px;
     font-weight: 500;
@@ -148,17 +183,20 @@
 }
 
 .bookmark-container {
+    /* position: absolute; */
+    /* left: 100px; */
     border-radius: 8px;
     background: #f6f8fc;
+    height: 45px;
 }
 .price-container {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    margin-left: 12px;
-    margin-bottom: 18px;
+    padding-top: 18px;
+    margin-bottom: 12px;
+    /* border: 2px solid red; */
 }
-
 
 .main-swipe-container {
     display: flex;
@@ -182,6 +220,7 @@
 .swiper-button-next {
     background: black;
 }
+
 @media (max-width: 367px) {
     .main-container {
         max-width: 100%;

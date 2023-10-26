@@ -1,0 +1,39 @@
+.nofound-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 150px;
+}
+
+.gif-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 300px;
+    margin-bottom: 16px;
+}
+.gif-container img{
+    width: 300px;
+    height: 400px;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.nosearchfound-text {
+    color: var(--accent);
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.lookingfor-text {
+    color: var(--fc-body);
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+.button-container {
+    margin-bottom: 150px;
+}

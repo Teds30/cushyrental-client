@@ -22,15 +22,15 @@ import UnitImageData from './pages/landlord/ManageUnits/EditUnit/EditUnitImage/U
 import Rules from './pages/Rules'
 import Dashboard from './pages/landlord/Dashboard/Dashboard'
 import Report from './pages/Report/Report'
-import ViewProfile from './pages/tenant/ViewProfile'
+import ViewProfile from './pages/tenant/ViewLandlordProfile/ViewProfile'
 import Profile from './pages/Profile/Profile'
 import EditProfile from './pages/Profile/EditProfile'
 import Subscriptions from './pages/landlord/Subscriptions/Subscriptions'
 import ManageSubscriptions from './pages/landlord/ManageSubscriptions/ManageSubscriptions'
 import AccountVerification from './pages/landlord/LandProfile/AccountVerification'
 import AvailSubscription from './pages/landlord/AvailSubscription/AvailSubscription'
-import RentedUnit from './pages/tenant/RentedUnit'
-import UnitDetails from './pages/tenant/UnitDetails'
+import RentedUnit from './pages/tenant/RentedUnit/RentedUnit'
+import UnitDetails from './pages/tenant/UnitDetails/UnitDetails'
 import ViewUnitDetails from './pages/tenant/ViewUnitDetails/ViewUnitDetails'
 import Homepage from './pages/tenant/Homepage/Homepage'
 import UnitLocation from './pages/tenant/ViewUnitDetails/Location/UnitLocation'
@@ -39,7 +39,7 @@ import UnitLocation from './pages/tenant/ViewUnitDetails/Location/UnitLocation'
 import AuthContext from './context/auth-context'
 import useAuth from './hooks/data/auth-hook'
 import Notifications from './pages/notifications/Notifications'
-// import UnitAfterSearch from './pages/tenant/UnitAfterSearch/UnitAfterSearch'
+import UnitAfterSearch from './pages/tenant/UnitAfterSearch/UnitAfterSearch'
 import SearchUnit from './pages/tenant/SearchUnit/SearchUnit'
 // import Homepage from './pages/tenant/Homepage/Homepage'
 
@@ -189,7 +189,7 @@ function App() {
 
                 <Route path="/unitdetails" element={<UnitDetails />}></Route>
 
-                {/* <Route path="/unitaftersearch" element={<UnitAfterSearch />}></Route> */}
+                <Route path="/unitaftersearch" element={<UnitAfterSearch />}></Route>
                 <Route
                     path="*"
                     element={

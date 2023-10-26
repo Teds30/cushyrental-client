@@ -1,27 +1,23 @@
 import React, { useState, useEffect } from "react";
 import styles from "./ViewProfile.module.css";
-import useImageManager from "../../hooks/data/image-hook";
+import useImageManager from "../../../hooks/data/image-hook";
 
 const LandlordProfileImage = (props) => {
     const { image } = props;
-    const { fetchImage, isLoading } = useImageManager();
+    const { fetchAvatar, isLoading } = useImageManager();
     const [imageData, setImageData] = useState([]);
 
     // console.log(image);
     // console.log(imageData);
 
     useEffect(() => {
-        const fetchImagesData = async () => {
+        const handleFetch = async () => {
             try {
-                const res = await fetchImage(image.replace("images/", ""));
-                // console.log(res);
+                const res = await fetchAvatar("default/1.png");
                 setImageData(res);
-            } catch (error) {
-                console.error("Error fetching images:", error.message);
-            }
+            } catch (err) {}
         };
-
-        fetchImagesData();
+        handleFetch();
     }, []);
 
     return (

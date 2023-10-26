@@ -7,10 +7,10 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import moment from "moment";
 import { FiChevronLeft } from "react-icons/fi";
-import SwipeableCard from "../../components/SwipeableCard/SwipeableCard";
-import BorderlessButton from "../../components/Button/BorderlessButton";
+import SwipeableCard from "../../../components/SwipeableCard/SwipeableCard";
+import BorderlessButton from "../../../components/Button/BorderlessButton";
 import RentedUnitRating from "./RentedUnitRating";
-import TextField from "../../components/TextField/TextField";
+import TextField from "../../../components/TextField/TextField";
 
 const RentedUnit = () => {
     const [rentals, setRentals] = useState([]);

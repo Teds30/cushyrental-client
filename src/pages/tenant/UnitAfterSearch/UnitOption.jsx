@@ -5,11 +5,13 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 
-const UnitOption = () => {
-    const [value, setValue] = useState("popularity");
+const UnitOption = ({ onSortChange, sortOption  }) => {
+    const [value, setValue] = useState(sortOption);
 
     const handleChange = (event) => {
-        setValue(event.target.value);
+        const selectedValue = event.target.value;
+        setValue(selectedValue);
+        onSortChange(selectedValue);
     };
 
 
@@ -23,7 +25,7 @@ const UnitOption = () => {
                 onChange={handleChange}
             >
                 <FormControlLabel
-                    value="popularity"
+                    value="nearest"
                     control={<Radio size="small" />}
                     label="Nearest"
                 />
@@ -33,7 +35,7 @@ const UnitOption = () => {
                     label="Price High to Low"
                 />
                 <FormControlLabel
-                    value="male"
+                    value="priceLowHigh"
                     control={<Radio size="small" />}
                     label="Price Low to High"
                 />

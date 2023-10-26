@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styles from './ViewProfile.module.css'
-import useImageManager from '../../hooks/data/image-hook'
+import useImageManager from '../../../hooks/data/image-hook'
 
 const LandlordUnitImage = (props) => {
     const { image } = props

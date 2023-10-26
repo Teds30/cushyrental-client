@@ -10,17 +10,21 @@ import IconButton from "@mui/material/IconButton";
 import ListAfterSearch from "./ListAfterSearch";
 import SwipeableCard from "../../../components/SwipeableCard/SwipeableCard";
 import UnitOption from "./UnitOption";
+import UnitNoFound from "./UnitNoFound";
 
 import { FiChevronLeft } from "react-icons/fi";
 import { CgOptions } from "react-icons/cg";
-
+import MapAfterSearch from "./MapAfterSearch";
 
 const UnitAfterSearch = () => {
     const [value, setValue] = useState(0);
     const [open, setOpen] = useState();
     const [units, setUnits] = useState([]);
 
-    console.log(units);
+    const [sortOption, setSortOption] = useState("");
+    const [unitOptionVisible, setUnitOptionVisible] = useState(false);
+
+    // console.log(units);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -43,11 +47,25 @@ const UnitAfterSearch = () => {
                 setUnits(data);
             } catch (error) {
                 console.error("Error fetching units:", error);
-                // setUnits([]);
             }
         };
         fetchUnits();
     }, []);
+
+    const handlesortUnits = (sortingOption) => {
+        setSortOption(sortingOption);
+
+        if (sortingOption === "nearest") {
+            setUnits([...units].sort((a, b) => a.distance - b.distance));
+        } else if (sortingOption === "priceHighLow") {
+            setUnits([...units].sort((a, b) => b.price - a.price));
+        } else if (sortingOption === "priceLowHigh") {
+            setUnits([...units].sort((a, b) => a.price - b.price));
+        }
+        
+        setOpen(false);
+        setUnitOptionVisible(!unitOptionVisible);
+    };
 
     return (
         <div className={`${styles["main-container"]} `}>
@@ -86,14 +104,16 @@ const UnitAfterSearch = () => {
                         </Link>
                         <Box sx={{ flexGrow: 1, alignItems: "center" }}>
                             <p className="title">Boarding Houses</p>
-                            <p>Rizal St., Legazpi City 500m radius</p>
+                            <p className="smaller-text">Rizal St., Legazpi City (500km radius)</p>
                         </Box>
+                        {value === 0 && units.length > 0 && ( 
                         <button
                             className={`${styles["option-button"]} `}
                             onClick={toggleDrawer(true)}
                         >
                             <CgOptions />
                         </button>
+                    )}
                     </Toolbar>
 
                     <Box
@@ -137,25 +157,19 @@ const UnitAfterSearch = () => {
                 </AppBar>
             </Box>
 
-            <TabPanel value={value} index={0}>
-                <ListAfterSearch units={units} />
-                {/* {!tenantsData ? (
-                    <p>No Tenants available</p>
+            {value === 0 ? (
+                units.length === 0 ? (
+                    <UnitNoFound />
                 ) : (
-                    <ManageTenants
-                        tenants={tenantsData}
-                        setTenants={setTenantsData}
-                        onRefresh={fetchTenantsData}
-                    />
-                )} */}
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-                {/* {!inquiriesData ? (
-                    <p>No Pending Inquiries available</p>
-                ) : (
-                    <ManagePendingInquiries pendingInquiries={inquiriesData} />
-                )} */}
-            </TabPanel>
+                    <TabPanel value={value} index={0}>
+                        <ListAfterSearch units={units} />
+                    </TabPanel>
+                )
+            ) : (
+                <TabPanel value={value} index={1}>
+                    <MapAfterSearch />
+                </TabPanel>
+            )}
             <SwipeableCard
                 open={open}
                 onOpen={toggleDrawer}
@@ -170,7 +184,10 @@ const UnitAfterSearch = () => {
                             </div>
                         </div>
                         <div className={`${styles["swipe-content-container"]}`}>
-                            <UnitOption />
+                            <UnitOption
+                                onSortChange={handlesortUnits}
+                                sortOption={sortOption}
+                            />
                         </div>
                     </div>
                 </div>

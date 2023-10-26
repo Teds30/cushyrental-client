@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styles from "./UnitDetails.module.css";
 import moment from "moment";
-import SwipeableCard from "../../components/SwipeableCard/SwipeableCard";
-import BorderedButton from "../../components/Button/BorderedButton";
-import useAuth from "../../hooks/data/auth-hook";
+import SwipeableCard from "../../../components/SwipeableCard/SwipeableCard";
+import BorderedButton from "../../../components/Button/BorderedButton";
+import useAuth from "../../../hooks/data/auth-hook";
 import UnitReply from "./UnitReply";
 
 const UnitDetails = () => {

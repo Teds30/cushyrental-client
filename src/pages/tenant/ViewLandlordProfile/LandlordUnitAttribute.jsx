@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
-import useImageManager from '../../hooks/data/image-hook'
+import useImageManager from '../../../hooks/data/image-hook'
 
 const LandlordUnitAttribute = (props) => {
     const { amenity } = props

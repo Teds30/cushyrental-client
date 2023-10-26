@@ -12,11 +12,15 @@ import { BiSolidBadgeCheck } from "react-icons/bi";
 import LandlordProfileImage from "./LandlordProfileImage";
 import LandlordUnit from "./LandlordUnit";
 
+
+
 const ViewProfile = () => {
     const [user, setUser] = useState(null);
     const [units, setUnits] = useState([]);
     const [isPriceAscending, setIsPriceAscending] = useState(false);
     const [isReviewAscending, setIsReviewAscending] = useState(false);
+
+
 
     useEffect(() => {
         const fetchUsers = async () => {
