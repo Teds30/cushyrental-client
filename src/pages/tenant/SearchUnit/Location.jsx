@@ -45,10 +45,34 @@ const radiusList = [
     },
 ]
 
-const Location = () => {
-    const [searchType, setSearchType] = useState(1)
-    const [radius, setRadius] = useState(3)
+const Location = (props) => {
+    const {
+        mapref,
+        setMapRef,
+        radius,
+        setRadius,
+        searchType,
+        setSearchType,
+        coordinates,
+        setCoordinates,
+        location,
+        setLocation,
+        universities,
+    } = props
     const [locationZone, setLocationZone] = useState()
+
+    const [isMapOpen, setIsMapOpen] = useState(false)
+
+    // searchType === 2
+    //     ? universities[0]
+    //     : {
+    //           lat: 13.143966,
+    //           lng: 123.725869,
+    //       }
+
+    const handleChangeLocation = (event) => {
+        setLocation(event.target.value)
+    }
 
     const locationHandler = (value) => {
         setSearchType(value[0])
@@ -60,6 +84,11 @@ const Location = () => {
 
     const mapHandler = () => {
         // code here...
+        if (isMapOpen) {
+            setIsMapOpen(false)
+        } else {
+            setIsMapOpen(true)
+        }
     }
 
     const locationZoneHandler = (value) => {
@@ -69,104 +98,140 @@ const Location = () => {
     const cardStyle = {
         display: 'flex',
         flexDirection: 'columns',
-        gap: '13px',
+        gap: '12px',
     }
+
+    const mapOpenStyles = isMapOpen
+        ? { paddingInline: '0px' }
+        : { paddingInline: '12px' }
+
+    const mapCardOpenStyles = isMapOpen
+        ? { ...cardStyle, padding: '0px' }
+        : { ...cardStyle }
 
     return (
         <div className={`${styles['location-main']}`}>
-            <CardPlain style={cardStyle}>
-                <p className="title" style={{ fontSize: '16px' }}>
-                    Search
-                </p>
-                <LocationDropdown searchType={searchType} />
+            <div
+                className={styles['card-container']}
+                style={{ paddingInline: '12px' }}
+            >
+                <CardPlain style={{ ...cardStyle }}>
+                    <p className="title" style={{ fontSize: '16px' }}>
+                        Search
+                    </p>
+                    {searchType === 2 && (
+                        <LocationDropdown
+                            searchType={searchType}
+                            universities={universities}
+                            location={location}
+                            onChangeLocation={handleChangeLocation}
+                        />
+                    )}
 
-                <div className={`${styles['location-button']}`}>
-                    <ChipOutlined
-                        items={locations}
-                        button="radio"
-                        selected={[searchType]}
-                        onChipValue={locationHandler}
-                    />
-                </div>
-            </CardPlain>
+                    <div className={`${styles['location-button']}`}>
+                        <ChipOutlined
+                            items={locations}
+                            button="radio"
+                            selected={[searchType]}
+                            onChipValue={locationHandler}
+                        />
+                    </div>
+                </CardPlain>
+            </div>
 
-            <CardPlain style={cardStyle}>
-                <p className="title" style={{ fontSize: '16px' }}>
-                    Radius
-                </p>
+            <div
+                className={styles['card-container']}
+                style={{ paddingInline: '12px' }}
+            >
+                <CardPlain style={{ ...cardStyle }}>
+                    <p className="title" style={{ fontSize: '16px' }}>
+                        Radius
+                    </p>
 
-                <div className={`${styles['hr']}`}></div>
+                    <div className={`${styles['hr']}`}></div>
 
-                <div className={`${styles['location-button']}`}>
-                    <RadiusChip
-                        items={radiusList}
-                        button="radio"
-                        selected={[radius]}
-                        onChipValue={radiusHandler}
-                    />
-                </div>
-            </CardPlain>
-
-            <CardPlain style={cardStyle}>
-                <Accordion
-                    sx={{
-                        border: 'none',
-                        outline: 'none',
-                        background: 'rgba(255, 255, 255, 0.80)',
-                        boxShadow: 'none',
-                        padding: '0',
-                    }}
+                    <div className={`${styles['location-button']}`}>
+                        <RadiusChip
+                            items={radiusList}
+                            button="radio"
+                            selected={[radius]}
+                            onChipValue={radiusHandler}
+                        />
+                    </div>
+                </CardPlain>
+            </div>
+            <div className={styles['card-container']} style={mapOpenStyles}>
+                <CardPlain
+                    style={{ ...mapCardOpenStyles, paddingInline: '0px' }}
                 >
-                    <AccordionSummary
-                        // expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header"
+                    <Accordion
                         sx={{
+                            border: 'none',
+                            outline: 'none',
+                            background: 'rgba(255, 255, 255, 0.80)',
+                            boxShadow: 'none',
                             padding: '0',
-                            '& MuiAccordionSummary-content': {
-                                margin: '0',
-                            },
                         }}
-                        onClick={mapHandler}
                     >
-                        <div className={`${styles['map-title']}`}>
-                            <BsMap />
-                            <p className="title"> Map</p>
-                        </div>
-                    </AccordionSummary>
-                    <AccordionDetails sx={{ padding: '0' }}>
-                        <div className={`${styles['location-map']}`}>
+                        <AccordionSummary
+                            // expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                            sx={{
+                                padding: '0',
+                                '& MuiAccordionSummary-content': {
+                                    padding: '0',
+                                    margin: '0',
+                                },
+                            }}
+                            onClick={mapHandler}
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                textAlign: 'start',
+                                alignItems: 'flex-start',
+                                paddingInline: '12px',
+                            }}
+                        >
+                            <p
+                                className="title"
+                                style={{
+                                    fontSize: '16px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
+                                }}
+                            >
+                                <BsMap />
+                                <span>Map</span>
+                            </p>
+
                             <div className={`${styles['hr']}`}></div>
-                            <div className={`${styles['location-zone']}`}>
-                                {/* <ChipOutlined
-                                    items={[
-                                        {
-                                            id: 1,
-                                            name: 'Show Location Zone',
-                                            icon: 'location.svg',
-                                        },
-                                    ]}
-                                    // button="radio"
-                                    // selected={[searchType]}
-                                    onChipValue={locationZoneHandler}
-                                /> */}
-                                <Tooltip title="Information here...">
-                                    <IconButton>
-                                        <IoIosInformationCircleOutline
-                                            style={{ fill: '--fc-body-light' }}
-                                        />
-                                    </IconButton>
-                                </Tooltip>
+                            {/* <div
+                                className={`${styles['map-title']}`}
+                                style={{ paddingInline: '12px' }}
+                            >
+                                <BsMap />
+                                <p className="title"> Map</p>
+                            </div> */}
+                        </AccordionSummary>
+                        <AccordionDetails sx={isMapOpen && { padding: '0' }}>
+                            <div className={`${styles['location-map']}`}>
+                                <div className={`${styles['hr']}`}></div>
+
+                                <Map
+                                    mapref={mapref}
+                                    setMapRef={setMapRef}
+                                    radius={radius}
+                                    location={location}
+                                    coordinates={coordinates}
+                                    // setCoordinates={setCoordinates}
+                                    searchType={searchType}
+                                />
                             </div>
-
-                            <Map radius={radius} />
-                        </div>
-                    </AccordionDetails>
-                </Accordion>
-            </CardPlain>
-
-            <div className={`${styles['search-button']}`}>
-                <PrimaryButton width="100%">Search</PrimaryButton>
+                        </AccordionDetails>
+                    </Accordion>
+                </CardPlain>
             </div>
         </div>
     )
