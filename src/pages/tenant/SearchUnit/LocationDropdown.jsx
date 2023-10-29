@@ -9,21 +9,9 @@ import LocationOnIcon from '@mui/icons-material/LocationOn'
 // import useVerificationManager from "../../../hooks/data/verifications-hook";
 
 export default function LocationDropdown(props) {
-    const { onIdentificationCard, searchType } = props
+    const { universities, location, onChangeLocation, searchType } = props
+
     // const { fetchIdentificationCards, isLoading } = useVerificationManager();
-
-    const [age, setAge] = React.useState(0)
-    const [location, setLocation] = useState([
-        {
-            id: 0,
-            name: 'Select ',
-        },
-    ])
-
-    const handleChange = (event) => {
-        setAge(event.target.value)
-        onIdentificationCard(event.target.value)
-    }
 
     // useEffect(() => {
     //     const handleFetch = async () => {
@@ -50,9 +38,9 @@ export default function LocationDropdown(props) {
                 <Select
                     // labelId="demo-simple-select-label"
                     // id="demo-simple-select"
-                    value={age}
+                    value={location}
                     // label="Age"
-                    onChange={handleChange}
+                    onChange={onChangeLocation}
                     sx={{
                         paddingLeft: '30px',
                         border: 'none',
@@ -60,11 +48,11 @@ export default function LocationDropdown(props) {
                     }}
                     // Use InputProps to add the icon
                 >
-                    {location.map((card) => {
+                    {universities.map((card) => {
                         return (
-                            <MenuItem key={card.id} value={card.id}>
+                            <MenuItem key={card.id} value={card}>
                                 {card.name}{' '}
-                                {searchType === 1 ? 'Location' : 'Institution'}
+                                {/* {searchType === 1 ? 'Location' : 'Institution'} */}
                             </MenuItem>
                         )
                     })}

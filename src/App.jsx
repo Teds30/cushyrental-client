@@ -84,7 +84,7 @@ function App() {
                         ) : user && user.user_type_id === 3 ? (
                             <Homepage />
                         ) : (
-                            <></>
+                            <>asd</>
                         )
                     }
                 ></Route>
@@ -189,7 +189,10 @@ function App() {
 
                 <Route path="/unitdetails" element={<UnitDetails />}></Route>
 
-                <Route path="/unitaftersearch" element={<UnitAfterSearch />}></Route>
+                <Route
+                    path="/unitaftersearch"
+                    element={<UnitAfterSearch />}
+                ></Route>
                 <Route
                     path="*"
                     element={

@@ -13,14 +13,14 @@ import LandlordProfileImage from "./LandlordProfileImage";
 import LandlordUnit from "./LandlordUnit";
 
 
-
 const ViewProfile = () => {
     const [user, setUser] = useState(null);
     const [units, setUnits] = useState([]);
     const [isPriceAscending, setIsPriceAscending] = useState(false);
     const [isReviewAscending, setIsReviewAscending] = useState(false);
 
-
+    const priceSortLabel = isPriceAscending ? "Price: Low to High" : "Price: High to Low";
+    const reviewSortLabel = isReviewAscending ? "Reviews: Low to High" : "Reviews: High to Low";
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -54,25 +54,20 @@ const ViewProfile = () => {
     const handlePriceSort = () => {
         setUnits((prevUnits) => {
             const sortedUnits = [...prevUnits].sort((unit1, unit2) => {
-                if (isPriceAscending) {
-                    return unit1.price - unit2.price;
-                } else {
-                    return unit2.price - unit1.price;
-                }
+                return isPriceAscending
+                    ? unit2.price - unit1.price
+                    : unit1.price - unit2.price;
             });
             setIsPriceAscending(!isPriceAscending);
             return sortedUnits;
         });
     };
-
     const handleReviewSort = () => {
         setUnits((prevReviews) => {
             const sortedReviews = [...prevReviews].sort((unit1, unit2) => {
-                if (isReviewAscending) {
-                    return unit1.average_ratings - unit2.average_ratings;
-                } else {
-                    return unit2.average_ratings - unit1.average_ratings;
-                }
+                return isReviewAscending
+                    ? unit2.average_ratings - unit1.average_ratings
+                    : unit1.average_ratings - unit2.average_ratings;
             });
             setIsReviewAscending(!isReviewAscending);
             return sortedReviews;
@@ -154,7 +149,7 @@ const ViewProfile = () => {
                                     marginTop: "-2px",
                                 }}
                             />
-                            {/* <p className="caption">{user.total_ratings.toFixed(2)}/5.0</p> */}
+                            <p className="caption">{user.total_ratings.toFixed(2)}/5.0</p>
                         </div>
                     </div>
                 </div>
@@ -182,7 +177,7 @@ const ViewProfile = () => {
                                     }}
                                 />
                             )}
-                            <p className="caption">Price</p>
+                            <p className="caption">{priceSortLabel}</p>
                         </button>
                     </div>
                     <div>
@@ -205,7 +200,7 @@ const ViewProfile = () => {
                                     }}
                                 />
                             )}
-                            <p className="caption"> Reviews</p>
+                            <p className="caption"> {reviewSortLabel}</p>
                         </button>
                     </div>
                 </div>

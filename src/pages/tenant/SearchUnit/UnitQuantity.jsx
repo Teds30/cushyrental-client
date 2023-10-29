@@ -8,8 +8,8 @@ import Quantity from "../../../components/Quantity/Quantity";
 import styles from "./SearchUnit.module.css";
 
 const UnitQuantity = (props) => {
-    const { onQuantity } = props;
-    const [unitQuantity, setUnitQuantity] = useState(1);
+    const { onQuantity, quantityValue } = props;
+    const [unitQuantity, setUnitQuantity] = useState(quantityValue ?? 1);
 
     const quantityHandler = (value) => {
         setUnitQuantity(value.value);
