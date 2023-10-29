@@ -113,7 +113,7 @@ const Profile = () => {
                                         />
                                     )}
                                 </div>
-                                {userCtx.user.user_type_id === 2 ? (
+                                {userCtx.user.user_type_id === 3 ? (
                                     <p>Tenant</p>
                                 ) : (
                                     <p>Landlord</p>
