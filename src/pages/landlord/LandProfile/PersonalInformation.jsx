@@ -76,11 +76,11 @@ const PersonalInformation = (props) => {
     const submitHandler = (event) => {
         event.preventDefault();
 
-        setIsSaving(true);
-
         if (!formIsValid) {
             return;
         }
+
+        setIsSaving(true);
 
         const data = {
             address: `${enteredHouseNumber}, ${enteredStreet}, ${enteredBarangay}, ${enteredMunicipality}, ${enteredProvince}`,

@@ -41,6 +41,7 @@ import useAuth from './hooks/data/auth-hook'
 import Notifications from './pages/notifications/Notifications'
 import UnitAfterSearch from './pages/tenant/UnitAfterSearch/UnitAfterSearch'
 import SearchUnit from './pages/tenant/SearchUnit/SearchUnit'
+import Favorites from './pages/tenant/Favorites/Favorites'
 // import Homepage from './pages/tenant/Homepage/Homepage'
 
 function App() {
@@ -193,6 +194,7 @@ function App() {
                     path="/unitaftersearch"
                     element={<UnitAfterSearch />}
                 ></Route>
+                <Route path="/favorites" element={<Favorites />}></Route>
                 <Route
                     path="*"
                     element={

@@ -8,6 +8,8 @@ import {
 } from "../../../../components/Tabs/Tabs";
 import FloatingActionButton from "../../../../components/Button/FloatingActionButton";
 import Units from "./Units";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
 
 import styles from "./ManageUnit.module.css";
 import { MdAdd } from "react-icons/md";
@@ -15,19 +17,35 @@ import { MdAdd } from "react-icons/md";
 const ManageUnitTabs = (props) => {
     const { userUnits = [] } = props;
 
+    console.log(userUnits);
+
     const [value, setValue] = useState(0);
     const [userUnitPending, setUserUnitPending] = useState(
-        userUnits.filter((unit) => unit.request_status === 0 && unit.is_listed === 1)
+        userUnits.filter(
+            (unit) => unit.request_status === 0 && unit.is_listed === 0
+        )
     );
 
     const [userUnitListed, setUserUnitListed] = useState(
-        userUnits.filter((unit) => unit.is_listed === 1 && unit.request_status !== 2 && unit.request_status !== 0)
+        userUnits.filter(
+            (unit) =>
+                unit.is_listed === 1 &&
+                unit.request_status !== 2 &&
+                unit.request_status !== 0
+        )
     );
     const [userUnitUnlisted, setUserUnitUnlisted] = useState(
-        userUnits.filter((unit) => unit.is_listed === 0 && unit.request_status !== 2 && unit.request_status !== 0)
+        userUnits.filter(
+            (unit) =>
+                unit.is_listed === 0 &&
+                unit.request_status !== 2 &&
+                unit.request_status !== 0
+        )
     );
     const [userUnitRejected, setUserUnitRejected] = useState(
-        userUnits.filter((unit) => {return unit.request_status === 2 && 3})
+        userUnits.filter((unit) => {
+            return unit.request_status === 2 && 3;
+        })
     );
 
     const handleChange = (event, newValue) => {
@@ -118,7 +136,7 @@ const ManageUnitTabs = (props) => {
                 {userUnits.length === 0 ? (
                     <p style={{ textAlign: "center" }}>No units posted</p>
                 ) : (
-                    <Units userUnits={userUnits}/>
+                    <Units userUnits={userUnits} />
                 )}
             </TabPanel>
             <TabPanel value={value} index={1}>
@@ -149,11 +167,16 @@ const ManageUnitTabs = (props) => {
                     <Units userUnits={userUnitRejected} />
                 )}
             </TabPanel>
-            <Link to="/manage_unit/create_unit">
-                <FloatingActionButton size="large" variant="circular">
-                    <MdAdd fontSize={"24px"} style={{ fill: "#fff" }} />
-                </FloatingActionButton>
-            </Link>
+            <div className={`${styles["create-unit-button"]}`}>
+                <Link to="/manage_unit/create_unit" style={{display: 'flex', justifyContent: 'end'}}>
+                    <Fab
+                        style={{ background: "var(--accent)" }}
+                        aria-label="add"
+                    >
+                        <AddIcon sx={{ color: "white" }} />
+                    </Fab>
+                </Link>
+            </div>
         </Fragment>
     );
 };

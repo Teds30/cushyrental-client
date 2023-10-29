@@ -1,5 +1,10 @@
-.swiper-pagination-bullet-active {
-  background-color: var(--accent);
+.similar-unit-swiper .swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background: var(--accent);
+  width: 8px;
+}
+
+.similar-unit-swiper .swiper-pagination-bullet {
+  background: #5C6173;
 }
 
 .similar-unit-swiper {
@@ -29,15 +34,18 @@
 }
 
 .similar-unit-swiper .swiper-pagination-bullets.swiper-pagination-horizontal {
+  border: 1px solid red;
   position: relative;
-  top: 8px;
+  top: 2px;
+  /* width: 100%; */
+  box-sizing: border-box;
 }
 
 .similar-unit-swiper .similar-unit-swiper-slide {
   background-position: center;
   background-size: cover;
   /* width: 170px; */
-  width: 260px;
+  width: 200px;
   /* height: 300px; */
 }
 

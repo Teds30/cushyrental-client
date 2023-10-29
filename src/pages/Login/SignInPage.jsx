@@ -140,7 +140,7 @@ const SignInPage = () => {
                     </div>
                     <div className={`${styles["remember-me"]} `}>
                         <Link
-                            to="/SignInPage/ForgotPassword"
+                            to="/signin/forgotpassword"
                             className={`${styles["forgot-password"]} `}
                         >
                             Forgot Password?

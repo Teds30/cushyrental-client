@@ -10,9 +10,12 @@ import styles from "./ManageUnit.module.css";
 import photo from "../../../../assets/cushyrental.svg";
 import { CiLocationOn } from "react-icons/ci";
 import { useEffect, useState } from "react";
+import UnitImage from "./UnitImage";
 
 const Unit = (props) => {
     const { user_unit } = props;
+
+    // console.log(user_unit);
 
     const { fetchImage, fetchImages, isLoading } = useImageManager();
     const [image, setImage] = useState(user_unit.images.filter(image => image.is_thumbnail === 1));
@@ -37,9 +40,10 @@ const Unit = (props) => {
         const formattedDate = `${year}-${month}-${day}`;
 
         if (
-            formattedDate >= subscription.date_start &&
-            formattedDate <= subscription.date_end
+            formattedDate >= subscription.date_start.split(' ')[0] &&
+            formattedDate <= subscription.date_end.split(' ')[0]
         ) {
+            // console.log("pumasok dito")
             return subscription;
         } else if (subscription.request_status === 0) {
             return subscription;
@@ -48,21 +52,7 @@ const Unit = (props) => {
 
     const requestStatus = user_unit.request_status === 0 ? user_unit.request_status : user_unit.request_status === 2 && 3;
 
-    useEffect(() => {
-        const handleFetch = async () => {
-            try {
-                const res = await fetchImages();
-                const filteredImages = image.map((image) => {
-                    return res.find((photo) => photo.id === image.id) || null;
-                });
-
-                const imagePhoto = await fetchImage(filteredImages[0].image.replace("images/", ""));
-
-                setUnitPhoto(imagePhoto);
-            } catch (err) {}
-        };
-        handleFetch();
-    }, []);
+    const imageThumbnail = user_unit.images.filter(image => image.is_thumbnail === 1).shift();
 
     return (
         <div className={`${styles["units-container"]}`}>
@@ -76,12 +66,13 @@ const Unit = (props) => {
                 }}
             >
                 <div className={`${styles["unit-col"]}`}>
-                    <div className={`${styles["unit-images"]}`}>
+                    <UnitImage imageThumbnail={imageThumbnail}/>
+                    {/* <div className={`${styles["unit-images"]}`}>
                         <img
                             src={unitPhoto === '' ? photo : unitPhoto}
                             alt={user_unit.name}
                         />
-                    </div>
+                    </div> */}
 
                     <div className={`${styles["col-data"]}`}>
                         <div>
@@ -150,7 +141,7 @@ const Unit = (props) => {
                         subscriptions[0].request_status === 1 && (
                             <div className={`${styles["unit-button"]}`}>
                                 <Link
-                                    to={`/manage_unit/edit/${user_unit.landlord_id}`}
+                                    to={`/manage_unit/edit/${user_unit.id}`}
                                     style={{ width: "100%" }}
                                 >
                                     <PrimaryButton width="100%">
