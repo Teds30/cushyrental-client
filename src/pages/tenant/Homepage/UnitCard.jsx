@@ -7,12 +7,14 @@ import useImageManager from '../../../hooks/data/image-hook'
 const UnitCard = (props) => {
     const { unit } = props
 
+    console.log(unit.unit.images[0].image.image)
+
     const { fetchImage } = useImageManager()
     const [image, setImage] = useState()
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetchImage(unit.unit.images[0].image.image)
+            const res = await fetchImage(unit.unit.images[0].image.image.replace("images/", ""))
             setImage(res)
         }
 
