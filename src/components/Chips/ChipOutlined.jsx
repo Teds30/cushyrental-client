@@ -24,11 +24,16 @@ const ChipOutlined = (props) => {
         const fetchIcons = async () => {
             const iconPromises = originalItems.map(async (item) => {
                 try {
-                    const res = await fetchIcon(item.icon)
-                    return {
-                        ...item,
-                        icon: res,
+                    if (!item.fixedIcon) {
+                        const res = await fetchIcon(item.icon)
+
+                        return {
+                            ...item,
+                            icon: res,
+                        }
                     }
+
+                    return { ...item }
                 } catch (error) {
                     console.log(error)
                     return null
@@ -63,21 +68,26 @@ const ChipOutlined = (props) => {
                 key={item.id}
                 variant="outlined"
                 icon={
-                    <div
-                        dangerouslySetInnerHTML={{
-                            __html: item.icon,
-                        }}
-                    />
+                    item.fixedIcon ? (
+                        item.fixedIcon
+                    ) : (
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: item.icon,
+                            }}
+                        />
+                    )
                 }
                 label={item.name}
                 sx={{
+                    fontFamily: 'inherit',
                     padding: '8px 18px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '10px',
-                    fontWeight: '500',
-                    fontSize: '16px',
+                    fontWeight: '400',
+                    fontSize: '14px',
                     background: chips.includes(item.id)
                         ? 'rgba(3, 176, 119, 0.08)'
                         : 'inherit',
@@ -91,8 +101,8 @@ const ChipOutlined = (props) => {
                         fill: chips.includes(item.id)
                             ? 'var(--accent)'
                             : '#8A93A6',
-                        height: '16px',
-                        width: '16px',
+                        height: '14px',
+                        width: '14px',
                     },
                     '& span': {
                         padding: '0',

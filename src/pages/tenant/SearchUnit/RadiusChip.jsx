@@ -52,7 +52,7 @@ const RadiusChip = (props) => {
                     justifyContent: 'center',
                     gap: '10px',
                     fontWeight: '500',
-                    fontSize: '16px',
+                    fontSize: '14px',
                     background: chips.includes(item.id)
                         ? 'rgba(3, 176, 119, 0.08)'
                         : 'inherit',
@@ -66,8 +66,8 @@ const RadiusChip = (props) => {
                         fill: chips.includes(item.id)
                             ? 'var(--accent)'
                             : '#8A93A6',
-                        height: '16px',
-                        width: '16px',
+                        height: '14px',
+                        width: '14px',
                     },
                     '& span': {
                         padding: '0',
