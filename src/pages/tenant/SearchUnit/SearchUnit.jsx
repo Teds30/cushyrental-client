@@ -13,6 +13,7 @@ import styles from './SearchUnit.module.css'
 import CancelIcon from '@mui/icons-material/Cancel'
 import Filter from './Filter'
 import PrimaryButton from '../../../components/Button/PrimaryButton'
+import { useNavigate } from 'react-router-dom'
 
 const universities = [
     {
@@ -45,6 +46,7 @@ const universities = [
 ]
 
 const SearchUnit = () => {
+    const navigate = useNavigate()
     const { fetchAttributes, isLoading } = useAttributeManager()
     const { searchUnits } = useUnitManager()
     const [value, setValue] = useState(0)
@@ -107,18 +109,20 @@ const SearchUnit = () => {
                         : '.5',
                 filters: filters,
             })
-
-            console.log(res)
+            console.log(res.units)
+            navigate('/unitaftersearch', {
+                state: {
+                    location: {
+                        lat: mapref.getCenter().lat(),
+                        lng: mapref.getCenter().lng(),
+                    },
+                    radius: radius,
+                    units: res.units,
+                },
+            })
         }
 
         sendSearch()
-        if (mapref) {
-            console.log({
-                location: coordinates,
-                radius: radius,
-                filters: filters,
-            })
-        }
     }
 
     const handleChange = (event, newValue) => {
@@ -127,6 +131,7 @@ const SearchUnit = () => {
 
     const closeSearchHandler = () => {
         // code here...
+        navigate('/')
     }
 
     useEffect(() => {
@@ -142,8 +147,9 @@ const SearchUnit = () => {
 
     const style = {
         textTransform: 'none',
-        fontWeight: '700',
-        fontSize: '16px',
+        fontWeight: '600',
+        fontSize: '14px',
+        letterSpacing: '0',
     }
 
     return (
