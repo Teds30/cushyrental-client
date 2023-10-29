@@ -15,12 +15,15 @@ import PrimaryButton from '../../../components/Button/PrimaryButton'
 import styles from './ViewUnitDetails.module.css'
 import CallIcon from '@mui/icons-material/Call'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
+
 import {
     BsBookmark,
     BsBookmarkFill,
     BsChatSquare,
     BsFillTelephoneOutboundFill,
 } from 'react-icons/bs'
+
+import { FiChevronLeft } from 'react-icons/fi'
 
 import useHttp from '../../../hooks/http-hook'
 import AuthContext from '../../../context/auth-context'
@@ -100,7 +103,6 @@ const ViewUnitDetails = () => {
             if (newRoom) {
                 navigate(`/chats/${newRoom._id}`)
             }
-
         } catch (err) {
             console.log(err)
         }
@@ -142,10 +144,11 @@ const ViewUnitDetails = () => {
                                         color="inherit"
                                         aria-label="menu"
                                     >
-                                        <ArrowBackIosIcon
+                                        <FiChevronLeft
                                             style={{
+                                                fill: 'transparent',
                                                 color: scrolling
-                                                    ? 'black'
+                                                    ? 'var(--fc-strong)'
                                                     : 'white',
                                             }}
                                         />
