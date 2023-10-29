@@ -16,17 +16,26 @@ import Map from './Map'
 import styles from './SearchUnit.module.css'
 import { IoIosInformationCircleOutline } from 'react-icons/io'
 import { BsMap } from 'react-icons/bs'
+import { TbMapPin } from 'react-icons/tb'
+import { FaUniversity } from 'react-icons/fa'
 
 const locations = [
     {
         id: 1,
         name: 'Location',
-        icon: 'male.svg',
+        fixedIcon: (
+            <TbMapPin
+                style={{
+                    fill: 'transparent',
+                    color: 'inherit',
+                }}
+            />
+        ),
     },
     {
         id: 2,
         name: 'Institution',
-        icon: 'male.svg',
+        fixedIcon: <FaUniversity />,
     },
 ]
 

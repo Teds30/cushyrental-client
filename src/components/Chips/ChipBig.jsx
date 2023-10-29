@@ -86,7 +86,7 @@ const ChipBig = (props) => {
                 padding: '8px 0',
                 width: '150px',
                 fontWeight: '500',
-                fontSize: '16px',
+                fontSize: '14px',
                 background: chips.includes(item.id) ? colorStyle : 'inherit',
                 color: chips.includes(item.id) ? 'var(--bg-layer1)' : 'inherit',
                 border: chips.includes(item.id)
