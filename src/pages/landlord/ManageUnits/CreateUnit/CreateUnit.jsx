@@ -32,7 +32,7 @@ const CreateUnit = () => {
                             }}
                         />
                     </IconButton>
-                    <span>Back</span>
+                    <span style={{color: 'var(--fc-strong)', fontSize: '16px', fontWeight: '700'}}>Back</span>
                 </Link>
             </Box>
             <div className={`${styles['container-title']}`}>
