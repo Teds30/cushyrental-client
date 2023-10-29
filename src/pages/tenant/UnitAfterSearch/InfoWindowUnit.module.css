@@ -1,0 +1,21 @@
+.info-unit-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 18px;
+}
+.info-unit-image {
+    width: 200px;
+    height: 100px;
+
+    overflow: hidden;
+    border-radius: 4px;
+
+    background-color: var(--bg-layer2);
+}
+.info-unit-image img {
+    width: 200px;
+    height: inherit;
+    object-fit: cover;
+    border-radius: 4px;
+}
