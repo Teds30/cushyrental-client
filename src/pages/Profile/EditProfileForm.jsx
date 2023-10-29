@@ -20,7 +20,7 @@ const EditProfileForm = (props) => {
     const userCtx = useContext(AuthContext);
     const navigate = useNavigate();
     const { notify } = useNotistack();
-    const { fetchLandlordVerification, isLoading } = useVerificationManager()
+    const { fetchLandlordVerification, isLoading } = useVerificationManager();
 
     const [user, setUser] = useState(userData);
     const [accountVerification, setAccountVerification] = useState([]);
@@ -30,7 +30,7 @@ const EditProfileForm = (props) => {
     const [lastName, setLastName] = useState(userData.last_name);
     const [isSaving, setISaving] = useState(false);
 
-    console.log(user.user_type_id);
+    console.log(user);
 
     const addImageChangeHandler = (event) => {
         const image = URL.createObjectURL(event.target.files[0]);
@@ -59,9 +59,10 @@ const EditProfileForm = (props) => {
 
     const genderChangeHandler = (event) => {
         const gender = event.target.value;
+        console.log(gender);
         setUser({
             ...user,
-            gender: gender === "Male" ? 0 : gender === "Fema" ? 1 : 2,
+            gender: gender === "Male" ? 0 : gender === "Female" ? 1 : 2,
         });
     };
 
@@ -136,161 +137,175 @@ const EditProfileForm = (props) => {
         const handleFetch = async () => {
             console.log(user.id);
             try {
-                const res = await fetchLandlordVerification(user.id)
-                console.log(res)
-                setAccountVerification(res)
-            } catch (err) {
-            }
-        }
-        handleFetch()
-    }, [])
+                const res = await fetchLandlordVerification(user.id);
+                console.log(res);
+                setAccountVerification(res);
+            } catch (err) {}
+        };
+        handleFetch();
+    }, []);
 
-    return !isLoading && Object.keys(accountVerification).length !== 0  && (
-        <div className={`${styles["edit-profile-main"]}`}>
-            <div className={`${styles["user-details"]}`}>
-                <div className={styles.photo}>
-                    <img
-                        src={
-                            Object.keys(newIimage).length === 0
-                                ? user.profile_picture_img
-                                : newIimage.image
-                        }
-                        alt={
-                            Object.keys(newIimage).length === 0
-                                ? user.name
-                                : newIimage.name
-                        }
-                    />
-                    <div className={`${styles["edit-profile"]}`}>
-                        <CameraAltIcon className={`${styles["camera-icon"]}`} />
+    return (
+        !isLoading &&
+        Object.keys(accountVerification).length !== 0 && (
+            <div className={`${styles["edit-profile-main"]}`}>
+                <div className={`${styles["user-details"]}`}>
+                    <div className={styles.photo}>
+                        <img
+                            src={
+                                Object.keys(newIimage).length === 0
+                                    ? user.profile_picture_img
+                                    : newIimage.image
+                            }
+                            alt={
+                                Object.keys(newIimage).length === 0
+                                    ? user.name
+                                    : newIimage.name
+                            }
+                        />
+                        <div className={`${styles["edit-profile"]}`}>
+                            <CameraAltIcon
+                                className={`${styles["camera-icon"]}`}
+                            />
+                        </div>
+                        <div className={`${styles["edit-input"]}`}>
+                            <input
+                                type="file"
+                                accept=".jpg, .jpeg, .png"
+                                onChange={addImageChangeHandler}
+                                multiple={false}
+                            />
+                        </div>
                     </div>
-                    <div className={`${styles["edit-input"]}`}>
-                        <input
-                            type="file"
-                            accept=".jpg, .jpeg, .png"
-                            onChange={addImageChangeHandler}
-                            multiple={false}
+                    <p className="title">
+                        {user.first_name}{" "}
+                        {user.middle_name !== "middle_name" && user.middle_name}{" "}
+                        {user.last_name}
+                    </p>
+                    <p className="smaller-text">
+                        {user.user_type_id === 3 ? "Tenant" : "Landlord"}
+                    </p>
+                </div>
+
+                <form
+                    onSubmit={submitHandler}
+                    className={`${styles["user-data"]}`}
+                >
+                    <div className={`${styles["user-data-col"]}`}>
+                        <TextField
+                            fullWidth
+                            label="First Name"
+                            defaultValue={firstName}
+                            onChange={firstNameChangeHandler}
+                            disabled
+                        />
+
+                        <TextField
+                            fullWidth
+                            label="Middle Name"
+                            defaultValue={middleName}
+                            onChange={middleNameChangeHandler}
+                            helperText={
+                                middleName === "" &&
+                                "Please enter your middle name."
+                            }
+                            error
+                        />
+
+                        <TextField
+                            fullWidth
+                            label="Last Name"
+                            defaultValue={lastName}
+                            onChange={lastNameChangeHandler}
+                            disabled
                         />
                     </div>
-                </div>
-                <p className="title">
-                    {user.first_name}{" "}
-                    {user.middle_name !== "middle_name" && user.middle_name}{" "}
-                    {user.last_name}
-                </p>
-                <p className="smaller-text">
-                    {user.user_type_id === 3 ? "Tenant" : "Landlord"}
-                </p>
+
+                    <div className={`${styles["user-data-col"]}`}>
+                        <TextField
+                            fullWidth
+                            label="Contact Number"
+                            defaultValue={user.phone_number}
+                            onChange={numberChangeHandler}
+                            helperText={
+                                user.phone_number === "" &&
+                                "Please enter your cellular number."
+                            }
+                            error
+                        />
+
+                        <Dropdown
+                            fullWidth
+                            label="Gender"
+                            selected={
+                                Number(user.gender) === 0
+                                    ? "Male"
+                                    : Number(user.gender) === 1
+                                    ? "Female"
+                                    : "Not to specify"
+                            }
+                            items={[
+                                { id: 0, name: "Male" },
+                                { id: 1, name: "Female" },
+                                { id: 2, name: "Not to specify" },
+                            ]}
+                            handleSelect={genderChangeHandler}
+                            // selectedValue={user.gender}
+                        />
+
+                        {user.user_type_id === 2 &&
+                            (accountVerification.data &&
+                            accountVerification.data.verdict === 1 ? (
+                                <div
+                                    // to="/profile/user_profile/verify/1"
+                                    className={`${styles["verify-account"]}`}
+                                    style={{ textDecoration: "none" }}
+                                >
+                                    <ErrorOutlineIcon />
+                                    <p>Your account is verified</p>
+                                </div>
+                            ) : accountVerification.data &&
+                              accountVerification.data.verdict === null ? (
+                                <div
+                                    // to="/profile/user_profile/verify/1"
+                                    className={`${styles["verify-account"]}`}
+                                    style={{ textDecoration: "none" }}
+                                >
+                                    <ErrorOutlineIcon />
+                                    <p>We are verifying your account.</p>
+                                </div>
+                            ) : (
+                                <Link
+                                    to="/profile/user_profile/verify/1"
+                                    className={`${styles["verify-account"]}`}
+                                    style={{ textDecoration: "none" }}
+                                >
+                                    <ErrorOutlineIcon
+                                        style={{ fill: "var(--accent-danger)" }}
+                                    />
+                                    <p
+                                        style={{
+                                            color: "var(--accent-danger)",
+                                        }}
+                                    >
+                                        Verify your account
+                                    </p>
+                                </Link>
+                            ))}
+                    </div>
+
+                    <div className={`${styles["edit-profile-button"]}`}>
+                        <PrimaryButton
+                            width="100%"
+                            isLoading={isSaving}
+                            loadingText="Saving"
+                        >
+                            Save
+                        </PrimaryButton>
+                    </div>
+                </form>
             </div>
-
-            <form onSubmit={submitHandler} className={`${styles["user-data"]}`}>
-                <div className={`${styles["user-data-col"]}`}>
-                    <TextField
-                        fullWidth
-                        label="First Name"
-                        defaultValue={firstName}
-                        onChange={firstNameChangeHandler}
-                        disabled
-                    />
-
-                    <TextField
-                        fullWidth
-                        label="Middle Name"
-                        defaultValue={middleName}
-                        onChange={middleNameChangeHandler}
-                        helperText={
-                            middleName === "" &&
-                            "Please enter your middle name."
-                        }
-                        error
-                    />
-
-                    <TextField
-                        fullWidth
-                        label="Last Name"
-                        defaultValue={lastName}
-                        onChange={lastNameChangeHandler}
-                        disabled
-                    />
-                </div>
-
-                <div className={`${styles["user-data-col"]}`}>
-                    <TextField
-                        fullWidth
-                        label="Contact Number"
-                        defaultValue={user.phone_number}
-                        onChange={numberChangeHandler}
-                        helperText={
-                            user.phone_number === "" &&
-                            "Please enter your cellular number."
-                        }
-                        error
-                    />
-
-                    <Dropdown
-                        fullWidth
-                        label="Gender"
-                        selected={
-                            user.gender === 0
-                                ? "Male"
-                                : user.gender === 1
-                                ? "Female"
-                                : "Not to specify"
-                        }
-                        items={[
-                            { id: 0, name: "Male" },
-                            { id: 1, name: "Female" },
-                            { id: 2, name: "Not to specify" },
-                        ]}
-                        handleSelect={genderChangeHandler}
-                        // selectedValue={user.gender}
-                    />
-
-                    { user.user_type_id === 2 && (accountVerification.data && accountVerification.data.verdict === 1 ? (
-                        <div
-                            // to="/profile/user_profile/verify/1"
-                            className={`${styles["verify-account"]}`}
-                            style={{ textDecoration: "none" }}
-                        >
-                            <ErrorOutlineIcon />
-                            <p>Your account is verified</p>
-                        </div>
-                    ) : accountVerification.data && accountVerification.data.verdict === null ? (
-                        <div
-                            // to="/profile/user_profile/verify/1"
-                            className={`${styles["verify-account"]}`}
-                            style={{ textDecoration: "none" }}
-                        >
-                            <ErrorOutlineIcon />
-                            <p>We are verifying your account.</p>
-                        </div>
-                    ) : (
-                        <Link
-                            to="/profile/user_profile/verify/1"
-                            className={`${styles["verify-account"]}`}
-                            style={{ textDecoration: "none" }}
-                        >
-                            <ErrorOutlineIcon
-                                style={{ fill: "var(--accent-danger)" }}
-                            />
-                            <p style={{ color: "var(--accent-danger)" }}>
-                                Verify your account
-                            </p>
-                        </Link>
-                    )) }
-                </div>
-
-                <div className={`${styles["edit-profile-button"]}`}>
-                    <PrimaryButton
-                        width="100%"
-                        isLoading={isSaving}
-                        loadingText="Saving"
-                    >
-                        Save
-                    </PrimaryButton>
-                </div>
-            </form>
-        </div>
+        )
     );
 };
 
