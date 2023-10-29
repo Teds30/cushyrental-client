@@ -23,6 +23,7 @@ const CreateAccount = () => {
 
     const userTypeHandler = useCallback(
         (userType) => {
+            console.log(userType);
             setUserType(userType)
         },
         [setUserType]
