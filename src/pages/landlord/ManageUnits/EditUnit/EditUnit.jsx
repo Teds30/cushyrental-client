@@ -103,7 +103,7 @@ const EditUnit = (props) => {
         try {
             const res = await updateUnit(id, filteredData);
             notify("Update successfully!", "success");
-            navigate("/manage_unit/" + res.id);
+            navigate("/manage_unit");
         } catch (error) {}
     };
 
@@ -260,7 +260,6 @@ const EditUnit = (props) => {
                                 maxValue={5}
                                 setQuantityvalue={unit.month_advance}
                                 onQuantity={quantityPaymentHandler}
-                                styled
                             />
                         </div>
                     </CardShadow>
@@ -320,7 +319,6 @@ const EditUnit = (props) => {
                                 maxValue={100}
                                 setQuantityvalue={unit.slots}
                                 onQuantity={quantitySlotsHandler}
-                                styled
                             />
                         </div>
                     </div>
