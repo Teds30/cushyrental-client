@@ -20,10 +20,10 @@ const EditProfileForm = (props) => {
     const userCtx = useContext(AuthContext);
     const navigate = useNavigate();
     const { notify } = useNotistack();
-    // const { fetchLandlordVerification, isLoading } = useVerificationManager()
+    const { fetchLandlordVerification, isLoading } = useVerificationManager()
 
     const [user, setUser] = useState(userData);
-    const [accountVerification, setAccountVerification] = useState({});
+    const [accountVerification, setAccountVerification] = useState([]);
     const [newIimage, setNewImage] = useState({});
     const [firstName, setFirstName] = useState(userData.first_name);
     const [middleName, setMiddleName] = useState(userData.middle_name);
@@ -70,7 +70,7 @@ const EditProfileForm = (props) => {
 
         formData.append("image", newIimage.file);
         formData.append("name", newIimage.name);
-        formData.append("path", "images");
+        formData.append("path", "profile_pictures");
 
         try {
             const res = await fetch(
@@ -92,7 +92,7 @@ const EditProfileForm = (props) => {
             };
 
             const resUpdate = await updateUser(userUpdate, user.id);
-            userCtx.onLogin(resUpdate, userCtx.token);
+            userCtx.onLogin({ user: resUpdate, token: userCtx.token });
             navigate("/profile");
             notify("User update successfully!", "success");
         } catch (err) {}
@@ -125,26 +125,27 @@ const EditProfileForm = (props) => {
                 };
 
                 const resUpdate = await updateUser(userUpdate, user.id);
-                console.log(resUpdate);
                 userCtx.onLogin({ user: resUpdate, token: userCtx.token });
-                // navigate("/profile");
-                // notify("User update successfully!", "success");
+                navigate("/profile");
+                notify("User update successfully!", "success");
             } catch (err) {}
         }
     };
 
-    // useEffect(() => {
-    //     const handleFetch = async () => {
-    //         try {
-    //             const res = await fetchLandlordVerification(user.id)
-    //             console.log(res)
-    //             setAccountVerification(res)
-    //         } catch (err) {}
-    //     }
-    //     handleFetch()
-    // }, [])
+    useEffect(() => {
+        const handleFetch = async () => {
+            console.log(user.id);
+            try {
+                const res = await fetchLandlordVerification(user.id)
+                console.log(res)
+                setAccountVerification(res)
+            } catch (err) {
+            }
+        }
+        handleFetch()
+    }, [])
 
-    return (
+    return !isLoading && Object.keys(accountVerification).length !== 0  && (
         <div className={`${styles["edit-profile-main"]}`}>
             <div className={`${styles["user-details"]}`}>
                 <div className={styles.photo}>
@@ -178,7 +179,7 @@ const EditProfileForm = (props) => {
                     {user.last_name}
                 </p>
                 <p className="smaller-text">
-                    {user.user_type_id === 1 ? "Tenant" : "Landlord"}
+                    {user.user_type_id === 3 ? "Tenant" : "Landlord"}
                 </p>
             </div>
 
@@ -245,7 +246,7 @@ const EditProfileForm = (props) => {
                         // selectedValue={user.gender}
                     />
 
-                    { user.user_type_id === 2 && (user.is_verfified === 1 ? (
+                    { user.user_type_id === 2 && (accountVerification.data && accountVerification.data.verdict === 1 ? (
                         <div
                             // to="/profile/user_profile/verify/1"
                             className={`${styles["verify-account"]}`}
@@ -254,7 +255,7 @@ const EditProfileForm = (props) => {
                             <ErrorOutlineIcon />
                             <p>Your account is verified</p>
                         </div>
-                    ) : user.is_verified === 2 ? (
+                    ) : accountVerification.data && accountVerification.data.verdict === null ? (
                         <div
                             // to="/profile/user_profile/verify/1"
                             className={`${styles["verify-account"]}`}

@@ -116,7 +116,7 @@ const ForgotPassword = () => {
   return (
     <form className={`${styles["main-container"]} `} onSubmit={submitHandler}>
       <div>
-        <Link to={`/SignInPage`}>
+        <Link to={`/signin`}>
           <div className={styles["back"]}>
             <FiChevronLeft size={24} /> FORGOT PASSWORD
           </div>

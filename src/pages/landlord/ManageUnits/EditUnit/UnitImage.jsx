@@ -22,7 +22,7 @@ const UnitImage = (props) => {
     const { unitImages, unitId } = props
 
     const { fetchImage } = useImageManager()
-    const [image, setImage] = useState(null) // Initialize to null
+    const [image, setImage] = useState([]) // Initialize to null
     const [currentIndex, setCurrentIndex] = useState(0)
     const swiperRef = useRef(null)
 
@@ -33,16 +33,20 @@ const UnitImage = (props) => {
     useEffect(() => {
         const handleFetch = async () => {
             try {
-                const data =
-                    unitImages.filter((image) => image.is_thumbnail === 1) ??
-                    unitImages
-                const res = await fetchImage(data[0].image)
-                // console.log('asd: ', unitImages)
+                const res = await Promise.all(unitImages.map(async (image) => {
+                    const imageBlob = await fetchImage(image.image.replace("images/", ""));
+                    return { ...image, image: imageBlob };
+                }));
+                console.log(res);
                 setImage(res)
-            } catch (err) {}
+            } catch (err) {
+                console.log(err);
+            }
         }
         handleFetch()
     }, [])
+
+    // console.log(image[0].image);
 
     return (
         <div className={`${styles['image-container']}`}>
@@ -69,8 +73,8 @@ const UnitImage = (props) => {
                     // onSwiper={(swiper) => console.log(swiper)}
                     className={styles['img-swiper']}
                 >
-                    {unitImages &&
-                        unitImages.map((img) => {
+                    {image.length !== 0 &&
+                        image.map((img) => {
                             return (
                                 <SwiperSlide key={img.id}>
                                     <ImageSlide image={img} />
@@ -78,7 +82,6 @@ const UnitImage = (props) => {
                             )
                         })}
                 </Swiper>
-                {/* <img src={image} alt={unitImages[0] && unitImages[0].name} /> */}
                 <div className={`${styles['image-chip']}`}>
                     <p>
                         {currentIndex + 1} of {unitImages.length}

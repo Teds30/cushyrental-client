@@ -39,6 +39,7 @@ const QontoConnector = styled(StepConnector)(({ theme }) => ({
         zIndex: 100,
         position: "relative",
         borderColor: "var(--accent)",
+        with: ''
     },
 }));
 

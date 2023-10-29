@@ -7,6 +7,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    background-color: var(--bg);
 }
 
 .search-nav {
@@ -19,13 +20,21 @@
     justify-content: space-between;
 }
 
-.location-main, .filter-main {
-    margin-top: 48px;
-    padding: 0 11px;
+.location-main,
+.filter-main {
+    margin-top: 64px;
 
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+
+.location-main {
+    padding: 0;
+}
+
+.filter-main {
+    padding: 0 12px;
 }
 
 .location-button {
@@ -39,7 +48,8 @@
     background-color: var(--border-color);
 }
 
-.location-map, .filter-col {
+.location-map,
+.filter-col {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -53,7 +63,7 @@
 }
 
 .search-button {
-    width: 100%;
+    padding: 12px;
 }
 
 .location-zone {

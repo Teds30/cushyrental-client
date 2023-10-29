@@ -16,7 +16,6 @@ const PrivacyAndAgreement = (props) => {
     const userCtx = useContext(AuthContext);
 
     const [selected, setSelected] = useState([]);
-    const [isSaving, setIsSaving] = useState(false);
 
     const submitHandler = async (event) => {
         event.preventDefault();
@@ -34,13 +33,12 @@ const PrivacyAndAgreement = (props) => {
 
         try {
             const res = await accountVerification(data);
-            console.log(res);
+            userCtx.onLogin({ user: res.user, token: userCtx.token });
             onNext();
         } catch (err) {
             console.log(err);
         }
 
-        
     };
 
     return (

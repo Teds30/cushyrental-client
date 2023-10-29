@@ -1,4 +1,7 @@
 import { Fragment } from "react";
+
+import styles from './ManageUnit.module.css';
+
 import Unit from "./Unit";
 
 const Units = (props) => {
@@ -7,9 +10,9 @@ const Units = (props) => {
     const content = userUnits.map(unit => <Unit key={unit.id} user_unit={unit} />)
 
     return (
-        <Fragment>
+        <div className={`${styles['units-col']}`}>
             { content }
-        </Fragment>
+        </div>
     );
 };
 

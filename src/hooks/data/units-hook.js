@@ -155,9 +155,7 @@ const useUnitManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `${
-                        import.meta.env.VITE_BACKEND_LOCALHOST
-                    }/api/units`,
+                    url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/units`,
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {
@@ -173,6 +171,27 @@ const useUnitManager = () => {
         [sendRequest]
     )
 
+    const searchUnits = useCallback(
+        async (body) => {
+            let responseData
+            try {
+                responseData = await sendRequest({
+                    url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/search`,
+                    method: 'POST',
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+            } catch (err) {
+                throw err.message
+            }
+
+            return responseData
+        },
+        [sendRequest]
+    )
+
     return {
         isLoading,
         fetchUnits,
@@ -182,7 +201,8 @@ const useUnitManager = () => {
         fetchUnitInclusions,
         fetchUnitRules,
         updateUnit,
-        createUnit
+        createUnit,
+        searchUnits,
     }
 }
 

@@ -196,6 +196,12 @@
     text-indent: 4%;
 }
 
+.link-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 @media (min-width: 640px) {
     .container {
         max-width: 768px;
