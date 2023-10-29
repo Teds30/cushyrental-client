@@ -52,11 +52,6 @@ function App() {
 
     let routes
 
-    useEffect(() => {
-        console.log('login? ', isLoggedIn)
-        console.log('hello: ', user)
-    }, [isLoggedIn, user])
-
     if (!storedData) {
         routes = (
             <Routes>
