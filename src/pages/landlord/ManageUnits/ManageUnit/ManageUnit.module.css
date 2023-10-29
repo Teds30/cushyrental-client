@@ -1,3 +1,8 @@
+.manage-unit-container {
+    position: relative;
+    height: 100vh;
+}
+
 .manage-unit-container .manage-unit-title {
     flex: 1;
     text-align: center;
@@ -12,11 +17,18 @@
     position: absolute;
 }
 
+.units-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
 .main-container {
     display: flex;
     flex-direction: column;
     gap: 12px;
     background: var(--bg-layer2);
+    height: 100vh;
 }
 
 .tab-child {
@@ -107,9 +119,22 @@
     gap: 10px;
 }
 
+.create-unit-button {
+    margin: 0 auto;
+    position: fixed;
+    bottom: 50px;
+    width: 100%;
+    padding: 17px;
+    box-sizing: border-box;
+}
+
 @media (min-width: 640px) {
     .manage-unit-container {
         max-width: 768px;
         margin: 0 auto;
+    }
+
+    .create-unit-button {
+        width:  768px;
     }
 }
