@@ -8,7 +8,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Skeleton from '@mui/material/Skeleton'
 
-const drawerBleeding = 32
+let drawerBleeding = 32
 const StyledBox = styled(Box)(({ theme }) => ({
     backgroundColor: 'var(--bg-layer1)',
 }))
@@ -18,8 +18,8 @@ const Puller = styled(Box)(({ theme }) => ({
     height: 6,
     backgroundColor: 'var(--bg-layer4)',
     borderRadius: 3,
-    position: 'absolute',
-    top: 8,
+    // position: 'absolute',
+    // top: 8,
     left: 'calc(50% - 15px)',
 }))
 const iOS =
@@ -27,7 +27,16 @@ const iOS =
     /iPad|iPhone|iPod/.test(navigator.userAgent)
 
 const SwipeableCard = (props) => {
-    const { open, onOpen, closeDrawer, children, fullWidth = false } = props
+    const {
+        open,
+        onOpen,
+        closeDrawer,
+        children,
+        fullWidth = false,
+        title = '',
+    } = props
+
+    drawerBleeding = title ? 48 : 32
 
     return (
         <React.Fragment>
@@ -39,6 +48,7 @@ const SwipeableCard = (props) => {
                         overflow: 'visible',
                         maxWidth: !fullWidth && '768px',
                         margin: 'auto',
+                        background: 'none',
                     },
                 }}
             />
@@ -57,10 +67,10 @@ const SwipeableCard = (props) => {
             >
                 <StyledBox
                     sx={{
-                        position: 'absolute',
-                        height: drawerBleeding,
+                        // position: 'absolute',
+                        // height: drawerBleeding,
                         backgroundColor: 'var(--bg-layer1)',
-                        top: -drawerBleeding,
+                        overflow: 'hidden',
                         borderTopLeftRadius: 8,
                         borderTopRightRadius: 8,
                         visibility: 'visible',
@@ -68,7 +78,29 @@ const SwipeableCard = (props) => {
                         left: 0,
                     }}
                 >
-                    <Puller />
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            padding: '8px',
+                        }}
+                    >
+                        <Puller />
+                    </Box>
+                    {title && (
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderBottom: '1px solid var(--border-color)',
+                                paddingBottom: '8px',
+                            }}
+                        >
+                            <p className="title">{title}</p>
+                        </Box>
+                    )}
                 </StyledBox>
                 <StyledBox
                     sx={{
