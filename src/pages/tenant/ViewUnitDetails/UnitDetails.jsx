@@ -208,7 +208,7 @@ const UnitDetails = (props) => {
                     </div>
                 </CardShadow>
 
-                <CardShadow>
+                {/* <CardShadow>
                     <div className={`${styles['unit-detials-col']}`}>
                         <p className="title">Payment & Inclusions</p>
 
@@ -220,7 +220,7 @@ const UnitDetails = (props) => {
                             }}
                         />
                     </div>
-                </CardShadow>
+                </CardShadow> */}
 
                 <CardShadow>
                     <div className={`${styles['unit-detials-col']}`}>
