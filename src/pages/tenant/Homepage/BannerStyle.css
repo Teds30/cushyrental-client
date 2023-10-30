@@ -10,6 +10,7 @@
         rgba(29, 97, 86, 1) 50%,
         rgba(29, 97, 86, 0.7) 100%
     );
+    z-index: 100;
 }
 
 .banner-swiper-slide {
