@@ -176,7 +176,10 @@ function App() {
                     element={<ManageRenters />}
                 ></Route>
                 <Route path="/rules" element={<Rules />}></Route>
-                <Route path="/viewprofile" element={<ViewProfile />}></Route>
+                <Route
+                    path="/viewprofile/:id"
+                    element={<ViewProfile />}
+                ></Route>
                 {/* <Route
                     path="*"
                     element={<Navigate replace to="/signin" />}
