@@ -19,6 +19,7 @@ const AvailModal = (props) => {
     const { sendRequest, isLoading } = useHttp()
 
     const [roomDetails, setRoomDetails] = useState({
+        data: null,
         request: 'none',
         req_slots: 0,
     })
@@ -33,6 +34,7 @@ const AvailModal = (props) => {
             const data = await res.json()
 
             setRoomDetails({
+                data: data,
                 request: data.request_status,
                 req_slots: data.slots,
             })
@@ -86,14 +88,24 @@ const AvailModal = (props) => {
         if (!socket) return
 
         socket.on('unit-avail-pending', () =>
-            setRoomDetails({ request: 'pending' })
+            setRoomDetails((prev) => {
+                return { ...prev, request: 'pending' }
+            })
         )
-        socket.on('unit-avail', () => setRoomDetails({ request: null }))
+        socket.on('unit-avail', () =>
+            setRoomDetails((prev) => {
+                return { ...prev, request: null }
+            })
+        )
         socket.on('unit-avail-accepted', () => {
-            setRoomDetails({ request: 'accepted' })
+            setRoomDetails((prev) => {
+                return { ...prev, request: 'accepted' }
+            })
         })
         socket.on('unit-avail-rejected', () =>
-            setRoomDetails({ request: 'rejected' })
+            setRoomDetails((prev) => {
+                return { ...prev, request: 'rejected' }
+            })
         )
     }, [socket])
 
@@ -102,15 +114,23 @@ const AvailModal = (props) => {
             slots: quantity.value,
             room_id: room_id,
             request_status: 'avail',
-            name: 'Tya Els',
+            name:
+                user_id !== roomDetails.data && roomDetails.data.tenant_id
+                    ? `${roomDetails.data.tenant.first_name} ${roomDetails.data.tenant.last_name}`
+                    : `${roomDetails.data.landlord.first_name} ${roomDetails.data.landlord.last_name}`,
             read: false,
+            user_id: roomDetails.data && roomDetails.data.landlord_id,
+            unit_name: unit && unit.name,
         })
     }
     const handleCancel = () => {
         socket.emit('unit-avail', {
             room_id: room_id,
             request_status: 'cancel',
-            name: 'Tya Els',
+            name:
+                user_id !== roomDetails.data && roomDetails.data.tenant_id
+                    ? `${roomDetails.data.tenant.first_name} ${roomDetails.data.tenant.last_name}`
+                    : `${roomDetails.data.landlord.first_name} ${roomDetails.data.landlord.last_name}`,
             read: false,
         })
     }
@@ -119,8 +139,12 @@ const AvailModal = (props) => {
         socket.emit('unit-avail', {
             room_id: room_id,
             request_status: 'accept',
-            name: 'Tya Els',
+            name:
+                user_id === roomDetails.data && roomDetails.data.tenant_id
+                    ? `${roomDetails.data.tenant.first_name} ${roomDetails.data.tenant.last_name}`
+                    : `${roomDetails.data.landlord.first_name} ${roomDetails.data.landlord.last_name}`,
             read: false,
+            user_id: roomDetails.data && roomDetails.data.tenant_id,
         })
         addRental()
     }
@@ -129,8 +153,13 @@ const AvailModal = (props) => {
         socket.emit('unit-avail', {
             room_id: room_id,
             request_status: 'reject',
-            name: 'Tya Els',
+            name:
+                user_id === roomDetails.data && roomDetails.data.tenant_id
+                    ? `${roomDetails.data.tenant.first_name} ${roomDetails.data.tenant.last_name}`
+                    : `${roomDetails.data.landlord.first_name} ${roomDetails.data.landlord.last_name}`,
             read: false,
+            user_id: roomDetails.data && roomDetails.data.tenant_id,
+            unit_name: unit && unit.name,
         })
     }
 
@@ -199,7 +228,7 @@ const AvailModal = (props) => {
         )
     }
 
-    if (roomDetails.request === 'pending') {
+    if (room && roomDetails.request === 'pending') {
         content =
             room.landlord_id === user_id ? (
                 <Box>
@@ -210,9 +239,13 @@ const AvailModal = (props) => {
                                 size={'18px'}
                             />
                         </div>
-                        <p className={'smaller-text'}>
-                            Jano is requesting a rental for this unit.
-                        </p>
+                        {roomDetails.data && (
+                            <p className={'smaller-text'}>
+                                {roomDetails.data.tenant.first_name}{' '}
+                                {roomDetails.data.tenant.last_name} is
+                                requesting a rental for this unit.
+                            </p>
+                        )}
                     </div>
                     <Box
                         sx={{

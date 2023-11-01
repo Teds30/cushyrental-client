@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import AppBar from '@mui/material/AppBar'
@@ -8,22 +8,20 @@ import useScrollTrigger from '@mui/material/useScrollTrigger'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Slide from '@mui/material/Slide'
+import { io } from 'socket.io-client'
 
 import { styled } from '@mui/material/styles'
 import Fab from '@mui/material/Fab'
 
-import { BiUser, BiSolidUser } from 'react-icons/bi'
-import {
-    BsChatSquare,
-    BsChatSquareFill,
-    BsBell,
-    BsBellFill,
-} from 'react-icons/bs'
 import { IoIosCalendar } from 'react-icons/io'
-import { PiHouseFill, PiHouseLight } from 'react-icons/pi'
 import { FiSearch } from 'react-icons/fi'
 
-import useAuth from '../../../hooks/data/auth-hook'
+import AuthContext from '../../../context/auth-context'
+import useHttp from '../../../hooks/http-hook'
+import styles from './BottomNavigation.module.css'
+import useNotificationManager from '../../../hooks/data/notification-hook'
+
+import nav_data from '../nav_data'
 
 function HideOnScroll(props) {
     const { children } = props
@@ -64,106 +62,40 @@ const itemStyles = {
     fontSize: '10px',
 }
 
-const nav_data = [
-    {
-        name: 'Home',
-        icon: <PiHouseLight style={{ fill: 'inherit' }} size={24} />,
-        selectedIcon: <PiHouseFill style={{ fill: 'inherit' }} size={24} />,
-    },
-    {
-        name: 'Chats',
-        icon: (
-            <Link
-                to="/chats"
-                style={{
-                    display: 'flex',
-                    justifyContent: 'centers',
-                    alignItems: 'center',
-                }}
-            >
-                <BsChatSquare
-                    style={{ fill: 'inherit' }}
-                    color="red"
-                    size={24}
-                />
-            </Link>
-        ),
-        selectedIcon: (
-            <Link
-                to="/chats"
-                style={{
-                    display: 'flex',
-                    justifyContent: 'centers',
-                    alignItems: 'center',
-                }}
-            >
-                <BsChatSquareFill style={{ fill: 'inherit' }} size={24} />
-            </Link>
-        ),
-    },
-    {
-        name: 'Notification',
-        icon: (
-            <Link
-                to="/notifications"
-                style={{
-                    display: 'flex',
-                    justifyContent: 'centers',
-                    alignItems: 'center',
-                }}
-            >
-                <BsBell style={{ fill: 'inherit' }} size={24} />
-            </Link>
-        ),
-        selectedIcon: (
-            <Link
-                to="/notifications"
-                style={{
-                    display: 'flex',
-                    justifyContent: 'centers',
-                    alignItems: 'center',
-                }}
-            >
-                <BsBellFill style={{ fill: 'inherit' }} size={24} />
-            </Link>
-        ),
-    },
-    {
-        name: 'Profile',
-        icon: (
-            <Link
-                to="/profile"
-                style={{
-                    display: 'flex',
-                    justifyContent: 'centers',
-                    alignItems: 'center',
-                }}
-            >
-                <BiUser
-                    style={{
-                        fill: 'inherit',
-                    }}
-                    size={24}
-                />
-            </Link>
-        ),
-
-        selectedIcon: <BiSolidUser style={{ fill: 'inherit' }} size={24} />,
-    },
-]
-
 const BottomNavigation = (props) => {
     const { current = 0, children, isTenant = false } = props
 
+    const authCtx = useContext(AuthContext)
+    const { sendRequest, isLoading } = useHttp()
+    const { fetchUserNotifications } = useNotificationManager()
+
     const [selected, setSelected] = useState(current)
     const [navData, setNavData] = useState(nav_data)
-    const { user } = useAuth()
+    const [user, setUser] = useState()
+    const [socket, setSocket] = useState(null)
+    const [notifCtr, setNotifCtr] = useState(0)
 
     const selectHandler = (id) => {
         setSelected(id)
     }
 
+    const loadData = async () => {
+        if (authCtx.user) {
+            setUser(authCtx.user)
+            const res = await fetchUserNotifications(authCtx.user.id)
+
+            const ctr = res.filter((notif) => notif.is_read === 0).length
+            setNotifCtr(ctr)
+        }
+    }
+
     useEffect(() => {
+        setSocket(
+            io(import.meta.env.VITE_CHAT_LOCALHOST, {
+                transports: ['websocket'],
+            })
+        )
+
         const mainNav = !isTenant
             ? {
                   name: 'Calendar',
@@ -202,7 +134,23 @@ const BottomNavigation = (props) => {
               }
 
         setNavData([...nav_data.slice(0, 2), mainNav, ...nav_data.slice(2)])
-    }, [])
+    }, [authCtx.user, notifCtr])
+
+    useEffect(() => {
+        if (!socket || !authCtx.user) return
+
+        loadData()
+        socket.emit('notification-join', { user_id: authCtx.user.id })
+        socket.on('notification-update', async () => {
+            const res = await fetchUserNotifications(authCtx.user.id)
+
+            const ctr = res.filter((notif) => notif.is_read === 0).length
+            setNotifCtr(ctr)
+        })
+        socket.on('notification-joined', () => {
+            console.log('i joined!')
+        })
+    }, [socket])
 
     return (
         <React.Fragment>
@@ -259,7 +207,10 @@ const BottomNavigation = (props) => {
                                     </div>
                                 ) : (
                                     <Box
-                                        sx={nav_style}
+                                        sx={{
+                                            ...nav_style,
+                                            position: 'relative',
+                                        }}
                                         key={index}
                                         onClick={() => {
                                             selectHandler(index)
@@ -269,6 +220,15 @@ const BottomNavigation = (props) => {
                                             ? data.selectedIcon
                                             : data.icon}
                                         {data.name}
+
+                                        {data.name === 'Notification' &&
+                                            notifCtr > 0 && (
+                                                <span
+                                                    className={styles['badge']}
+                                                >
+                                                    {notifCtr}
+                                                </span>
+                                            )}
                                     </Box>
                                 )
                             })}

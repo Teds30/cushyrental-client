@@ -27,11 +27,21 @@ const trailingActions = ({ onDelete }) => (
     </TrailingActions>
 )
 
-const SwipeableNotification = ({ onDelete, data = {}, is_read = false }) => {
+const SwipeableNotification = ({
+    onVisit,
+    onDelete,
+    data = {},
+    is_read = false,
+}) => {
     return (
         <SwipeableList>
-            <SwipeableListItem trailingActions={trailingActions({ onDelete })}>
-                <Notification data={data} is_read={is_read} />
+            <SwipeableListItem
+                onClick={() => {
+                    onVisit({ url: data.redirect_url, id: data.id })
+                }}
+                trailingActions={trailingActions({ onDelete })}
+            >
+                <Notification data={data} is_read={!!data.is_read} />
             </SwipeableListItem>
         </SwipeableList>
     )
