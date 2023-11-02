@@ -79,7 +79,8 @@ const UnitsCarousel = () => {
                     modifier: 1,
                     slideShadows: true,
                 }}
-                pagination={true}
+                // pagination={true}
+                pagination={{ dynamicBullets: true, dynamicMainBullets: 3 }}
                 autoplay={{ delay: 3000 }}
                 modules={[Autoplay, Pagination]}
                 className="banner-swiper"
@@ -87,7 +88,10 @@ const UnitsCarousel = () => {
             >
                 {content}
             </Swiper>
-            <div className={styles['wave2']} style={{ marginTop: 0 }}>
+            <div
+                className={styles['wave2']}
+                style={{ marginTop: '-20px', zIndex: '1' }}
+            >
                 <svg
                     width="514"
                     height="125"

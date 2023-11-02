@@ -16,7 +16,6 @@ import AuthContext from '../../../context/auth-context'
 
 const ManageSubscriptions = () => {
     const authCtx = useContext(AuthContext)
-    const userId = authCtx.user.id
     const { fetchUserSubscriptions, isLoading } = useSubscriptionManager()
 
     const [userSubscriptions, setUserSubscriptions] = useState([])
@@ -25,12 +24,12 @@ const ManageSubscriptions = () => {
     useEffect(() => {
         const handleFetch = async () => {
             try {
-                const res = await fetchUserSubscriptions(userId)
+                const res = await fetchUserSubscriptions(authCtx.user.id)
                 setUserSubscriptions(res)
             } catch (err) {}
         }
-        handleFetch()
-    }, [])
+        if (authCtx.user) handleFetch()
+    }, [authCtx.user])
 
     return (
         <div className={`${styles['manage-unit-container']}`}>

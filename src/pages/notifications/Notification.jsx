@@ -24,7 +24,12 @@ const Notification = (props) => {
                 <img src={pic} alt="" />
             </div>
             <div className={styles['content']}>
-                <p className="title">{data.title}</p>
+                <div className={styles['title-container']}>
+                    <span className={`${styles['title-wrap']} title`}>
+                        {data.title}
+                    </span>
+                    {!is_read && <div className={styles['is_read_dot']}></div>}
+                </div>
                 <div className={styles['details']}>
                     <p>{data.message}</p>
                 </div>

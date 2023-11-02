@@ -18,6 +18,7 @@ export const useHttp = () => {
             body = null,
             headers = { Accept: 'application/json' },
             expectText = false,
+            notifyError = false,
         }) => {
             setIsLoading(true)
             const httpAbortCtrl = new AbortController()
@@ -43,7 +44,9 @@ export const useHttp = () => {
 
                 if (!response.ok) {
                     // throw new Error(response.message)
-                    notify(data.message, 'error')
+                    if (notifyError) {
+                        notify(data.message, 'error')
+                    }
                     throw new Error(data.message)
                 }
 

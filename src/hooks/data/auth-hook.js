@@ -37,7 +37,6 @@ const useAuth = () => {
                     Authorization: `Bearer ${token}`,
                 },
             })
-            console.log('resspons: ', response)
             setUser(response) // Set the user data in the component state
         } catch (error) {
             // Handle errors if needed

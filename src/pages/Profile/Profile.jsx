@@ -24,9 +24,7 @@ const Profile = () => {
     const [image, setImage] = useState()
     const navigate = useNavigate()
 
-    console.log(userCtx.user)
-
-    console.log(userCtx.user.profile_picture_img)
+    // console.log(userCtx.user.profile_picture_img)
 
     const logoutHandler = (event) => {
         event.preventDefault()
@@ -95,7 +93,14 @@ const Profile = () => {
                     {userCtx.user && (
                         <div className={`${styles['user-profile']}`}>
                             <div className={`${styles['photo']}`}>
-                                <img src={image} alt={userCtx.user.first_name + ' ' + userCtx.user.last_name} />
+                                <img
+                                    src={image}
+                                    alt={
+                                        userCtx.user.first_name +
+                                        ' ' +
+                                        userCtx.user.last_name
+                                    }
+                                />
                             </div>
                             <div className={`${styles['user']}`}>
                                 <div className={styles.name}>
@@ -125,7 +130,7 @@ const Profile = () => {
                     )}
 
                     <div className={`${styles['user-menu']}`}>
-                        { userCtx.user_type_id === 2 ? (<ProfileOption
+                        { userCtx.user.user_type_id === 2 ? (<ProfileOption
                             user_type_id={
                                 userCtx.user && userCtx.user.user_type_id
                             }

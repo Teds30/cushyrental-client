@@ -19,7 +19,16 @@ import AuthContext from '../../context/auth-context'
 
 const Conversation = (props) => {
     const authCtx = useContext(AuthContext)
-    const user_id = authCtx.user.id
+
+    const [user_id, setUserId] = useState()
+
+    useEffect(() => {
+        const loadData = () => {
+            if (authCtx.user) setUserId(authCtx.user.id)
+        }
+
+        loadData()
+    }, [authCtx.user])
 
     const { room_id } = useParams()
     const navigate = useNavigate()
