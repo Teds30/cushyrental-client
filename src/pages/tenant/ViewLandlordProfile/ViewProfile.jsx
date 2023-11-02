@@ -149,7 +149,7 @@ const ViewProfile = () => {
                                     marginTop: "-2px",
                                 }}
                             />
-                            <p className="caption">{user.total_ratings.toFixed(2)}/5.0</p>
+                            {/* <p className="caption">{user.total_ratings.toFixed(2)}/5.0</p> */}
                         </div>
                     </div>
                 </div>

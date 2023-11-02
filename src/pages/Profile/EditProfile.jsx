@@ -82,7 +82,7 @@ const EditProfile = () => {
                             >
                                 <FiChevronLeft
                                     style={{
-                                        color: "var(--bg-layer1)",
+                                        // color: "var(--bg-layer1)",
                                         fill: "transparent",
                                         color: scrolling ? "black" : "white",
                                     }}
