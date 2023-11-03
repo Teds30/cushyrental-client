@@ -7,14 +7,22 @@ import styles from './ViewProfile.module.css'
 import LandlordUnitAttribute from './LandlordUnitAttribute'
 import LandlordUnitImage from './LandlordUnitImage'
 import LandlordUnitRating from './LandlordUnitRating'
+// import useBookmark from '../../../hooks/data/bookmark-hook'
 
 const LandlordUnit = (props) => {
     const { unit } = props
-    const [isBookmarked, setIsBookmarked] = useState(false)
+    const [isBookmarked, setIsBookmarked] = useState([]);
+    // const {addBookmark } = useBookmark();
 
-    const handleBookmarkClick = () => {
-        setIsBookmarked(!isBookmarked)
-    }
+    console.log(isBookmarked);
+
+    const handleBookmarkClick = (id) => {
+        if (isBookmarked.includes(id)) {
+            setIsBookmarked(isBookmarked.filter((itemId) => itemId !== id));
+        } else {
+            setIsBookmarked([...isBookmarked, id]);
+        }
+    };
 
     const displayAmenities = unit.amenities.slice(0, 1)
     const excessAmenities = unit.amenities.slice(1)
@@ -34,9 +42,11 @@ const LandlordUnit = (props) => {
                         size="large"
                         color="inherit"
                         aria-label="menu"
-                        onClick={handleBookmarkClick}
+                        onClick={() =>
+                            handleBookmarkClick(unit.id)
+                        }
                     >
-                        {isBookmarked ? (
+                        {isBookmarked.includes(unit.id) ? (
                             <BsBookmarkFill
                                 style={{
                                     width: '18px',

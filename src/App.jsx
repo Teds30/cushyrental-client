@@ -29,7 +29,7 @@ import Subscriptions from './pages/landlord/Subscriptions/Subscriptions'
 import ManageSubscriptions from './pages/landlord/ManageSubscriptions/ManageSubscriptions'
 import AccountVerification from './pages/landlord/LandProfile/AccountVerification'
 import AvailSubscription from './pages/landlord/AvailSubscription/AvailSubscription'
-import RentedUnit from './pages/tenant/RentedUnit/RentedUnit'
+import RentedUnitMain from './pages/tenant/RentedUnit/RentedUnitMain'
 import UnitDetails from './pages/tenant/UnitDetails/UnitDetails'
 import ViewUnitDetails from './pages/tenant/ViewUnitDetails/ViewUnitDetails'
 import Homepage from './pages/tenant/Homepage/Homepage'
@@ -184,7 +184,7 @@ function App() {
                     path="*"
                     element={<Navigate replace to="/signin" />}
                 ></Route> */}
-                <Route path="/rentedunit" element={<RentedUnit />}></Route>
+                <Route path="/rentedunit" element={<RentedUnitMain />}></Route>
 
                 <Route path="/unitdetails" element={<UnitDetails />}></Route>
 
