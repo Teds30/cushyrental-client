@@ -10,7 +10,7 @@ const CostComparisonUnit = (props) => {
     const { unit } = props
 
     const cctool = useContext(ComparisonToolContext)
-    const { months } = cctool
+    const { months, monthsList } = cctool
 
     const { fetchImage, isLoading } = useImageManager()
     const [unitImg, setUnitImg] = useState()
@@ -27,15 +27,15 @@ const CostComparisonUnit = (props) => {
         if (unit.images[0]) handleFetch()
     }, [unit])
 
-    // const updatedPrice =
-    //     months.length > 0
-    //         ? parseFloat(
-    //               parseFloat(unit.price) * parseInt(months.length)
-    //           ).toLocaleString('en-US', {
-    //               minimumFractionDigits: 2,
-    //               maximumFractionDigits: 2,
-    //           })
-    //         : 0
+    const updatedPrice =
+        monthsList.length > 0
+            ? parseFloat(
+                  parseFloat(unit.price) * parseInt(monthsList.length)
+              ).toLocaleString('en-US', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+              })
+            : 0
     const formattedPrice = unit.price.toLocaleString('en-US', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
@@ -48,8 +48,11 @@ const CostComparisonUnit = (props) => {
             </div>
             <div className={styles['unit-details']}>
                 <h3 style={{ color: 'var(--accent)' }}>
-                    {/* ₱{months.length > 0 ? updatedPrice : formattedPrice} */}
-                    ₱{formattedPrice}
+                    ₱
+                    {monthsList && monthsList.length > 0
+                        ? updatedPrice
+                        : formattedPrice}
+                    {/* ₱{formattedPrice} */}
                 </h3>
                 <p className="title">{unit.name}</p>
                 <div
