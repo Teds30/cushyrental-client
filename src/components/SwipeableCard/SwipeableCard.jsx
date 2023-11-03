@@ -54,9 +54,9 @@ const SwipeableCard = (props) => {
             />
             <SwipeableDrawer
                 anchor="bottom"
-                open={open}
+                open={!!open}
                 onClose={closeDrawer}
-                onOpen={onOpen(true)}
+                onOpen={onOpen}
                 swipeAreaWidth={drawerBleeding}
                 disableSwipeToOpen={true}
                 ModalProps={{
