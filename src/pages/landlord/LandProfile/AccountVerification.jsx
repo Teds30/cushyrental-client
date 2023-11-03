@@ -64,10 +64,9 @@ const AccountVerification = () => {
                                 >
                                     <FiChevronLeft
                                         style={{
-                                            fill: 'transparent',
-                                            color: scrolling
-                                                ? 'black'
-                                                : 'white',
+                                            color: "var(--bg-layer1)",
+                                            fill: "transparent",
+                                            color: scrolling ? "black" : "white",
                                         }}
                                     />
                                 </IconButton>
