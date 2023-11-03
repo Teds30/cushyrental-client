@@ -24,6 +24,16 @@
     transition: max-width 0.3s ease-in-out;
 }
 
+.toolbar-container {
+    display: flex;
+    align-items: center;
+}
+
+.favorites-title{
+    flex: 1;
+    text-align: center;
+}
+
 .padding-top-container {
     padding: 65px 10px 50px 10px;
 }
@@ -78,15 +88,20 @@
 
 .side-unit-container {
     display: flex;
+    flex: 1;
     flex-direction: column;
     gap: 15px;
-    width: 100%;
+    /* width: 100%; */
 }
 
 .content-container {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+}
+
+.text-container {
+    flex: 1;
 }
 
 .bname-container {
@@ -111,9 +126,12 @@
 .bookmark-container {
     /* position: absolute; */
     /* left: 100px; */
+    display: flex;
+    justify-content: end;
     border-radius: 8px;
     background: #f6f8fc;
     height: 45px;
+    /* flex: 1; */
 }
 
 .button-container {
@@ -127,6 +145,7 @@
 .button-compare {
     display: flex;
     padding: 6px;
+    align-items: center;
     justify-content: center;
     gap: 3px;
     align-self: stretch;
