@@ -130,17 +130,21 @@ const Profile = () => {
                     )}
 
                     <div className={`${styles['user-menu']}`}>
-                        { userCtx.user.user_type_id === 2 ? (<ProfileOption
-                            user_type_id={
-                                userCtx.user && userCtx.user.user_type_id
-                            }
-                            className={`${styles['profile-option']}`}
-                        />) : (<TenantProfileOption
-                            user_type_id={
-                                userCtx.user && userCtx.user.user_type_id
-                            }
-                            className={`${styles['profile-option']}`}
-                        />) }
+                        {userCtx.user && userCtx.user.user_type_id === 2 ? (
+                            <ProfileOption
+                                user_type_id={
+                                    userCtx.user && userCtx.user.user_type_id
+                                }
+                                className={`${styles['profile-option']}`}
+                            />
+                        ) : (
+                            <TenantProfileOption
+                                user_type_id={
+                                    userCtx.user && userCtx.user.user_type_id
+                                }
+                                className={`${styles['profile-option']}`}
+                            />
+                        )}
                     </div>
                 </div>
 
