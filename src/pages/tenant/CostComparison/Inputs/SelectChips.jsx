@@ -2,33 +2,38 @@ import React, { useState, useEffect } from 'react'
 import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
 
-// import useImageManager from "../../hooks/data/image-hook";
+import styles from './SelectChips.module.css'
 
-import styles from '../../../components/Chips/ChipButton.module.css'
-// import "../../../components/Chips/chip.css";
-
-const RadiusChip = (props) => {
+const SelectChips = (props) => {
     const {
         items = [],
         button = 'checkbox',
         clickable = true,
+        expenseId,
         selected = [],
     } = props
 
-    const [chips, setChips] = useState(selected.length !== 0 ? selected : [])
+    const [chips, setChips] = useState(selected ?? [])
 
     const handleClick = (id) => {
         if (button === 'checkbox') {
             if (chips.includes(id)) {
-                setChips(chips.filter((chipId) => chipId !== id))
-                props.onChipValue(chips.filter((chipId) => chipId !== id))
+                if (chips.length !== 1) {
+                    setChips(chips.filter((chipId) => chipId !== id))
+                    props.onChipValue(
+                        expenseId,
+                        chips.filter((chipId) => chipId !== id)
+                    )
+                }
             } else {
-                setChips([...chips, id])
-                props.onChipValue([...chips, id])
+                setChips((prev) => {
+                    return [...prev, id]
+                })
+                props.onChipValue(expenseId, [...chips, id])
             }
         } else {
             setChips([id])
-            props.onChipValue([id])
+            props.onChipValue(expenseId, [id])
         }
     }
 
@@ -37,13 +42,6 @@ const RadiusChip = (props) => {
             <Chip
                 key={item.id}
                 variant="outlined"
-                // icon={
-                //     <div
-                //         dangerouslySetInnerHTML={{
-                //             __html: item.icon,
-                //         }}
-                //     />
-                // }
                 label={item.name}
                 sx={{
                     padding: '8px 18px',
@@ -52,7 +50,6 @@ const RadiusChip = (props) => {
                     justifyContent: 'center',
                     gap: '10px',
                     fontWeight: '500',
-                    fontSize: '14px',
                     background: chips.includes(item.id)
                         ? 'rgba(3, 176, 119, 0.08)'
                         : 'inherit',
@@ -88,4 +85,4 @@ const RadiusChip = (props) => {
     )
 }
 
-export default RadiusChip
+export default SelectChips

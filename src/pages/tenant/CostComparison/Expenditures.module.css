@@ -1,0 +1,126 @@
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* background-color: var(--bg); */
+    margin-top: 56px;
+    padding: 12px;
+
+    gap: 24px;
+}
+
+.note {
+    padding: 12px;
+    border: 1px solid #133f81;
+    background-color: rgb(19, 63, 129, 0.04);
+    color: #133f81;
+    border-radius: 8px;
+    display: flex;
+    gap: 12px;
+
+    font-size: 10px;
+    line-height: 1.5em;
+}
+.input-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+
+    position: relative;
+    animation: fadein 1s ease-in-out;
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0%;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+.date-selector-container {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.separator {
+    color: var(--fc-body);
+    font-weight: 700;
+    font-size: 10px;
+}
+
+.expense-card {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 24px;
+    padding-top: 0;
+    border-radius: 8px;
+    gap: 12px;
+
+    background-color: var(--bg-layer1);
+    border: 1px solid var(--border-color);
+}
+
+.expense-card .adornment {
+    color: var(--fc-body-light);
+    font-weight: 700;
+}
+.expense-input-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+.expense-input {
+    width: 100%;
+    font-size: 18px;
+    padding: 12px;
+    padding-left: 0;
+    background: transparent;
+    color: var(--fc-body);
+    outline: none;
+    border: 0;
+}
+
+.flat-dropdown {
+    display: flex;
+    gap: 8px;
+}
+
+.chips-container {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.months-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+}
+
+.new-expenses-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 12px;
+
+    gap: 12px;
+}
+
+.input-name-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-name-container span {
+    display: flex;
+    color: var(--accent-danger);
+    /* text-decoration: underline; */
+}

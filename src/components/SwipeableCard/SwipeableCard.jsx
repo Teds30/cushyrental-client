@@ -34,6 +34,7 @@ const SwipeableCard = (props) => {
         children,
         fullWidth = false,
         title = '',
+        action,
     } = props
 
     drawerBleeding = title ? 48 : 32
@@ -70,7 +71,7 @@ const SwipeableCard = (props) => {
                         // position: 'absolute',
                         // height: drawerBleeding,
                         backgroundColor: 'var(--bg-layer1)',
-                        overflow: 'hidden',
+                        // overflow: 'hidden',
                         borderTopLeftRadius: 8,
                         borderTopRightRadius: 8,
                         visibility: 'visible',
@@ -113,6 +114,7 @@ const SwipeableCard = (props) => {
                 >
                     {children}
                 </StyledBox>
+                {action}
             </SwipeableDrawer>
         </React.Fragment>
     )

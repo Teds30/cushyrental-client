@@ -1,0 +1,33 @@
+.unit {
+    display: flex;
+    gap: 12px;
+
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px 12px;
+}
+.unit-selected {
+    border: 2px solid var(--accent);
+    background-color: rgba(var(--accent-rgb), 0.03);
+}
+
+.unit-details {
+    flex: 1;
+}
+
+.unit-img {
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 64px;
+    height: 64px;
+    background-color: var(--bg-layer2);
+    border-radius: 4px;
+}
+.unit-img img {
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
+}

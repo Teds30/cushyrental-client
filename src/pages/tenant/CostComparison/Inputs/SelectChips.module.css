@@ -1,0 +1,11 @@
+.chip {
+    /* justify-content: center; */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    /* justify-content: center; */
+}
+
+.chipImage path {
+    fill: white;
+}

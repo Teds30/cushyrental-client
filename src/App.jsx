@@ -42,7 +42,11 @@ import Notifications from './pages/notifications/Notifications'
 import UnitAfterSearch from './pages/tenant/UnitAfterSearch/UnitAfterSearch'
 import SearchUnit from './pages/tenant/SearchUnit/SearchUnit'
 import Favorites from './pages/tenant/Favorites/Favorites'
+import CostComparison from './pages/tenant/CostComparison/CostComparison'
+import Expenditures from './pages/tenant/CostComparison/Expenditures'
+import CostComparisonTool from './pages/tenant/CostComparison/CostComparisonTool'
 // import Homepage from './pages/tenant/Homepage/Homepage'
+import { ComparisonToolContextProvider } from './context/comparison-tool-context'
 
 function App() {
     const { user, token, loginHandler, logoutHandler, isLoggedIn } = useAuth()
@@ -193,6 +197,14 @@ function App() {
                     element={<UnitAfterSearch />}
                 ></Route>
                 <Route path="/favorites" element={<Favorites />}></Route>
+
+                    <Route
+                        path="/costcomparison"
+                        element={<CostComparisonTool />}
+                    >
+                        <Route path="" element={<CostComparison />} />
+                        <Route path="edit" element={<Expenditures />} />
+                    </Route>
                 <Route
                     path="*"
                     element={

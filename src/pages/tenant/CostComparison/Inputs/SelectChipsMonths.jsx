@@ -2,49 +2,59 @@ import React, { useState, useEffect } from 'react'
 import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
 
-// import useImageManager from "../../hooks/data/image-hook";
+import styles from './SelectChips.module.css'
+import moment from 'moment'
 
-import styles from '../../../components/Chips/ChipButton.module.css'
-// import "../../../components/Chips/chip.css";
-
-const RadiusChip = (props) => {
+const SelectChipsMonths = (props) => {
     const {
         items = [],
         button = 'checkbox',
         clickable = true,
         selected = [],
+        expenseId,
     } = props
 
-    const [chips, setChips] = useState(selected.length !== 0 ? selected : [])
+    const [chips, setChips] = useState([])
 
-    const handleClick = (id) => {
+    useEffect(() => {
+        let idArray = []
+        for (const month of selected) {
+            idArray.push(month.id)
+        }
+        setChips(idArray)
+    }, [selected])
+
+    const handleClick = (item) => {
         if (button === 'checkbox') {
-            if (chips.includes(id)) {
-                setChips(chips.filter((chipId) => chipId !== id))
-                props.onChipValue(chips.filter((chipId) => chipId !== id))
+            if (chips.includes(item.id)) {
+                if (selected.length !== 1) {
+                    setChips(chips.filter((chipId) => chipId !== item.id))
+                    props.onChipValue(
+                        expenseId,
+                        selected.filter((chipId) => chipId.id !== item.id)
+                    )
+                }
             } else {
-                setChips([...chips, id])
-                props.onChipValue([...chips, id])
+                setChips((prev) => {
+                    return [...prev, item.id]
+                })
+                props.onChipValue(expenseId, [...selected, item])
             }
         } else {
-            setChips([id])
-            props.onChipValue([id])
+            setChips([item.id])
+            props.onChipValue(expenseId, [item.id])
         }
     }
 
     const content = items.map((item) => {
+        const momentDate = moment(`${item.year}-${item.month}`, 'YYYY-MM')
+        const monthName = momentDate.format('MMMM')
+
         return (
             <Chip
                 key={item.id}
                 variant="outlined"
-                // icon={
-                //     <div
-                //         dangerouslySetInnerHTML={{
-                //             __html: item.icon,
-                //         }}
-                //     />
-                // }
-                label={item.name}
+                label={monthName}
                 sx={{
                     padding: '8px 18px',
                     display: 'flex',
@@ -52,7 +62,6 @@ const RadiusChip = (props) => {
                     justifyContent: 'center',
                     gap: '10px',
                     fontWeight: '500',
-                    fontSize: '14px',
                     background: chips.includes(item.id)
                         ? 'rgba(3, 176, 119, 0.08)'
                         : 'inherit',
@@ -76,7 +85,7 @@ const RadiusChip = (props) => {
                         background: 'rgba(3, 176, 119, 0.08)', // Remove hover background
                     },
                 }}
-                onClick={clickable ? () => handleClick(item.id) : undefined}
+                onClick={clickable ? () => handleClick(item) : undefined}
             />
         )
     })
@@ -88,4 +97,4 @@ const RadiusChip = (props) => {
     )
 }
 
-export default RadiusChip
+export default SelectChipsMonths
