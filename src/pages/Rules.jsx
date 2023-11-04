@@ -25,7 +25,7 @@ const Rules = () => {
                     }}
                 >
                     <Toolbar>
-                        <Link>
+                        <Link to={`/profile`}>
                             <IconButton
                                 size="large"
                                 edge="start"
