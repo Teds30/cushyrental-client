@@ -33,9 +33,8 @@
     display: flex;
     flex-direction: column;
     gap: 17px;
-    padding-top: 6px;
     padding: 6px;
-    margin-top: 56px;
+    margin-top: 76px;
     margin-bottom: 56px;
 }
 
