@@ -18,28 +18,12 @@ import SecondaryButton from '../../../components/Button/SecondaryButton'
 
 const EstimatedStay = (props) => {
     const cctool = useContext(ComparisonToolContext)
-    const { handleMonthsList, selectedDates, handleSelectDates } = cctool
-
-    const handleSaveDates = useCallback(() => {
-        const fromDate = dayjs(selectedDates.from)
-        const toDate = dayjs(selectedDates.to)
-
-        const months = []
-        let current = fromDate
-        let idCounter = 0 // Initialize a counter for IDs
-
-        while (current.isBefore(toDate) || current.isSame(toDate, 'month')) {
-            months.push({
-                id: idCounter,
-                year: current.format('YYYY'),
-                month: current.format('MM'),
-            })
-            current = current.add(1, 'month')
-            idCounter++ // Increment the ID counter
-        }
-
-        handleMonthsList(months)
-    }, [selectedDates])
+    const {
+        handleMonthsList,
+        selectedDates,
+        handleSelectDates,
+        handleSaveDates,
+    } = cctool
 
     return (
         <div className={styles['input-container']}>
@@ -48,14 +32,14 @@ const EstimatedStay = (props) => {
                 <div className={styles['datepicker']}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
-                            label={'Date'}
+                            label={'Start of stay'}
                             views={['month', 'year']}
                             defaultValue={
                                 selectedDates.from
                                     ? dayjs(selectedDates.from)
                                     : dayjs()
                             }
-                            min
+                            minDate={dayjs()}
                             onChange={(newValue) => {
                                 handleSelectDates({
                                     from: newValue.format('MM/DD/YYYY'),
@@ -68,14 +52,14 @@ const EstimatedStay = (props) => {
                 <div className={styles['datepicker']}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
-                            label={'Date'}
+                            label={'End of stay'}
                             views={['month', 'year']}
                             minDate={dayjs(selectedDates.from)}
-                            defaultValue={
-                                selectedDates.to
-                                    ? dayjs(selectedDates.to)
-                                    : dayjs()
-                            }
+                            // defaultValue={
+                            //     selectedDates.to
+                            //         ? dayjs(selectedDates.to)
+                            //         : dayjs()
+                            // }
                             onChange={(newValue) => {
                                 handleSelectDates({
                                     to: newValue.format('MM/DD/YYYY'),

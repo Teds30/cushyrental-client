@@ -61,7 +61,7 @@
     align-items: center;
     justify-content: center;
     gap: 20px;
-    margin-top: 200px;
+    /* margin-top: 200px; */
 }
 
 .unit-container {
@@ -112,4 +112,29 @@
 .select-units-action {
     background-color: var(--bg-layer1);
     padding: 12px;
+}
+
+.no-units {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-units-icon {
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+
+    background-color: rgba(var(--accent-rgb), 0.08);
+}
+.no-units-icon svg {
+    width: 64px;
+    width: 64px;
 }

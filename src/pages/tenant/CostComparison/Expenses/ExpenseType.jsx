@@ -213,6 +213,16 @@ const ExpenseType = (props) => {
                                     <FormControlLabel
                                         control={
                                             <Checkbox
+                                                sx={{
+                                                    border: 'var(--accent)',
+                                                    color: 'var(--accent)',
+                                                    '&.Mui-checked': {
+                                                        color: 'var(--accent)',
+                                                    },
+                                                    '&:hover': {
+                                                        color: 'var(--accent)',
+                                                    },
+                                                }}
                                                 checked={filterChecked}
                                                 onChange={(event) =>
                                                     handleFilterChange(

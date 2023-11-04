@@ -40,6 +40,8 @@ const Expenditures = (props) => {
         handleTotal,
         handleExpenseTotal,
         handleNewCategory,
+        selectedDates,
+        monthsList,
     } = cctool
 
     const [open, setOpen] = useState()
@@ -196,21 +198,34 @@ const Expenditures = (props) => {
                 </div>
 
                 <EstimatedStay />
+                {selectedDates.from &&
+                    selectedDates.to &&
+                    monthsList.length > 0 && (
+                        <>
+                            <p
+                                className="title"
+                                style={{ alignSelf: 'flex-start' }}
+                            >
+                                Estimated Amount of Expenses
+                            </p>
 
-                <p className="title" style={{ alignSelf: 'flex-start' }}>
-                    Estimated Amount of Expenses
-                </p>
+                            {expensesInput.map((expense, index) => {
+                                return (
+                                    <ExpenseType
+                                        expense={expense}
+                                        key={index}
+                                    />
+                                )
+                            })}
 
-                {expensesInput.map((expense, index) => {
-                    return <ExpenseType expense={expense} key={index} />
-                })}
-
-                <BorderedButton width="100%" onClick={toggleDrawer}>
-                    Add a category
-                </BorderedButton>
-                <PrimaryButton width="100%" onClick={handleCompute}>
-                    Compute
-                </PrimaryButton>
+                            <BorderedButton width="100%" onClick={toggleDrawer}>
+                                Add a category
+                            </BorderedButton>
+                            <PrimaryButton width="100%" onClick={handleCompute}>
+                                Compute
+                            </PrimaryButton>
+                        </>
+                    )}
 
                 <SwipeableCard
                     open={open}

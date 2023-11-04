@@ -25,6 +25,7 @@ const ComparisonToolContext = React.createContext({
     handleRemoveCategory: () => {},
     handleSelectAllMonths: () => {},
     handleSelectUnits: () => {},
+    handleSaveDates: () => {},
 })
 
 export const ComparisonToolContextProvider = (props) => {
@@ -61,7 +62,7 @@ export const ComparisonToolContextProvider = (props) => {
     const [total, setTotal] = useState(0)
     const [selectedDates, setSelectedDates] = useState({
         from: dayjs(),
-        to: dayjs(),
+        to: null,
     })
 
     const handleSelectUnits = (savedUnits) => {
@@ -120,6 +121,27 @@ export const ComparisonToolContextProvider = (props) => {
                 ...date,
             }
         })
+    }
+
+    const handleSaveDates = () => {
+        const fromDate = dayjs(selectedDates.from)
+        const toDate = dayjs(selectedDates.to)
+
+        const months = []
+        let current = fromDate
+        let idCounter = 0 // Initialize a counter for IDs
+
+        while (current.isBefore(toDate) || current.isSame(toDate, 'month')) {
+            months.push({
+                id: idCounter,
+                year: current.format('YYYY'),
+                month: current.format('MM'),
+            })
+            current = current.add(1, 'month')
+            idCounter++ // Increment the ID counter
+        }
+
+        handleMonthsList(months)
     }
 
     const handleExpenses = (event, id) => {
@@ -241,6 +263,7 @@ export const ComparisonToolContextProvider = (props) => {
                 monthsList: monthsList,
                 expensesInput: expensesInput,
                 selectedDates: selectedDates,
+                handleSaveDates: handleSaveDates,
                 monthsListDisplay: monthsListDisplay,
                 total: total,
                 handleMonths: handleMonths,
