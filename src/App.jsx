@@ -174,6 +174,10 @@ function App() {
                 <Route path="/search" element={<SearchUnit />}></Route>
                 {/* Unit Search */}
 
+                {/* Unit Comparison */}
+                <Route path="/unit_comparison/:id" element={<UnitComparison />}></Route>
+                {/* Unit Comparison */}
+
                 <Route path="/myunit-landlord" element={<MyUnit />}></Route>
                 <Route
                     path="/myunit-landlord/managerenters"

@@ -7,6 +7,7 @@ const useBookmark = () => {
     const addToBookmark = useCallback(
         async (body) => {
             let responseData
+            let responseData
             try {
                 responseData = await sendRequest({
                     url: `${
@@ -18,6 +19,8 @@ const useBookmark = () => {
                         'Content-Type': 'application/json',
                     },
                 })
+
+                return responseData
             } catch (err) {
                 throw err.message
             }
@@ -60,6 +63,8 @@ const useBookmark = () => {
                         'Content-Type': 'application/json',
                     },
                 })
+
+                return responseData
             } catch (err) {
                 throw err.message
             }
@@ -73,7 +78,8 @@ const useBookmark = () => {
         addToBookmark,
         fetchBookmark,
         fetchBookmarkUnits,
-
+,
+        fetchBookmarkUnits
     }
 }
 

@@ -5,7 +5,7 @@ import Checkbox from '@mui/material/Checkbox';
 import SquareRoundedIcon from '@mui/icons-material/SquareRounded';
 
 const CheckBox = (props) => {
-    const { items = [], selectedValue = [], onSelectedUsers = () => {}, isChecked = (false)} = props;
+    const { items = [], selectedValue = [], onSelectedUsers = () => {}, isChecked = (false), isDisabled = false, labelSize = 'auto', checkBoxSize = 'auto'} = props;
 
     const [ checkItems, setCheckItems ] = React.useState(selectedValue.length !== 0 ? selectedValue : []);
 
@@ -34,9 +34,12 @@ const CheckBox = (props) => {
         control={
           
           <Checkbox
+            disabled={isDisabled !== false ? true : false}
             checked={checkItems.find(checkItem => checkItem === item.id) ? true : false}
             onChange={() => checkedItemsHandler(item)}
             sx={{
+              height: checkBoxSize,
+              width: checkBoxSize,
               border: 'var(--accent)',
               color: "var(--accent)",
               "&.Mui-checked": {
@@ -50,6 +53,7 @@ const CheckBox = (props) => {
         }
         key={item.id}
         label={item.name}
+        sx={{"& span": {fontSize: labelSize, fontFamily: 'inter'} }}
       />));
 
     return (
