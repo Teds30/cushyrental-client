@@ -34,6 +34,7 @@ import UnitDetails from './pages/tenant/UnitDetails/UnitDetails'
 import ViewUnitDetails from './pages/tenant/ViewUnitDetails/ViewUnitDetails'
 import Homepage from './pages/tenant/Homepage/Homepage'
 import UnitLocation from './pages/tenant/ViewUnitDetails/Location/UnitLocation'
+import UnitComparison from './pages/tenant/UnitComparison/UnitComparison'
 // import './App.css'
 
 import AuthContext from './context/auth-context'
