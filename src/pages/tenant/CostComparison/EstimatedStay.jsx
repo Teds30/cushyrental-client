@@ -14,11 +14,13 @@ import dayjs from 'dayjs'
 
 import styles from './Expenditures.module.css'
 import ComparisonToolContext from '../../../context/comparison-tool-context'
+import PrimaryButton from '../../../components/Button/PrimaryButton'
 import SecondaryButton from '../../../components/Button/SecondaryButton'
 
 const EstimatedStay = (props) => {
     const cctool = useContext(ComparisonToolContext)
     const {
+        monthsList,
         handleMonthsList,
         selectedDates,
         handleSelectDates,
@@ -69,9 +71,15 @@ const EstimatedStay = (props) => {
                     </LocalizationProvider>
                 </div>
             </div>
-            <SecondaryButton onClick={handleSaveDates}>
-                Save Date
-            </SecondaryButton>
+            {monthsList.length > 0 ? (
+                <SecondaryButton onClick={handleSaveDates}>
+                    Save Date
+                </SecondaryButton>
+            ) : (
+                <PrimaryButton onClick={handleSaveDates}>
+                    Save Date
+                </PrimaryButton>
+            )}
         </div>
     )
 }

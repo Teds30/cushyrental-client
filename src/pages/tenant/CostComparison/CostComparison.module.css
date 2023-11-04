@@ -128,13 +128,13 @@
     justify-content: center;
     align-items: center;
 
-    width: 64px;
-    height: 64px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
 
     background-color: rgba(var(--accent-rgb), 0.08);
 }
 .no-units-icon svg {
-    width: 64px;
-    width: 64px;
+    width: 100px;
+    width: 100px;
 }
