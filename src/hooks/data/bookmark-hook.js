@@ -18,6 +18,8 @@ const useBookmark = () => {
                         'Content-Type': 'application/json',
                     },
                 })
+
+                return responseData
             } catch (err) {
                 throw err.message
             }
@@ -60,6 +62,8 @@ const useBookmark = () => {
                         'Content-Type': 'application/json',
                     },
                 })
+
+                return responseData
             } catch (err) {
                 throw err.message
             }
@@ -73,7 +77,6 @@ const useBookmark = () => {
         addToBookmark,
         fetchBookmark,
         fetchBookmarkUnits,
-
     }
 }
 

@@ -100,169 +100,122 @@ const Favorites = () => {
             </Box>
 
             <div className={`${styles["padding-top-container"]} `}>
-                {units &&
-                    units.map((units) => (
-                        <div
-                            key={units.id}
-                            className={`${styles["main-unit-container"]} `}
-                            id={`user-${units.id}`}
-                        >
-                            {(units.slots === null || units.slots === 0) && (
-                                <div
-                                    className={`${styles["disabled-unit-container"]}`}
-                                ></div>
-                            )}
+                {units && units.map((units) => (
+                    <div
+                        key={units.id}
+                        className={`${styles["main-unit-container"]} `}
+                        id={`user-${units.id}`}
+                        
+                    >
+                        <div className={`${styles["image-container"]} `} onClick={() => unitHandler(units.id)}>
+                            <FavoritesImage images={units.images.filter(image => image.is_thumbnail === 1).shift()} />
                             <div
-                                className={`${styles["image-container"]} `}
-                                onClick={() => unitHandler(units.id)}
+                                className={`${styles["unit-gallery-container"]} `}
                             >
-                                <FavoritesImage
-                                    images={units.images
-                                        .filter(
-                                            (image) => image.is_thumbnail === 1
-                                        )
-                                        .shift()}
+                                <GrGallery
+                                    style={{
+                                        height: "14px",
+                                        width: "14px",
+                                        fill: "var(--border-color)",
+                                    }}
                                 />
-                                <div
-                                    className={`${styles["unit-gallery-container"]} `}
-                                >
-                                    <GrGallery
-                                        style={{
-                                            height: "14px",
-                                            width: "14px",
-                                            fill: "var(--border-color)",
-                                        }}
-                                    />
-                                    <p className="smaller-text">
-                                        {units.images.length}
-                                    </p>
-                                </div>
-                            </div>
-                            <div
-                                className={`${styles["side-unit-container"]} `}
-                            >
-                                <div
-                                    className={`${styles["content-container"]} `}
-                                >
-                                    <div
-                                        className={`${styles["text-container"]} `}
-                                        onClick={() => unitHandler(units.id)}
-                                    >
-                                        <Status
-                                            unitRequestStatus={units.slots}
-                                        />
-                                        <p
-                                            className={`${
-                                                styles["bname-container"]
-                                            } ${
-                                                units.slots === null ||
-                                                units.slots === 0
-                                                    ? styles["bname2-container"]
-                                                    : styles["bname-container"]
-                                            }`}
-                                        >
-                                            {units.name}
-                                        </p>
-                                        <FavoritesUnitRating
-                                            average_ratings={
-                                                units.average_ratings
-                                            }
-                                        />
-                                        <p
-                                            className={`${styles["price-container"]} `}
-                                        >
-                                            Php {units.price}
-                                        </p>
-                                        <p
-                                            className={`${styles["address-container"]} `}
-                                        >
-                                            <TbMapPin
-                                                style={{
-                                                    fill: "transparent",
-                                                    paddingRight: "3px",
-                                                    // marginTop: "-2px",
-                                                }}
-                                                size={14}
-                                            />
-                                            {units.address}
-                                        </p>
-                                    </div>
-                                    <div
-                                        className={`${styles["bookmark-container"]}} ${
-                                            units.slots === null ||
-                                            units.slots === 0
-                                                ? styles["bookmark2-container"]
-                                                : styles["bookmark-container"]
-                                        }`}
-                                        
-                                    >
-                                        <IconButton
-                                            size="large"
-                                            color="inherit"
-                                            aria-label="menu"
-                                            onClick={() =>
-                                                handleBookmarkClick(units.id)
-                                            }
-                                        >
-                                            {isBookmarked.includes(units.id) ? (
-                                                <BsBookmark
-                                                    style={{
-                                                        width: "18px",
-                                                        height: "18px",
-                                                        color: "var(--fc-strong)",
-                                                        fill: "var(--fc-body)",
-                                                    }}
-                                                />
-                                            ) : (
-                                                <BsBookmarkFill
-                                                    style={{
-                                                        width: "18px",
-                                                        height: "18px",
-                                                        color: "var(--fc-strong)",
-                                                        fill: "var(--accent)",
-                                                    }}
-                                                />
-                                            )}
-                                        </IconButton>
-                                    </div>
-                                </div>
-                                {units.slots !== null && units.slots !== 0 && (
-                                    <div
-                                        className={`${styles["button-container"]}`}
-                                    >
-                                        <Link to="">
-                                            <div
-                                                className={`${styles["button-compare"]}`}
-                                            >
-                                                <PiHouseLight
-                                                    style={{
-                                                        fill: "var(--accent)",
-                                                        marginTop: "2px",
-                                                    }}
-                                                    size={16}
-                                                />{" "}
-                                                <p>Compare</p>
-                                            </div>
-                                        </Link>
-
-                                        <Link to="">
-                                            <button
-                                                className={`${styles["button-message"]}`}
-                                            >
-                                                {" "}
-                                                <BiMessageAlt
-                                                    style={{
-                                                        fill: "var(--accent)",
-                                                    }}
-                                                    size={20}
-                                                />
-                                            </button>
-                                        </Link>
-                                    </div>
-                                )}
+                                <p className="smaller-text">
+                                    {units.images.length}
+                                </p>
                             </div>
                         </div>
-                    ))}
+                        <div className={`${styles["side-unit-container"]} `}>
+                            <div className={`${styles["content-container"]} `} >
+                                <div className={`${styles["text-container"]} `} onClick={() => unitHandler(units.id)}>
+                                    <p
+                                        className={`${styles["bname-container"]} `}
+                                    >
+                                        {units.name}
+                                    </p>
+                                    <FavoritesUnitRating
+                                        average_ratings={units.average_ratings}
+                                    />
+                                    <p
+                                        className={`${styles["price-container"]} `}
+                                    >
+                                        Php {units.price}
+                                    </p>
+                                    <p
+                                        className={`${styles["address-container"]} `}
+                                    >
+                                        <TbMapPin
+                                            style={{
+                                                fill: "transparent",
+                                                paddingRight: "3px",
+                                                // marginTop: "-2px",
+                                            }}
+                                            size={14}
+                                        />
+                                        {units.address}
+                                    </p>
+                                </div>
+                                <div
+                                    className={`${styles["bookmark-container"]}`}
+                                >
+                                    <IconButton
+                                        size="large"
+                                        color="inherit"
+                                        aria-label="menu"
+                                        onClick={() =>
+                                            handleBookmarkClick(units.id)
+                                        }
+                                    >
+                                        {isBookmarked.includes(units.id) ? (
+                                            <BsBookmark
+                                            style={{
+                                                width: "18px",
+                                                height: "18px",
+                                                color: "var(--fc-strong)",
+                                                fill: "var(--fc-body)",
+                                            }}
+                                        />
+                                        ) : (
+
+                                            <BsBookmarkFill
+                                            style={{
+                                                width: "18px",
+                                                height: "18px",
+                                                color: "var(--fc-strong)",
+                                                fill: "var(--accent)",
+                                            }}
+                                        />
+                                        )}
+                                    </IconButton>
+                                </div>
+                            </div>
+                            <div className={`${styles["button-container"]}`}>
+                                <Link to="">
+                                    <div
+                                        className={`${styles["button-compare"]}`}
+                                    >
+                                        <PiHouseLight
+                                            style={{ fill: "var(--accent)", marginTop: "2px"}}
+                                            size={16}
+                                        />{" "}
+                                        <p>Compare</p>
+                                    </div>
+                                </Link>
+
+                                <Link to="">
+                                    <button
+                                        className={`${styles["button-message"]}`}
+                                    >
+                                        {" "}
+                                        <BiMessageAlt
+                                            style={{ fill: "var(--accent)" }}
+                                            size={20}
+                                        />
+                                    </button>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>
 
             <div className={`${styles["button-add-container"]}`}>

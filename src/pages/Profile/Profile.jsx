@@ -17,6 +17,7 @@ import VerifiedIcon from '@mui/icons-material/Verified'
 import { FiChevronLeft } from 'react-icons/fi'
 import { LiaScrollSolid } from 'react-icons/lia'
 import logo from '../../assets/cushyrental.svg'
+import RulesAndRegulationIcon from './RulesAndRegulationIcon'
 
 const Profile = () => {
     const userCtx = useContext(AuthContext)
@@ -130,17 +131,21 @@ const Profile = () => {
                     )}
 
                     <div className={`${styles['user-menu']}`}>
-                        { userCtx.user.user_type_id === 2 ? (<ProfileOption
-                            user_type_id={
-                                userCtx.user && userCtx.user.user_type_id
-                            }
-                            className={`${styles['profile-option']}`}
-                        />) : (<TenantProfileOption
-                            user_type_id={
-                                userCtx.user && userCtx.user.user_type_id
-                            }
-                            className={`${styles['profile-option']}`}
-                        />) }
+                        {userCtx.user && userCtx.user.user_type_id === 2 ? (
+                            <ProfileOption
+                                user_type_id={
+                                    userCtx.user && userCtx.user.user_type_id
+                                }
+                                className={`${styles['profile-option']}`}
+                            />
+                        ) : (
+                            <TenantProfileOption
+                                user_type_id={
+                                    userCtx.user && userCtx.user.user_type_id
+                                }
+                                className={`${styles['profile-option']}`}
+                            />
+                        )}
                     </div>
                 </div>
 
@@ -162,13 +167,14 @@ const Profile = () => {
                         <Link to="/rules" className={`${styles['about-col']}`}>
                             <div className={`${styles['about-rule']}`}>
                                 <div className={`${styles['rule']}`}>
-                                    <LiaScrollSolid
+                                    <RulesAndRegulationIcon/>
+                                    {/* <LiaScrollSolid
                                         style={{
                                             height: '44px',
                                             width: '44px',
                                             fill: 'var(--accent',
                                         }}
-                                    />
+                                    /> */}
                                 </div>
                             </div>
                             <p className="smaller-text">Rule and Regulations</p>

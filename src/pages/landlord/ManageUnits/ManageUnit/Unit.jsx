@@ -58,8 +58,10 @@ const Unit = (props) => {
             : user_unit.request_status === 2 && 3
 
     const imageThumbnail = user_unit.images
-        .filter((image) => image.is_thumbnail === 1)
-        .shift()
+        .filter((image, index) => image.is_thumbnail === 1)
+        .shift();
+
+    console.log(imageThumbnail);
 
     return (
         <div className={`${styles['units-container']}`}>
@@ -73,13 +75,7 @@ const Unit = (props) => {
                 }}
             >
                 <div className={`${styles['unit-col']}`}>
-                    <UnitImage imageThumbnail={imageThumbnail} />
-                    {/* <div className={`${styles["unit-images"]}`}>
-                        <img
-                            src={unitPhoto === '' ? photo : unitPhoto}
-                            alt={user_unit.name}
-                        />
-                    </div> */}
+                    <UnitImage imageThumbnail={imageThumbnail !== undefined ? imageThumbnail : user_unit.images[0]} />
 
                     <div className={`${styles['col-data']}`}>
                         <div>

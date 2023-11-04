@@ -8,6 +8,13 @@
     text-align: center;
 }
 
+.top-back-container {
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+    box-shadow: 'none';
+}
+
 .toolbar-container {
     display: flex;
     position: relative;
@@ -136,5 +143,11 @@
 
     .create-unit-button {
         width:  768px;
+    }
+}
+
+@media (min-width: 775px) {
+    .top-back-container {
+        width: 768px;
     }
 }

@@ -6,7 +6,7 @@ import Zoom from '@mui/material/Zoom'
 import { green } from '@mui/material/colors'
 
 const FloatingActionButton = (props) => {
-    const { children, size, variant = 'circular' } = props
+    const { children, size, variant = 'circular', onClick = () => {} } = props
 
     const fabStyle = {
         backgroundColor: 'var(--accent)',
@@ -35,6 +35,7 @@ const FloatingActionButton = (props) => {
             style={{
                 transitionDelay: `${transitionDuration.exit}ms`,
             }}
+            onClick={onClick}
             unmountOnExit
         >
             <Fab

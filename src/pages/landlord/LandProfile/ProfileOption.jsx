@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom'
 
 import styles from './LandLordProfile.module.css'
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
-import SubscriptionsIcon from '@mui/icons-material/Subscriptions'
+// import SubscriptionsIcon from '@mui/icons-material/Subscriptions'
+import SubscriptionIcon from './SubscriptionIcon'
 import { BiBuildingHouse } from 'react-icons/bi'
 
 const ProfileOption = (props) => {
@@ -22,13 +23,7 @@ const ProfileOption = (props) => {
 
             {user_type_id === 2 && (
                 <Link to="/manage_subscriptions" className={styles.col}>
-                    <SubscriptionsIcon
-                        style={{
-                            color: 'var(--fc-strong)',
-                            height: '30px',
-                            width: '30px',
-                        }}
-                    />
+                    <SubscriptionIcon/>
                     <p className="smaller-text">Subscription</p>
                 </Link>
             )}

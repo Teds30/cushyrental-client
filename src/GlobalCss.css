@@ -12,7 +12,7 @@
 
 .MuiFormControlLabel-root {
     margin-right: 0px !important;
-} 
+}
 .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
     /* border-color: var(--input-border-color); */
     border-color: var(--fc-body) !important;
@@ -51,4 +51,7 @@
 }
 .MuiRadio-root {
     color: var(--accent) !important;
+}
+.MuiTypography-root {
+    font-family: inherit !important;
 }

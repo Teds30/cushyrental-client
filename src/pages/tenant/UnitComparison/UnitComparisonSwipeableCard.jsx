@@ -8,36 +8,29 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Skeleton from '@mui/material/Skeleton'
 
-let drawerBleeding = 32
+const drawerBleeding = 32
 const StyledBox = styled(Box)(({ theme }) => ({
     backgroundColor: 'var(--bg-layer1)',
+    gap: '0'
 }))
 
 const Puller = styled(Box)(({ theme }) => ({
-    width: 30,
+    width: 98,
     height: 6,
-    backgroundColor: 'var(--bg-layer4)',
+    backgroundColor: 'var(--accent)',
     borderRadius: 3,
-    // position: 'absolute',
-    // top: 8,
-    left: 'calc(50% - 15px)',
+    
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, 0)'
 }))
 const iOS =
     typeof navigator !== 'undefined' &&
     /iPad|iPhone|iPod/.test(navigator.userAgent)
 
-const SwipeableCard = (props) => {
-    const {
-        open,
-        onOpen,
-        closeDrawer,
-        children,
-        fullWidth = false,
-        title = '',
-        action,
-    } = props
-
-    drawerBleeding = title ? 48 : 32
+const UnitComparisonSwipeableCard = (props) => {
+    const { open, onOpen, closeDrawer, children, fullWidth = false } = props
 
     return (
         <React.Fragment>
@@ -49,15 +42,19 @@ const SwipeableCard = (props) => {
                         overflow: 'visible',
                         maxWidth: !fullWidth && '768px',
                         margin: 'auto',
-                        background: 'none',
+                        height: '85%'
                     },
+                    '.MuiBackdrop-root': {
+                        display: 'flex',
+                        position: 'relative'
+                    }
                 }}
             />
             <SwipeableDrawer
                 anchor="bottom"
-                open={!!open}
+                open={open}
                 onClose={closeDrawer}
-                onOpen={onOpen}
+                onOpen={onOpen(true)}
                 swipeAreaWidth={drawerBleeding}
                 disableSwipeToOpen={true}
                 ModalProps={{
@@ -68,10 +65,10 @@ const SwipeableCard = (props) => {
             >
                 <StyledBox
                     sx={{
-                        // position: 'absolute',
-                        // height: drawerBleeding,
+                        position: 'absolute',
+                        height: drawerBleeding,
                         backgroundColor: 'var(--bg-layer1)',
-                        // overflow: 'hidden',
+                        top: -drawerBleeding,
                         borderTopLeftRadius: 8,
                         borderTopRightRadius: 8,
                         visibility: 'visible',
@@ -79,29 +76,7 @@ const SwipeableCard = (props) => {
                         left: 0,
                     }}
                 >
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            padding: '8px',
-                        }}
-                    >
-                        <Puller />
-                    </Box>
-                    {title && (
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                borderBottom: '1px solid var(--border-color)',
-                                paddingBottom: '8px',
-                            }}
-                        >
-                            <p className="title">{title}</p>
-                        </Box>
-                    )}
+                    <Puller />
                 </StyledBox>
                 <StyledBox
                     sx={{
@@ -114,10 +89,9 @@ const SwipeableCard = (props) => {
                 >
                     {children}
                 </StyledBox>
-                {action}
             </SwipeableDrawer>
         </React.Fragment>
     )
 }
 
-export default SwipeableCard
+export default UnitComparisonSwipeableCard

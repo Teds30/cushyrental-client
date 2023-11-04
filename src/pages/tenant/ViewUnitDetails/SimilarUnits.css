@@ -34,7 +34,6 @@
 }
 
 .similar-unit-swiper .swiper-pagination-bullets.swiper-pagination-horizontal {
-  border: 1px solid red;
   position: relative;
   top: 2px;
   /* width: 100%; */
