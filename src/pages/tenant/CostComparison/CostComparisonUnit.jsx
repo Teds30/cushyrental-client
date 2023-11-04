@@ -54,6 +54,12 @@ const CostComparisonUnit = (props) => {
                         : formattedPrice}
                     {/* ₱{formattedPrice} */}
                 </h3>
+
+                {monthsList.length > 1 && (
+                    <p className="smaller-text">
+                        (₱{formattedPrice} x {monthsList.length} months)
+                    </p>
+                )}
                 <p className="title">{unit.name}</p>
                 <div
                     className="caption"

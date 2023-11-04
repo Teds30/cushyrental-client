@@ -12,14 +12,16 @@ import { io } from 'socket.io-client'
 
 import { styled } from '@mui/material/styles'
 import Fab from '@mui/material/Fab'
+import Badge from '@mui/material/Badge'
 
 import { IoIosCalendar } from 'react-icons/io'
 import { FiSearch } from 'react-icons/fi'
 
 import AuthContext from '../../../context/auth-context'
 import useHttp from '../../../hooks/http-hook'
-import styles from './BottomNavigation.module.css'
 import useNotificationManager from '../../../hooks/data/notification-hook'
+
+import styles from './BottomNavigation.module.css'
 
 import nav_data from '../nav_data'
 
@@ -34,6 +36,13 @@ function HideOnScroll(props) {
         </Slide>
     )
 }
+
+const CustomBadge = styled(Badge)({
+    color: '#fff',
+    '& span': {
+        backgroundColor: 'red',
+    },
+})
 
 const StyledFab = styled(Fab)({
     position: 'absolute',
@@ -216,19 +225,34 @@ const BottomNavigation = (props) => {
                                             selectHandler(index)
                                         }}
                                     >
-                                        {index === selected
-                                            ? data.selectedIcon
-                                            : data.icon}
+                                        {data.name === 'Notification' && (
+                                            <CustomBadge
+                                                badgeContent={notifCtr}
+                                            >
+                                                {index === selected
+                                                    ? data.selectedIcon
+                                                    : data.icon}
+                                            </CustomBadge>
+                                        )}
+                                        {data.name !== 'Notification' && (
+                                            <>
+                                                {index === selected
+                                                    ? data.selectedIcon
+                                                    : data.icon}
+                                            </>
+                                        )}
                                         {data.name}
 
-                                        {data.name === 'Notification' &&
-                                            notifCtr > 0 && (
-                                                <span
-                                                    className={styles['badge']}
-                                                >
-                                                    {notifCtr}
-                                                </span>
-                                            )}
+                                        {/* {data.name === 'Notification' &&
+                                                notifCtr > 0 && (
+                                                    <span
+                                                        className={
+                                                            styles['badge']
+                                                        }
+                                                    >
+                                                        {notifCtr}
+                                                    </span>
+                                                )} */}
                                     </Box>
                                 )
                             })}
