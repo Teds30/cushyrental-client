@@ -1,13 +1,13 @@
 .main-container {
     max-width: 100%;
-    /* margin: auto; */
+    margin: auto;
     display: flex;
     height: 100vh;
     flex-direction: column;
     background: var(--bg-layer1);
     position: relative;
     transition: max-width 0.3s ease-in-out;
-    z-index: 99;
+    /* z-index: 99; */
 }
 
 .top-back-container {
@@ -53,7 +53,7 @@
     padding-bottom: 14px;
 }
 
-.manage-unit-title{
+.manage-unit-title {
     flex: 1;
     text-align: center;
 }
@@ -193,8 +193,9 @@
 .text-unit_data {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    /* width: 100%; */
     gap: 9px;
+    flex: 1;
 }
 
 .text-name_data {
@@ -389,13 +390,13 @@
 }
 
 @media (min-width: 375px) {
-    .top-back-container { */
-/* max-width: 375px; */
-/* min-height: 64px;
+    .top-back-container {
+        max-width: 375px;
+        min-height: 64px;
     }
-} */
+}
 
-/* @media (min-width: 300px) {
+@media (min-width: 300px) {
     .toptext-profile-container {
         margin-top: 50px;
     }

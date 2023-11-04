@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import useImageManager from "../../../hooks/data/image-hook";
 
-const FavoritesImage = (props) => {
+const RentedUnitImage = (props) => {
     const { images } = props;
     const { fetchImage, isLoading } = useImageManager();
     const [unitPhoto, setUnitPhoto] = useState("");
 
-    // console.log(images)
+    console.log(images);
 
     useEffect(() => {
         const handleFetch = async () => {
@@ -23,9 +23,10 @@ const FavoritesImage = (props) => {
 
             <img
                 src={unitPhoto === "" ? photo : unitPhoto}
-                alt={images.image.name}
+                alt=""
+                // alt={images.umit.images.image.name}
             />
     );
 };
 
-export default FavoritesImage;
+export default RentedUnitImage;

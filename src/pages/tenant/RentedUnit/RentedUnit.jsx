@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, navigate } from "react-router-dom";
 import styles from "./RentedUnit.module.css";
 
@@ -12,10 +12,15 @@ import BorderlessButton from "../../../components/Button/BorderlessButton";
 import RentedUnitRating from "./RentedUnitRating";
 import TextField from "../../../components/TextField/TextField";
 import useNotistack from "../../../hooks/notistack-hook";
+import RentedUnitImage from "./RentedUnitImage";
+import AuthContext from "../../../context/auth-context";
 
 const RentedUnit = (props) => {
-    const { rental } = props;
+    const { rental, onSubmittedReview } = props;
     const { notify } = useNotistack();
+    const authCtx = useContext(AuthContext);
+
+    console.log(rental);
 
     const [open, setOpen] = useState();
     const [selectedRental, setSelectedRental] = useState([]);
@@ -28,6 +33,24 @@ const RentedUnit = (props) => {
     const [submittedReview, setSubmittedReview] = useState(null);
 
     const wordLimit = 100;
+
+    const ratingValue = rental.unit.rentals
+        .map((rental) => {
+            return rental.reviews.filter((review) => {
+                return review.user_id === authCtx.user.id && review.star;
+            });
+        })
+        .shift();
+
+    //    console.log(rental)
+    // const ratingValue = rental.unit.rentals.filter((rental) => {
+    //         if (rental.user_id === authCtx.user.id) {return rental.reviews.filter((review) => {
+    //             return review.user_id === authCtx.user.id && review.star;
+    //         });}
+
+    //     })
+    //     .shift();
+    console.log(ratingValue);
 
     const handleRateUnitClick = () => {
         onRateUnitClick(rental);
@@ -72,7 +95,7 @@ const RentedUnit = (props) => {
         );
 
         const formData = {
-            user_id: 1,
+            user_id: authCtx.user.id,
             rental_id: rentalId,
             environment_star: environmentRating,
             unit_star: boardingHouseRating,
@@ -98,7 +121,10 @@ const RentedUnit = (props) => {
 
             const data = await res.json();
             setSubmittedReview(data);
-            console.log("Submitted review data:", data);
+            onSubmittedReview(data);
+
+            console.log(data);
+            // console.log("Submitted review data:", data);
 
             notify("Review sent successfully", "success");
 
@@ -121,8 +147,11 @@ const RentedUnit = (props) => {
         <div className={`${styles["previews-unit"]} `}>
             <div className={`${styles["previews-unit-data"]} `}>
                 <div className={`${styles["image-unit_data"]} `}>
-                    <img src="" alt="" />
-                    {/* <RentedUnitImage images={rental.unit.images} /> */}
+                    <RentedUnitImage
+                        images={rental.unit.images
+                            .filter((image) => image.is_thumbnail === 1)
+                            .shift()}
+                    />
                 </div>
                 <div className={`${styles["text-unit_data"]} `}>
                     <Status unitRequestStatus={rental.date_end} />
@@ -146,6 +175,15 @@ const RentedUnit = (props) => {
                     </p>
                 </div>
             </div>
+            {/* {rental.date_end == null && ( */}
+            <div>
+                <p>Rated</p>
+                <RentedUnitRating
+                    value={ratingValue.map((r) => r.star).shift()}
+                />
+            </div>
+            {/* )} */}
+
             {rental.date_end === null && (
                 <div className={`${styles["rate-unit-button"]}`}>
                     <PrimaryButton width="100%" onClick={handleRateUnitClick}>

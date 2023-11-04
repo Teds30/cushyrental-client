@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext} from "react";
 import { Link, navigate } from "react-router-dom";
 import styles from "./RentedUnit.module.css";
 import AppBar from "@mui/material/AppBar";
@@ -8,23 +8,26 @@ import IconButton from "@mui/material/IconButton";
 import moment from "moment";
 import { FiChevronLeft } from "react-icons/fi";
 import RentedUnitTabs from "./RentedUnitTabs";
-
+import AuthContext from "../../../context/auth-context";
 
 const RentedUnitMain = () => {
     const [rentedUnit, setRentedUnit] = useState([]);
+    const authCtx = useContext(AuthContext);
 
     const formatDate = (dateString) => {
         const date = moment(dateString);
         return date.format("MMMM DD, YYYY");
     };
 
+    console.log(rentedUnit);
+    // console.log(authCtx.user.id);
     useEffect(() => {
         const fetchRentals = async () => {
             try {
                 const response = await fetch(
                     `${
                         import.meta.env.VITE_BACKEND_LOCALHOST
-                    }/api/tenant-rentals/10`
+                    }/api/tenant-rentals/${authCtx.user.id}`
                 );
                 const data = await response.json();
                 setRentedUnit(data);
@@ -72,9 +75,12 @@ const RentedUnitMain = () => {
                     </Toolbar>
                 </AppBar>
             </Box>
-            <div >
-                <RentedUnitTabs rentedUnit={rentedUnit} />
-            </div>
+            {rentedUnit.length !== 0 && (
+                  <div >
+                  <RentedUnitTabs rentedUnit={rentedUnit} />
+              </div>
+            )}
+          
         </div>
     );
 };

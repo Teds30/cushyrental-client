@@ -5,12 +5,13 @@ import styles from "./RentedUnit.module.css";
 const RentedUnitRating = (props) => {
     const { value, onRatingChange } = props;
 
+    console.log(value);
     return (
         <div className={`${styles["star-container"]}`}>
             <Rating
                 name="custom-rating-read"
-                defaultValue={5}
-                value={value || 5}
+                // defaultValue={5}
+                value={value}
                 onChange={(event, newValue) => onRatingChange(newValue)}
                 sx={{
                     color: "var(--accent)",

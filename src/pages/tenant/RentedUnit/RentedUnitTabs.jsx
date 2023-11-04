@@ -7,9 +7,9 @@ import styles from "./RentedUnitTabs.module.css";
 import RentedUnitList from "./RentedUnitList.jsx";
 
 const RentedUnitTabs = (props) => {
-    const { rentedUnit = [] } = props;
+    const { rentedUnit } = props;
 
-    console.log(rentedUnit);
+    // console.log(rentedUnit);
     const [value, setValue] = useState(0);
     const [rentedUnitActive, setRentedUnitActive] = useState([]);
     const [rentedUnitInactive, setRentedUnitInactive] = useState([]);
