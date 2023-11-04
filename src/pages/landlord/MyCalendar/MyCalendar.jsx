@@ -208,7 +208,7 @@ const MyCalendar = ({ window }) => {
                     }}
                 >
                     <Toolbar>
-                        <Link to="/landlord-home">
+                        <Link to="/">
                             <IconButton
                                 size="large"
                                 edge="start"

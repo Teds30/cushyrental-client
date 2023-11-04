@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link, navigate } from "react-router-dom";
+import React, { useState, useEffect, useContext, } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Favorites.module.css";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -15,38 +15,63 @@ import { BiMessageAlt } from "react-icons/bi";
 import { GrGallery } from "react-icons/gr";
 import FavoritesUnitRating from "./FavoritesUnitRating";
 import FavoritesImage from "./FavoritesImage";
+import useBookmark from "../../../hooks/data/bookmark-hook";
+import AuthContext from "../../../context/auth-context";
 
 
 const Favorites = () => {
     const [units, setUnits] = useState([]);
     const [isBookmarked, setIsBookmarked] = useState([]);
+    const { fetchBookmarkUnits, addToBookmark, isLoading } = useBookmark();
+    const navigate = useNavigate();
 
-    
+    const authCtx = useContext(AuthContext);
+
+    // console.log(authCtx);
+
+    console.log(units);
     // console.log(isBookmarked);
 
     // console.log(fetchImage);
     useEffect(() => {
-        const fetchUnits = async () => {
+        const loadData = async () => {
             try {
-                const response = await fetch(
-                    `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/user_units/1`
-                );
-                const data = await response.json();
-                setUnits(data);
+                const response = await fetchBookmarkUnits(authCtx.user.id);
+                // const data = await response.json();
+                // console.log(authCtx.user.id)
+                // console.log(response);
+                setUnits(response);
             } catch (error) {
                 console.error("Error fetching units:", error);
             }
         };
-        fetchUnits();
-    }, []);
+        if (authCtx.user)
+
+        loadData();
+    }, [authCtx.user]);
 
     console.log(units);
-    const handleBookmarkClick = (id) => {
-        if (isBookmarked.includes(id)) {
-            setIsBookmarked(isBookmarked.filter((itemId) => itemId !== id));
-        } else {
-            setIsBookmarked([...isBookmarked, id]);
-        }
+
+    
+    const handleBookmarkClick = async (id) => {
+        const body = {unit_id: id, user_id: authCtx.user.id}
+        console.log(body);
+
+        const res = await addToBookmark(body);
+        setUnits(res);
+
+        // console.log(res);
+
+        // if (isBookmarked.includes(id)) {
+        //     setIsBookmarked(isBookmarked.filter((itemId) => itemId !== id));
+        // } else {
+        //     setIsBookmarked([...isBookmarked, id]);
+        // }
+    };
+
+    const unitHandler = (id) => {
+        // const unitId = e.currentTarget.id.split("-")[1];
+        navigate(`/unit/${id}`);
     };
 
     return (
@@ -62,13 +87,9 @@ const Favorites = () => {
                         boxShadow: "none",
                     }}
                 >
-                    <Toolbar>
+                    <Toolbar >
                         <Link
-                            to=""
-                            onClick={(e) => {
-                                e.preventDefault();
-                                navigate(-1);
-                            }}
+                            to={`/profile`}
                         >
                             <IconButton
                                 size="large"
@@ -84,7 +105,7 @@ const Favorites = () => {
                                 />
                             </IconButton>
                         </Link>
-                        <Box sx={{ flexGrow: 1, alignItems: "center" }}>
+                        <Box sx={{ marginLeft: '-22px' }} className={`${styles['favorites-title']}`}>
                             <p className="title">Favorites</p>
                         </Box>
                     </Toolbar>
@@ -92,14 +113,15 @@ const Favorites = () => {
             </Box>
 
             <div className={`${styles["padding-top-container"]} `}>
-                {units.map((units) => (
+                {units && units.map((units) => (
                     <div
                         key={units.id}
                         className={`${styles["main-unit-container"]} `}
                         id={`user-${units.id}`}
+                        
                     >
-                        <div className={`${styles["image-container"]} `}>
-                            <FavoritesImage images={units.images} />
+                        <div className={`${styles["image-container"]} `} onClick={() => unitHandler(units.id)}>
+                            <FavoritesImage images={units.images.filter(image => image.is_thumbnail === 1).shift()} />
                             <div
                                 className={`${styles["unit-gallery-container"]} `}
                             >
@@ -116,8 +138,8 @@ const Favorites = () => {
                             </div>
                         </div>
                         <div className={`${styles["side-unit-container"]} `}>
-                            <div className={`${styles["content-container"]} `}>
-                                <div>
+                            <div className={`${styles["content-container"]} `} >
+                                <div className={`${styles["text-container"]} `} onClick={() => unitHandler(units.id)}>
                                     <p
                                         className={`${styles["bname-container"]} `}
                                     >
@@ -138,7 +160,7 @@ const Favorites = () => {
                                             style={{
                                                 fill: "transparent",
                                                 paddingRight: "3px",
-                                                marginTop: "-2px",
+                                                // marginTop: "-2px",
                                             }}
                                             size={14}
                                         />
@@ -157,23 +179,24 @@ const Favorites = () => {
                                         }
                                     >
                                         {isBookmarked.includes(units.id) ? (
-                                            <BsBookmarkFill
-                                                style={{
-                                                    width: "18px",
-                                                    height: "18px",
-                                                    color: "var(--fc-strong)",
-                                                    fill: "var(--accent)",
-                                                }}
-                                            />
-                                        ) : (
                                             <BsBookmark
-                                                style={{
-                                                    width: "18px",
-                                                    height: "18px",
-                                                    color: "var(--fc-strong)",
-                                                    fill: "var(--fc-body)",
-                                                }}
-                                            />
+                                            style={{
+                                                width: "18px",
+                                                height: "18px",
+                                                color: "var(--fc-strong)",
+                                                fill: "var(--fc-body)",
+                                            }}
+                                        />
+                                        ) : (
+
+                                            <BsBookmarkFill
+                                            style={{
+                                                width: "18px",
+                                                height: "18px",
+                                                color: "var(--fc-strong)",
+                                                fill: "var(--accent)",
+                                            }}
+                                        />
                                         )}
                                     </IconButton>
                                 </div>
@@ -220,6 +243,9 @@ const Favorites = () => {
             </div>
         </div>
     );
+    // return (
+    //     <div>asd</div>
+    // )
 };
 
 export default Favorites;

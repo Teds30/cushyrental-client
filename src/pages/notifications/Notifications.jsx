@@ -19,7 +19,12 @@ const Notifications = () => {
     const navigate = useNavigate()
     const [notifications, setNotifications] = useState([])
     const authCtx = useContext(AuthContext)
-    const { isLoading, fetchUserNotifications } = useNotificationManager()
+    const {
+        isLoading,
+        fetchUserNotifications,
+        readUserNotification,
+        deleteUserNotification,
+    } = useNotificationManager()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -36,9 +41,17 @@ const Notifications = () => {
         console.log('Archived')
     }
 
-    const handleDelete = (id) => {
+    const handleDelete = async (id) => {
         // Implement your delete logic here.
         console.log('Deleted: ', id)
+        const res = await deleteUserNotification(id)
+    }
+
+    const handleClick = async ({ url = '', id = null }) => {
+        // Implement your delete logic here.
+        console.log('Clicked: ', url)
+        const res = await readUserNotification(id)
+        navigate(url)
     }
 
     return (
@@ -91,21 +104,24 @@ const Notifications = () => {
                 </AppBar>
             </Box>
             <div className={styles['notifications-container']}>
-                <h3>Recents</h3>
                 {notifications.length > 0 ? (
-                    notifications.map((notification, index) => (
-                        <SwipeableNotification
-                            key={index}
-                            data={notification}
-                            is_read={true}
-                            onArchive={handleArchive}
-                            onDelete={() => {
-                                handleDelete(notification.id)
-                            }}
-                        />
-                    ))
+                    <>
+                        <h3>Recents</h3>
+                        {notifications.map((notification, index) => (
+                            <SwipeableNotification
+                                key={index}
+                                data={notification}
+                                is_read={true}
+                                onArchive={handleArchive}
+                                onDelete={() => {
+                                    handleDelete(notification.id)
+                                }}
+                                onVisit={handleClick}
+                            />
+                        ))}
+                    </>
                 ) : (
-                    <p>'No notifications.' </p>
+                    <p style={{ textAlign: 'center' }}>No notifications. </p>
                 )}
             </div>
         </div>

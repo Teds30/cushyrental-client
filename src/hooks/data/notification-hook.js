@@ -29,8 +29,31 @@ const useNotificationManager = () => {
                 responseData = await sendRequest({
                     url: `${
                         import.meta.env.VITE_BACKEND_LOCALHOST
-                    }/api/user_notifications/${id}`,
+                    }/api/notifications/${id}`,
                     method: 'DELETE',
+                })
+            } catch (err) {
+                throw err.message
+            }
+
+            return responseData
+        },
+        [sendRequest]
+    )
+
+    const readUserNotification = useCallback(
+        async (id) => {
+            let responseData
+            try {
+                responseData = await sendRequest({
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/notifications/`,
+                    body: JSON.stringify({ id: id }),
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                 })
             } catch (err) {
                 throw err.message
@@ -45,6 +68,7 @@ const useNotificationManager = () => {
         isLoading,
         fetchUserNotifications,
         deleteUserNotification,
+        readUserNotification,
     }
 }
 

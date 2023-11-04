@@ -211,10 +211,10 @@ const PersonalInformation = (props) => {
                 open={open}
                 onOpen={toggleDrawer}
                 closeDrawer={handleCloseDrawer}
+                title="Select unit to promote"
             >
                 <div className={styles['swipeable-edge-content']}>
                     <div className={styles['main-content']}>
-                        <p className="title">Promote unit</p>
                         <div className={styles['units-container']}>
                             {units.map((unit) => {
                                 const unitStyles =

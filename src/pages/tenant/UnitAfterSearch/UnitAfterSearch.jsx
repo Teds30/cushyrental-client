@@ -226,15 +226,16 @@ const UnitAfterSearch = () => {
                 open={open}
                 onOpen={toggleDrawer}
                 closeDrawer={handleCloseDrawer}
+                title="Sort"
             >
                 {' '}
                 <div style={{ padding: '0 20px' }}>
                     <div className={`${styles['main-swipe-container']}`}>
-                        <div className={`${styles['top-swipe-container']}`}>
+                        {/* <div className={`${styles['top-swipe-container']}`}>
                             <div>
                                 <p className="title">Sort</p>
                             </div>
-                        </div>
+                        </div> */}
                         <div className={`${styles['swipe-content-container']}`}>
                             <UnitOption
                                 onSortChange={handlesortUnits}

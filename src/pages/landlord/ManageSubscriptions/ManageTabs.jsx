@@ -19,6 +19,7 @@ const ManageTabs = (props) => {
     const [subscriptionDenied, setSubscriptionDenied] = useState([])
     const [subscriptionCompleted, setSubscriptionCompleted] = useState([])
 
+    console.log(subscriptionPending);
     const handleFilter = (req_status) => {
         const fil = userSubscriptions.filter((unit) => {
             return unit.request_status === req_status

@@ -5,7 +5,8 @@ const useBookmark = () => {
     const { sendRequest, isLoading } = useHttp()
 
     const addToBookmark = useCallback(
-        async () => {
+        async (body) => {
+            let responseData
             let responseData
             try {
                 responseData = await sendRequest({
@@ -13,6 +14,7 @@ const useBookmark = () => {
                         import.meta.env.VITE_BACKEND_LOCALHOST
                     }/api/add_bookmark`,
                     method: 'POST',
+                    body: JSON.stringify(body),
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -22,6 +24,7 @@ const useBookmark = () => {
             } catch (err) {
                 throw err.message
             }
+            return responseData
         },
         [sendRequest]
     )
@@ -34,15 +37,15 @@ const useBookmark = () => {
                     url: `${
                         import.meta.env.VITE_BACKEND_LOCALHOST
                     }/api/bookmark/${id}`,
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                 })
-
-                return responseData
             } catch (err) {
                 throw err.message
             }
+            return responseData
         },
         [sendRequest]
     )
@@ -55,6 +58,7 @@ const useBookmark = () => {
                     url: `${
                         import.meta.env.VITE_BACKEND_LOCALHOST
                     }/api/bookmark_units/${id}`,
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -64,6 +68,7 @@ const useBookmark = () => {
             } catch (err) {
                 throw err.message
             }
+            return responseData
         },
         [sendRequest]
     )
@@ -72,6 +77,8 @@ const useBookmark = () => {
         isLoading,
         addToBookmark,
         fetchBookmark,
+        fetchBookmarkUnits,
+,
         fetchBookmarkUnits
     }
 }

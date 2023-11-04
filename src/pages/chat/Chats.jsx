@@ -37,8 +37,6 @@ const Chats = () => {
             },
         })
 
-        console.log('asd: ', userId)
-
         setRooms(res.rooms)
         setInitialRooms(res.rooms)
     }
@@ -81,7 +79,7 @@ const Chats = () => {
             <div className={styles['header']}>
                 <div className={styles['col1']}>
                     <Link
-                        to="/home"
+                        to="/"
                         onClick={(e) => {
                             e.preventDefault()
                             navigate(-1)

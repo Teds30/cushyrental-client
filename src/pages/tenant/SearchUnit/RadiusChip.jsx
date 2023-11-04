@@ -72,6 +72,9 @@ const RadiusChip = (props) => {
                     '& span': {
                         padding: '0',
                     },
+                    '&.MuiChip-clickable:hover': {
+                        background: 'rgba(3, 176, 119, 0.08)', // Remove hover background
+                    },
                 }}
                 onClick={clickable ? () => handleClick(item.id) : undefined}
             />

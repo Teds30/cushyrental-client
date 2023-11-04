@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Link, navigate } from "react-router-dom";
 import styles from "./RentedUnit.module.css";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import moment from "moment";
-import { FiChevronLeft } from "react-icons/fi";
+
+// import { IoIosStar } from "react-icons/io";
+import Status from "./RentedUnitStatus";
+import PrimaryButton from "../../../components/Button/PrimaryButton";
+import { TbMapPin } from "react-icons/tb";
+
 import SwipeableCard from "../../../components/SwipeableCard/SwipeableCard";
 import BorderlessButton from "../../../components/Button/BorderlessButton";
 import RentedUnitRating from "./RentedUnitRating";
 import TextField from "../../../components/TextField/TextField";
+import useNotistack from "../../../hooks/notistack-hook";
 
-const RentedUnit = () => {
-    const [rentals, setRentals] = useState([]);
+const RentedUnit = (props) => {
+    const { rental } = props;
+    const { notify } = useNotistack();
+
     const [open, setOpen] = useState();
     const [selectedRental, setSelectedRental] = useState([]);
     const [inputValue, setInputValue] = useState("");
@@ -26,28 +29,9 @@ const RentedUnit = () => {
 
     const wordLimit = 100;
 
-    const formatDate = (dateString) => {
-        const date = moment(dateString);
-        return date.format("MMMM DD, YYYY");
+    const handleRateUnitClick = () => {
+        onRateUnitClick(rental);
     };
-
-    useEffect(() => {
-        const fetchRentals = async () => {
-            try {
-                const response = await fetch(
-                    `${
-                        import.meta.env.VITE_BACKEND_LOCALHOST
-                    }/api/tenant-rentals/2`
-                );
-                const data = await response.json();
-                setRentals(data);
-            } catch (error) {
-                console.error("Error fetching users:", error);
-            }
-        };
-
-        fetchRentals();
-    }, []);
 
     const handleInputChange = (event) => {
         const value = event.target.value;
@@ -97,8 +81,9 @@ const RentedUnit = () => {
             star: averageStar,
         };
 
-        console.log(averageStar);
-        console.log(inputValue);
+        // console.log(averageStar);
+        // console.log(inputValue);
+
         try {
             const res = await fetch(
                 `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/reviews`,
@@ -115,6 +100,8 @@ const RentedUnit = () => {
             setSubmittedReview(data);
             console.log("Submitted review data:", data);
 
+            notify("Review sent successfully", "success");
+
             setOpen(false);
 
             setInputValue("");
@@ -126,80 +113,46 @@ const RentedUnit = () => {
         }
     };
 
+    const onRateUnitClick = (rental) => {
+        setSelectedRental(rental);
+        setOpen(true);
+    };
     return (
-        <div className={`${styles["main-container"]} `}>
-            <Box className={`${styles["top-back-container"]} `}>
-                <AppBar
-                    position="static"
-                    sx={{
-                        margin: 0,
-                        backgroundColor: "#fff",
-                        color: "var(--fc-body)",
-                        fontFamily: "Inter",
-                        boxShadow: "none",
-                    }}
-                >
-                    <Toolbar>
-                        <Link
-                            to=""
-                            onClick={(e) => {
-                                e.preventDefault();
-                                navigate(-1);
+        <div className={`${styles["previews-unit"]} `}>
+            <div className={`${styles["previews-unit-data"]} `}>
+                <div className={`${styles["image-unit_data"]} `}>
+                    <img src="" alt="" />
+                    {/* <RentedUnitImage images={rental.unit.images} /> */}
+                </div>
+                <div className={`${styles["text-unit_data"]} `}>
+                    <Status unitRequestStatus={rental.date_end} />
+                    <p className={`${styles["text-name_data"]} `}>
+                        {rental.unit.name}
+                    </p>
+                    <p className={`${styles["text-address_data"]} `}>
+                        <TbMapPin
+                            style={{
+                                fill: "transparent",
+                                paddingRight: "2px",
+                                fontSize: "14px",
+                                marginTop: "-3px",
                             }}
-                        >
-                            <IconButton
-                                size="large"
-                                edge="start"
-                                color="inherit"
-                                aria-label="menu"
-                            >
-                                <FiChevronLeft
-                                    style={{
-                                        color: "var(--fc-strong)",
-                                        fill: "transparent",
-                                    }}
-                                />
-                            </IconButton>
-                        </Link>
-                        <Box sx={{ flexGrow: 1, alignItems: "center" }}>
-                            <p className="title">Rented Unit</p>
-                        </Box>
-                    </Toolbar>
-                </AppBar>
-            </Box>
-
-            <div className={`${styles["profile-container"]} `}>
-                <div className={`${styles["previews-unit"]} `}>
-                    {rentals.map((rental) => (
-                        <div
-                            key={rental.id}
-                            className={`${styles["previews-unit-data"]} `}
-                        >
-                            <div className={`${styles["image-unit_data"]} `}>
-                                <img src="" alt="" />
-                            </div>
-                            <div className={`${styles["text-unit_data"]} `}>
-                                <p>{formatDate(rental.date_start)}</p>
-                                <p>{rental.unit.name}</p>
-                                <p>{rental.unit.address}</p>
-                                <div
-                                    className={`${styles["rate-unit-button"]}`}
-                                >
-                                    <button
-                                        className={`${styles["rate-unit-button-style"]}`}
-                                        onClick={toggleDrawer(true, rental)}
-                                    >
-                                        Rate Unit
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+                        />
+                        {rental.unit.address}
+                    </p>
+                    <p className={`${styles["text-price_data"]} `}>
+                        {" "}
+                        ₱ {rental.unit.price}
+                    </p>
                 </div>
             </div>
-            <div className={`${styles["bottom-text-container"]}`}>
-                <p>No more units found.</p>
-            </div>
+            {rental.date_end === null && (
+                <div className={`${styles["rate-unit-button"]}`}>
+                    <PrimaryButton width="100%" onClick={handleRateUnitClick}>
+                        Rate Unit
+                    </PrimaryButton>
+                </div>
+            )}
 
             <SwipeableCard
                 open={open}
