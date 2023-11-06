@@ -27,6 +27,7 @@ import { FiChevronLeft } from 'react-icons/fi'
 
 import useHttp from '../../../hooks/http-hook'
 import AuthContext from '../../../context/auth-context'
+import UnitBookmark from './UnitBookmark'
 
 const ViewUnitDetails = () => {
     const { id } = useParams()
@@ -38,12 +39,6 @@ const ViewUnitDetails = () => {
 
     const [unitData, setUnitData] = useState({})
     const [scrolling, setScrolling] = useState(false)
-
-    const [isBookmarked, setIsBookmarked] = useState(false)
-
-    const handleBookmarkClick = () => {
-        setIsBookmarked(!isBookmarked)
-    }
 
     useEffect(() => {
         const handleFetch = async () => {
@@ -159,28 +154,7 @@ const ViewUnitDetails = () => {
                                 </Box>
                             </div>
                             <div className={`${styles['bookmark']}`}>
-                                <IconButton
-                                    color="inherit"
-                                    aria-label="menu"
-                                    onClick={handleBookmarkClick}
-                                >
-                                    {isBookmarked ? (
-                                        <BsBookmarkFill
-                                            style={{
-                                                fill: 'var(--accent)',
-                                                background: 'transparent',
-                                            }}
-                                        />
-                                    ) : (
-                                        <BsBookmark
-                                            style={{
-                                                fill: scrolling
-                                                    ? 'var(--fc-strong)'
-                                                    : '#fff',
-                                            }}
-                                        />
-                                    )}
-                                </IconButton>
+                                <UnitBookmark scrolling={scrolling} unitId={unitData.id}/>
                             </div>
                         </Toolbar>
                     </AppBar>
