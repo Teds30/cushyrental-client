@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useNotistack from "../../hooks/notistack-hook";
-
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
 import styles from "../Login/SignInPage.module.css";
 import PrimaryButton from "../../components/Button/PrimaryButton";
 import TextField from "../../components/TextField/TextField";
@@ -42,7 +45,7 @@ const ForgotPassword = () => {
   );
   let formIsValid = false
 
-  const [otpDigits, setOtpDigits] = useState(Array(4).fill(""));
+  const [otpDigits, setOtpDigits] = useState(Array(6).fill(""));
   const [showInfo, setShowInfo] = useState(false);
   const [otp, setOtp] = useState([]);
   const [isVerified, setIsVerified] = useState(false);
@@ -56,11 +59,11 @@ const ForgotPassword = () => {
     const updatedOtpDigits = [...otpDigits];
     updatedOtpDigits[index] = value;
 
-    if (otp.join("") != updatedOtpDigits.join("") && updatedOtpDigits.length != 4) {
+    if (otp.join("") != updatedOtpDigits.join("") && updatedOtpDigits.length != 6) {
       setIsVerified(false);
       setError(true);
       setError(true);
-    } else if (otp.join("") === updatedOtpDigits.join("") && updatedOtpDigits.length === 4) {
+    } else if (otp.join("") === updatedOtpDigits.join("") && updatedOtpDigits.length === 6) {
       setIsVerified(true);
       setError(false);
     }
@@ -74,7 +77,7 @@ const ForgotPassword = () => {
 
   const generateRandomNumbers = () => {
     const newRandomNumbers = [];
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 6; i++) {
       const randomNumber = Math.floor(Math.random() * 10); // Generates a random number between 0 and 9
       newRandomNumbers.push(randomNumber);
     }
@@ -115,15 +118,41 @@ const ForgotPassword = () => {
 
   return (
     <form className={`${styles["main-container"]} `} onSubmit={submitHandler}>
-      <div>
-        <Link to={`/signin`}>
-          <div className={styles["back"]}>
-            <FiChevronLeft size={24} /> FORGOT PASSWORD
-          </div>
-        </Link>
-      </div>
+        <Box className={`${styles['top-back-container']} `}>
+                    <AppBar
+                        position="static"
+                        sx={{
+                            margin: 0,
+                            backgroundColor: '#fff',
+                            color: 'var(--fc-body)',
+                            fontFamily: 'Inter',
+                            boxShadow: 'none',
+                        }}
+                    >
+                        <Toolbar>
+                            <Link to={`/signin`}>
+                                <IconButton
+                                    size="large"
+                                    edge="start"
+                                    color="inherit"
+                                    aria-label="menu"
+                                >
+                                    <FiChevronLeft
+                                        style={{
+                                            color: 'var(--fc-strong)',
+                                            fill: 'transparent',
+                                        }}
+                                    />
+                                </IconButton>
+                            </Link>
+                            <Box sx={{ flexGrow: 1 }}>
+                                <p className="title">FORGOT PASSWORD</p>
+                            </Box>
+                        </Toolbar>
+                    </AppBar>
+                </Box>
 
-      <div>
+      <div className={`${styles["enter-email"]} `}>
         <TextField
           fullWidth
           label="Email Address"
