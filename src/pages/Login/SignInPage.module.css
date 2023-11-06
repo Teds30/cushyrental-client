@@ -1,11 +1,25 @@
 .main-container {
   max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
+  margin: auto;
   display: flex;
   flex-direction: column;
+  background: var(--bg-layer1);
+  transition: max-width 0.3s ease-in-out;
   padding: 20px 26px;
   gap: 25px;
+}
+
+.top-back-container {
+  width: 100%;
+  max-width: 100%;
+  flex: 1;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  background: var(--bg-layer1);
+  z-index: 100;
+  transition: max-width 0.3s ease-in-out;
 }
 
 .logo {
@@ -171,6 +185,10 @@
   color: var(--accent-danger);
 }
 
+.enter-email {
+  display: flex;
+  align-items: center;
+}
 .enter-code {
   display: flex;
   align-items: center;
@@ -233,8 +251,8 @@
   }
 
   .otp-input {
-    width: 55px;
-    height: 55px;
+    width: 32px;
+    height: 35px;
     font-size: 25px;
   }
 }
@@ -281,7 +299,7 @@
   }
 
   .otp-input {
-    width: 90px;
+    width: 80px;
     height: 90px;
     font-size: 38px;
   }
