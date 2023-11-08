@@ -91,6 +91,22 @@
     margin-right: -12px;
 }
 
+.unit-comparison-button {
+    border: 1px solid red;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.unit-selected {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
 /* .unit-images {
     width: inherit;
     height: inherit;

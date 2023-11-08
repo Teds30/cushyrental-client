@@ -6,15 +6,17 @@ import useAttributeManager from "../../../../../../hooks/data/attribute-hook";
 import PrimaryButton from "../../../../../../components/Button/PrimaryButton";
 import useNotistack from "../../../../../../hooks/notistack-hook";
 import useUserManager from "../../../../../../hooks/data/users-hook";
+import useUnitManager from "../../../../../../hooks/data/units-hook";
 
 import styles from "./EditRules.module.css";
 
 const EditRules = (props) => {
     const { unitRules, unitId } = props;
     const { fetchRules } = useAttributeManager();
-    const { updateUserRules, isLoading } = useUserManager();
+    const { updateUserRules } = useUserManager();
     const navigate = useNavigate();
     const { notify } = useNotistack();
+    const { deleteUnitRule, editUnitRule, isLoading } = useUnitManager();
 
     const [rules, setRules] = useState([]);
     const [selectedRules, setSelectedRules] = useState(unitRules);
@@ -24,27 +26,46 @@ const EditRules = (props) => {
         setSelectedRules(value);
     };
 
-    const saveAmenityHandler = (event) => {
+    const saveAmenityHandler = async (event) => {
         event.preventDefault();
 
         if (selectedRules.length === 0) {
             return;
         }
 
-        selectedRules.forEach(async (element, index) => {
-            try {
-                const data = {
-                    unit_id: Number(unitId),
-                    rule_id: element.toString(),
-                };
-                const res = await updateUserRules(data);
-            } catch (error) {}
+        let data = rules
+            .filter((rule) => !selectedRules.includes(rule.id))
+            .map((rule) => ({ ...rule, unit_id: Number(unitId) }));
 
-            if (index === selectedRules.length - 1) {
-                navigate("/manage_unit/edit/" + unitId);
-                notify("Rules save successfully", "success");
-            }
-        });
+        if (data.length !== 0) {
+            const res = await deleteUnitRule(data);
+            console.log(res);
+        } else {
+            data = rules
+            .filter((rule) => selectedRules.includes(rule.id))
+            .map((rule) => ({ ...rule, unit_id: Number(unitId) })); 
+
+            const res = await editUnitRule(data);
+            console.log(res);
+        }
+
+        navigate("/manage_unit/edit/" + unitId);
+        notify("Amenities save successfully", "success");
+
+        // selectedRules.forEach(async (element, index) => {
+        //     try {
+        //         const data = {
+        //             unit_id: Number(unitId),
+        //             rule_id: element.toString(),
+        //         };
+        //         const res = await updateUserRules(data);
+        //     } catch (error) {}
+
+        //     if (index === selectedRules.length - 1) {
+        //         navigate("/manage_unit/edit/" + unitId);
+        //         notify("Rules save successfully", "success");
+        //     }
+        // });
     };
 
     useEffect(() => {

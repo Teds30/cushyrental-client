@@ -13,6 +13,7 @@ import styles from "./EditProfile.module.css";
 import photo from "../../assets/Units/pics.png";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import BorderlessButton from "../../components/Button/BorderlessButton";
 
 const EditProfileForm = (props) => {
     const { userData = {} } = props;
@@ -222,17 +223,24 @@ const EditProfileForm = (props) => {
                     </div>
 
                     <div className={`${styles["user-data-col"]}`}>
-                        <TextField
-                            fullWidth
-                            label="Contact Number"
-                            defaultValue={user.phone_number}
-                            onChange={numberChangeHandler}
-                            helperText={
-                                user.phone_number === "" &&
-                                "Please enter your cellular number."
-                            }
-                            error
-                        />
+                        <div className={`${styles["phone-number-col"]}`}>
+                            <TextField
+                                fullWidth
+                                disabled
+                                label="Contact Number"
+                                defaultValue={user.phone_number}
+                                onChange={numberChangeHandler}
+                                helperText={
+                                    user.phone_number === "" &&
+                                    "Please enter your cellular number."
+                                }
+                                error
+                            />
+
+                            <div className={`${styles['change-button']}`}>
+                                <Link className={`${styles['change']}`}>CHANGE</Link>
+                            </div>
+                        </div>
 
                         <Dropdown
                             fullWidth

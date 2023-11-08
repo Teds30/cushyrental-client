@@ -59,6 +59,7 @@ const ManageUnitTabs = (props) => {
                     borderBottom: 1,
                     borderColor: "divider",
                     background: "var(--bg-layer1)",
+                    marginTop: '56px'
                 }}
             >
                 <StyledTabs

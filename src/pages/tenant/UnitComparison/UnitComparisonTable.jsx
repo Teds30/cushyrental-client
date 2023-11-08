@@ -53,10 +53,16 @@ const UnitComparisonTable = (props) => {
             if (newData.length === 0) {
                 return prevUnits.filter(unit => presentUnits.includes(unit.id));
             } else {
+                if (data.lenth === 3) {
+                    return data;
+                }
                 const updatedUnits = [...prevUnits, ...newData];
+                console.log('pumasok dito');
                 return updatedUnits;
             }
         });
+
+        setOpen(false);
     };
 
     const unitContent = units.map((unit, index) => {
@@ -252,7 +258,7 @@ const UnitComparisonTable = (props) => {
                 closeDrawer={handleCloseDrawer}
             >
                 {!isLoading && (
-                    <Bookmark units={bookmarks} onSelectedUnitList={selectedUnitHandler} selectedUnitList={units.map(unit => unit.id)} />
+                    <Bookmark units={bookmarks} onSelectedUnitList={selectedUnitHandler} selectedUnitList={units.map(unit => unit.id)} onCompare={handleCloseDrawer} />
                 )}
             </UnitComparisonSwipeableCard>
         </div>

@@ -153,173 +153,127 @@ const Favorites = () => {
             </Box>
 
             <div className={`${styles["padding-top-container"]} `}>
-                {units &&
-                    sortedUnits.map((units) => (
-                        <div
-                            key={units.id}
-                            className={`${styles["main-unit-container"]} `}
-                            id={`user-${units.id}`}
-                        >
-                            {(units.slots === null || units.slots === 0) && (
-                                <div
-                                    className={`${styles["disabled-unit-container"]}`}
-                                ></div>
-                            )}
+                {units && units.map((units) => {
+                    const imageThumbnail = units.images
+                    .filter((image, index) => image.is_thumbnail === 1)
+                    .shift();
+
+                    return (
+                    <div
+                        key={units.id}
+                        className={`${styles["main-unit-container"]} `}
+                        id={`user-${units.id}`}
+                        
+                    >
+                        <div className={`${styles["image-container"]} `} onClick={() => unitHandler(units.id)}>
+                            <FavoritesImage images={imageThumbnail !== undefined ? imageThumbnail : units.images[0]} />
                             <div
-                                className={`${styles["right-unit-container"]} `}
-                                onClick={() => unitHandler(units.id)}
+                                className={`${styles["unit-gallery-container"]} `}
                             >
-                                {" "}
-                                <div
-                                    className={`${styles["image-container"]} `}
-                                >
-                                    <FavoritesImage
-                                        images={units.images
-                                            .filter(
-                                                (image) =>
-                                                    image.is_thumbnail === 1
-                                            )
-                                            .shift()}
-                                    />
-                                    <div
-                                        className={`${styles["unit-gallery-container"]} `}
-                                    >
-                                        <GrGallery
-                                            style={{
-                                                height: "14px",
-                                                width: "14px",
-                                                fill: "var(--border-color)",
-                                            }}
-                                        />
-                                        <p className="smaller-text">
-                                            {units.images.length}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div
-                                className={`${styles["side-unit-container"]} `}
-                            >
-                                <div
-                                    className={`${styles["content-container"]} `}
-                                >
-                                    <div
-                                        className={`${styles["text-container"]} `}
-                                        onClick={() => unitHandler(units.id)}
-                                    >
-                                        <Status
-                                            unitRequestStatus={units.slots}
-                                        />
-                                        <p
-                                            className={`${styles["bname-container"]} `}
-                                        >
-                                            {units.name}
-                                        </p>
-                                        <FavoritesUnitRating
-                                            average_ratings={
-                                                units.average_ratings
-                                            }
-                                        />
-                                        <p
-                                            className={`${styles["price-container"]} `}
-                                        >
-                                            Php {units.price}
-                                        </p>
-                                        <p
-                                            className={`${styles["address-container"]} `}
-                                        >
-                                            <TbMapPin
-                                                style={{
-                                                    fill: "transparent",
-                                                    paddingRight: "3px",
-                                                    marginTop: "-2px",
-                                                }}
-                                                size={14}
-                                            />
-                                            {units.address}
-                                        </p>
-                                    </div>
-                                    <div
-                                        className={`${styles["bookmark-container"]}`}
-                                    >
-                                        <IconButton
-                                            size="large"
-                                            color="inherit"
-                                            aria-label="menu"
-                                            onClick={() =>
-                                                handleBookmarkClick(units.id)
-                                            }
-                                        >
-                                            {isBookmarked.includes(units.id) ? (
-                                                <BsBookmark
-                                                    style={{
-                                                        width: "18px",
-                                                        height: "18px",
-                                                        color: "var(--fc-strong)",
-                                                        fill: "var(--fc-body)",
-                                                    }}
-                                                />
-                                            ) : (
-                                                <BsBookmarkFill
-                                                    style={{
-                                                        width: "18px",
-                                                        height: "18px",
-                                                        color: "var(--fc-strong)",
-                                                        fill: "var(--accent)",
-                                                    }}
-                                                />
-                                            )}
-                                        </IconButton>
-                                    </div>
-                                </div>
-                                <div
-                                    className={`${styles["button-container"]}`}
-                                >
-                                    <Link to="">
-                                        <div
-                                            className={`${styles["button-compare"]}`}
-                                        >
-                                            <svg
-                                                width="16"
-                                                height="16"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    d="M8.492 22.5848L8.49709 22.5844C8.50838 22.5833 8.52822 22.5808 8.55359 22.5756C8.60632 22.5648 8.67097 22.5447 8.73093 22.5103C8.82051 22.4589 8.95389 22.3526 8.95389 22.0156V18.5976C8.95126 18.3101 9.01537 18.0601 9.13947 17.8525C9.26341 17.6452 9.43004 17.5089 9.5885 17.4216C9.74406 17.3359 9.8947 17.2955 10.0026 17.2758C10.0577 17.2657 10.1048 17.2604 10.1404 17.2576C10.1582 17.2562 10.1734 17.2554 10.1855 17.255L10.2013 17.2546L10.2075 17.2545L10.2101 17.2545L10.2113 17.2545L10.2118 17.2545C10.2121 17.2545 10.2124 17.2545 10.2124 17.7545V17.2545H13.7269C14.4092 17.2545 14.8347 17.5458 15.0589 17.9156C15.161 18.084 15.2091 18.2485 15.2324 18.3685C15.2442 18.4293 15.2502 18.4815 15.2532 18.5209C15.2547 18.5407 15.2555 18.5576 15.2559 18.5711L15.2562 18.5887L15.2562 18.5951L15.2563 18.5956L15.2562 18.5985L15.2562 18.5998L15.2562 18.6005C15.2562 18.6008 15.2562 18.6011 14.7562 18.5951V22.0156C14.7562 23.0406 15.6775 23.0848 15.6775 23.0848L8.492 22.5848ZM8.492 22.5848H6.5354L6.50915 22.5825C6.47922 22.5797 6.43332 22.5748 6.37373 22.5672C6.25441 22.5519 6.08108 22.5254 5.87193 22.4812C5.45138 22.3924 4.89756 22.2343 4.34946 21.9589C3.26669 21.4149 2.23438 20.4379 2.23438 18.5951V9.56759C2.23447 9.56684 2.23457 9.56599 2.23469 9.56505C2.23632 9.55257 2.24105 9.52303 2.25358 9.47751C2.27853 9.38692 2.3354 9.22955 2.46422 9.01481C2.72217 8.58477 3.2731 7.91765 4.44429 7.1007L4.47262 7.08094L4.49316 7.06191C4.49169 7.06329 4.49089 7.06407 4.49094 7.06413C4.49118 7.06442 4.50783 7.05098 4.5562 7.01384C4.60932 6.97307 4.68486 6.91558 4.7801 6.84343C4.97036 6.69928 5.2366 6.49858 5.55354 6.2602C6.18727 5.78354 7.02212 5.15741 7.85376 4.5343C8.68535 3.91122 9.51352 3.29131 10.1338 2.82717L10.8827 2.26687L11.0923 2.11011L11.1475 2.06884L11.1616 2.05826L11.1652 2.05559L11.1661 2.05492L11.1663 2.05475L10.867 1.65427L11.1665 2.05475L11.1708 2.0514C11.1712 2.05111 11.1717 2.05071 11.1724 2.05021C11.176 2.0476 11.1835 2.04235 11.1945 2.03504C11.2166 2.02037 11.2526 1.99773 11.3008 1.97169C11.3981 1.91916 11.5399 1.85549 11.7132 1.81327C12.0487 1.73147 12.5147 1.72486 13.0442 2.07231C13.6839 2.49201 15.2678 3.73284 16.7164 4.88989C17.4352 5.46399 18.1126 6.01105 18.6105 6.41464C18.8594 6.61641 19.0634 6.78226 19.2051 6.89765L19.3687 7.03103L19.4114 7.0659L19.4223 7.07479L19.425 7.07702L19.4257 7.07758L19.4259 7.07771L19.7423 6.69061L19.4259 7.07775L19.4423 7.0911L19.4597 7.10303C20.6538 7.92154 21.2318 8.59168 21.5096 9.02671C21.6483 9.24396 21.713 9.40385 21.7427 9.49679C21.7565 9.53999 21.7629 9.56936 21.7656 9.58404L21.7656 18.5938L21.7656 18.5941V18.5942V18.5946V18.5951L21.7656 18.5993C21.7655 18.6049 21.7652 18.6144 21.7648 18.6277C21.7638 18.6543 21.7618 18.6958 21.7577 18.7501C21.7494 18.8587 21.7326 19.0174 21.6985 19.2092C21.63 19.5951 21.4938 20.1028 21.2264 20.6049C20.9603 21.1045 20.5674 21.5936 19.9829 21.9595C19.4001 22.3244 18.5982 22.5848 17.4844 22.5848H15.7003H8.492Z"
-                                                    stroke="var(--accent)"
-                                                    fill="transparent"
-                                                />
-                                                <path
-                                                    d="M10.2 12.1429H6V13.2857H10.2V15L12.6 12.7143L10.2 10.4286V12.1429ZM13.8 11.5714V9.85714H18V8.71429H13.8V7L11.4 9.28571L13.8 11.5714Z"
-                                                    fill="var(--accent)"
-                                                />
-                                            </svg>
-
-                                            <p>Compare</p>
-                                        </div>
-                                    </Link>
-
-                                    <Link to="">
-                                        <button
-                                            className={`${styles["button-message"]}`}
-                                            onClick={()=> handleInquire(units.id)}
-                                        >
-                                            {" "}
-                                            <BiMessageAlt
-                                                style={{
-                                                    fill: "var(--accent)",
-                                                }}
-                                                size={25}
-                                            />
-                                        </button>
-                                    </Link>
-                                </div>
+                                <GrGallery
+                                    style={{
+                                        height: "14px",
+                                        width: "14px",
+                                        fill: "var(--border-color)",
+                                    }}
+                                />
+                                <p className="smaller-text">
+                                    {units.images.length}
+                                </p>
                             </div>
                         </div>
-                    ))}
+                        <div className={`${styles["side-unit-container"]} `}>
+                            <div className={`${styles["content-container"]} `} >
+                                <div className={`${styles["text-container"]} `} onClick={() => unitHandler(units.id)}>
+                                    <p
+                                        className={`${styles["bname-container"]} `}
+                                    >
+                                        {units.name}
+                                    </p>
+                                    <FavoritesUnitRating
+                                        average_ratings={units.average_ratings}
+                                    />
+                                    <p
+                                        className={`${styles["price-container"]} `}
+                                    >
+                                        Php {units.price}
+                                    </p>
+                                    <p
+                                        className={`${styles["address-container"]} `}
+                                    >
+                                        <TbMapPin
+                                            style={{
+                                                fill: "transparent",
+                                                paddingRight: "3px",
+                                                // marginTop: "-2px",
+                                            }}
+                                            size={14}
+                                        />
+                                        {units.address}
+                                    </p>
+                                </div>
+                                <div
+                                    className={`${styles["bookmark-container"]}`}
+                                >
+                                    <IconButton
+                                        size="large"
+                                        color="inherit"
+                                        aria-label="menu"
+                                        onClick={() =>
+                                            handleBookmarkClick(units.id)
+                                        }
+                                    >
+                                        {isBookmarked.includes(units.id) ? (
+                                            <BsBookmark
+                                            style={{
+                                                width: "18px",
+                                                height: "18px",
+                                                color: "var(--fc-strong)",
+                                                fill: "var(--fc-body)",
+                                            }}
+                                        />
+                                        ) : (
+
+                                            <BsBookmarkFill
+                                            style={{
+                                                width: "18px",
+                                                height: "18px",
+                                                color: "var(--fc-strong)",
+                                                fill: "var(--accent)",
+                                            }}
+                                        />
+                                        )}
+                                    </IconButton>
+                                </div>
+                            </div>
+                            <div className={`${styles["button-container"]}`}>
+                                <Link to={`/unit_comparison/${units.id}`}>
+                                    <div
+                                        className={`${styles["button-compare"]}`}
+                                    >
+                                        <PiHouseLight
+                                            style={{ fill: "var(--accent)", marginTop: "2px"}}
+                                            size={16}
+                                        />{" "}
+                                        <p>Compare</p>
+                                    </div>
+                                </Link>
+
+                                <Link to="">
+                                    <button
+                                        className={`${styles["button-message"]}`}
+                                    >
+                                        {" "}
+                                        <BiMessageAlt
+                                            style={{ fill: "var(--accent)" }}
+                                            size={20}
+                                        />
+                                    </button>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>
 
             <div className={`${styles["button-add-container"]}`}>
