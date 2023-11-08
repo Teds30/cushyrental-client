@@ -1,6 +1,7 @@
 .manage-unit-container {
     position: relative;
     height: 100vh;
+    transition: max-width 0.3s ease-in-out;
 }
 
 .manage-unit-container .manage-unit-title {
@@ -31,6 +32,7 @@
 }
 
 .main-container {
+
     display: flex;
     flex-direction: column;
     gap: 12px;
