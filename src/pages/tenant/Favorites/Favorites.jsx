@@ -100,7 +100,12 @@ const Favorites = () => {
             </Box>
 
             <div className={`${styles["padding-top-container"]} `}>
-                {units && units.map((units) => (
+                {units && units.map((units) => {
+                    const imageThumbnail = units.images
+                    .filter((image, index) => image.is_thumbnail === 1)
+                    .shift();
+
+                    return (
                     <div
                         key={units.id}
                         className={`${styles["main-unit-container"]} `}
@@ -108,7 +113,7 @@ const Favorites = () => {
                         
                     >
                         <div className={`${styles["image-container"]} `} onClick={() => unitHandler(units.id)}>
-                            <FavoritesImage images={units.images.filter(image => image.is_thumbnail === 1).shift()} />
+                            <FavoritesImage images={imageThumbnail !== undefined ? imageThumbnail : units.images[0]} />
                             <div
                                 className={`${styles["unit-gallery-container"]} `}
                             >
@@ -189,7 +194,7 @@ const Favorites = () => {
                                 </div>
                             </div>
                             <div className={`${styles["button-container"]}`}>
-                                <Link to="">
+                                <Link to={`/unit_comparison/${units.id}`}>
                                     <div
                                         className={`${styles["button-compare"]}`}
                                     >
@@ -215,7 +220,7 @@ const Favorites = () => {
                             </div>
                         </div>
                     </div>
-                ))}
+                )})}
             </div>
 
             <div className={`${styles["button-add-container"]}`}>
