@@ -8,17 +8,21 @@ import FacilityKS from "./FacilityKS";
 import FacilityOthers from "./FacilityOthers";
 import useUserManager from "../../../../../../hooks/data/users-hook";
 import useNotistack from "../../../../../../hooks/notistack-hook";
+import useUnitManager from "../../../../../../hooks/data/units-hook";
 
 import styles from "./EditFacilities.module.css";
 
 const EditAmenities = (props) => {
     const { unitFacilities, unitId } = props;
     const { fetchFacilities } = useAttributeManager();
-    const { updateUserFacilities, isLoading } = useUserManager();
+    const { updateUserFacilities } = useUserManager();
     const { notify } = useNotistack();
     const navigate = useNavigate();
+    const { editUnitfacility, isLoading } = useUnitManager();
 
     const [facilities, setFacilities] = useState([]);
+
+    console.log(unitFacilities)
 
     const [comfortRoom, setComfortRoom] = useState(
         unitFacilities.filter((facility) => {
@@ -79,7 +83,7 @@ const EditAmenities = (props) => {
         setOtherFacilities(value);
     };
 
-    const saveFacilityHandler = (event) => {
+    const saveFacilityHandler = async (event) => {
         event.preventDefault();
 
         let data = [];
@@ -120,16 +124,21 @@ const EditAmenities = (props) => {
             return;
         }
 
-        data.forEach(async (element, index) => {
-            try {
-                const res = await updateUserFacilities(element);
-            } catch (error) {}
+        const res = await editUnitfacility(data);
+        console.log(res);
 
-            if (index === data.length - 1) {
-                navigate("/manage_unit/edit/" + unitId);
-                notify("Facility save successfully", "success");
-            }
-        });
+        navigate("/manage_unit/edit/" + unitId);
+        notify("Facility save successfully", "success");
+        // data.forEach(async (element, index) => {
+        //     try {
+        //         const res = await updateUserFacilities(element);
+        //     } catch (error) {}
+
+        //     if (index === data.length - 1) {
+        //         navigate("/manage_unit/edit/" + unitId);
+        //         notify("Facility save successfully", "success");
+        //     }
+        // });
     };
 
     useEffect(() => {
