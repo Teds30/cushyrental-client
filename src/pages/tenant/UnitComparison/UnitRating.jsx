@@ -6,6 +6,7 @@ const UnitRating = (props) => {
     console.log(rating);
 
     return (<Rating
+        readOnly
         value={rating}
         precision={0.5}
         sx={{
