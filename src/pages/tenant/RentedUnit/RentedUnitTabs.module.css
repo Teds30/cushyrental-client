@@ -1,3 +1,11 @@
+.top-back-container {
+    /* position: fixed; */
+    max-width: 100%;
+    /* margin: auto; */
+    transition: max-width 0.3s ease-in-out;
+    z-index: 100;
+}
+
 .manage-unit-container .manage-unit-title {
     flex: 1;
     text-align: center;
@@ -5,7 +13,13 @@
 
 .toolbar-container {
     display: flex;
-    position: relative;
+    align-items: center;
+    max-width: 100%;
+    /* justify-content: center ; */
+}
+.manage-unit-title {
+    flex: 1;
+    text-align: center;
 }
 
 .link-button {
@@ -19,6 +33,7 @@
     align-items: center;
     margin-bottom: 12px;
 }
+
 .main-container {
     display: flex;
     flex-direction: column;
@@ -113,9 +128,87 @@
     gap: 10px;
 }
 
-@media (min-width: 640px) {
+/* @media (min-width: 640px) {
     .manage-unit-container {
         max-width: 768px;
         margin: 0 auto;
+    }
+} */
+
+@media (max-width: 367px) {
+    .top-back-container {
+        max-width: 100%;
+    }
+    /* .top-back-container {
+        max-width: 100%;
+        min-height: 64px;
+    } */
+
+    .unit-container {
+        width: 270px;
+    }
+}
+
+@media (max-width: 768px) {
+    .top-back-container, .toolbar-container {
+        max-width: 100%;
+        transition: all 0.15s ease-in-out;
+
+    }
+    /* .top-back-container {
+        max-width: 100%;
+        min-height: 64px;
+    } */
+}
+
+@media (min-width: 375px) {
+    .top-back-container {
+        max-width: 375px;
+        min-height: 64px;
+    }
+}
+
+@media (min-width: 300px) {
+    .toptext-profile-container {
+        margin-top: 50px;
+    }
+}
+
+@media (min-width: 475px) {
+    .main-container {
+        max-width: 475px;
+    }
+    .top-back-container {
+        max-width: 475px;
+        min-height: 64px;
+    }
+
+    .toptext-profile-container {
+        margin-top: 60px;
+    }
+}
+
+@media (min-width: 640px) {
+    .main-container {
+        max-width: 768px;
+    }
+    .top-back-container {
+        max-width: 768px;
+        min-height: 64px;
+    }
+
+    .toptext-profile-container {
+        margin-top: 70px;
+    }
+}
+
+@media (min-width: 768px) {
+    .main-container,
+    .top-back-container, .toolbar-container {
+        max-width: 768px;
+    }
+
+    .toptext-profile-container {
+        margin-top: 90px;
     }
 }

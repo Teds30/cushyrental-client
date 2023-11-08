@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, navigate } from "react-router-dom";
 import styles from "./RentedUnit.module.css";
 
-// import { IoIosStar } from "react-icons/io";
 import Status from "./RentedUnitStatus";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import { TbMapPin } from "react-icons/tb";
@@ -14,9 +13,10 @@ import TextField from "../../../components/TextField/TextField";
 import useNotistack from "../../../hooks/notistack-hook";
 import RentedUnitImage from "./RentedUnitImage";
 import AuthContext from "../../../context/auth-context";
+import RentedUnitRatingStar from "./RentedUnitStar";
 
 const RentedUnit = (props) => {
-    const { rental, onSubmittedReview } = props;
+    const { rental, onSubmittedReview, onRefresh} = props;
     const { notify } = useNotistack();
     const authCtx = useContext(AuthContext);
 
@@ -42,15 +42,9 @@ const RentedUnit = (props) => {
         })
         .shift();
 
-    //    console.log(rental)
-    // const ratingValue = rental.unit.rentals.filter((rental) => {
-    //         if (rental.user_id === authCtx.user.id) {return rental.reviews.filter((review) => {
-    //             return review.user_id === authCtx.user.id && review.star;
-    //         });}
-
-    //     })
-    //     .shift();
-    console.log(ratingValue);
+    // console.log("value", ratingValue);
+    // console.log("rentalId", rental.id);
+    // console.log(rentals);
 
     const handleRateUnitClick = () => {
         onRateUnitClick(rental);
@@ -122,9 +116,8 @@ const RentedUnit = (props) => {
             const data = await res.json();
             setSubmittedReview(data);
             onSubmittedReview(data);
-
-            console.log(data);
-            // console.log("Submitted review data:", data);
+            console.log("saving");
+            onRefresh();
 
             notify("Review sent successfully", "success");
 
@@ -175,22 +168,34 @@ const RentedUnit = (props) => {
                     </p>
                 </div>
             </div>
-            {/* {rental.date_end == null && ( */}
-            <div>
-                <p>Rated</p>
-                <RentedUnitRating
-                    value={ratingValue.map((r) => r.star).shift()}
-                />
-            </div>
-            {/* )} */}
+            {rental.date_end == null &&
+                ratingValue &&
+                ratingValue.length > 0 && (
+                    <div className={`${styles["ratingunit-container"]} `}>
+                        <div className={`${styles["rated-container"]} `}>
+                            <p>RATE</p>
+                        </div>
+                        <div className={`${styles["star-container"]} `}>
+                            <RentedUnitRatingStar
+                                average_ratings={ratingValue
+                                    .map((r) => r.star)
+                                    .shift()}
+                            />
+                        </div>
+                    </div>
+                )}
 
-            {rental.date_end === null && (
-                <div className={`${styles["rate-unit-button"]}`}>
-                    <PrimaryButton width="100%" onClick={handleRateUnitClick}>
-                        Rate Unit
-                    </PrimaryButton>
-                </div>
-            )}
+            {rental.date_end == null &&
+                (ratingValue.length === 0) && (
+                    <div className={`${styles["rate-unit-button"]}`}>
+                        <PrimaryButton
+                            width="100%"
+                            onClick={handleRateUnitClick}
+                        >
+                            Rate Unit
+                        </PrimaryButton>
+                    </div>
+                )}
 
             <SwipeableCard
                 open={open}

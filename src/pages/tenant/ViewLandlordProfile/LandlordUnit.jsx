@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
 import IconButton from '@mui/material/IconButton'
-import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
+
 import styles from './ViewProfile.module.css'
 import LandlordUnitAttribute from './LandlordUnitAttribute'
 import LandlordUnitImage from './LandlordUnitImage'
 import LandlordUnitRating from './LandlordUnitRating'
+import LandlordProfileBookmark from './LandlordProfileBookmark'
 // import useBookmark from '../../../hooks/data/bookmark-hook'
 
 const LandlordUnit = (props) => {
@@ -15,14 +16,6 @@ const LandlordUnit = (props) => {
     // const {addBookmark } = useBookmark();
 
     console.log(isBookmarked);
-
-    const handleBookmarkClick = (id) => {
-        if (isBookmarked.includes(id)) {
-            setIsBookmarked(isBookmarked.filter((itemId) => itemId !== id));
-        } else {
-            setIsBookmarked([...isBookmarked, id]);
-        }
-    };
 
     const displayAmenities = unit.amenities.slice(0, 1)
     const excessAmenities = unit.amenities.slice(1)
@@ -38,34 +31,7 @@ const LandlordUnit = (props) => {
                     image={unit.images.length > 0 && unit.images[0].image}
                 />
                 <div className={`${styles['bookmark-container']}`}>
-                    <IconButton
-                        size="large"
-                        color="inherit"
-                        aria-label="menu"
-                        onClick={() =>
-                            handleBookmarkClick(unit.id)
-                        }
-                    >
-                        {isBookmarked.includes(unit.id) ? (
-                            <BsBookmarkFill
-                                style={{
-                                    width: '18px',
-                                    height: '18px',
-                                    color: 'var(--fc-strong)',
-                                    fill: 'var(--accent)',
-                                }}
-                            />
-                        ) : (
-                            <BsBookmark
-                                style={{
-                                    width: '18px',
-                                    height: '18px',
-                                    color: 'var(--fc-strong)',
-                                    fill: 'var(--fc-body)',
-                                }}
-                            />
-                        )}
-                    </IconButton>
+                    <LandlordProfileBookmark unitId={unit.id} />
                 </div>
             </div>
             <div className={`${styles['content-container']} `}>

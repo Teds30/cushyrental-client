@@ -25,7 +25,7 @@ const FavoritesUnitRating = (props) => {
                 max={5}
                 value={starsToShow}
                 precision={0.5}
-                sx={{ color: "var(--accent)" }}
+                sx={{ color: "var(--accent)", fontSize: "14px", }}
             />
         </Stack>
     );
