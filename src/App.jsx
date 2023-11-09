@@ -211,7 +211,6 @@ function App() {
                         <Route path="" element={<CostComparison />} />
                         <Route path="edit" element={<Expenditures />} />
                     </Route>
-                <Route path="/about" element={<About />}></Route>
                 <Route
                     path="*"
                     element={
