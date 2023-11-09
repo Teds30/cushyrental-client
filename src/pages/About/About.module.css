@@ -1,0 +1,44 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.nav-container {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-top: 32px;
+    margin-bottom: 64px;
+}
+
+.nav-mid-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+}
+
+.button-container {
+    border-radius: 14px;
+    background: #03b077;
+    border: none;
+    padding: 10px 20px;
+}
+
+.header-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 32px
+}
+.header-title {
+    color: var(--fc-strong);
+    font-family: Plus Jakarta Sans;
+    font-size: 96px;
+    font-weight: 700;
+}

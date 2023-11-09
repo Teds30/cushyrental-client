@@ -18,6 +18,7 @@ import { FiChevronLeft } from 'react-icons/fi'
 import { LiaScrollSolid } from 'react-icons/lia'
 import logo from '../../assets/cushyrental.svg'
 import RulesAndRegulationIcon from './RulesAndRegulationIcon'
+import About from '../About/About'
 
 const Profile = () => {
     const userCtx = useContext(AuthContext)
@@ -157,7 +158,8 @@ const Profile = () => {
                     <div className={styles['hr']}></div>
 
                     <div className={`${styles['about-row']}`}>
-                        <Link className={`${styles['about-col']}`}>
+                        <Link to={`/about`}
+                           className={`${styles['about-col']}`}>
                             <div className={`${styles['about-image']}`}>
                                 <img src={logo} alt="CushyRental" />
                             </div>
