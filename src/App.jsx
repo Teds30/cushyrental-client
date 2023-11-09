@@ -48,7 +48,6 @@ import Expenditures from './pages/tenant/CostComparison/Expenditures'
 import CostComparisonTool from './pages/tenant/CostComparison/CostComparisonTool'
 // import Homepage from './pages/tenant/Homepage/Homepage'
 import { ComparisonToolContextProvider } from './context/comparison-tool-context'
-import About from './pages/About/About'
 
 function App() {
     const { user, token, loginHandler, logoutHandler, isLoggedIn } = useAuth()
