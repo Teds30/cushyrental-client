@@ -45,7 +45,7 @@ const UnitComparison = () => {
                 >
                     <Toolbar className={`${styles["toolbar-container"]}`}>
                         <Link
-                            to={`/profile`}
+                            to={`/favorites`}
                             // onClick={(e) => {
                             //     e.preventDefault()
                             //     navigate(-1)

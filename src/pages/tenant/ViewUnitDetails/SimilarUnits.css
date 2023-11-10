@@ -33,9 +33,17 @@
   height: 93px;
 }
 
+.similar-unit-swiper-slide .unitImage {
+  height: 93px;
+}
+
+.swiper-slide-active .unitImage {
+  height: 125px;
+}
+
 .similar-unit-swiper .swiper-pagination-bullets.swiper-pagination-horizontal {
   position: relative;
-  top: 2px;
+  top: 12px;
   /* width: 100%; */
   box-sizing: border-box;
 }
@@ -45,6 +53,7 @@
   background-size: cover;
   /* width: 170px; */
   width: 200px;
+  /* height: 93px; */
   /* height: 300px; */
 }
 

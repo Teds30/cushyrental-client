@@ -1,6 +1,7 @@
 .edit-unit-container {
     display: flex;
     flex-direction: column;
+    transition: max-width 0.3s ease-in-out;
     /* background-color: var(--bg); */
 }
 
@@ -8,6 +9,15 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
+    margin-top: 56px;
+}
+
+.top-back-container {
+    position: fixed;
+    width: 100%;
+    /* background: none; */
+    z-index: 100;
+    box-shadow: 'none';
 }
 
 .learn-more {
@@ -39,7 +49,7 @@
 }
 
 .image-chip {
-    z-index: 100;
+    z-index: 50;
     position: absolute;
     top: 8px;
     right: 8px;
@@ -51,7 +61,7 @@
 }
 
 .edit-image-button {
-    z-index: 100;
+    z-index: 50;
     position: absolute;
     left: 18px;
     bottom: 24px;
@@ -170,5 +180,11 @@
     .edit-unit-container {
         max-width: 768px;
         margin: 0 auto;
+    }
+}
+
+@media (min-width: 775px) {
+    .top-back-container {
+        width: 768px;
     }
 }

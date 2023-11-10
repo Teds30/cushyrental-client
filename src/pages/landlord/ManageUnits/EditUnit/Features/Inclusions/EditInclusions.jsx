@@ -5,6 +5,7 @@ import ChipBig from "../../../../../../components/Chips/ChipBig";
 import useAttributeManager from "../../../../../../hooks/data/attribute-hook";
 import useNotistack from "../../../../../../hooks/notistack-hook";
 import useUserManager from "../../../../../../hooks/data/users-hook";
+import useUnitManager from "../../../../../../hooks/data/units-hook";
 
 import styles from "./EditInclusions.module.css";
 import PrimaryButton from "../../../../../../components/Button/PrimaryButton";
@@ -12,9 +13,10 @@ import PrimaryButton from "../../../../../../components/Button/PrimaryButton";
 const EditInclusions = (props) => {
     const { unitInclusions, unitId } = props;
     const { fetchInclusions } = useAttributeManager();
-    const { updateUserInclusions, isLoading } = useUserManager();
+    const { updateUserInclusions } = useUserManager();
     const { notify } = useNotistack();
     const navigate = useNavigate();
+    const { deleteUnitInclusion, editUnitInclusion, isLoading } = useUnitManager();
 
     const [inclusions, setInclusions] = useState([]);
     const [selectedInclusions, setSelectedInclusions] =
@@ -24,27 +26,46 @@ const EditInclusions = (props) => {
         setSelectedInclusions(value);
     };
 
-    const saveAmenityHandler = (event) => {
+    const saveAmenityHandler = async (event) => {
         event.preventDefault();
 
         if (selectedInclusions.length === 0) {
             return;
         }
 
-        selectedInclusions.forEach(async (element, index) => {
-            try {
-                const data = {
-                    unit_id: Number(unitId),
-                    inclusion_id: element,
-                };
-                const res = await updateUserInclusions(data);
-            } catch (error) {}
+        let data = inclusions
+            .filter((inclusion) => !selectedInclusions.includes(inclusion.id))
+            .map((inclusion) => ({ ...inclusion, unit_id: Number(unitId) }));
 
-            if (index === selectedInclusions.length - 1) {
-                navigate("/manage_unit/edit/" + unitId);
-                notify("Inclusions save successfully", "success");
-            }
-        });
+        if (data.length !== 0) {
+            const res = await deleteUnitInclusion(data);
+            console.log(res);
+        } else {
+            data = inclusions
+            .filter((inclusion) => selectedInclusions.includes(inclusion.id))
+            .map((inclusion) => ({ ...inclusion, unit_id: Number(unitId) })); 
+
+            const res = await editUnitInclusion(data);
+            console.log(res);
+        }
+
+        navigate("/manage_unit/edit/" + unitId);
+        notify("Amenities save successfully", "success");
+
+        // selectedInclusions.forEach(async (element, index) => {
+        //     try {
+        //         const data = {
+        //             unit_id: Number(unitId),
+        //             inclusion_id: element,
+        //         };
+        //         const res = await updateUserInclusions(data);
+        //     } catch (error) {}
+
+        //     if (index === selectedInclusions.length - 1) {
+        //         navigate("/manage_unit/edit/" + unitId);
+        //         notify("Inclusions save successfully", "success");
+        //     }
+        // });
     };
 
     useEffect(() => {

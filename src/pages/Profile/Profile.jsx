@@ -17,6 +17,7 @@ import VerifiedIcon from '@mui/icons-material/Verified'
 import { FiChevronLeft } from 'react-icons/fi'
 import { LiaScrollSolid } from 'react-icons/lia'
 import logo from '../../assets/cushyrental.svg'
+import RulesAndRegulationIcon from './RulesAndRegulationIcon'
 
 const Profile = () => {
     const userCtx = useContext(AuthContext)
@@ -156,7 +157,8 @@ const Profile = () => {
                     <div className={styles['hr']}></div>
 
                     <div className={`${styles['about-row']}`}>
-                        <Link className={`${styles['about-col']}`}>
+                        <Link
+                           className={`${styles['about-col']}`}>
                             <div className={`${styles['about-image']}`}>
                                 <img src={logo} alt="CushyRental" />
                             </div>
@@ -166,13 +168,14 @@ const Profile = () => {
                         <Link to="/rules" className={`${styles['about-col']}`}>
                             <div className={`${styles['about-rule']}`}>
                                 <div className={`${styles['rule']}`}>
-                                    <LiaScrollSolid
+                                    <RulesAndRegulationIcon/>
+                                    {/* <LiaScrollSolid
                                         style={{
                                             height: '44px',
                                             width: '44px',
                                             fill: 'var(--accent',
                                         }}
-                                    />
+                                    /> */}
                                 </div>
                             </div>
                             <p className="smaller-text">Rule and Regulations</p>

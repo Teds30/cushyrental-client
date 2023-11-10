@@ -1,34 +1,48 @@
+import { useEffect, useState } from "react";
 import Rating from "@mui/material/Rating";
+
+import UnitBookmarkPhoto from "./UnitBookmarkPhoto";
+import CheckBox from "../../../components/CheckBox/CheckBox";
 
 import styles from "./Bookmark.module.css";
 import { GrGallery } from "react-icons/gr";
 import { IoLocationOutline } from "react-icons/io5";
 import photo from "../../../assets/Units/pics.png";
-import CheckBox from "../../../components/CheckBox/CheckBox";
-import { useEffect, useState } from "react";
-import UnitBookmarkPhoto from "./UnitBookmarkPhoto";
+import BorderlessButton from "../../../components/Button/BorderlessButton";
+import PrimaryButton from "../../../components/Button/PrimaryButton";
 
 const Bookmark = (props) => {
-    const { units, onSelectedUnitList, selectedUnitList } = props;
+    const { units, onSelectedUnitList, selectedUnitList, onCompare } = props;
 
     const [selectedUnit, setSelectedUnit] = useState(selectedUnitList);
+
+    const cancelHandler = () => {
+        setSelectedUnit([]);
+    }
+
+    const comapareHandler = () => {
+        const selectedUnits = units.filter((unit) => {
+            if (selectedUnit.includes(unit.id)) {
+                return unit
+            }
+        });
+
+
+        // console.log(selectedUnits);
+
+        onSelectedUnitList(selectedUnits);
+    }
 
     useEffect(() => {
         const selectedHandler = () => {
             if (selectedUnit.length > 3) {
                 setSelectedUnit(selectedUnit.slice(1));
             }
-
-            const selectedUnits = units.filter((unit) => {
-                if (selectedUnit.includes(unit.id)) {
-                    return unit
-                }
-            });
-
-            onSelectedUnitList(selectedUnits);
         }
 
-        selectedHandler();
+        if (selectedUnit.length > 3) {
+            selectedHandler();
+        }
     }, [selectedUnit]);
 
     const content = units.map((unit) => {
@@ -38,7 +52,7 @@ const Bookmark = (props) => {
             <div key={unit.id} className={`${styles["bookmark-row"]}`}>
                 <div className={`${styles["bookmark-col"]}`}>
                     <div className={`${styles["unit-photo"]}`}>
-                        <UnitBookmarkPhoto images={imageThumbnail}/>
+                        <UnitBookmarkPhoto images={imageThumbnail !== undefined ? imageThumbnail : unit.images[0]}/>
                         {/* <img src={photo} alt="" /> */}
 
                         <div className={`${styles["unit-number"]}`}>
@@ -96,6 +110,14 @@ const Bookmark = (props) => {
             <p className={`${styles["favorites-title"]}`}>Select Unit</p>
 
             {content}
+
+            <div className={`${styles['unit-comparison-button']}`}>
+                <div className={`${styles['unit-selected']}`}>
+                    <p>Selected {selectedUnit.length}/3</p>
+                    <BorderlessButton onClick={cancelHandler}>Cancel</BorderlessButton>
+                </div>
+                <PrimaryButton onClick={comapareHandler} disabled={selectedUnit.length < 1 ? true : false}>Compare</PrimaryButton>
+            </div>
         </div>
     );
 };

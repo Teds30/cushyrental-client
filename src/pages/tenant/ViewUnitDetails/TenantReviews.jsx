@@ -112,6 +112,7 @@ export default function TenantReviews(props) {
                             <div className="review-rating">
                                 <Rating
                                     value={review.star}
+                                    precision={0.5}
                                     sx={{
                                         fontSize: "10px",
                                         color: "var(--accent)",
@@ -120,18 +121,6 @@ export default function TenantReviews(props) {
                                         },
                                     }}
                                 />
-                                {/* <Rating
-                                    name="disabled"
-                                    value={review.star}
-                                    disabled
-                                    sx={{
-                                        color: "var(--accent)",
-                                        fontSize: "10px",
-                                        "& svg": {
-                                            fill: "var(--accent)",
-                                        },
-                                    }}
-                                /> */}
                                 <span
                                     className="smaller-text"
                                     style={{

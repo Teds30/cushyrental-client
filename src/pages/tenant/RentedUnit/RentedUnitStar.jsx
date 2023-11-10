@@ -1,18 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Rating from "@mui/material/Rating";
-import styles from "./RentedUnit.module.css";
+import Stack from "@mui/material/Stack";
+import StarIcon from '@mui/icons-material/Star';
 
-const RentedUnitRating = (props) => {
-    const { value, onRatingChange } = props;
+const RentedUnitRatingStar = (props) => {
+    const { average_ratings } = props;
+    const [starsToShow, setStarsToShow] = useState(5);
 
-    console.log(value);
+    useEffect(() => {
+        if (Number.isInteger(average_ratings)) {
+            setStarsToShow(average_ratings);
+        } else if ([1.5, 2.5, 3.5, 4.5].includes(average_ratings)) {
+            setStarsToShow(average_ratings);
+        } else {
+            setStarsToShow(Math.round(average_ratings * 2) / 2);
+        }
+    }, [average_ratings]);
+
     return (
-        <div className={`${styles["star-container"]}`}>
+        <Stack spacing={1}>
             <Rating
                 name="custom-rating-read"
-                // defaultValue={5}
-                value={value}
-                onChange={(event, newValue) => onRatingChange(newValue)}
+                readOnly
+                size="small"
+                max={5}
+                value={starsToShow}
+                precision={0.5}
+                emptyIcon={<StarIcon style={{ opacity: 0.55, color: "#8A93A6"}} fontSize="inherit" />}
                 sx={{
                     color: "var(--accent)",
                     fontSize: "22px",
@@ -31,8 +45,8 @@ const RentedUnitRating = (props) => {
 
                     '@media (min-width: 375px)': {
                         "& .MuiRating-icon": {
-                            marginRight: "10px",
-                            marginLeft: "12px",
+                            marginRight: "6px",
+                            marginLeft: "6px",
                         },
                     },
                     
@@ -66,8 +80,8 @@ const RentedUnitRating = (props) => {
                     }
                 }}
             />
-        </div>
+        </Stack>
     );
 };
 
-export default RentedUnitRating;
+export default RentedUnitRatingStar

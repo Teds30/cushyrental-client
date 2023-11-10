@@ -192,6 +192,156 @@ const useUnitManager = () => {
         [sendRequest]
     )
 
+
+    const deleteUnitAmenity = useCallback(
+        async (body) => {
+            let responseData
+            try {
+                responseData = await sendRequest({
+                    url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/unit_amenities`,
+                    method: 'DELETE',
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+            } catch (err) {
+                throw err.message
+            }
+
+            return responseData
+        },
+        [sendRequest]
+    )
+
+    const editUnitAmenity = useCallback(
+        async (body) => {
+            let responseData
+            try {
+                responseData = await sendRequest({
+                    url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/unit_amenities`,
+                    method: 'POST',
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+            } catch (err) {
+                throw err.message
+            }
+
+            return responseData
+        },
+        [sendRequest]
+    )
+
+    const deleteUnitInclusion = useCallback(
+        async (body) => {
+            let responseData
+            try {
+                responseData = await sendRequest({
+                    url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/unit_inclusions`,
+                    method: 'DELETE',
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+            } catch (err) {
+                throw err.message
+            }
+
+            return responseData
+        },
+        [sendRequest]
+    )
+
+    const editUnitInclusion = useCallback(
+        async (body) => {
+            let responseData
+            try {
+                responseData = await sendRequest({
+                    url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/unit_inclusions`,
+                    method: 'POST',
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+            } catch (err) {
+                throw err.message
+            }
+
+            return responseData
+        },
+        [sendRequest]
+    )
+
+    const deleteUnitRule = useCallback(
+        async (body) => {
+            let responseData
+            try {
+                responseData = await sendRequest({
+                    url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/unit_rules`,
+                    method: 'DELETE',
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+            } catch (err) {
+                throw err.message
+            }
+
+            return responseData
+        },
+        [sendRequest]
+    )
+
+    const editUnitRule = useCallback(
+        async (body) => {
+            let responseData
+            try {
+                responseData = await sendRequest({
+                    url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/unit_rules`,
+                    method: 'POST',
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+            } catch (err) {
+                throw err.message
+            }
+
+            return responseData
+        },
+        [sendRequest]
+    )
+
+    const editUnitfacility = useCallback(
+        async (body) => {
+            let responseData
+            try {
+                responseData = await sendRequest({
+                    url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/unit_facilities`,
+                    method: 'POST',
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+            } catch (err) {
+                throw err.message
+            }
+
+            return responseData
+        },
+        [sendRequest]
+    )
+
+    // unit_amenities
+
     return {
         isLoading,
         fetchUnits,
@@ -203,6 +353,13 @@ const useUnitManager = () => {
         updateUnit,
         createUnit,
         searchUnits,
+        deleteUnitAmenity,
+        editUnitAmenity,
+        deleteUnitInclusion,
+        editUnitInclusion,
+        deleteUnitRule,
+        editUnitRule,
+        editUnitfacility
     }
 }
 

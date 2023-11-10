@@ -9,7 +9,7 @@ import VerifiedIcon from '@mui/icons-material/Verified'
 
 const LandlordProfile = (props) => {
     const { user } = props;
-    const { fetchImage, isLoading } = useImageManager();
+    const { fetchAvatar, isLoading } = useImageManager();
 
     const [landlord, setLandlord] = useState({});
 
@@ -21,7 +21,7 @@ const LandlordProfile = (props) => {
     useEffect(() => {
         const handleFetch = async () => {
             try {
-                const res = await fetchImage(user.profile_picture_img);
+                const res = await fetchAvatar(user.profile_picture_img);
                 setLandlord({ ...user, profile_picture_img: res });
             } catch (err) {}
         };

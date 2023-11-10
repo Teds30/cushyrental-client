@@ -12,6 +12,7 @@ import IconButton from '@mui/material/IconButton'
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
 import { TbMapPin } from 'react-icons/tb'
 import ListAfterSearchImage from './ListAfterSearchImage'
+import ListAfterSearchBookmark from "../UnitAfterSearch/ListAfterSearchBookmark";
 
 import useImageManager from '../../../hooks/data/image-hook'
 
@@ -154,32 +155,7 @@ const ListAfterSearch = ({ units }) => {
                         </Link>
 
                         <div className={`${styles['bookmark-container']}`}>
-                            <IconButton
-                                size="large"
-                                color="inherit"
-                                aria-label="menu"
-                                onClick={() => handleBookmarkClick(units.id)}
-                            >
-                                {isBookmarked.includes(units.id) ? (
-                                    <BsBookmarkFill
-                                        style={{
-                                            width: '18px',
-                                            height: '18px',
-                                            color: 'var(--fc-strong)',
-                                            fill: 'var(--accent)',
-                                        }}
-                                    />
-                                ) : (
-                                    <BsBookmark
-                                        style={{
-                                            width: '18px',
-                                            height: '18px',
-                                            color: 'var(--fc-strong)',
-                                            fill: 'var(--fc-body)',
-                                        }}
-                                    />
-                                )}
-                            </IconButton>
+                           <ListAfterSearchBookmark unitId={units.id} />
                         </div>
                     </div>
                 </div>

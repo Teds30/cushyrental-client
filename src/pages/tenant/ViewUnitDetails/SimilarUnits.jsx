@@ -46,6 +46,11 @@ export default function SimilarUnits(props) {
                                 images[0].image.replace("images/", "")
                             );
                             return { ...unit, thumbnail_image: image };
+                        } else {
+                            const image = await fetchImage(
+                                unit.images[0].image.replace("images/", "")
+                            );
+                            return { ...unit, thumbnail_image: image };
                         }
                         return unit;
                     })
@@ -71,7 +76,7 @@ export default function SimilarUnits(props) {
                                     alt={unit.name}
                                 />
                                 <div className="similar-unit-bookmark">
-                                    <Bookmark />
+                                    <Bookmark unitId={unit.id} />
                                     {/* <BookmarkBorderIcon style={{ fill: "green" }} /> */}
                                 </div>
                                 <div className="units">
@@ -115,6 +120,7 @@ export default function SimilarUnits(props) {
 
                                     <Rating
                                         name="disabled"
+                                        precision={0.5}
                                         value={unit.average_rating}
                                         disabled
                                         sx={{
@@ -155,10 +161,11 @@ export default function SimilarUnits(props) {
     return (
         <Fragment>
             <Swiper
-                effect={"coverflow"}
+                effect={'coverflow'}
                 grabCursor={true}
                 centeredSlides={true}
-                slidesPerView={"auto"}
+                slidesPerView={'auto'}
+                spaceBetween={15}
                 coverflowEffect={{
                     rotate: 50,
                     stretch: 0,
@@ -166,8 +173,9 @@ export default function SimilarUnits(props) {
                     modifier: 1,
                     slideShadows: true,
                 }}
-                pagination={true}
-                modules={[EffectCoverflow, Pagination]}
+                pagination={{ dynamicBullets: true, dynamicMainBullets: 3 }}
+                autoplay={{ delay: 3000 }}
+                modules={[Pagination]}
                 className="similar-unit-swiper"
                 style={{ transform: "0" }}
             >

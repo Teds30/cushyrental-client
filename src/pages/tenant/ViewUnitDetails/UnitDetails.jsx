@@ -89,6 +89,7 @@ const UnitDetails = (props) => {
                         <div className={styles.ratings}>
                             <Rating
                                 value={unit.average_ratings}
+                                precision={0.5}
                                 sx={{
                                     fontSize: '14px',
                                     color: 'var(--accent)',
