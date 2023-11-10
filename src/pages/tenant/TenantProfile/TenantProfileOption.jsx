@@ -13,7 +13,7 @@ const TenantProfileOption = (props) => {
                 <p className='smaller-text'>My Profile</p>
             </Link>
 
-            <Link to="/favorites"className={styles.col}>
+            <Link to="/favorites"className={styles.col1}>
                 <Bookmark/>
                 <p className='smaller-text'>Favorites</p>
             </Link>

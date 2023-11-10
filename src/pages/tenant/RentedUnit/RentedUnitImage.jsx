@@ -11,7 +11,7 @@ const RentedUnitImage = (props) => {
     useEffect(() => {
         const handleFetch = async () => {
             try {
-                const res = await fetchImage(images.image.replace("images/", ""));
+                const res = await fetchImage(rental.unit.images.image.replace("images/", ""));
                 setUnitPhoto(res);
             } catch (err) {}
         };
