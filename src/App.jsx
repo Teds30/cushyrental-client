@@ -58,6 +58,7 @@ import CostComparisonTool from './pages/tenant/CostComparison/CostComparisonTool
 // import Homepage from './pages/tenant/Homepage/Homepage'
 import { ComparisonToolContextProvider } from './context/comparison-tool-context'
 import { LinearProgress } from '@mui/material'
+import About from './pages/about/About'
 
 function App() {
     const { user, token, loginHandler, logoutHandler, isLoggedIn } = useAuth()
@@ -80,6 +81,8 @@ function App() {
                     path="*"
                     element={<Navigate replace to="/signin" />}
                 ></Route>
+
+                <Route path="/about" element={<About />}></Route>
             </Routes>
         )
     } else {
@@ -100,6 +103,8 @@ function App() {
                             )
                         }
                     ></Route>
+
+                    <Route path="/about" element={<About />}></Route>
                     <Route
                         path="/notifications"
                         element={<Notifications />}
