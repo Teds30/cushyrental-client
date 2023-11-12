@@ -136,14 +136,18 @@ const RentedUnit = (props) => {
         setSelectedRental(rental);
         setOpen(true);
     };
+
+    const imageThumbnail = rental.unit.images
+                            .filter((image, index) => image.is_thumbnail === 1)
+                            .shift();
     return (
         <div className={`${styles["previews-unit"]} `}>
             <div className={`${styles["previews-unit-data"]} `}>
                 <div className={`${styles["image-unit_data"]} `}>
                     <RentedUnitImage
-                        images={rental.unit.images
-                            .filter((image) => image.is_thumbnail === 1)
-                            .shift()}
+                        images={imageThumbnail !== undefined
+                            ? imageThumbnail
+                            : rental.unit.images[0]}
                     />
                 </div>
                 <div className={`${styles["text-unit_data"]} `}>
