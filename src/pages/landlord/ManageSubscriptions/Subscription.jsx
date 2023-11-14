@@ -79,13 +79,13 @@ const Subscription = (props) => {
                         )}
                 </div>
             </div>
-            {/* {subscription.request_status === 0 && (
+            {subscription.request_status === 0 && (
                 <div className={styles['row']}>
                     <BorderedButton btnType="danger" width="100%">
                         Cancel
                     </BorderedButton>
                 </div>
-            )} */}
+            )}
         </div>
     )
 }

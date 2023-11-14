@@ -42,10 +42,14 @@ const Unit = (props) => {
         const formattedDate = `${year}-${month}-${day}`;
 
         if (
+            subscription.date_start === null &&
+            subscription.date_end === null
+        ) {
+            return subscription;
+        } else if (
             formattedDate >= subscription.date_start.split(" ")[0] &&
             formattedDate <= subscription.date_end.split(" ")[0]
         ) {
-            // console.log("pumasok dito")
             return subscription;
         } else if (subscription.request_status === 0) {
             return subscription;
@@ -151,7 +155,7 @@ const Unit = (props) => {
                 </div>
 
                 {requestStatus === false &&
-                    (subscriptions.length !== 0 ? (
+                    (subscriptions.length === 0 ? (
                         user_unit.request_status === 0 ? (
                             <BorderedButton width="100%" btnType="danger">
                                 Cancel Unit Request
