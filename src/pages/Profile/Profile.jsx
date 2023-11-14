@@ -157,7 +157,7 @@ const Profile = () => {
                     <div className={styles['hr']}></div>
 
                     <div className={`${styles['about-row']}`}>
-                        <Link
+                        <Link to={`/about`}
                            className={`${styles['about-col']}`}>
                             <div className={`${styles['about-image']}`}>
                                 <img src={logo} alt="CushyRental" />
