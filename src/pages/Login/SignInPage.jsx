@@ -2,27 +2,27 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import FacebookLogin, { FacebookLoginResponse } from "rc-facebook-login";
 
-import styles from '../Login/SignInPage.module.css'
-import PrimaryButton from '../../components/Button/PrimaryButton'
-import TextField from '../../components/TextField/TextField'
-import CheckBox from '../../components/CheckBox/CheckBox'
-import Logo from '../../assets/cushyrental.svg'
-import useLogin from '../../hooks/data/login-hook'
-import SocialMediaLogin from './SocialMedia'
-import AuthContext from '../../context/auth-context'
-import Alert from '../../components/Alert/Alert'
+import styles from "../Login/SignInPage.module.css";
+import PrimaryButton from "../../components/Button/PrimaryButton";
+import TextField from "../../components/TextField/TextField";
+import CheckBox from "../../components/CheckBox/CheckBox";
+import Logo from "../../assets/cushyrental.svg";
+import useLogin from "../../hooks/data/login-hook";
+import SocialMediaLogin from "./SocialMedia";
+import AuthContext from "../../context/auth-context";
+import Alert from "../../components/Alert/Alert";
 import TextFieldAdornedPassword from "../../components/TextFieldAdorned/TextFieldAdornedPassword";
 
 const SignInPage = () => {
-    const { loginUser, isLoading } = useLogin()
-    const [isInvalid, setIsInvalid] = useState(false)
-    const [emailInput, setEmailInput] = useState('')
-    const [passwordInput, setPasswordInput] = useState('')
-    const [emailError, setEmailError] = useState('')
-    const [passwordError, setPasswordError] = useState('')
-    const [checkBoxItems, setCheckBoxItems] = useState([])
-    const userCtx = useContext(AuthContext)
-    const navigate = useNavigate()
+    const { loginUser, isLoading } = useLogin();
+    const [isInvalid, setIsInvalid] = useState(false);
+    const [emailInput, setEmailInput] = useState("");
+    const [passwordInput, setPasswordInput] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [checkBoxItems, setCheckBoxItems] = useState([]);
+    const userCtx = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleEmailChange = (event) => {
         setEmailInput(event.target.value);
@@ -71,20 +71,16 @@ const SignInPage = () => {
             const res = await loginUser({
                 email: emailInput,
                 password: passwordInput,
-            })
+            });
 
             if (res.token) {
-                setIsInvalid(false)
-                userCtx.onLogin({ user: res.user, token: res.token })
-                // if (res.user.user_type_id === 2) navigate('/landlord-home')
-                // if (res.user.user_type_id === 3) navigate('/tenant-home')
-                navigate('/')
+                setIsInvalid(false);
+                userCtx.onLogin({ user: res.user, token: res.token });
+                navigate("/");
             } else {
-                setIsInvalid(true)
+                setIsInvalid(true);
             }
-        } catch (error) {
-            console.log(error);
-        }
+        } catch (error) {}
     };
 
     return (
@@ -103,9 +99,9 @@ const SignInPage = () => {
                 </div>
             </div>
 
-            <div className={`${styles['sign-in']} `}>
+            <div className={`${styles["sign-in"]} `}>
                 {isInvalid && <Alert />}
-                <div className={`${styles['custom__inputs']} `}>
+                <div className={`${styles["custom__inputs"]} `}>
                     <TextField
                         fullWidth
                         label="Email"

@@ -1,214 +1,169 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import useNotistack from "../../hooks/notistack-hook";
-import AppBar from '@mui/material/AppBar'
-import Box from '@mui/material/Box'
-import Toolbar from '@mui/material/Toolbar'
-import IconButton from '@mui/material/IconButton'
+import React, { useEffect, useState, Fragment } from "react";
 import styles from "../Login/SignInPage.module.css";
 import PrimaryButton from "../../components/Button/PrimaryButton";
-import TextField from "../../components/TextField/TextField";
-import useValidate from "../../hooks/validate-input-hook";
 import useSendEmail from "./send-email-hook";
 import useLogin from "../../hooks/data/login-hook";
 
-import { FiChevronLeft } from "react-icons/fi";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 
-const ForgotPassword = () => {
-  const { sendOtp } = useSendEmail();
-  const { forgotPassword, isLoading } = useLogin();
-  const { notify } = useNotistack();
+const ForgotPassword = (props) => {
+    const { email, onVerified } = props;
+    const { sendOtp } = useSendEmail();
+    const { forgotPassword, isLoading } = useLogin();
 
-  const regex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    const [otpDigits, setOtpDigits] = useState(Array(5).fill(""));
+    const [showInfo, setShowInfo] = useState(false);
+    const [otp, setOtp] = useState([]);
+    const [isVerified, setIsVerified] = useState(false);
+    const [error, setError] = useState(false);
+    const [time, setTime] = useState(60);
+    const [isHasTime, SetItHasTime] = useState(false);
 
-  const {
-    value: enteredEmail,
-    isValid: enteredEmailIsValid,
-    hasError: enteredEmailHasError,
-    valueChangeHandler: emailChangeHandler,
-    inputBlurHandler: emailBlurHandler,
-    reset: emailReset,
-  } = useValidate(
-    (value) =>
-      value.trim() !== "" && value.includes("@") && value.includes(".com")
-  );
-  const {
-    value: enteredNewPassword,
-    isValid: enteredNewPasswordIsValid,
-    hasError: enteredNewPasswordHasError,
-    valueChangeHandler: newPasswordChangeHandler,
-    inputBlurHandler: newPasswordBlurHandler,
-    reset: newPasswordReset,
-  } = useValidate(
-    (value) => value.trim() !== "" && value.length >= 8 && regex.test(value)
-  );
-  let formIsValid = false
+    const otpDigitChangeHandler = (index, value) => {
+        const updatedOtpDigits = [...otpDigits];
+        updatedOtpDigits[index] = value;
 
-  const [otpDigits, setOtpDigits] = useState(Array(6).fill(""));
-  const [showInfo, setShowInfo] = useState(false);
-  const [otp, setOtp] = useState([]);
-  const [isVerified, setIsVerified] = useState(false);
-  const [ error, setError ] = useState(false);
+        if (
+            otp.join("") != updatedOtpDigits.join("") &&
+            updatedOtpDigits.length != 5
+        ) {
+            setIsVerified(false);
+            setError(true);
+            setError(true);
+        } else if (
+            otp.join("") === updatedOtpDigits.join("") &&
+            updatedOtpDigits.length === 5
+        ) {
+            setIsVerified(true);
+            setError(false);
+        }
 
-  if (enteredNewPasswordIsValid) {
-    formIsValid = true;
-  }
+        setOtpDigits(updatedOtpDigits);
+    };
 
-  const otpDigitChangeHandler = (index, value) => {
-    const updatedOtpDigits = [...otpDigits];
-    updatedOtpDigits[index] = value;
+    const toggleInfo = () => {
+        setShowInfo(!showInfo);
+    };
 
-    if (otp.join("") != updatedOtpDigits.join("") && updatedOtpDigits.length != 6) {
-      setIsVerified(false);
-      setError(true);
-      setError(true);
-    } else if (otp.join("") === updatedOtpDigits.join("") && updatedOtpDigits.length === 6) {
-      setIsVerified(true);
-      setError(false);
-    }
+    const generateRandomNumbers = () => {
+        const newRandomNumbers = [];
+        for (let i = 0; i < 5; i++) {
+            const randomNumber = Math.floor(Math.random() * 10); // Generates a random number between 0 and 9
+            newRandomNumbers.push(randomNumber);
+        }
+        return newRandomNumbers;
+    };
 
-    setOtpDigits(updatedOtpDigits);
-  };
+    const resendHandler = () => {
+        setError(false);
+        setOtpDigits(Array(5).fill(""));
+        setTime(60);
+    };
 
-  const toggleInfo = () => {
-    setShowInfo(!showInfo);
-  };
+    const submitHandler = () => {
+        if (otpDigits.length !== 5) {
+            console.log("Hello John");
+            return;
+        }
 
-  const generateRandomNumbers = () => {
-    const newRandomNumbers = [];
-    for (let i = 0; i < 6; i++) {
-      const randomNumber = Math.floor(Math.random() * 10); // Generates a random number between 0 and 9
-      newRandomNumbers.push(randomNumber);
-    }
-    return newRandomNumbers;
-  };
+        setError(false);
 
-  const submitHandler = async (event) => {
-    event.preventDefault();
+        const otpCode = otpDigits.map(Number);
 
-    const data = {
-      email: enteredEmail,
-      password: enteredNewPassword
-    }
+        const isEqual = JSON.stringify(otpCode) === JSON.stringify(otp);
 
-    console.log(data);
+        if (isEqual) {
+            onVerified();
+        } else {
+            setError(true);
+        }
+    };
 
-    try {
-      const res = await forgotPassword(data);
-      if (res) {
-        notify('Update password successfullly', 'success');
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    useEffect(() => {
+        let interval;
 
-    emailReset();
-    setOtpDigits('');
-    newPasswordReset('');
-  };
+        if (time === 60) {
+            const returnOtp = generateRandomNumbers();
+            setOtp(returnOtp);
+            sendOtp(email, returnOtp);
+        }
 
-  useEffect(() => {
-    if (enteredEmailIsValid && !enteredEmailHasError) {
-      const returnOtp = generateRandomNumbers();
-      setOtp(returnOtp);
-      sendOtp(enteredEmail, returnOtp);
-    }
-  }, [enteredEmailIsValid, enteredEmailHasError]);
+        if (time !== 0) {
+            // if ()
 
-  return (
-    <form className={`${styles["main-container"]} `} onSubmit={submitHandler}>
-        <Box className={`${styles['top-back-container']} `}>
-                    <AppBar
-                        position="static"
-                        sx={{
-                            margin: 0,
-                            backgroundColor: '#fff',
-                            color: 'var(--fc-body)',
-                            fontFamily: 'Inter',
-                            boxShadow: 'none',
-                        }}
+            interval = setInterval(() => {
+                setTime(time - 1);
+            }, 1000);
+        } else {
+            setOtp([]);
+        }
+
+        return () => clearInterval(interval);
+    }, [time, setTime]);
+
+    return (
+        <div className={`${styles["forgot-password-code-row"]}`}>
+            <div className={`${styles["enter-code"]} `}>
+                Enter Code
+                <AiOutlineInfoCircle size={20} onClick={toggleInfo} />
+            </div>
+
+            {showInfo && (
+                <div
+                    className={`${styles["overlay-bubble"]} ${styles["show"]}`}
+                >
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Quae, hic.
+                </div>
+            )}
+
+            <div className={`${styles["otp-main"]}`}>
+                <div className={`${styles["otp-row"]}`}>
+                    <div className={styles["otp"]}>
+                        {otpDigits.map((digit, index) => (
+                            <input
+                                key={index}
+                                type="text"
+                                maxLength={1}
+                                className={`${styles["otp-input"]} ${
+                                    error && styles.error
+                                }`}
+                                value={digit}
+                                onChange={(e) =>
+                                    otpDigitChangeHandler(index, e.target.value)
+                                }
+                            />
+                        ))}
+                    </div>
+
+                    <div
+                        className={`${styles["resend-button"]} ${
+                            time !== 0 && styles["has-time"]
+                        }`}
                     >
-                        <Toolbar>
-                            <Link to={`/signin`}>
-                                <IconButton
-                                    size="large"
-                                    edge="start"
-                                    color="inherit"
-                                    aria-label="menu"
-                                >
-                                    <FiChevronLeft
-                                        style={{
-                                            color: 'var(--fc-strong)',
-                                            fill: 'transparent',
-                                        }}
-                                    />
-                                </IconButton>
-                            </Link>
-                            <Box sx={{ flexGrow: 1 }}>
-                                <p className="title">FORGOT PASSWORD</p>
-                            </Box>
-                        </Toolbar>
-                    </AppBar>
-                </Box>
+                        <button
+                            disabled={time !== 0 ? true : false}
+                            onClick={resendHandler}
+                        >
+                            {time === 0
+                                ? "Resend"
+                                : "Resend in " + "(" + time + "s)"}
+                        </button>
+                    </div>
+                </div>
 
-      <div className={`${styles["enter-email"]} `}>
-        <TextField
-          fullWidth
-          label="Email Address"
-          type="email"
-          value={enteredEmail}
-          onChange={emailChangeHandler}
-          onBlur={emailBlurHandler}
-          helperText={enteredEmailHasError && "Please enter your valid email."}
-          error
-        />
-      </div>
-
-      <div className={`${styles["enter-code"]} `}>
-        Enter Code
-        <AiOutlineInfoCircle size={20} onClick={toggleInfo} />
-      </div>
-
-      {showInfo && (
-        <div className={`${styles["overlay-bubble"]} ${styles["show"]}`}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, hic.
+                <PrimaryButton
+                    type="submit"
+                    isLoading={isLoading}
+                    loadingText="SUBMIT"
+                    width="100%"
+                    onClick={submitHandler}
+                >
+                    SUBMIT
+                </PrimaryButton>
+            </div>
         </div>
-      )}
-
-      <div className={styles["otp"]}>
-        {otpDigits.map((digit, index) => (
-          <input
-            key={index}
-            type="text"
-            maxLength={1}
-            className={`${styles["otp-input"]} ${error && styles.error}`}
-            value={digit}
-            onChange={(e) => otpDigitChangeHandler(index, e.target.value)}
-          />
-        ))}
-      </div>
-
-      <div>
-        <TextField
-          fullWidth
-          label="New Password"
-          type="password"
-          disabled={!isVerified === true && true}
-          value={enteredNewPassword}
-          onChange={newPasswordChangeHandler}
-          onBlur={newPasswordBlurHandler}
-          helperText={enteredNewPasswordHasError && "Password must contain 8+ characters, symbol, upper and lowercase letters and a number."}
-          error
-        />
-      </div>
-
-      <PrimaryButton type="submit" disabled={!formIsValid} isLoading={isLoading}
-          loadingText="SUBMIT">
-        SUBMIT
-      </PrimaryButton>
-    </form>
-  );
+    );
 };
 
 export default ForgotPassword;
