@@ -72,7 +72,7 @@ const ForgotPasswordUpdatePassword = (props) => {
                 onBlur={newPasswordBlurHandler}
                 helperText={
                     enteredNewPasswordHasError &&
-                    "Please confirm your password."
+                    "Password must contain 8+ characters, symbol, upper and lowercase letters and a number."
                 }
             />
 
