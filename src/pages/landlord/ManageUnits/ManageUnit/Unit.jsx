@@ -61,8 +61,6 @@ const Unit = (props) => {
         .filter((image, index) => image.is_thumbnail === 1)
         .shift();
 
-    console.log(imageThumbnail);
-
     return (
         <div className={`${styles['units-container']}`}>
             <CardPlain
