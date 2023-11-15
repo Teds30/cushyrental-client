@@ -9,7 +9,7 @@ import React, {
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import CreateAccount from './pages/auth/CreateAccount/CreateAccount'
 import SignInPage from './pages/Login/SignInPage'
-import ForgotPassword from './pages/Login/ForgotPassword'
+import ForgotPasswordMain from './pages/Login/ForgotPasswordMain'
 const Conversation = React.lazy(() => import('./pages/chat/Conversation'))
 
 // import Conversation from './pages/chat/Conversation'
@@ -74,7 +74,7 @@ function App() {
                 <Route path="/signin" element={<SignInPage />}></Route>
                 <Route
                     path="/signin/forgotpassword"
-                    element={<ForgotPassword />}
+                    element={<ForgotPasswordMain />}
                 ></Route>
                 <Route path="/register" element={<CreateAccount />}></Route>
                 <Route
