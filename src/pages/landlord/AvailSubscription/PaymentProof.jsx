@@ -135,7 +135,7 @@ const PaymentProof = (props) => {
                                         Click here to upload image
                                     </p>
                                     <p className="smaller-text">
-                                        Maximum size is 10MB
+                                        Maximum size is 5MB
                                     </p>
                                 </div>
                             </Fragment>
