@@ -115,7 +115,7 @@ const Profile = () => {
                                             userCtx.user.middle_name}{' '}
                                         {userCtx.user.last_name}
                                     </p>
-                                    {userCtx.user.is_verified !== false && (
+                                    {userCtx.user.is_verified !== false && userCtx.user.user_type_id === 2 && (
                                         <VerifiedIcon
                                             style={{ color: 'var(--accent)' }}
                                         />
