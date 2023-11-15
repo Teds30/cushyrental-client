@@ -59,6 +59,7 @@ import CostComparisonTool from './pages/tenant/CostComparison/CostComparisonTool
 import { ComparisonToolContextProvider } from './context/comparison-tool-context'
 import { LinearProgress } from '@mui/material'
 import About from './pages/about/About'
+import ChangeContactNumberMain from './pages/Profile/ChangeContactNumber/ChangeContactNumberMain'
 
 function App() {
     const { user, token, loginHandler, logoutHandler, isLoggedIn } = useAuth()
@@ -227,6 +228,8 @@ function App() {
                         element={<UnitAfterSearch />}
                     ></Route>
                     <Route path="/favorites" element={<Favorites />}></Route>
+
+                    <Route path="/change_contact_number" element={<ChangeContactNumberMain />}></Route>
 
                     <Route
                         path="/costcomparison"
