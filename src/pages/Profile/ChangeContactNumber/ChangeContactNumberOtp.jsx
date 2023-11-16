@@ -1,15 +1,20 @@
-import React, { useEffect, useState, Fragment } from "react";
-import styles from "../Login/SignInPage.module.css";
-import PrimaryButton from "../../components/Button/PrimaryButton";
-import useSendEmail from "./send-email-hook";
-import useLogin from "../../hooks/data/login-hook";
+import React, { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
+import PrimaryButton from "../../../components/Button/PrimaryButton";
+import useUserManager from "../../../hooks/data/users-hook";
+import useNotistack from "../../../hooks/notistack-hook";
+import AuthContext from "../../../context/auth-context";
+
+import styles from "../../Login/SignInPage.module.css";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 
-const ForgotPassword = (props) => {
-    const { email, onVerified } = props;
-    const { sendOtp } = useSendEmail();
-    const { forgotPassword, isLoading } = useLogin();
+const ChangeContactNumberOtp = (props) => {
+    const { user, token } = props;
+    const { updateUser, isLoading } = useUserManager();
+    const navigate = useNavigate();
+    const { notify } = useNotistack();
+    const userCtx = useContext(AuthContext);
 
     const [otpDigits, setOtpDigits] = useState(Array(5).fill(""));
     const [showInfo, setShowInfo] = useState(false);
@@ -17,7 +22,6 @@ const ForgotPassword = (props) => {
     const [isVerified, setIsVerified] = useState(false);
     const [error, setError] = useState(false);
     const [time, setTime] = useState(60);
-    const [isHasTime, SetItHasTime] = useState(false);
 
     const otpDigitChangeHandler = (index, value) => {
         const updatedOtpDigits = [...otpDigits];
@@ -60,7 +64,7 @@ const ForgotPassword = (props) => {
         setTime(60);
     };
 
-    const submitHandler = () => {
+    const submitHandler = async () => {
         if (otpDigits.length !== 5) {
             console.log("Hello John");
             return;
@@ -73,7 +77,18 @@ const ForgotPassword = (props) => {
         const isEqual = JSON.stringify(otpCode) === JSON.stringify(otp);
 
         if (isEqual) {
-            onVerified();
+            // onVerified();
+            console.log(isEqual);
+            try {
+                const res = await updateUser(
+                    { ...user, gender: user.gender.toString() },
+                    user.id
+                );
+                console.log(res);
+                userCtx.onLogin({ user: res, token: token });
+                navigate("/profile/user_profile");
+                notify("Successfully update phone number.", "success");
+            } catch (err) {}
         } else {
             setError(true);
         }
@@ -84,13 +99,13 @@ const ForgotPassword = (props) => {
 
         if (time === 60) {
             const returnOtp = generateRandomNumbers();
+            console.log(returnOtp);
+            console.log(token);
             setOtp(returnOtp);
-            sendOtp(email, returnOtp);
+            // send verify code here
         }
 
         if (time !== 0) {
-            // if ()
-
             interval = setInterval(() => {
                 setTime(time - 1);
             }, 1000);
@@ -166,4 +181,4 @@ const ForgotPassword = (props) => {
     );
 };
 
-export default ForgotPassword;
+export default ChangeContactNumberOtp;

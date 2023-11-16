@@ -1,0 +1,113 @@
+.main-container {
+    max-width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-layer1);
+    transition: max-width 0.3s ease-in-out;
+    gap:27px;
+}
+
+.change-number-row {
+    padding: 0 26px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 27px;
+}
+
+.enter-number {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.enter-number p {
+    font-weight: 500;
+}
+
+.change-number-code-row {
+    padding: 0 26px;
+}
+
+.enter-code {
+    display: flex;
+    align-items: center;
+}
+
+.overlay-bubble {
+    position: absolute;
+    margin: 120px 80px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    z-index: 1;
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.otp-main {
+    display: flex;
+    flex-direction: column;
+    gap: 37px;
+}
+
+.otp-row {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.otp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    margin-top: 20px;
+}
+
+.otp .otp-input:focus,
+.otp-input:focus-visible {
+  border: 2px solid var(--accent);
+}
+.otp-input.error {
+  border: 2px solid var(--accent-danger);
+}
+
+.resend-button {
+    display: flex;
+    justify-content: end;
+}
+
+.resend-button button {
+    border: none;
+    background: none;
+    outline: none;
+    color: var(--accent);
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    cursor: pointer;
+    padding: 0;
+}
+
+.resend-button.has-time button {
+    color: #8A93A6;
+}
+
+@media (min-width: 640px) {
+    .main-container {
+        width: 768px;
+        margin: 0 auto;
+        position: relative;
+    }
+}
+

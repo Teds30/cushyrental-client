@@ -9,7 +9,7 @@ import React, {
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import CreateAccount from './pages/auth/CreateAccount/CreateAccount'
 import SignInPage from './pages/Login/SignInPage'
-import ForgotPassword from './pages/Login/ForgotPassword'
+import ForgotPasswordMain from './pages/Login/ForgotPasswordMain'
 const Conversation = React.lazy(() => import('./pages/chat/Conversation'))
 
 // import Conversation from './pages/chat/Conversation'
@@ -59,6 +59,7 @@ import CostComparisonTool from './pages/tenant/CostComparison/CostComparisonTool
 import { ComparisonToolContextProvider } from './context/comparison-tool-context'
 import { LinearProgress } from '@mui/material'
 import About from './pages/about/About'
+import ChangeContactNumberMain from './pages/Profile/ChangeContactNumber/ChangeContactNumberMain'
 
 function App() {
     const { user, token, loginHandler, logoutHandler, isLoggedIn } = useAuth()
@@ -74,7 +75,7 @@ function App() {
                 <Route path="/signin" element={<SignInPage />}></Route>
                 <Route
                     path="/signin/forgotpassword"
-                    element={<ForgotPassword />}
+                    element={<ForgotPasswordMain />}
                 ></Route>
                 <Route path="/register" element={<CreateAccount />}></Route>
                 <Route
@@ -227,6 +228,8 @@ function App() {
                         element={<UnitAfterSearch />}
                     ></Route>
                     <Route path="/favorites" element={<Favorites />}></Route>
+
+                    <Route path="/change_contact_number" element={<ChangeContactNumberMain />}></Route>
 
                     <Route
                         path="/costcomparison"

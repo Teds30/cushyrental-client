@@ -29,8 +29,6 @@ const ForgotPasswordOTP = ({ otp, setIsVerified }) => {
         setOtpDigits(updatedOtpDigits);
     };
 
-
-
     return (
         <div className={styles["otp"]}>
             {otpDigits.map((digit, index) => (

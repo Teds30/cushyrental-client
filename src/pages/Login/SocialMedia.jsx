@@ -88,37 +88,30 @@ const SocialMediaLogin = () => {
 
     return (
         <div className={styles.socmed}>
-            <FacebookLogin
-                appId={'782460463883150'}
-                fields="name,email,picture"
-                callback={responseFacebook}
-                render={({ disabled, onClick }) => (
-                    <Link
-                        onClick={onClick}
-                        disabled={disabled}
-                        className="facebook-login-button"
-                    >
-                        <div className={styles['background']}>
-                            <FacebookOutlinedIcon
-                                size="large"
-                                style={{ color: '#4267B2' }}
-                            />{' '}
-                            Facebook
-                        </div>
-                    </Link>
-                )}
-            />
-
-            <Link onClick={googleRegisterHandle}>
-                <div className={styles['background']}>
-                    <img
-                        src={Google}
-                        alt="Google Icon"
-                        className={styles.googleIcon}
-                    />{' '}
-                    Google
+          <FacebookLogin
+            appId={"782460463883150"}
+            fields="name,email,picture"
+            callback={responseFacebook}
+            render={({ disabled, onClick }) => (
+              <Link
+                onClick={onClick}
+                disabled={disabled}
+                className="facebook-login-button"
+              >
+                <div className={styles["background"]}>
+                  <FacebookOutlinedIcon size="large" style={{ color: "#4267B2" }} />{" "}
+                  Facebook
                 </div>
-            </Link>
+              </Link>
+            )}
+          />
+    
+          <Link onClick={googleRegisterHandle}>
+            <div className={styles["background"]}>
+              <img src={Google} alt="Google Icon" className={styles.googleIcon} />{" "}
+              Google
+            </div>
+          </Link>
         </div>
     )
 }

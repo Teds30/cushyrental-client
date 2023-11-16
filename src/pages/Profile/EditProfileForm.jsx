@@ -238,7 +238,7 @@ const EditProfileForm = (props) => {
                             />
 
                             <div className={`${styles['change-button']}`}>
-                                <Link className={`${styles['change']}`}>CHANGE</Link>
+                                <Link to={`/change_contact_number`} className={`${styles['change']}`}>CHANGE</Link>
                             </div>
                         </div>
 

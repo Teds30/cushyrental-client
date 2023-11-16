@@ -115,7 +115,7 @@ const Profile = () => {
                                             userCtx.user.middle_name}{' '}
                                         {userCtx.user.last_name}
                                     </p>
-                                    {userCtx.user.is_verified !== false && (
+                                    {userCtx.user.is_verified !== false && userCtx.user.user_type_id === 2 && (
                                         <VerifiedIcon
                                             style={{ color: 'var(--accent)' }}
                                         />
@@ -157,7 +157,7 @@ const Profile = () => {
                     <div className={styles['hr']}></div>
 
                     <div className={`${styles['about-row']}`}>
-                        <Link
+                        <Link to={`/about`}
                            className={`${styles['about-col']}`}>
                             <div className={`${styles['about-image']}`}>
                                 <img src={logo} alt="CushyRental" />

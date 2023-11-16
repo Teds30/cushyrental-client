@@ -23,7 +23,6 @@ const CreateAccount = () => {
 
     const userTypeHandler = useCallback(
         (userType) => {
-            console.log(userType);
             setUserType(userType)
         },
         [setUserType]
@@ -35,14 +34,11 @@ const CreateAccount = () => {
             user_type_id: userType.user_type_id,
         }
 
-        // console.log(data);
-
         try {
             const res = await accountRegistration(data)
             ctx.onLogin({ user: res.user, token: res.token })
-            navigate('/profile')
+            navigate('/');
         } catch (error) {
-            console.log(error)
         }
     }
 
@@ -61,9 +57,8 @@ const CreateAccount = () => {
 
                 const registerGoogleRes = await googleAccountRegistration(data)
                 ctx.onLogin(registerGoogleRes.user, registerGoogleRes.token)
-                console.log(user)
+                navigate('/');
             } catch (error) {
-                console.log(error)
             }
         },
     })
@@ -103,9 +98,8 @@ const CreateAccount = () => {
         try {
             const res = await facebookAccountRegistration(data)
             ctx.onLogin(res.user, res.token)
-            console.log(user)
+            navigate('/');
         } catch (error) {
-            console.log(error)
         }
     }
 
