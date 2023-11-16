@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import styles from './About.module.css'
 import { Link } from 'react-router-dom'
@@ -16,6 +16,9 @@ import ph from '../../assets/icon/philippines_flag.png'
 
 import { BsChevronDoubleDown } from 'react-icons/bs'
 import { TbArrowNarrowRight } from 'react-icons/tb'
+import { Box } from '@mui/material'
+import AnimatedElement from './AnimatedElement'
+import AnimatedNumber from './AnimatedNumber'
 
 const About = () => {
     return (
@@ -40,10 +43,18 @@ const About = () => {
                 <div className={styles['blur-img']}>
                     <img src={blurLogo} alt="" />
                 </div>
-                <h1>Experience cozy lodging </h1>
-                <p className={styles['support']}>
-                    Discover and inquire units around Legazpi City
-                </p>
+
+                <AnimatedElement>
+                    <h1>Experience cozy lodging</h1>
+                </AnimatedElement>
+                <AnimatedElement
+                    fromY={25}
+                    transition={{ duration: 0.5, delay: 0.75 }}
+                >
+                    <p className={styles['support']}>
+                        Discover and inquire units around Legazpi City
+                    </p>
+                </AnimatedElement>
                 <div class={styles['mouseindicator']}>
                     <div class={styles['outer']}>
                         <div class={styles['inner']}></div>
@@ -122,8 +133,8 @@ const About = () => {
                         fill="none"
                     >
                         <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
+                            fillRule="evenodd"
+                            clipRule="evenodd"
                             d="M0 102.64L80 153.96C160 205.28 320 307.92 480 359.24C640 410.56 800 410.56 960 376.346C1120 342.133 1280 273.706 1440 273.706C1600 273.706 1760 342.133 1840 376.346L1920 410.56V0H1840C1760 0 1600 0 1440 0C1280 0 1120 0 960 0C800 0 640 0 480 0C320 0 160 0 80 0H0V102.64Z"
                             fill="#1D6156"
                         />
@@ -131,15 +142,27 @@ const About = () => {
                 </span>
             </section>
             <section className={styles['mtt']}>
-                <h1>Meet the Team</h1>
-                <p className={styles['support']}>
-                    Locates innovative solution aligning to your needs
-                </p>
+                <AnimatedElement>
+                    <h1>Meet the Team</h1>
+                </AnimatedElement>
+                <AnimatedElement
+                    fromY={25}
+                    transition={{ duration: 0.5, delay: 0.75 }}
+                >
+                    <p className={styles['support']}>
+                        Locates innovative solution aligning to your needs
+                    </p>
+                </AnimatedElement>
 
                 <div className={styles['team']}>
                     <div className={styles['member']}>
                         <div className={styles['member-img']}>
-                            <div className={styles['blob']}>
+                            <AnimatedElement
+                                animation="zoom-in"
+                                transition={{ duration: 0.25, delay: 0.25 }}
+                                classes={styles['blob']}
+                                showOnce={true}
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="215"
@@ -152,15 +175,27 @@ const About = () => {
                                         fill="#03B077"
                                     />
                                 </svg>
-                            </div>
-                            <img src={ela} alt="" />
+                            </AnimatedElement>
+
+                            <AnimatedElement
+                                showOnce={true}
+                                style={{ width: 'inherit', height: 'inherit' }}
+                                transition={{ duration: 0.5, delay: 0.5 }}
+                            >
+                                <img src={ela} alt="" />
+                            </AnimatedElement>
                         </div>
                         <h3>ELA MAE</h3>
                         <p>Project Manager</p>
                     </div>
                     <div className={styles['member']}>
                         <div className={styles['member-img']}>
-                            <div className={styles['blob']}>
+                            <AnimatedElement
+                                animation="zoom-in"
+                                transition={{ duration: 0.25, delay: 0.25 }}
+                                classes={styles['blob']}
+                                showOnce={true}
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="215"
@@ -173,15 +208,26 @@ const About = () => {
                                         fill="#03B077"
                                     />
                                 </svg>
-                            </div>
-                            <img src={teddy} alt="" />
+                            </AnimatedElement>
+                            <AnimatedElement
+                                showOnce={true}
+                                style={{ width: 'inherit', height: 'inherit' }}
+                                transition={{ duration: 0.5, delay: 0.5 }}
+                            >
+                                <img src={teddy} alt="" />
+                            </AnimatedElement>
                         </div>
                         <h3>TEDDY MARC</h3>
                         <p>Lead Developer</p>
                     </div>
                     <div className={styles['member']}>
                         <div className={styles['member-img']}>
-                            <div className={styles['blob']}>
+                            <AnimatedElement
+                                animation="zoom-in"
+                                transition={{ duration: 0.25, delay: 0.25 }}
+                                classes={styles['blob']}
+                                showOnce={true}
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="215"
@@ -194,15 +240,26 @@ const About = () => {
                                         fill="#03B077"
                                     />
                                 </svg>
-                            </div>
-                            <img src={jie} alt="" />
+                            </AnimatedElement>
+                            <AnimatedElement
+                                showOnce={true}
+                                style={{ width: 'inherit', height: 'inherit' }}
+                                transition={{ duration: 0.5, delay: 0.5 }}
+                            >
+                                <img src={jie} alt="" />
+                            </AnimatedElement>
                         </div>
                         <h3>JOHN ARJIE</h3>
                         <p>Developer</p>
                     </div>
                     <div className={styles['member']}>
                         <div className={styles['member-img']}>
-                            <div className={styles['blob']}>
+                            <AnimatedElement
+                                animation="zoom-in"
+                                transition={{ duration: 0.25, delay: 0.25 }}
+                                classes={styles['blob']}
+                                showOnce={true}
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="209"
@@ -215,8 +272,14 @@ const About = () => {
                                         fill="#03B077"
                                     />
                                 </svg>
-                            </div>
-                            <img src={john} alt="" />
+                            </AnimatedElement>
+                            <AnimatedElement
+                                showOnce={true}
+                                style={{ width: 'inherit', height: 'inherit' }}
+                                transition={{ duration: 0.5, delay: 0.5 }}
+                            >
+                                <img src={john} alt="" />
+                            </AnimatedElement>
                         </div>
                         <h3>JOHN</h3>
                         <p>Project Manager</p>
@@ -226,20 +289,33 @@ const About = () => {
 
             <section className={styles['community']}>
                 <div className={styles['community-title']}>
-                    <h2>Community</h2>
-                    <p className={styles['support']}>Join the numbers</p>
+                    <AnimatedElement>
+                        <h2>Community</h2>
+                    </AnimatedElement>
+                    <AnimatedElement
+                        fromY={25}
+                        transition={{ duration: 0.5, delay: 0.75 }}
+                    >
+                        <p className={styles['support']}>Join the numbers</p>
+                    </AnimatedElement>
                 </div>
                 <div className={styles['metrics']}>
                     <div className={styles['metric']}>
-                        <h1>50</h1>
+                        <h1>
+                            <AnimatedNumber name='units' number={50}></AnimatedNumber>
+                        </h1>
                         <h3>Units Listed</h3>
                     </div>
                     <div className={styles['metric']}>
-                        <h1>20</h1>
+                        <h1>
+                            <AnimatedNumber name='landlords' number={20}></AnimatedNumber>
+                        </h1>
                         <h3>Landlords Registered</h3>
                     </div>
                     <div className={styles['metric']}>
-                        <h1>51</h1>
+                        <h1>
+                            <AnimatedNumber name='tenants' number={51}></AnimatedNumber>
+                        </h1>
                         <h3>Tenants Registered</h3>
                     </div>
                 </div>
@@ -247,74 +323,106 @@ const About = () => {
 
             <section className={styles['features-container']}>
                 <div>
-                    <h2>Why not look for an easier way?</h2>
-                    <p className={styles['support']}>
-                        We provide extensive features that enhance your search
-                        method
-                    </p>
+                    <AnimatedElement>
+                        <h2>Why not look for an easier way?</h2>
+                    </AnimatedElement>
+                    <AnimatedElement
+                        fromY={25}
+                        transition={{ duration: 0.5, delay: 0.75 }}
+                    >
+                        <p className={styles['support']}>
+                            We provide extensive features that enhance your
+                            search method
+                        </p>
+                    </AnimatedElement>
                 </div>
 
                 <div className={styles['features']}>
-                    <div className={styles['feature']}>
-                        <div className={styles['feature-img']}>
-                            <img src="" alt="" />
+                    <AnimatedElement>
+                        <div className={styles['feature']}>
+                            <div className={styles['feature-img']}>
+                                <img src="" alt="" />
+                            </div>
+                            <p className="title">
+                                Integrated Google Map for Unit Searching
+                            </p>
                         </div>
-                        <p className="title">
-                            Integrated Google Map for Unit Searching
-                        </p>
-                    </div>
-                    <div className={styles['feature']}>
-                        <div className={styles['feature-img']}>
-                            <img src="" alt="" />
+                    </AnimatedElement>
+
+                    <AnimatedElement>
+                        <div className={styles['feature']}>
+                            <div className={styles['feature-img']}>
+                                <img src="" alt="" />
+                            </div>
+                            <p className="title">Cost Comparison Tool</p>
                         </div>
-                        <p className="title">Cost Comparison Tool</p>
-                    </div>
-                    <div className={styles['feature']}>
-                        <div className={styles['feature-img']}>
-                            <img src="" alt="" />
+                    </AnimatedElement>
+
+                    <AnimatedElement>
+                        <div className={styles['feature']}>
+                            <div className={styles['feature-img']}>
+                                <img src="" alt="" />
+                            </div>
+                            <p className="title">Unit Comparison Tooll</p>
                         </div>
-                        <p className="title">Unit Comparison Tooll</p>
-                    </div>
-                    <div className={styles['feature']}>
-                        <div className={styles['feature-img']}>
-                            <img src="" alt="" />
+                    </AnimatedElement>
+
+                    <AnimatedElement>
+                        <div className={styles['feature']}>
+                            <div className={styles['feature-img']}>
+                                <img src="" alt="" />
+                            </div>
+                            <p className="title">Chat System</p>
                         </div>
-                        <p className="title">Chat System</p>
-                    </div>
-                    <div className={styles['feature']}>
-                        <div className={styles['feature-img']}>
-                            <img src="" alt="" />
+                    </AnimatedElement>
+
+                    <AnimatedElement>
+                        <div className={styles['feature']}>
+                            <div className={styles['feature-img']}>
+                                <img src="" alt="" />
+                            </div>
+                            <p className="title">Save Favorite</p>
                         </div>
-                        <p className="title">Save Favorite</p>
-                    </div>
-                    <div className={styles['feature']}>
-                        <div className={styles['feature-img']}>
-                            <img src="" alt="" />
+                    </AnimatedElement>
+
+                    <AnimatedElement>
+                        <div className={styles['feature']}>
+                            <div className={styles['feature-img']}>
+                                <img src="" alt="" />
+                            </div>
+                            <p className="title">Advertise Unit</p>
                         </div>
-                        <p className="title">Advertise Unit</p>
-                    </div>
+                    </AnimatedElement>
                 </div>
 
                 <h3>You can conveniently access records</h3>
                 <div className={styles['features']}>
-                    <div className={styles['feature']}>
-                        <div className={styles['feature-img']}>
-                            <img src="" alt="" />
+                    <AnimatedElement>
+                        <div className={styles['feature']}>
+                            <div className={styles['feature-img']}>
+                                <img src="" alt="" />
+                            </div>
+                            <p className="title">Interactive Calendar</p>
                         </div>
-                        <p className="title">Interactive Calendar</p>
-                    </div>
-                    <div className={styles['feature']}>
-                        <div className={styles['feature-img']}>
-                            <img src="" alt="" />
+                    </AnimatedElement>
+
+                    <AnimatedElement>
+                        <div className={styles['feature']}>
+                            <div className={styles['feature-img']}>
+                                <img src="" alt="" />
+                            </div>
+                            <p className="title">SMS Payment Reminder</p>
                         </div>
-                        <p className="title">SMS Payment Reminder</p>
-                    </div>
-                    <div className={styles['feature']}>
-                        <div className={styles['feature-img']}>
-                            <img src="" alt="" />
+                    </AnimatedElement>
+
+                    <AnimatedElement>
+                        <div className={styles['feature']}>
+                            <div className={styles['feature-img']}>
+                                <img src="" alt="" />
+                            </div>
+                            <p className="title">Real-time Notification</p>
                         </div>
-                        <p className="title">Real-time Notification</p>
-                    </div>
+                    </AnimatedElement>
                 </div>
             </section>
 

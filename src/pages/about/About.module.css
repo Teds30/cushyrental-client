@@ -285,7 +285,6 @@
     align-items: center;
 
     gap: clamp(2rem, -2.0553rem + 17.3028vw, 6.25rem);
-    border: 1px solid red;
     padding: 64px 0;
 
     flex-wrap: wrap;
@@ -397,6 +396,8 @@
     border-radius: clamp(0.875rem, 0.2786rem + 2.5445vw, 1.5rem);
     padding: clamp(0.625rem, -0.2099rem + 3.5623vw, 1.5rem)
         clamp(1.25rem, 0.2958rem + 4.0712vw, 2.25rem);
+
+    cursor: pointer;
 }
 
 .discover-btn span {
@@ -410,8 +411,8 @@
 
 .btn-primary {
     background-color: var(--accent);
+    animation: pulse 2s infinite;
 }
-
 .btn-outlined {
     background-color: transparent;
     border: 2px solid #223629;
@@ -492,4 +493,22 @@
     /* .blur-img img {
         width: 360px;
     } */
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 clamp(0.625rem, 0.0286rem + 2.5445vw, 1.25rem)
+            rgba(var(--accent-rgb), 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0);
+    }
 }
