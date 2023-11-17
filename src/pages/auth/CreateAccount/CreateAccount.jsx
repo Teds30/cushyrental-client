@@ -8,6 +8,7 @@ import useAuth from '../../../hooks/data/auth-hook'
 import useGoogleAuth from '../../../hooks/data/google-auth-hook'
 import useFacebookAuth from '../../../hooks/data/facebook-auth'
 import AuthContext from '../../../context/auth-context'
+import useNotistack from '../../../hooks/notistack-hook'
 
 import styles from './CreateAccount.module.css'
 
@@ -17,6 +18,7 @@ const CreateAccount = () => {
     const { facebookAccountRegistration } = useFacebookAuth()
     const ctx = useContext(AuthContext)
     const navigate = useNavigate()
+    const {notify} = useNotistack();
 
     const [counter, setCounter] = useState(0)
     const [userType, setUserType] = useState({ user_type_id: '2' })
@@ -39,6 +41,7 @@ const CreateAccount = () => {
             ctx.onLogin({ user: res.user, token: res.token })
             navigate('/');
         } catch (error) {
+            notify('Email already exist.','info');
         }
     }
 

@@ -6,6 +6,7 @@ import SecondaryButton from '../../../../components/Button/SecondaryButton'
 import CreateUnitContext from '../../../../context/create-unit-context'
 import useUnitManager from '../../../../hooks/data/units-hook'
 import AuthContext from '../../../../context/auth-context'
+import useNotistack from '../../../../hooks/notistack-hook'
 
 import styles from './CreateUnit.module.css'
 import EastIcon from '@mui/icons-material/East'
@@ -17,6 +18,7 @@ const UploadImageForm = (props) => {
     const { onNext, onBack } = props
     const { createUnit } = useUnitManager()
     const imageData = []
+    const {notify} = useNotistack();
 
     const createUnitCtx = useContext(CreateUnitContext)
     const userCtx = useContext(AuthContext)
@@ -29,8 +31,15 @@ const UploadImageForm = (props) => {
     const [unitImages, setUnitImages] = useState(uploadImageDetails)
 
     const addImageChangeHandler = (event) => {
-        setUnitImages([...unitImages, event.target.files[0]])
-    }
+        const selectedImage = event.target.files[0];
+    
+        if (selectedImage && selectedImage.size > 5 * 1024 * 1024) {
+            notify('Selected image is greater than 5MB', 'info');
+            return;
+        }
+    
+        setUnitImages([...unitImages, selectedImage]);
+    };
 
     const removeHandler = (id) => {
         const newUnitImages = unitImages.filter((image, index) => index !== id)
