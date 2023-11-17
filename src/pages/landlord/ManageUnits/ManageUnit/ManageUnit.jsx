@@ -32,7 +32,7 @@ const ManageUnit = () => {
 
     return (
         <div className={`${styles['manage-unit-container']}`}>
-            {isLoading ? (
+            {isLoading && userUnits.length === 0 ? (
                 ''
             ) : (
                 <Fragment>
