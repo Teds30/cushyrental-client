@@ -3,8 +3,6 @@ import { Rating } from "@mui/material";
 const UnitRating = (props) => {
     const {rating} = props;
 
-    console.log(rating);
-
     return (<Rating
         readOnly
         value={rating}

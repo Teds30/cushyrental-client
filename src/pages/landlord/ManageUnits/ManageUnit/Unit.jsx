@@ -43,7 +43,8 @@ const Unit = (props) => {
 
         if (
             subscription.date_start === null &&
-            subscription.date_end === null
+            subscription.date_end === null &&
+            subscription.request_status === 0
         ) {
             return subscription;
         } else if (
@@ -56,10 +57,14 @@ const Unit = (props) => {
         }
     });
 
+    console.log(subscriptions);
+
     const requestStatus =
         user_unit.request_status === 0
             ? user_unit.request_status
             : user_unit.request_status === 2 && 3;
+
+    console.log(requestStatus);
 
     const imageThumbnail = user_unit.images
         .filter((image, index) => image.is_thumbnail === 1)
@@ -154,41 +159,36 @@ const Unit = (props) => {
                     </div>
                 </div>
 
-                {requestStatus === false &&
-                    (subscriptions.length === 0 ? (
-                        user_unit.request_status === 0 ? (
-                            <BorderedButton width="100%" btnType="danger">
-                                Cancel Unit Request
-                            </BorderedButton>
-                        ) : (
-                            user_unit.request_status === 1 && (
-                                <div className={`${styles["unit-button"]}`}>
-                                    <Link
-                                        to={`/manage_unit/edit/${user_unit.id}`}
-                                        style={{ width: "100%" }}
-                                    >
-                                        <PrimaryButton width="100%">
-                                            Manage Unit
-                                        </PrimaryButton>
-                                    </Link>
-                                </div>
-                            )
-                        )
-                    ) : (
-                        <div className={`${styles["unit-button"]}`}>
-                            <Link
-                                to={`/manage_unit/edit/${user_unit.id}`}
-                                style={{ width: "100%" }}
-                            >
-                                <PrimaryButton width="100%">
-                                    Manage Unit
-                                </PrimaryButton>
-                            </Link>
-                            <Link to="/avail_subscriptions">
-                                <BorderedButton>Promote</BorderedButton>
-                            </Link>
-                        </div>
-                    ))}
+                {subscriptions.length === 0 ? (
+                    <div className={`${styles["unit-button"]}`}>
+                        <Link
+                            to={`/manage_unit/edit/${user_unit.id}`}
+                            style={{ width: "100%" }}
+                        >
+                            <PrimaryButton width="100%">
+                                Manage Unit
+                            </PrimaryButton>
+                        </Link>
+                        <Link to="/avail_subscriptions">
+                            <BorderedButton>Promote</BorderedButton>
+                        </Link>
+                    </div>
+                ) : subscriptions[0].request_status === 0 ? (
+                    <BorderedButton width="100%" btnType="danger">
+                        Cancel Unit Request
+                    </BorderedButton>
+                ) : (
+                    <div className={`${styles["unit-button"]}`}>
+                        <Link
+                            to={`/manage_unit/edit/${user_unit.id}`}
+                            style={{ width: "100%" }}
+                        >
+                            <PrimaryButton width="100%">
+                                Manage Unit
+                            </PrimaryButton>
+                        </Link>
+                    </div>
+                )}
             </CardPlain>
         </div>
     );

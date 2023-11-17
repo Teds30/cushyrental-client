@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -14,6 +14,7 @@ import UnitFacilities from "./UnitFacilities";
 import UnitInclusions from "./UnitInclusions";
 import UnitRules from "./UnitRules";
 import UnitGender from "./UnitGender";
+import AuthContext from "../../../context/auth-context";
 
 import styles from "./UnitComparison.module.css";
 import TextMarque from "./TextMarque";
@@ -21,14 +22,15 @@ import TextMarque from "./TextMarque";
 const UnitComparisonTable = (props) => {
     const { unitData } = props;
     const { fetchBookmarkUnits, isLoading } = useBookmark();
-
-    console.log(unitData)
+    const userCtx = useContext(AuthContext);
 
     const [bookmarks, setBookmarks] = useState([]);
     const [units, setUnits] = useState([unitData]);
     const [open, setOpen] = useState(false);
 
     let unitIndex;
+
+    console.log(userCtx.user);
 
     const removeUnitHandler = (id) => {
         setUnits(units.filter((unit) => unit.id !== id));
@@ -131,7 +133,8 @@ const UnitComparisonTable = (props) => {
     useEffect(() => {
         const handleFetch = async () => {
             try {
-                const res = await fetchBookmarkUnits(12);
+                const res = await fetchBookmarkUnits(userCtx.user.id);
+                console.log(res);
                 setBookmarks(res);
             } catch (err) {}
         };
