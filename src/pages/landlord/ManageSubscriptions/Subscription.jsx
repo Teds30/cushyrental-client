@@ -15,6 +15,8 @@ import no_img from '../../../assets/cushyrental.svg'
 const Subscription = (props) => {
     const { subscription } = props
 
+    console.log(subscription);
+
     const { fetchImage, fetchImages, isLoading } = useImageManager()
     const [image, setImage] = useState(null)
 
@@ -23,7 +25,7 @@ const Subscription = (props) => {
     useEffect(() => {
         const handleFetch = async (image) => {
             try {
-                const resImage = await fetchImage(image)
+                const resImage = await fetchImage(subscription.unit.image.replace("images/", ""))
 
                 setImage(resImage)
             } catch (err) {}
