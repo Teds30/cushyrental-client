@@ -196,7 +196,7 @@ function App() {
                     {/* Unit Search */}
 
                     {/* Unit Comparison */}
-                    {/* <Route path="/unit_comparison/:id" element={<UnitComparison />}></Route> */}
+                    <Route path="/unit_comparison/:id" element={<UnitComparison />}></Route>
                     {/* Unit Comparison */}
 
                     <Route path="/myunit-landlord" element={<MyUnit />}></Route>
