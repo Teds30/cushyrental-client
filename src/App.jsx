@@ -60,6 +60,7 @@ import { ComparisonToolContextProvider } from './context/comparison-tool-context
 import { LinearProgress } from '@mui/material'
 import About from './pages/about/About'
 import ChangeContactNumberMain from './pages/Profile/ChangeContactNumber/ChangeContactNumberMain'
+import SplashScreen from './components/SplashScreen/SplashScreen'
 
 function App() {
     const { user, token, loginHandler, logoutHandler, isLoggedIn } = useAuth()
@@ -100,7 +101,7 @@ function App() {
                             ) : user && user.user_type_id === 3 ? (
                                 <Homepage />
                             ) : (
-                                <>asd</>
+                                <SplashScreen />
                             )
                         }
                     ></Route>
@@ -196,7 +197,10 @@ function App() {
                     {/* Unit Search */}
 
                     {/* Unit Comparison */}
-                    {/* <Route path="/unit_comparison/:id" element={<UnitComparison />}></Route> */}
+                    <Route
+                        path="/unit_comparison/:id"
+                        element={<UnitComparison />}
+                    ></Route>
                     {/* Unit Comparison */}
 
                     <Route path="/myunit-landlord" element={<MyUnit />}></Route>
@@ -229,7 +233,10 @@ function App() {
                     ></Route>
                     <Route path="/favorites" element={<Favorites />}></Route>
 
-                    <Route path="/change_contact_number" element={<ChangeContactNumberMain />}></Route>
+                    <Route
+                        path="/change_contact_number"
+                        element={<ChangeContactNumberMain />}
+                    ></Route>
 
                     <Route
                         path="/costcomparison"
@@ -238,6 +245,8 @@ function App() {
                         <Route path="" element={<CostComparison />} />
                         <Route path="edit" element={<Expenditures />} />
                     </Route>
+
+                    <Route path="/about" element={<About />}></Route>
                     <Route
                         path="*"
                         element={
