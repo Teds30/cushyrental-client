@@ -16,7 +16,7 @@ import AuthContext from "../../../context/auth-context";
 import RentedUnitRatingStar from "./RentedUnitStar";
 
 const RentedUnit = (props) => {
-    const { rental, onSubmittedReview, onRefresh} = props;
+    const { rental, onSubmittedReview, onRefresh } = props;
     const { notify } = useNotistack();
     const authCtx = useContext(AuthContext);
 
@@ -138,16 +138,19 @@ const RentedUnit = (props) => {
     };
 
     const imageThumbnail = rental.unit.images
-                            .filter((image, index) => image.is_thumbnail === 1)
-                            .shift();
+        .filter((image, index) => image.is_thumbnail === 1)
+        .shift();
+        
     return (
         <div className={`${styles["previews-unit"]} `}>
             <div className={`${styles["previews-unit-data"]} `}>
                 <div className={`${styles["image-unit_data"]} `}>
                     <RentedUnitImage
-                        images={imageThumbnail !== undefined
-                            ? imageThumbnail
-                            : rental.unit.images[0]}
+                        images={
+                            imageThumbnail !== undefined
+                                ? imageThumbnail
+                                : rental.unit.images[0]
+                        }
                     />
                 </div>
                 <div className={`${styles["text-unit_data"]} `}>
@@ -189,17 +192,13 @@ const RentedUnit = (props) => {
                     </div>
                 )}
 
-            {rental.date_end == null &&
-                (ratingValue.length === 0) && (
-                    <div className={`${styles["rate-unit-button"]}`}>
-                        <PrimaryButton
-                            width="100%"
-                            onClick={handleRateUnitClick}
-                        >
-                            Rate Unit
-                        </PrimaryButton>
-                    </div>
-                )}
+            {rental.date_end == null && ratingValue.length === 0 && (
+                <div className={`${styles["rate-unit-button"]}`}>
+                    <PrimaryButton width="100%" onClick={handleRateUnitClick}>
+                        Rate Unit
+                    </PrimaryButton>
+                </div>
+            )}
 
             <SwipeableCard
                 open={open}

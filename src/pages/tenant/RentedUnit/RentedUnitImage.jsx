@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import useImageManager from "../../../hooks/data/image-hook";
 
+import no_img from '../../../assets/cushyrental.svg'
+
 const RentedUnitImage = (props) => {
-    const { images } = props;
-    const { fetchImage, isLoading } = useImageManager();
+    const { images} = props;
+    const { fetchImages, fetchImage, isLoading } = useImageManager();
     const [unitPhoto, setUnitPhoto] = useState("");
 
     console.log(images);
@@ -11,11 +13,16 @@ const RentedUnitImage = (props) => {
     useEffect(() => {
         const handleFetch = async () => {
             try {
-                const res = await fetchImage(rental.unit.images.image.replace("images/", ""));
-                setUnitPhoto(res);
+                const res = await fetchImages();
+                const imageData = res.filter(unit_image => unit_image.id === images.image_id);
+                const res2 = await fetchImage(imageData[0].image);
+                setUnitPhoto(res2);
             } catch (err) {}
         };
-        handleFetch();
+
+
+        if (images !== undefined) {handleFetch()} 
+        else {setUnitPhoto(no_img)};
     }, []);
 
 

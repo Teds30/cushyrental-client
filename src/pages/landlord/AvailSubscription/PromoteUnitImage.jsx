@@ -9,7 +9,7 @@ const PromoteUnitImage = (props) => {
 
     useEffect(() => {
         const loadData = async () => {
-            const res = await fetchImage(image)
+            const res = await fetchImage(image.replace('images/', ''))
             setImageBlob(res)
         }
 
