@@ -21,7 +21,6 @@ const UnitRules = (props) => {
                         icon: res,
                     };
                 } catch (error) {
-                    console.log(error);
                     return null;
                 }
             });
