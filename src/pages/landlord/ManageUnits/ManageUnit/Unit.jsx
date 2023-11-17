@@ -5,6 +5,7 @@ import Status from "./Status";
 import PrimaryButton from "../../../../components/Button/PrimaryButton";
 import BorderedButton from "../../../../components/Button/BorderedButton";
 import useImageManager from "../../../../hooks/data/image-hook";
+import useSubscriptionManager from "../../../../hooks/data/subscriptions-hooks";
 
 import styles from "./ManageUnit.module.css";
 import photo from "../../../../assets/cushyrental.svg";
@@ -13,27 +14,37 @@ import { useEffect, useState } from "react";
 import UnitImage from "./UnitImage";
 
 const Unit = (props) => {
-    const { user_unit } = props;
-
-    console.log(user_unit);
-
-    const { fetchImage, fetchImages, isLoading } = useImageManager();
-    const [image, setImage] = useState(
-        user_unit.images.filter((image) => image.is_thumbnail === 1)
-    );
-    const [unitPhoto, setUnitPhoto] = useState("");
+    const { user_unit: unitSubscriptions } = props;
+    const { deleteUnitSubscription, isLoading } = useSubscriptionManager();
+    const [userUnit, setUserUnit] = useState(unitSubscriptions);
+    console.log(userUnit);
 
     let gender;
 
-    if (user_unit.target_gender === 1) {
+    if (userUnit.target_gender === 1) {
         gender = "Male";
-    } else if (user_unit.target_gender === 1) {
+    } else if (userUnit.target_gender === 1) {
         gender = "Female";
     } else {
         gender = "All";
     }
 
-    const subscriptions = user_unit.subscriptions.filter((subscription) => {
+    const cancelUnitRequestHandler = async (id) => {
+        console.log(id);
+        try {
+            const res = await deleteUnitSubscription(id);
+            const sample = userUnit.subscriptions.filter(
+                (unitSubscribe) => unitSubscribe.id !== id
+            );
+            console.log(sample);
+            setUserUnit({
+                ...userUnit,
+                subscriptions: sample,
+            });
+        } catch (err) {}
+    };
+
+    const subscriptions = userUnit.subscriptions.filter((subscription) => {
         const currentDate = new Date();
         const year = currentDate.getFullYear();
         const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Add 1 to the month since it's zero-based
@@ -60,17 +71,13 @@ const Unit = (props) => {
     console.log(subscriptions);
 
     const requestStatus =
-        user_unit.request_status === 0
-            ? user_unit.request_status
-            : user_unit.request_status === 2 && 3;
+        userUnit.request_status === 0
+            ? userUnit.request_status
+            : userUnit.request_status === 2 && 3;
 
-    console.log(requestStatus);
-
-    const imageThumbnail = user_unit.images
+    const imageThumbnail = userUnit.images
         .filter((image, index) => image.is_thumbnail === 1)
         .shift();
-
-    // console.log(imageThumbnail);
 
     return (
         <div className={`${styles["units-container"]}`}>
@@ -88,7 +95,7 @@ const Unit = (props) => {
                         imageThumbnail={
                             imageThumbnail !== undefined
                                 ? imageThumbnail
-                                : user_unit.images[0]
+                                : userUnit.images[0]
                         }
                     />
 
@@ -98,24 +105,24 @@ const Unit = (props) => {
                                 unitRequestStatus={
                                     requestStatus !== false
                                         ? requestStatus
-                                        : user_unit.is_listed === 0
+                                        : userUnit.is_listed === 0
                                         ? 2
-                                        : user_unit.is_listed
+                                        : userUnit.is_listed
                                 }
                             />
                         </div>
-                        <div className="title">{user_unit.name}</div>
+                        <div className="title">{userUnit.name}</div>
                         <div className={`${styles["col-address"]}`}>
                             <div>
                                 <CiLocationOn />
                             </div>
-                            <div className="caption">{user_unit.address}</div>
+                            <div className="caption">{userUnit.address}</div>
                         </div>
                         <div
                             className="title"
                             style={{ fontSize: "16px", color: "var(--accent)" }}
                         >
-                            Php {user_unit.price}
+                            Php {userUnit.price}
                         </div>
                     </div>
                 </div>
@@ -125,14 +132,14 @@ const Unit = (props) => {
                 <div className={`${styles["col-data-2"]}`}>
                     <div className={`${styles["unit-datas"]}`}>
                         <div className="pre-title">Rating</div>
-                        <p className="title">{user_unit.average_ratings}</p>
+                        <p className="title">{userUnit.average_ratings}</p>
                     </div>
 
                     <div className={`${styles["hr-horizontal"]}`}></div>
 
                     <div className={`${styles["unit-datas"]}`}>
                         <div className="pre-title">Available Slot</div>
-                        <p className="title">{user_unit.slots}</p>
+                        <p className="title">{userUnit.slots}</p>
                     </div>
 
                     <div className={`${styles["hr-horizontal"]}`}></div>
@@ -162,7 +169,7 @@ const Unit = (props) => {
                 {subscriptions.length === 0 ? (
                     <div className={`${styles["unit-button"]}`}>
                         <Link
-                            to={`/manage_unit/edit/${user_unit.id}`}
+                            to={`/manage_unit/edit/${userUnit.id}`}
                             style={{ width: "100%" }}
                         >
                             <PrimaryButton width="100%">
@@ -174,13 +181,19 @@ const Unit = (props) => {
                         </Link>
                     </div>
                 ) : subscriptions[0].request_status === 0 ? (
-                    <BorderedButton width="100%" btnType="danger">
+                    <BorderedButton
+                        width="100%"
+                        btnType="danger"
+                        onClick={() =>
+                            cancelUnitRequestHandler(subscriptions[0].id)
+                        }
+                    >
                         Cancel Unit Request
                     </BorderedButton>
                 ) : (
                     <div className={`${styles["unit-button"]}`}>
                         <Link
-                            to={`/manage_unit/edit/${user_unit.id}`}
+                            to={`/manage_unit/edit/${userUnit.id}`}
                             style={{ width: "100%" }}
                         >
                             <PrimaryButton width="100%">

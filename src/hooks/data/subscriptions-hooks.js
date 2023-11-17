@@ -125,6 +125,22 @@ const useSubscriptionManager = () => {
         return responseData
     }, [sendRequest])
 
+    const deleteUnitSubscription = useCallback(
+        async (id, body) => {
+            try {
+                await sendRequest({
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/unit_subscriptions/${id}`,
+                    method: 'DELETE',
+                })
+            } catch (err) {
+                throw err.message
+            }
+        },
+        [sendRequest]
+    )
+
     return {
         isLoading,
         fetchSubscription,
@@ -134,6 +150,7 @@ const useSubscriptionManager = () => {
         subscribeUnit,
         fetchSilverUnits,
         fetchGoldUnits,
+        deleteUnitSubscription
     }
 }
 
