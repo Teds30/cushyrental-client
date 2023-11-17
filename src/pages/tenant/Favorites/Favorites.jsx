@@ -30,26 +30,26 @@ const Favorites = () => {
     const authCtx = useContext(AuthContext);
 
     // console.log(units);
+    const loadData = async () => {
+        try {
+            const response = await fetchBookmarkUnits(authCtx.user.id);
+            setUnits(response);
+            // console.log(response);
+        } catch (error) {
+            console.error("Error fetching units:", error);
+        }
+    };
 
     useEffect(() => {
-        const loadData = async () => {
-            try {
-                const response = await fetchBookmarkUnits(authCtx.user.id);
-                setUnits(response);
-                // console.log(response);
-            } catch (error) {
-                console.error("Error fetching units:", error);
-            }
-        };
+        
         if (authCtx.user) loadData();
     }, [authCtx.user]);
 
     const handleBookmarkClick = async (id) => {
         const body = { unit_id: id, user_id: authCtx.user.id };
-        // console.log(body);
-
         const res = await addToBookmark(body);
         setUnits(res);
+        loadData();
     };
 
     const unitHandler = (id) => {
