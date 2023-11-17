@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import useImageManager from "../../../hooks/data/image-hook";
-
+import no_img from '../../../assets/cushyrental.svg'
 const FavoritesImage = (props) => {
     const { images } = props;
     const { fetchImage, isLoading } = useImageManager();
     const [unitPhoto, setUnitPhoto] = useState("");
 
-    console.log(images)
+    // console.log(images)
 
     useEffect(() => {
         const handleFetch = async () => {
@@ -15,14 +15,16 @@ const FavoritesImage = (props) => {
                 setUnitPhoto(res);
             } catch (err) {}
         };
-        handleFetch();
+
+        if (Object.keys(images).length !== 0) {handleFetch()}
+        else {setUnitPhoto(no_img)};
     }, []);
 
 
     return !isLoading && unitPhoto !== '' && (
 
             <img
-                src={unitPhoto === "" ? photo : unitPhoto}
+                src={unitPhoto}
                 alt={images.image.name}
             />
     );

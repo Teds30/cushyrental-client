@@ -39,7 +39,9 @@ const UnitFacilities = (props) => {
             })
             .shift();
 
-        return (
+            console.log(exclusive);
+
+        if (exclusive !== undefined) { return (
             <div key={facility.id} className={`${styles["facilities"]}`}>
                 <p className={`${styles["facility-name"]}`}>{facility.name}</p>
 
@@ -50,7 +52,7 @@ const UnitFacilities = (props) => {
                     labelSize={"10px"}
                 />
             </div>
-        );
+        );}
     });
 
     return (
