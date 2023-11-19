@@ -29,7 +29,7 @@ const PaymentScan = (props) => {
                         Or through this number
                         <div className={styles['hr']}></div>
                     </div>
-                    <h2>+639123456789</h2>
+                    <h2>+639662177561</h2>
                 </div>
             </div>
             <div className={styles['actions']}>
