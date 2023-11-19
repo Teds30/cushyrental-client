@@ -3,9 +3,9 @@ import ChipBig from "../../../../../components/Chips/ChipBig";
 import styles from '../CreateUnit.module.css';
 
 const Others = (props) => {
-    const { otherFacilities, onOther } = props;
+    const { otherFacilities, onOther, selectedOtherFacilities } = props;
 
-    const [ facilityValue, setFacilityValue ] = useState([]);
+    const [ facilityValue, setFacilityValue ] = useState(selectedOtherFacilities);
 
     const facilityValueHandler = (data) => {
         setFacilityValue(data);
