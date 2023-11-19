@@ -137,6 +137,11 @@
     box-sizing: border-box;
 }
 
+.create-unit-button .button {
+    display: flex;
+    justify-content: end;
+}
+
 @media (min-width: 640px) {
     .manage-unit-container {
         max-width: 768px;
