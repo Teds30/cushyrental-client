@@ -36,7 +36,7 @@ const PersonalInformation = (props) => {
         valueChangeHandler: accnumChangeHandler,
         inputBlurHandler: accnumBlurHandler,
         reset: accnumReset,
-    } = useValidate((value) => value.trim() !== '')
+    } = useValidate((value) => value.trim() !== '' && value.length === 11)
     const {
         value: enteredEmail,
         isValid: enteredEmailIsValid,
@@ -72,10 +72,14 @@ const PersonalInformation = (props) => {
     }, [])
 
     const isValid =
-        !!form.selectedUnit.unitId &&
-        !!form.gcash_name &&
-        !!form.gcash_account &&
-        !!form.email_address
+    enteredNameIsValid &&
+    enteredAccnumIsValid &&
+    enteredEmailIsValid 
+
+        // !!form.selectedUnit.unitId &&
+        // !!form.gcash_name &&
+        // !!form.gcash_account &&
+        // !!form.email_address
 
     return (
         <div className={styles['container']}>
@@ -160,6 +164,7 @@ const PersonalInformation = (props) => {
                         <TextField
                             fullWidth
                             label="GCash Account Number"
+                            type="number"
                             defaultValue={form.gcash_account}
                             onChange={(e) => {
                                 accnumChangeHandler(e)
@@ -173,7 +178,7 @@ const PersonalInformation = (props) => {
                             onBlur={accnumBlurHandler}
                             helperText={
                                 enteredAccnumHasError &&
-                                'Please enter your GCash account number.'
+                                'Please enter a valid GCash Number.'
                             }
                             error
                             required
