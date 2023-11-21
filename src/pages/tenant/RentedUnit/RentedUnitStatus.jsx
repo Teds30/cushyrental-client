@@ -3,7 +3,19 @@ import StatusChip from '../../../components/StatusChip/StatusChip'
 const RentedUnitStatus = (props) => {
     const { unitRequestStatus } = props
 
-    const status = unitRequestStatus !== null ? { type: 'success', status: 'ACTIVE' } : { type: 'danger', status: 'INACTIVE' };
+    let status;
+
+    if (unitRequestStatus === 1) {
+        status = { type: 'success', status: 'ACTIVE' };
+    } else if (
+        unitRequestStatus === 0 ||
+        unitRequestStatus === 2 ||
+        unitRequestStatus === 3 ||
+        unitRequestStatus === 4
+    ) {
+        status = { type: 'danger', status: 'INACTIVE' };
+    }
+
     
     return (
         <StatusChip type={status.type}>

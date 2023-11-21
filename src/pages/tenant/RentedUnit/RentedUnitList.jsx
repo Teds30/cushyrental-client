@@ -16,7 +16,7 @@ const RentedUnitList = (props) => {
                     rental.unit.reviews.map((review) => {});
                 }
             }
-            return rental; // Return the rental object after making changes
+            return rental; 
         });
 
         setRentedUnit(updatedRentedUnit);
