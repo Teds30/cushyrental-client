@@ -31,15 +31,26 @@
   top: 15px;
 }
 
+.component-title1 {
+  margin-top: -10px;
+}
 .sign-in {
+  margin-top: 19px;
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 10px;
+}
+
+.textfield_container {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
 }
 
 .remember-forgot {
   display: flex;
   justify-content: space-between;
+  margin-top: 10px;
 }
 
 .remember-me {
@@ -52,6 +63,9 @@
   color: var(--accent);
 }
 
+.loginButton-container {
+  margin-top: 30px;
+}
 .checkbox-container {
   border: 1px solid var(--border-color);
   display: flex;
@@ -73,7 +87,7 @@
 .sign-up__container {
   margin: 0 0 0 0;
   width: 100%;
-
+  margin-top: 40px;
   display: flex;
   align-items: center;
 }
@@ -117,11 +131,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 22px;
 }
 
 .socmed {
-  margin: 38px 0 0 0;
+  margin: 30px 0 0 0;
 }
 
 .googleIcon {

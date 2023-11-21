@@ -46,7 +46,7 @@ const SignInPage = () => {
         }
     };
 
-    const checkBoxHandler = (items) => {
+    const rememberMeHandler = (items) => {
         setCheckBoxItems(items);
     };
 
@@ -95,44 +95,46 @@ const SignInPage = () => {
 
                 <div className={`${styles["component-title"]} `}>
                     <h2>Sign In to</h2>
-                    <h2>Cushy Rental</h2>
+                    <h2 className={`${styles["component-title1"]} `}>Cushy Rental</h2>
                 </div>
             </div>
 
             <div className={`${styles["sign-in"]} `}>
                 {isInvalid && <Alert />}
-                <div className={`${styles["custom__inputs"]} `}>
-                    <TextField
-                        fullWidth
-                        label="Email"
-                        type="email"
-                        value={emailInput}
-                        onChange={handleEmailChange}
-                        onBlur={handleEmailBlur}
-                    />
-                    <p className={styles["error"]}>{emailError}</p>
-                </div>
+                <div className={`${styles["textfield_container"]} `}>
+                    <div className={`${styles["custom__inputs"]} `}>
+                        <TextField
+                            fullWidth
+                            label="Email"
+                            type="email"
+                            value={emailInput}
+                            onChange={handleEmailChange}
+                            onBlur={handleEmailBlur}
+                        />
+                        <p className={styles["error"]}>{emailError}</p>
+                    </div>
 
-                <div className={`${styles["custom__inputs"]} `}>
-                    <TextFieldAdornedPassword
-                        label="Password"
-                        type="password"
-                        value={passwordInput}
-                        onChange={handlePasswordChange}
-                        onBlur={handlePasswordBlur}
-                        helperText={
-                            passwordError && "Please confirm your password."
-                        }
-                    />
-                    {/* <div className={styles['error']}>{passwordError}</div> */}
+                    <div className={`${styles["custom__inputs"]} `}>
+                        <TextFieldAdornedPassword
+                            label="Password"
+                            type="password"
+                            value={passwordInput}
+                            onChange={handlePasswordChange}
+                            onBlur={handlePasswordBlur}
+                            helperText={
+                                passwordError && "Please confirm your password."
+                            }
+                        />
+                        {/* <div className={styles['error']}>{passwordError}</div> */}
+                    </div>
                 </div>
 
                 <div className={`${styles["remember-forgot"]} `}>
                     <div className={`${styles["remember-me"]} `}>
                         {/* <CheckBox
-              items={[{ id: 1, name: "Remember Me" }]}
-              onCheckBox={checkBoxHandler}
-            /> */}
+                            items={[{ id: 1, name: "Remember Me" }]}
+                            onCheckBox={rememberMeHandler}
+                        /> */}
                     </div>
                     <div className={`${styles["remember-me"]} `}>
                         <Link
@@ -144,9 +146,11 @@ const SignInPage = () => {
                     </div>
                 </div>
 
-                <PrimaryButton type="submit" isLoading={isLoading}>
-                    LOG IN
-                </PrimaryButton>
+                <div className={`${styles["loginButton-container"]} `}>
+                    <PrimaryButton type="submit" isLoading={isLoading} width="100%">
+                        LOG IN
+                    </PrimaryButton>
+                </div>
 
                 <div>
                     <div className={`${styles["sign-up__container"]}`}>
