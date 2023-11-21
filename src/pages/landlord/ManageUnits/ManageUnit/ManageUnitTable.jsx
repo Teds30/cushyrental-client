@@ -17,7 +17,7 @@ import { MdAdd } from "react-icons/md";
 const ManageUnitTabs = (props) => {
     const { userUnits = [] } = props;
 
-    console.log(userUnits);
+    // console.log(userUnits);
 
     const [value, setValue] = useState(0);
     const [userUnitPending, setUserUnitPending] = useState(
@@ -169,7 +169,8 @@ const ManageUnitTabs = (props) => {
                 )}
             </TabPanel>
             <div className={`${styles["create-unit-button"]}`}>
-                <Link to="/manage_unit/create_unit" style={{display: 'flex', justifyContent: 'end'}}>
+                <div className={`${styles['button']}`}>
+                <Link to="/manage_unit/create_unit" >
                     <Fab
                         style={{ background: "var(--accent)" }}
                         aria-label="add"
@@ -177,6 +178,7 @@ const ManageUnitTabs = (props) => {
                         <AddIcon sx={{ color: "white" }} />
                     </Fab>
                 </Link>
+                </div>
             </div>
         </Fragment>
     );

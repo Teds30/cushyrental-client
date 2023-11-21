@@ -1,19 +1,23 @@
-import React, { useEffect } from 'react'
-import Subscription from './Subscription'
+import React from "react";
+import Subscription from "./Subscription";
 
-import styles from './SubscriptionsList.module.css'
+import styles from "./SubscriptionsList.module.css";
 
 const SubscriptionsList = (props) => {
-    const { userSubscriptions = [] } = props
+    const { userSubscriptions = [], onRefresh } = props;
 
     const content = userSubscriptions ? (
         userSubscriptions.map((subscription) => (
-            <Subscription key={subscription.id} subscription={subscription} />
+            <Subscription
+                key={subscription.id}
+                subscription={subscription}
+                onRefresh={onRefresh}
+            />
         ))
     ) : (
-        <p style={{ textAlign: 'center' }}>No results.</p>
-    )
-    return <div className={styles['container']}>{content}</div>
-}
+        <p style={{ textAlign: "center" }}>No results.</p>
+    );
+    return <div className={styles["container"]}>{content}</div>;
+};
 
-export default SubscriptionsList
+export default SubscriptionsList;

@@ -23,7 +23,6 @@ const ManageTenants = (props) => {
 
     useEffect(() => {
         setFilteredData(tenants)
-        console.log(tenants)
     }, [tenants])
 
     const handleSearch = (event) => {
@@ -62,7 +61,6 @@ const ManageTenants = (props) => {
         }
         setSelectAllChecked(!selectAllChecked)
         setChecked(event.target.checked)
-        console.log('Selected User IDs:', selectedUsers)
     }
 
     useEffect(() => {

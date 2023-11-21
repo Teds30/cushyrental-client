@@ -62,7 +62,6 @@ const ForgotPassword = (props) => {
 
     const submitHandler = () => {
         if (otpDigits.length !== 5) {
-            console.log("Hello John");
             return;
         }
 

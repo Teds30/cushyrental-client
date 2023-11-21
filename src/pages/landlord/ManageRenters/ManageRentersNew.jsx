@@ -165,7 +165,6 @@ const ManageRenters = () => {
                                 <CheckBox
                                     items={[user]}
                                     onCheckBox={(checkedItems) => {
-                                        console.log(checkedItems);
                                     }}
                                     checked={selectedUsers.includes(user)}
                                 />

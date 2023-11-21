@@ -15,20 +15,37 @@ import KitchenSink from "./FacilityComponent/KitchenSink";
 const FacilitiesForm = (props) => {
     const { onBack, onNext } = props;
     const { createUnit } = useUnitManager();
-    // let cRData;
 
     const createUnitCtx = useContext(CreateUnitContext);
     const facilityData = createUnitCtx.unitData.facilities
         ? createUnitCtx.unitData.facilities
         : [];
+    console.log(facilityData);
 
     const { isLoading, fetchFacilities } = useAttributeManager();
 
     const [facilities, setFacilities] = useState([]);
 
-    const [cRSelectedValue, setCRSelectedValue] = useState("1");
-    const [kSSelectedValue, setKSSelectedValue] = useState("1");
-    const [otherFacility, setOtherFacility] = useState([]);
+    const test =
+    facilityData.length !== 0
+        ? facilityData
+              .filter((facility) => facility.id !== "1" && facility.id !== "2")
+              .map((facility) => facility.id)
+        : [];
+
+    console.log(test);
+
+    const [cRSelectedValue, setCRSelectedValue] = useState(
+        facilityData.length !== 0
+            ? facilityData.find((facility) => facility.id === "1")?.is_shared
+            : "1"
+    );
+    const [kSSelectedValue, setKSSelectedValue] = useState(
+        facilityData.length !== 0
+            ? facilityData.find((facility) => facility.id === "2")?.is_shared
+            : "1"
+    );
+    const [otherFacility, setOtherFacility] = useState(test);
 
     const comfortRoomHandler = (data) => {
         setCRSelectedValue(data);
@@ -163,6 +180,7 @@ const FacilitiesForm = (props) => {
                                     facility.name !== "Kitchen Sink" &&
                                     facility.name !== "Comfort Room"
                             )}
+                            selectedOtherFacilities={otherFacility}
                             onOther={otherHandler}
                         />
                     </div>

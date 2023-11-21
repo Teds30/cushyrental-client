@@ -4,11 +4,11 @@ export const useSendEmail = () => {
     const { notify } = useNotistack();
 
     const config = {
-        Username: "johncanila.otilla@bicol-u.edu.ph",
-        Password: "5AC808A0D271CCC1122A620B7BA2985BECE0",
+        Username: "CushyRental@gmail.com",
+        Password: "0E27E2B1214676DD3BB97DD3BD042C20DD35",
         Host: "smtp.elasticemail.com",
         Port: 2525,
-        From: "johncanila.otilla@bicol-u.edu.ph",
+        From: "CushyRental@gmail.com",
         Subject: "HUWAG I SHARE ANG IYONG OTP",
     };
 

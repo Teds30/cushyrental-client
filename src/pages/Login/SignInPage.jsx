@@ -12,59 +12,85 @@ import SocialMediaLogin from "./SocialMedia";
 import AuthContext from "../../context/auth-context";
 import Alert from "../../components/Alert/Alert";
 import TextFieldAdornedPassword from "../../components/TextFieldAdorned/TextFieldAdornedPassword";
+import useValidate from "../../hooks/validate-input-hook";
 
 const SignInPage = () => {
     const { loginUser, isLoading } = useLogin();
     const [isInvalid, setIsInvalid] = useState(false);
-    const [emailInput, setEmailInput] = useState("");
-    const [passwordInput, setPasswordInput] = useState("");
+    // const [emailInput, setEmailInput] = useState("");
+    // const [passwordInput, setPasswordInput] = useState("");
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
+
+    const regex = /^(?=.*\d)(?=.*[!@#$%^&*._])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+    const {
+        value: emailInput,
+        isValid: enteredEmailInputValid,
+        hasError: enteredEmailInputHasError,
+        valueChangeHandler: emailInputChangeHandler,
+        inputBlurHandler: emailInputBlurHandler,
+        reset: emailInputReset,
+    } = useValidate(
+        (value) =>
+            value.trim() !== "" &&
+            value.includes("@") &&
+            value.includes("gmail") &&
+            value.includes(".com")
+    );
+
+    const {
+        value: passwordInput,
+        isValid: enteredPasswordInputIsValid,
+        hasError: enteredPasswordInputHasError,
+        valueChangeHandler: passwordInputChangeHandler,
+        inputBlurHandler: passwordInputBlurHandler,
+        reset: passwordInputReset,
+    } = useValidate(
+        (value) => value.trim() !== "" && value.length >= 8 && regex.test(value)
+    );
+
     const [checkBoxItems, setCheckBoxItems] = useState([]);
     const userCtx = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const handleEmailChange = (event) => {
-        setEmailInput(event.target.value);
-        setEmailError("");
-    };
+    let formIsValid = false;
 
-    const handlePasswordChange = (event) => {
-        setPasswordInput(event.target.value);
-        setPasswordError("");
-    };
+    if (enteredEmailInputValid && enteredPasswordInputIsValid) {
+        formIsValid = true;
+    }
 
-    const handleEmailBlur = () => {
-        if (emailInput === "") {
-            setEmailError("Email is required.");
-        }
-    };
+    // const handleEmailChange = (event) => {
+    //     setEmailInput(event.target.value);
+    //     setEmailError("");
+    // };
 
-    const handlePasswordBlur = () => {
-        if (passwordInput === "") {
-            setPasswordError("Password is required.");
-        }
-    };
+    // const handlePasswordChange = (event) => {
+    //     setPasswordInput(event.target.value);
+    //     setPasswordError("");
+    // };
 
-    const checkBoxHandler = (items) => {
+    // const handleEmailBlur = () => {
+    //     if (emailInput === "") {
+    //         setEmailError("Email is required.");
+    //     }
+    // };
+
+    // const handlePasswordBlur = () => {
+    //     if (passwordInput === "") {
+    //         setPasswordError("Password is required.");
+    //     }
+    // };
+
+    const rememberMeHandler = (items) => {
         setCheckBoxItems(items);
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        setEmailError("");
-        setPasswordError("");
-
-        if (emailInput === "") {
-            setEmailError("Email is required.");
-        }
-
-        if (passwordInput === "") {
-            setPasswordError("Password is required.");
-        }
-
-        if (emailInput !== "" && passwordInput !== "") {
+        if (!formIsValid) {
+            return;
         }
 
         try {
@@ -95,44 +121,69 @@ const SignInPage = () => {
 
                 <div className={`${styles["component-title"]} `}>
                     <h2>Sign In to</h2>
-                    <h2>Cushy Rental</h2>
+                    <h2 className={`${styles["component-title1"]} `}>Cushy Rental</h2>
                 </div>
             </div>
 
             <div className={`${styles["sign-in"]} `}>
                 {isInvalid && <Alert />}
-                <div className={`${styles["custom__inputs"]} `}>
+                <div className={`${styles["textfield_container"]} `}>
+                    <div className={`${styles["custom__inputs"]} `}>
+                        {/* <TextField
+                            fullWidth
+                            label="Email"
+                            type="email"
+                            value={emailInput}
+                            onChange={handleEmailChange}
+                            onBlur={handleEmailBlur}
+                        />
+                        <p className={styles["error"]}>{emailError}</p> */}
                     <TextField
+                        type="email"
                         fullWidth
                         label="Email"
-                        type="email"
                         value={emailInput}
-                        onChange={handleEmailChange}
-                        onBlur={handleEmailBlur}
-                    />
-                    <p className={styles["error"]}>{emailError}</p>
-                </div>
-
-                <div className={`${styles["custom__inputs"]} `}>
-                    <TextFieldAdornedPassword
-                        label="Password"
-                        type="password"
-                        value={passwordInput}
-                        onChange={handlePasswordChange}
-                        onBlur={handlePasswordBlur}
+                        onChange={emailInputChangeHandler}
+                        onBlur={emailInputBlurHandler}
                         helperText={
-                            passwordError && "Please confirm your password."
+                            enteredEmailInputHasError &&
+                            "Please enter your valid email address."
                         }
+                        error
                     />
-                    {/* <div className={styles['error']}>{passwordError}</div> */}
+                    </div>
+
+                    <div className={`${styles["custom__inputs"]} `}>
+                        {/* <TextFieldAdornedPassword
+                            label="Password"
+                            type="password"
+                            value={passwordInput}
+                            onChange={handlePasswordChange}
+                            onBlur={handlePasswordBlur}
+                            helperText={
+                                passwordError && "Please confirm your password."
+                            }
+                    /> */}
+                    <TextFieldAdornedPassword
+                    label="Password"
+                    value={passwordInput}
+                    onChange={passwordInputChangeHandler}
+                    onBlur={passwordInputBlurHandler}
+                    helperText={
+                        enteredPasswordInputHasError &&
+                        "Password must contain 8+ characters, symbol, upper and lowercase letters and a number."
+                    }
+                    />
+                        {/* <div className={styles['error']}>{passwordError}</div> */}
+                    </div>
                 </div>
 
                 <div className={`${styles["remember-forgot"]} `}>
                     <div className={`${styles["remember-me"]} `}>
                         {/* <CheckBox
-              items={[{ id: 1, name: "Remember Me" }]}
-              onCheckBox={checkBoxHandler}
-            /> */}
+                            items={[{ id: 1, name: "Remember Me" }]}
+                            onCheckBox={rememberMeHandler}
+                        /> */}
                     </div>
                     <div className={`${styles["remember-me"]} `}>
                         <Link
@@ -144,9 +195,11 @@ const SignInPage = () => {
                     </div>
                 </div>
 
-                <PrimaryButton type="submit" isLoading={isLoading}>
-                    LOG IN
-                </PrimaryButton>
+                <div className={`${styles["loginButton-container"]} `}>
+                    <PrimaryButton type="submit" isLoading={isLoading} width="100%" loadingText="LOGIN">
+                        LOGIN
+                    </PrimaryButton>
+                </div>
 
                 <div>
                     <div className={`${styles["sign-up__container"]}`}>

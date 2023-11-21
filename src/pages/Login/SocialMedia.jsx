@@ -31,7 +31,6 @@ const SocialMediaLogin = () => {
             })
             navigate('/')
         } catch (error) {
-            console.log(error)
         }
     }
 
@@ -71,7 +70,6 @@ const SocialMediaLogin = () => {
             const res = await facebookAccountRegistration(data)
             ctx.onLogin({ user: res.user, token: res.token })
         } catch (error) {
-            console.log(error)
         }
     }
 
@@ -82,7 +80,6 @@ const SocialMediaLogin = () => {
     const googleRegisterHandle = useGoogleLogin({
         onSuccess: onGoogleAuth,
         onFailure: (error) => {
-            console.log('Google authentication failed:', error)
         },
     })
 
