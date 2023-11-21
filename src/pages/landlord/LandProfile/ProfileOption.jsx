@@ -29,7 +29,7 @@ const ProfileOption = (props) => {
             )}
 
             {user_type_id === 2 && (
-                <Link to="/manage_unit" className={styles.col}>
+                <Link to="/myunit-landlord" className={styles.col}>
                     <BiBuildingHouse
                         style={{
                             color: 'var(--fc-strong)',
