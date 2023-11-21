@@ -28,13 +28,13 @@ const RentedUnitMain = () => {
             );
             const data = await response.json();
             setRentedUnit(data);
-            console.log("fetched");
+            // console.log("fetched");
         } catch (error) {
             console.error("Error fetching users:", error);
         }
     };
 
-    console.log(rentedUnit);
+    // console.log(rentedUnit);
     // console.log(authCtx.user.id);
     useEffect(() => {
         if (authCtx.user) fetchRentals();

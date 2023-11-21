@@ -17,7 +17,7 @@ import { MdAdd } from "react-icons/md";
 const ManageUnitTabs = (props) => {
     const { userUnits = [] } = props;
 
-    console.log(userUnits);
+    // console.log(userUnits);
 
     const [value, setValue] = useState(0);
     const [userUnitPending, setUserUnitPending] = useState(

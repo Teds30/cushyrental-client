@@ -20,7 +20,7 @@ const RentedUnit = (props) => {
     const { notify } = useNotistack();
     const authCtx = useContext(AuthContext);
 
-    console.log(rental);
+    // console.log(rental);
 
     const [open, setOpen] = useState();
     const [selectedRental, setSelectedRental] = useState([]);
@@ -116,7 +116,7 @@ const RentedUnit = (props) => {
             const data = await res.json();
             setSubmittedReview(data);
             onSubmittedReview(data);
-            console.log("saving");
+            // console.log("saving");
             onRefresh();
 
             notify("Review sent successfully", "success");

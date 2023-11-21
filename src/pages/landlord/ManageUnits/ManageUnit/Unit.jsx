@@ -17,7 +17,7 @@ const Unit = (props) => {
     const { user_unit: unitSubscriptions } = props;
     const { deleteUnitSubscription, isLoading } = useSubscriptionManager();
     const [userUnit, setUserUnit] = useState(unitSubscriptions);
-    console.log(userUnit);
+    // console.log(userUnit);
 
     let gender;
 
@@ -30,13 +30,13 @@ const Unit = (props) => {
     }
 
     const cancelUnitRequestHandler = async (id) => {
-        console.log(id);
+        // console.log(id);
         try {
             const res = await deleteUnitSubscription(id);
             const sample = userUnit.subscriptions.filter(
                 (unitSubscribe) => unitSubscribe.id !== id
             );
-            console.log(sample);
+            // console.log(sample);
             setUserUnit({
                 ...userUnit,
                 subscriptions: sample,
@@ -68,7 +68,7 @@ const Unit = (props) => {
         }
     });
 
-    console.log(subscriptions);
+    // console.log(subscriptions);
 
     const requestStatus =
         userUnit.request_status === 0
