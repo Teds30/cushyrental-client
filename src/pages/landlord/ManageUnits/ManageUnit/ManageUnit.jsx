@@ -23,7 +23,7 @@ const ManageUnit = () => {
         const handleFetch = async () => {
             try {
                 const res = await fetchUserUnits(userCtx.user.id)
-                console.log(res);
+                // console.log(res);
                 setUserUnits(res)
             } catch (err) {}
         }
@@ -52,11 +52,11 @@ const ManageUnit = () => {
                                 className={`${styles['toolbar-container']}`}
                             >
                                 <Link
-                                    to={`/profile`}
-                                    // onClick={(e) => {
-                                    //     e.preventDefault()
-                                    //     navigate(-1)
-                                    // }}
+                                    to={`/myunit-landlord`}
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        navigate(-1)
+                                    }}
                                     className={`${styles['link-button']}`}
                                 >
                                     <IconButton
