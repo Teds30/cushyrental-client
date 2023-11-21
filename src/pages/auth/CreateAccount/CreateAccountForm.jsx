@@ -126,13 +126,13 @@ const CreateAccountForm = (props) => {
             phone_number: enteredPhoneNumber,
         });
 
-        firstNameReset();
-        lastNameReset();
-        genderReset();
-        phoneNumberReset();
-        emailReset();
-        passwordReset();
-        confirmPasswordReset();
+        // firstNameReset();
+        // lastNameReset();
+        // genderReset();
+        // phoneNumberReset();
+        // emailReset();
+        // passwordReset();
+        // confirmPasswordReset();
     };
 
     const registerGoogleAuthHandler = () => {
