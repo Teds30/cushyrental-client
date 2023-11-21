@@ -140,7 +140,7 @@ const RentedUnit = (props) => {
     const imageThumbnail = rental.unit.images
         .filter((image, index) => image.is_thumbnail === 1)
         .shift();
-        
+
     return (
         <div className={`${styles["previews-unit"]} `}>
             <div className={`${styles["previews-unit-data"]} `}>
@@ -154,7 +154,7 @@ const RentedUnit = (props) => {
                     />
                 </div>
                 <div className={`${styles["text-unit_data"]} `}>
-                    <Status unitRequestStatus={rental.date_end} />
+                    <Status unitRequestStatus={rental.rental_status} />
                     <p className={`${styles["text-name_data"]} `}>
                         {rental.unit.name}
                     </p>
@@ -175,7 +175,8 @@ const RentedUnit = (props) => {
                     </p>
                 </div>
             </div>
-            {rental.date_end == null &&
+            {rental.date_end !== null &&
+                rental.rental_status === 4 &&
                 ratingValue &&
                 ratingValue.length > 0 && (
                     <div className={`${styles["ratingunit-container"]} `}>
@@ -192,13 +193,18 @@ const RentedUnit = (props) => {
                     </div>
                 )}
 
-            {rental.date_end == null && ratingValue.length === 0 && (
-                <div className={`${styles["rate-unit-button"]}`}>
-                    <PrimaryButton width="100%" onClick={handleRateUnitClick}>
-                        Rate Unit
-                    </PrimaryButton>
-                </div>
-            )}
+            {rental.date_end !== null &&
+                rental.rental_status === 4 &&
+                ratingValue.length === 0 && (
+                    <div className={`${styles["rate-unit-button"]}`}>
+                        <PrimaryButton
+                            width="100%"
+                            onClick={handleRateUnitClick}
+                        >
+                            Rate Unit
+                        </PrimaryButton>
+                    </div>
+                )}
 
             <SwipeableCard
                 open={open}
