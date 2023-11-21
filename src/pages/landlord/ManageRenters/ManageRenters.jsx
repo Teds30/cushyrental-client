@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link, Route, Switch, useNavigate } from 'react-router-dom'
-import ManageTenants from './ManageTenants'
-import ManagePendingInquiries from './ManagePendingInquiries'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
-import { StyledTabs, StyledTab, TabPanel } from '../../../components/Tabs/Tabs'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
+
+import ManageTenants from './ManageTenants'
+import ManagePendingInquiries from './ManagePendingInquiries'
+import useRental from '../../../hooks/data/rental-hook'
+import { StyledTabs, StyledTab, TabPanel } from '../../../components/Tabs/Tabs'
+import AuthContext from '../../../context/auth-context'
+
 import styles from './ManageRenters.module.css'
 import { FiChevronLeft } from 'react-icons/fi'
 
@@ -15,6 +19,8 @@ const ManageRenters = () => {
     const [inquiriesData, setInquiriesData] = useState([])
     const [value, setValue] = useState(0)
     const navigate = useNavigate()
+    const { fetchRentals } = useRental();
+    const userCtx = useContext(AuthContext);
 
     const handleChange = (event, newValue) => {
         setValue(newValue)
@@ -22,18 +28,12 @@ const ManageRenters = () => {
 
     const fetchTenantsData = async () => {
         try {
-            const response = await fetch(
-                `${
-                    import.meta.env.VITE_BACKEND_LOCALHOST
-                }/api/landlord-rentals/1`
-            )
-            const data = await response.json()
-            const availableRentals = data.filter(
+            const res = await fetchRentals(userCtx.user.id);
+            const availableRentals = res.filter(
                 (rental) => rental.rental_status === 0
             )
             setTenantsData(availableRentals)
         } catch (error) {
-            console.error('Error fetching tenants data:', error)
         }
     }
 
