@@ -32,12 +32,11 @@
 }
 
 .main-container {
-
     display: flex;
     flex-direction: column;
     gap: 12px;
     background: var(--bg-layer2);
-    height: 100vh;
+    /* height: 100vh; */
 }
 
 .tab-child {
