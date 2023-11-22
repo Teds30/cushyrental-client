@@ -19,8 +19,9 @@ import useSchoolManager from '../../../hooks/data/school-hook'
 
 const SearchUnit = () => {
     const navigate = useNavigate()
-    const { fetchAttributes, isLoading } = useAttributeManager()
-    const { fetchSchools } = useSchoolManager()
+    const { fetchAttributes, isLoading: attributeLoading } =
+        useAttributeManager()
+    const { fetchSchools, isLoading: schoolLoading } = useSchoolManager()
     const { searchUnits } = useUnitManager()
     const [value, setValue] = useState(0)
     const [attribtes, setAttributes] = useState([])
@@ -142,7 +143,7 @@ const SearchUnit = () => {
     }
 
     return (
-        !isLoading &&
+        !attributeLoading &&
         attribtes.length !== 0 && (
             <div className={`${styles['search-container']}`}>
                 <Box
@@ -197,11 +198,13 @@ const SearchUnit = () => {
                 </TabPanel>
 
                 <TabPanel value={value} index={1}>
-                    <Filter
-                        setFilters={setFilters}
-                        filters={filters}
-                        attributes={attribtes}
-                    />
+                    {!attributeLoading && (
+                        <Filter
+                            setFilters={setFilters}
+                            filters={filters}
+                            attributes={attribtes}
+                        />
+                    )}
                 </TabPanel>
 
                 <div className={`${styles['search-button']}`}>

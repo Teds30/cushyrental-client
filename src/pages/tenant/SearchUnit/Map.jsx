@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { GoogleMap, Marker, Circle } from '@react-google-maps/api'
-import { useLoadScript } from '@react-google-maps/api'
+
+import useSchoolManager from '../../../hooks/data/school-hook'
 
 import styles from './Map.module.css'
 
@@ -17,6 +18,9 @@ const Map = (props) => {
     } = props
 
     const [circleRef, setCircleRef] = useState(null)
+
+    const [schoolIcon, setSchoolIcon] = useState('')
+    const { fetchSchoolIcon } = useSchoolManager()
 
     // const { isLoaded } = useLoadScript({
     //     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API,
@@ -73,9 +77,15 @@ const Map = (props) => {
         }
     )
 
+    const loadSchool = async () => {
+        const res = await fetchSchoolIcon(location.icon)
+        setSchoolIcon(res)
+    }
+
     useEffect(() => {
         if (location && location.location) {
             setCenter(location.location)
+            loadSchool()
             if (circleRef) {
                 circleRef.setCenter(location.location)
             }
@@ -153,7 +163,7 @@ const Map = (props) => {
                             position={location.location}
                             icon={{
                                 // url: icon,
-                                url: `/assets/universities/${location.icon}`,
+                                url: schoolIcon,
                                 scaledSize: new google.maps.Size(48, 60),
                             }}
                         />
