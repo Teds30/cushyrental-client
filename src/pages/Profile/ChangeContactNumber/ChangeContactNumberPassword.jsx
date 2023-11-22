@@ -1,21 +1,19 @@
-import TextField from "../../../components/TextField/TextField";
-import useValidate from "../../../hooks/validate-input-hook";
-import PrimaryButton from "../../../components/Button/PrimaryButton";
-import useUserManager from "../../../hooks/data/users-hook";
-import useNotistack from "../../../hooks/notistack-hook";
-import TextFieldAdornedPassword from "../../../components/TextFieldAdorned/TextFieldAdornedPassword";
-import useLogin from "../../../hooks/data/login-hook";
+import TextField from '../../../components/TextField/TextField'
+import useValidate from '../../../hooks/validate-input-hook'
+import PrimaryButton from '../../../components/Button/PrimaryButton'
+import useUserManager from '../../../hooks/data/users-hook'
+import useNotistack from '../../../hooks/notistack-hook'
+import TextFieldAdornedPassword from '../../../components/TextFieldAdorned/TextFieldAdornedPassword'
+import useLogin from '../../../hooks/data/login-hook'
 
-import styles from "./ChangeContactNumber.module.css";
+import styles from './ChangeContactNumber.module.css'
 
 const ChangeContactNumberPassword = (props) => {
-    const { email, onAuthenticatedUser } = props;
-    const { notify } = useNotistack();
-    const { loginUser, isLoading } = useLogin();
+    const { user, onAuthenticatedUser } = props
+    const { notify } = useNotistack()
+    const { loginUser, isLoading } = useLogin()
 
-    console.log(email);
-
-    const regex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    const regex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/
 
     const {
         value: enteredPassword,
@@ -25,48 +23,40 @@ const ChangeContactNumberPassword = (props) => {
         inputBlurHandler: passwordBlurHandler,
         reset: passwordReset,
     } = useValidate(
-        (value) => value.trim() !== "" && value.length >= 8 && regex.test(value)
+        (value) => value.trim() !== ''
         // && value.includes(".com")
-    );
+    )
 
-    let formIsValid = false;
+    let formIsValid = false
 
     if (enteredPasswordIsValid) {
-        formIsValid = true;
+        formIsValid = true
     }
 
     const submitHandler = async () => {
         if (!formIsValid) {
-            return;
+            return
         }
 
-        try {
-            const res = await loginUser({
-                email: email,
-                password: enteredPassword,
-            });
-
-            console.log(res);
-            onAuthenticatedUser();
-            if (res.user === null) {
-                notify('Incorrect password', 'error')
-            }
-        } catch(err) {}
+        if (user.password === enteredPassword) {
+            onAuthenticatedUser()
+        } else {
+            notify('Incorrect password', 'error')
+        }
 
         // onNumber(enteredNumber);
-    };
+    }
 
     return (
-        <div className={`${styles["change-number-row"]}`}>
-            <div className={`${styles["enter-number"]} `}>
+        <div className={`${styles['change-number-row']}`}>
+            <div className={`${styles['enter-number']} `}>
                 <TextFieldAdornedPassword
                     label="Password"
                     value={enteredPassword}
                     onChange={passwordChangeHandler}
                     onBlur={passwordBlurHandler}
                     helperText={
-                        enteredPasswordHasError &&
-                        "Password must contain 8+ characters, symbol, upper and lowercase letters and a number."
+                        enteredPasswordHasError && 'Enter a valid password.'
                     }
                 />
             </div>
@@ -80,9 +70,9 @@ const ChangeContactNumberPassword = (props) => {
                 SUBMIT
             </PrimaryButton>
         </div>
-    );
-};
+    )
+}
 
-export default ChangeContactNumberPassword;
+export default ChangeContactNumberPassword
 
 // ChangeContactNumberPassword
