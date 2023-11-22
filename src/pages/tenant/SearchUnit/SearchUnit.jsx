@@ -15,42 +15,16 @@ import Filter from './Filter'
 import PrimaryButton from '../../../components/Button/PrimaryButton'
 import { useNavigate } from 'react-router-dom'
 
-const universities = [
-    {
-        id: 1,
-        name: 'Bicol University Main Campus',
-        location: {
-            lat: 13.144297,
-            lng: 123.725128,
-        },
-        icon: 'BU_Main.png',
-    },
-    {
-        id: 2,
-        name: 'University of Santo Tomas Legazpi',
-        location: {
-            lat: 13.1645849,
-            lng: 123.7510655,
-        },
-        icon: 'ustl.png',
-    },
-    {
-        id: 3,
-        name: 'Divine Word College Legazpi',
-        location: {
-            lat: 13.138219,
-            lng: 123.735674,
-        },
-        icon: 'DWCL.png',
-    },
-]
+import useSchoolManager from '../../../hooks/data/school-hook'
 
 const SearchUnit = () => {
     const navigate = useNavigate()
     const { fetchAttributes, isLoading } = useAttributeManager()
+    const { fetchSchools } = useSchoolManager()
     const { searchUnits } = useUnitManager()
     const [value, setValue] = useState(0)
     const [attribtes, setAttributes] = useState([])
+    const [universities, setUniversities] = useState([])
 
     const [filters, setFilters] = useState([])
     const [radius, setRadius] = useState(1)
@@ -64,6 +38,29 @@ const SearchUnit = () => {
     const [searchType, setSearchType] = useState(1)
 
     useEffect(() => {
+        const loadSchools = async () => {
+            const res = await fetchSchools()
+
+            const outputArray = res.map((item) => {
+                const [lat, lng] = item.location.split(',')
+
+                return {
+                    id: item.id,
+                    name: item.name,
+                    location: {
+                        lat: parseFloat(lat),
+                        lng: parseFloat(lng),
+                    },
+                    icon: item.icon,
+                }
+            })
+
+            setUniversities(outputArray)
+        }
+
+        loadSchools()
+    }, [])
+    useEffect(() => {
         const newLocation =
             searchType === 2
                 ? universities[0]
@@ -74,14 +71,6 @@ const SearchUnit = () => {
 
         setLocation(newLocation)
     }, [searchType])
-    if (mapref) {
-        // console.log({
-        //     lat: mapref.getCenter().lat(),
-        //     lng: mapref.getCenter().lng(),
-        // })
-    } else {
-        console.log('no')
-    }
 
     useEffect(() => {
         if (mapref) {
@@ -90,7 +79,7 @@ const SearchUnit = () => {
                 lng: mapref.getCenter().lng(),
             })
         }
-    }, [value])
+    }, [value, mapref])
 
     const submitSearch = () => {
         const sendSearch = async () => {
@@ -109,7 +98,7 @@ const SearchUnit = () => {
                         : '.5',
                 filters: filters,
             })
-            console.log(res.units)
+
             navigate('/unitaftersearch', {
                 state: {
                     location: {
@@ -195,7 +184,7 @@ const SearchUnit = () => {
                     <Location
                         mapref={mapref}
                         coordinates={coordinates}
-                        // setCoordinates={setCoordinates}
+                        setCoordinates={setCoordinates}
                         setMapRef={setMapRef}
                         radius={radius}
                         setRadius={setRadius}
