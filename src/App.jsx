@@ -60,7 +60,7 @@ import { ComparisonToolContextProvider } from './context/comparison-tool-context
 import { LinearProgress } from '@mui/material'
 import About from './pages/about/About'
 import ChangeContactNumberMain from './pages/Profile/ChangeContactNumber/ChangeContactNumberMain'
-// import SplashScreen from './components/SplashScreen/SplashScreen'
+import SplashScreen from './components/SplashScreen/SplashScreen'
 
 function App() {
     const { user, token, loginHandler, logoutHandler, isLoggedIn } = useAuth()
@@ -93,7 +93,7 @@ function App() {
                 <Routes>
                     {/* <Route path="/landlord-home" element={<Dashboard />}></Route>
                 <Route path="/tenant-home" element={<Homepage />}></Route> */}
-                    {/* <Route
+                    <Route
                         path="/"
                         element={
                             user && user.user_type_id === 2 ? (
@@ -104,7 +104,7 @@ function App() {
                                 <SplashScreen />
                             )
                         }
-                    ></Route> */}
+                    ></Route>
 
                     <Route path="/about" element={<About />}></Route>
                     <Route

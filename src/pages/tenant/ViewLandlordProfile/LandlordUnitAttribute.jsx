@@ -17,7 +17,6 @@ const LandlordUnitAttribute = (props) => {
         setIcon(res)
     }
 
-    console.log(amenity)
     return (
         <div>
             {' '}

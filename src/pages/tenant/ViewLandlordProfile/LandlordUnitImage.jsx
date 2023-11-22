@@ -1,36 +1,41 @@
-import React, { useState, useEffect } from 'react'
-import styles from './ViewProfile.module.css'
-import useImageManager from '../../../hooks/data/image-hook'
+import React, { useState, useEffect } from "react";
+import useImageManager from "../../../hooks/data/image-hook";
+// import photo from "../../../../assets/cushyrental.svg";
+
+import no_img from "../../../assets/cushyrental.svg";
 
 const LandlordUnitImage = (props) => {
-    const { image } = props
-    const { fetchImages, fetchImage } = useImageManager()
-    const [imagesData, setImagesData] = useState([])
+    const { images } = props;
+    const { fetchImages, fetchImage, isLoading } = useImageManager();
+    const [unitPhoto, setUnitPhoto] = useState("");
+
+    console.log(images);
 
     useEffect(() => {
-        const fetchImagesData = async () => {
+        const handleFetch = async () => {
             try {
-                const responseImage = await fetchImage(image)
-                setImagesData(responseImage)
-            } catch (error) {
-                console.error('Error fetching images:', error.message)
-            }
-        }
+                const res = await fetchImage(images.image.image.replace("images/", ""));
+                console.log("res:", res);
+                setUnitPhoto(res);
+            } catch (err) {}
+        };
 
-        if (image) fetchImagesData()
-    }, [fetchImages])
+        if (images !== undefined) {
+            handleFetch();
+        } else {
+            setUnitPhoto(no_img);
+        }
+    }, []);
 
     return (
-        <div>
-            {imagesData && (
-                <img
-                    src={imagesData}
-                    alt="Unit"
-                    className={styles['unit-image']}
-                />
-            )}
-        </div>
-    )
-}
+        !isLoading &&
+        unitPhoto !== "" && (
+            <img
+                src={unitPhoto === "" ? photo : unitPhoto}
+                alt="Unit"
+            />
+        )
+    );
+};
 
-export default LandlordUnitImage
+export default LandlordUnitImage;
