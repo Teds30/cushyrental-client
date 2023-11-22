@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import styles from "./ManageRenters.module.css";
 import SearchField from "../../../components/Search/SearchField";
-
+import ManageRenterImage from "./ManageRenterImage";
 
 const ManagePendingInquiries = (props) => {
     const { pendingInquiries } = props;
@@ -57,9 +57,8 @@ const ManagePendingInquiries = (props) => {
                     >
                         <div className={`${styles["box-container"]} `}>
                             <div className={`${styles["box-image"]} `}>
-                                <img
-                                    src={user.user.profile_picture_img}
-                                    alt="Renter"
+                                <ManageRenterImage
+                                    image={user.user.profile_picture_img}
                                 />
                             </div>
                             <div className={`${styles["box-details"]} `}>

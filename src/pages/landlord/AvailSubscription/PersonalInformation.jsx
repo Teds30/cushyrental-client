@@ -17,7 +17,6 @@ const PersonalInformation = (props) => {
     const { form, setForm, handleNext, handleBack } = props
 
     const authCtx = useContext(AuthContext)
-    const userId = authCtx.user.id
     const { sendRequest } = useHttp()
     const [initialSelect, setInitialSelect] = useState(form.selectedUnit)
 
@@ -63,13 +62,13 @@ const PersonalInformation = (props) => {
             const res = await sendRequest({
                 url: `${
                     import.meta.env.VITE_BACKEND_LOCALHOST
-                }/api/user_units/${userId}`,
+                }/api/user_units/${authCtx.user.id}`,
             })
 
             setUnits(res.filter((unit) => unit.request_status === 1))
         }
-        loadUnits()
-    }, [])
+        authCtx.user && loadUnits()
+    }, [authCtx.user])
 
     const isValid =
     enteredNameIsValid &&
