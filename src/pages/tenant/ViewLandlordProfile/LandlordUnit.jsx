@@ -27,7 +27,7 @@ const LandlordUnit = (props) => {
         .shift();
 
     return (
-        <div className={`${styles["unit-container"]} `}>
+        <Link to={`/unit/${unit.id}`} className={`${styles["unit-container"]} `}>
             <div className={`${styles["image-unit-container"]} `}>
                 <LandlordUnitImage
                     images={
@@ -96,7 +96,7 @@ const LandlordUnit = (props) => {
                     )}
                 </div>
             </Link>
-        </div>
+        </Link>
     );
 };
 
