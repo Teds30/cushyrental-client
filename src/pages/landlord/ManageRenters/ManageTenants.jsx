@@ -24,10 +24,7 @@ const ManageTenants = (props) => {
     const [terminateModalOpen, setTerminateModalOpen] = useState(false);
     const [checked, setChecked] = useState(false);
     const cbRef = useRef(null);
-    const { error, sendRequest } = useHttp();
     const { terminateUser, isLoading } = useRental();
-
-    console.log(tenants);
 
     // useEffect(() => {
     //     setFilteredData(tenants)
@@ -85,8 +82,6 @@ const ManageTenants = (props) => {
     //         setSelectedUsers(allUserIds);
     //     }
     //     setSelectAllChecked(!selectAllChecked);
-
-    //     console.log("Selected User IDs:", selectedUsers);
     // };
 
     const handleToggleCheckboxes = () => {
