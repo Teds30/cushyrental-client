@@ -19,6 +19,7 @@ const ViewProfile = () => {
     const [isPriceAscending, setIsPriceAscending] = useState(false)
     const [isReviewAscending, setIsReviewAscending] = useState(false)
 
+    console.log(units);
     const priceSortLabel = isPriceAscending
         ? 'Price: Low to High'
         : 'Price: High to Low'

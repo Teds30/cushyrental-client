@@ -39,7 +39,6 @@ import ManageSubscriptions from './pages/landlord/ManageSubscriptions/ManageSubs
 import AccountVerification from './pages/landlord/LandProfile/AccountVerification'
 import AvailSubscription from './pages/landlord/AvailSubscription/AvailSubscription'
 import RentedUnitMain from './pages/tenant/RentedUnit/RentedUnitMain'
-import UnitDetails from './pages/tenant/UnitDetails/UnitDetails'
 import ViewUnitDetails from './pages/tenant/ViewUnitDetails/ViewUnitDetails'
 import Homepage from './pages/tenant/Homepage/Homepage'
 import UnitLocation from './pages/tenant/ViewUnitDetails/Location/UnitLocation'
@@ -60,7 +59,7 @@ import { ComparisonToolContextProvider } from './context/comparison-tool-context
 import { LinearProgress } from '@mui/material'
 import About from './pages/about/About'
 import ChangeContactNumberMain from './pages/Profile/ChangeContactNumber/ChangeContactNumberMain'
-// import SplashScreen from './components/SplashScreen/SplashScreen'
+import SplashScreen from './components/SplashScreen/SplashScreen'
 
 function App() {
     const { user, token, loginHandler, logoutHandler, isLoggedIn } = useAuth()
@@ -93,7 +92,7 @@ function App() {
                 <Routes>
                     {/* <Route path="/landlord-home" element={<Dashboard />}></Route>
                 <Route path="/tenant-home" element={<Homepage />}></Route> */}
-                    {/* <Route
+                    <Route
                         path="/"
                         element={
                             user && user.user_type_id === 2 ? (
@@ -104,7 +103,7 @@ function App() {
                                 <SplashScreen />
                             )
                         }
-                    ></Route> */}
+                    ></Route>
 
                     <Route path="/about" element={<About />}></Route>
                     <Route
@@ -197,7 +196,10 @@ function App() {
                     {/* Unit Search */}
 
                     {/* Unit Comparison */}
-                    <Route path="/unit_comparison/:id" element={<UnitComparison />}></Route>
+                    <Route
+                        path="/unit_comparison/:id"
+                        element={<UnitComparison />}
+                    ></Route>
                     {/* Unit Comparison */}
 
                     <Route path="/myunit-landlord" element={<MyUnit />}></Route>
@@ -217,11 +219,6 @@ function App() {
                     <Route
                         path="/rentedunit"
                         element={<RentedUnitMain />}
-                    ></Route>
-
-                    <Route
-                        path="/unitdetails"
-                        element={<UnitDetails />}
                     ></Route>
 
                     <Route

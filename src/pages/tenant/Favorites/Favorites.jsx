@@ -34,7 +34,6 @@ const Favorites = () => {
         try {
             const response = await fetchBookmarkUnits(authCtx.user.id);
             setUnits(response);
-            // console.log(response);
         } catch (error) {
             console.error("Error fetching units:", error);
         }
