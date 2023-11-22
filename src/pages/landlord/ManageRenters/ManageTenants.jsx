@@ -10,12 +10,13 @@ import PrimaryButton from "../../../components/Button/BorderlessButton";
 import CheckBox from "../../../components/CheckBox/CheckBox";
 import TerminateConfirmationModal from "./Modal";
 import ManageRenterImage from "./ManageRenterImage";
-
+import useRental from "../../../hooks/data/rental-hook";
 
 import styles from "./ManageRenters.module.css";
 
 const ManageTenants = (props) => {
-    const { tenants, setTenants, onRefresh } = props;
+    const { tenants, onRefresh } = props;
+
     const [filteredData, setFilteredData] = useState(tenants);
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [showCheckboxes, setShowCheckboxes] = useState(false);
@@ -23,7 +24,7 @@ const ManageTenants = (props) => {
     const [terminateModalOpen, setTerminateModalOpen] = useState(false);
     const [checked, setChecked] = useState(false);
     const cbRef = useRef(null);
-    const { isLoading, error, sendRequest } = useHttp();
+    const { terminateUser, isLoading } = useRental();
 
     // useEffect(() => {
     //     setFilteredData(tenants)
@@ -81,8 +82,6 @@ const ManageTenants = (props) => {
     //         setSelectedUsers(allUserIds);
     //     }
     //     setSelectAllChecked(!selectAllChecked);
-
-    //     console.log("Selected User IDs:", selectedUsers);
     // };
 
     const handleToggleCheckboxes = () => {
@@ -101,18 +100,12 @@ const ManageTenants = (props) => {
         }
     };
 
-    const handleTerminateConfirm = () => {
+    const handleTerminateConfirm = async () => {
         if (selectedUsers.length > 0) {
             for (const userId of selectedUsers) {
-                const terminate = async () => {
-                    await sendRequest({
-                        url: `http://127.0.0.1:8000/api/terminate-rentals/${userId}`,
-                        method: "POST",
-                    });
-                };
-                terminate();
+                const res = await terminateUser(userId);
                 onRefresh();
-                setSelectedUsers([]);
+                setFilteredData(filteredData.filter(tenant => tenant.id !== userId));
                 setTerminateModalOpen(false);
             }
         } else {
@@ -266,6 +259,7 @@ const ManageTenants = (props) => {
                 open={terminateModalOpen}
                 onClose={() => setTerminateModalOpen(false)}
                 onTerminate={handleTerminateConfirm}
+                isLoading={isLoading}
             />
         </div>
     );

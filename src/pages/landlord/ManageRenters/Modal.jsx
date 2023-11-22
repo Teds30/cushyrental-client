@@ -25,7 +25,7 @@ const buttonContainerStyle = {
     gap: "16px",
 };
 
-function TerminateConfirmationModal({ open, onClose, onTerminate }) {
+function TerminateConfirmationModal({ open, onClose, onTerminate, isLoading }) {
     return (
         <Modal
             open={open}
@@ -70,6 +70,8 @@ function TerminateConfirmationModal({ open, onClose, onTerminate }) {
                         btnType="danger"
                         onClick={onTerminate}
                         sx={{ mt: 2 }}
+                        isLoading={isLoading}
+                        loadingText="Terminate"
                     >
                         Terminate
                     </PrimaryButton>
