@@ -11,6 +11,7 @@ import CheckBox from "../../../components/CheckBox/CheckBox";
 import TerminateConfirmationModal from "./Modal";
 import ManageRenterImage from "./ManageRenterImage";
 
+
 import styles from "./ManageRenters.module.css";
 
 const ManageTenants = (props) => {
@@ -112,10 +113,10 @@ const ManageTenants = (props) => {
                 terminate();
                 onRefresh();
                 setSelectedUsers([]);
+                setTerminateModalOpen(false);
             }
         } else {
         }
-        setTerminateModalOpen(false);
     };
 
     return (
