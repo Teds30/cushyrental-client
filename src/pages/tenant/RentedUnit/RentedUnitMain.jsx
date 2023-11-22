@@ -14,6 +14,8 @@ const RentedUnitMain = () => {
     const [rentedUnit, setRentedUnit] = useState([]);
     const authCtx = useContext(AuthContext);
 
+    console.log(rentedUnit)
+
     const formatDate = (dateString) => {
         const date = moment(dateString);
         return date.format("MMMM DD, YYYY");

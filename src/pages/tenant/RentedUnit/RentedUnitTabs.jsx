@@ -11,30 +11,20 @@ import styles from "./RentedUnitTabs.module.css";
 import RentedUnitList from "./RentedUnitList.jsx";
 
 const RentedUnitTabs = (props) => {
-    const { rentedUnit, onRefresh } = props;
+    const { rentedUnit = [], onRefresh } = props;
 
-    // console.log(rentedUnit);
     const [value, setValue] = useState(0);
     const [rentedUnitActive, setRentedUnitActive] = useState([]);
     const [rentedUnitInactive, setRentedUnitInactive] = useState([]);
 
-    const handleFilter = (req_status) => {
-        const fil = rentedUnit.filter((rental) => {
-            return rental.rental_status === req_status;
-        });
-        // console.log("req", req_status)
-        // console.log("fil", fil)
-        switch (req_status) {
-            case 0:
-                setRentedUnitInactive(fil);
-            case 1:
-                setRentedUnitActive(fil);
-        }
-    };
-
     useEffect(() => {
-        handleFilter(0);
-        handleFilter(1);
+        const activeUnits = rentedUnit.filter((unit) => unit.rental_status === 1);
+        setRentedUnitActive(activeUnits);
+
+        const inactiveUnits = rentedUnit.filter(
+            (unit) => unit.rental_status !== 1
+        );
+        setRentedUnitInactive(inactiveUnits);
     }, [rentedUnit]);
 
     const handleChange = (event, newValue) => {
@@ -62,7 +52,6 @@ const RentedUnitTabs = (props) => {
                     aria-label="scrollable auto tabs example"
                     sx={{
                         justifyContent: "center",
-                        // Center align the tabs horizontally
                     }}
                 >
                     <StyledTab
@@ -100,7 +89,7 @@ const RentedUnitTabs = (props) => {
                     />
                 </StyledTabs>
             </Box>
-            <Box sx={{ marginTop: "110px"}}>
+            <Box sx={{ marginTop: "110px" }}>
                 <TabPanel value={value} index={0}>
                     {rentedUnit.length === 0 ? (
                         <p
@@ -120,7 +109,7 @@ const RentedUnitTabs = (props) => {
                     )}
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    {rentedUnit.length === 0 ? (
+                    {rentedUnitActive.length === 0 ? (
                         <p
                             style={{
                                 textAlign: "center",
@@ -138,7 +127,7 @@ const RentedUnitTabs = (props) => {
                     )}
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                    {rentedUnit.length === 0 ? (
+                    {rentedUnitInactive.length === 0 ? (
                         <p
                             style={{
                                 textAlign: "center",
