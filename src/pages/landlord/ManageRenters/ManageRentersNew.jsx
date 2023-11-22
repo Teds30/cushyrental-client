@@ -164,8 +164,7 @@ const ManageRenters = () => {
                             <div className={`${styles["box-selected"]} `}>
                                 <CheckBox
                                     items={[user]}
-                                    onCheckBox={(checkedItems) => {
-                                    }}
+                                    onCheckBox={(checkedItems) => {}}
                                     checked={selectedUsers.includes(user)}
                                 />
                             </div>
