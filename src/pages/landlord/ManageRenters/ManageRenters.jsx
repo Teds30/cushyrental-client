@@ -28,8 +28,7 @@ const ManageRenters = () => {
 
     const fetchTenantsData = async () => {
         try {
-            // const res = await fetchRentals(userCtx.user.id);
-            const res = await fetchRentals(1);
+            const res = await fetchRentals(userCtx.user.id);
             const availableRentals = res.filter(
                 (rental) => rental.rental_status === 0
             );
