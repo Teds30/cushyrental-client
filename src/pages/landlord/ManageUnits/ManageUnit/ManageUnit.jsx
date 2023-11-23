@@ -53,10 +53,10 @@ const ManageUnit = () => {
                             >
                                 <Link
                                     to={`/myunit-landlord`}
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        navigate(-1)
-                                    }}
+                                    // onClick={(e) => {
+                                    //     e.preventDefault()
+                                    //     navigate(-1)
+                                    // }}
                                     className={`${styles['link-button']}`}
                                 >
                                     <IconButton

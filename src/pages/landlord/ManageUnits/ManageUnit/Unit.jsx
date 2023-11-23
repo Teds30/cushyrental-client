@@ -17,7 +17,7 @@ const Unit = (props) => {
     const { user_unit: unitSubscriptions } = props;
     const { deleteUnitSubscription, isLoading } = useSubscriptionManager();
     const [userUnit, setUserUnit] = useState(unitSubscriptions);
-    // console.log(userUnit);
+    console.log(userUnit);
 
     let gender;
 
@@ -176,7 +176,7 @@ const Unit = (props) => {
                                 Manage Unit
                             </PrimaryButton>
                         </Link>
-                        <Link to="/avail_subscriptions">
+                        <Link to="/subscriptions">
                             <BorderedButton>Promote</BorderedButton>
                         </Link>
                     </div>
