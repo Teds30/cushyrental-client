@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import styles from './AvailSubscription.module.css'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import {
     IconButton,
     Step,
@@ -132,11 +132,11 @@ const AvailSubscription = () => {
         <div className={styles['container']}>
             <div className={styles['nav-container']}>
                 <Link
-                    to="/myunit-landlord"
-                    onClick={(e) => {
-                        e.preventDefault()
-                        navigate(-1)
-                    }}
+                    to="/subscriptions"
+                    // onClick={(e) => {
+                    //     e.preventDefault()
+                    //     navigate(-1)
+                    // }}
                     className={`${styles['link-button']}`}
                 >
                     <IconButton size="large" color="inherit" aria-label="menu">
