@@ -37,16 +37,12 @@ const UnitImage = (props) => {
                     const imageBlob = await fetchImage(image.image.replace("images/", ""));
                     return { ...image, image: imageBlob };
                 }));
-                console.log(res);
                 setImage(res)
             } catch (err) {
-                console.log(err);
             }
         }
         handleFetch()
     }, [])
-
-    // console.log(image[0].image);
 
     return (
         <div className={`${styles['image-container']}`}>
@@ -70,7 +66,6 @@ const UnitImage = (props) => {
                     spaceBetween={50}
                     slidesPerView={1}
                     onSlideChange={handleSlideChange}
-                    // onSwiper={(swiper) => console.log(swiper)}
                     className={styles['img-swiper']}
                 >
                     {image.length !== 0 &&

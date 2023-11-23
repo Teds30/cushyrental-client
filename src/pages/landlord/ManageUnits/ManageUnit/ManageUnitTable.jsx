@@ -15,16 +15,18 @@ import styles from "./ManageUnit.module.css";
 import { MdAdd } from "react-icons/md";
 
 const ManageUnitTabs = (props) => {
-    const { userUnits = [] } = props;
-
-    // console.log(userUnits);
+    const { userUnits = [], onDeleteUnit } = props;
 
     const [value, setValue] = useState(0);
-    const [userUnitPending, setUserUnitPending] = useState(
-        userUnits.filter(
-            (unit) => unit.request_status === 0 && unit.is_listed === 0
-        )
-    );
+    // const [userUnitPending, setUserUnitPending] = useState(
+    //     userUnits.filter(
+    //         (unit) => unit.request_status === 0 && unit.is_listed === 0
+    //     )
+    // );
+
+    const userUnitPending = userUnits.filter(
+        (unit) => unit.request_status === 0 && unit.is_listed === 0
+    )
 
     const [userUnitListed, setUserUnitListed] = useState(
         userUnits.filter(
@@ -51,6 +53,10 @@ const ManageUnitTabs = (props) => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    const deleteUnitHandler = (id) => {
+        onDeleteUnit(id);
+    }
 
     return (
         <Fragment>
@@ -137,7 +143,7 @@ const ManageUnitTabs = (props) => {
                 {userUnits.length === 0 ? (
                     <p style={{ textAlign: "center" }}>No units posted</p>
                 ) : (
-                    <Units userUnits={userUnits} />
+                    <Units userUnits={userUnits} onDeleteUnit={deleteUnitHandler} />
                 )}
             </TabPanel>
             <TabPanel value={value} index={1}>
@@ -158,7 +164,7 @@ const ManageUnitTabs = (props) => {
                 {userUnitPending.length === 0 ? (
                     <p style={{ textAlign: "center" }}>No pending units</p>
                 ) : (
-                    <Units userUnits={userUnitPending} />
+                    <Units userUnits={userUnitPending} onDeleteUnit={deleteUnitHandler} />
                 )}
             </TabPanel>
             <TabPanel value={value} index={4}>
@@ -170,7 +176,7 @@ const ManageUnitTabs = (props) => {
             </TabPanel>
             <div className={`${styles["create-unit-button"]}`}>
                 <div className={`${styles['button']}`}>
-                <Link to="/manage_unit/create_unit" >
+                <Link to="/manage_unit/create_unit">
                     <Fab
                         style={{ background: "var(--accent)" }}
                         aria-label="add"
