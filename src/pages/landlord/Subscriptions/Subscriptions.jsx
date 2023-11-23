@@ -1,57 +1,62 @@
-import React, { useEffect, useState } from 'react'
-
+import React, { useRef, useState, useEffect } from "react";
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination } from 'swiper/modules'
+import { Swiper, SwiperSlide } from "swiper/react";
+
 // Import Swiper styles
-import 'swiper/css'
-import 'swiper/css/pagination'
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
 
-import { Link } from 'react-router-dom'
-import { IconButton } from '@mui/material'
-import { FiChevronLeft } from 'react-icons/fi'
+import "./SubscriptionStyle.css";
 
-import styles from './Subscriptions.module.css'
-import SubscriptionCard from './SubscriptionCard'
+// import required modules
+import { EffectCoverflow, Pagination } from "swiper/modules";
 
-import useSubscriptionManager from '../../../hooks/data/subscriptions-hooks'
+import { Link } from "react-router-dom";
+import { IconButton } from "@mui/material";
+import { FiChevronLeft } from "react-icons/fi";
+
+import styles from "./Subscriptions.module.css";
+import SubscriptionCard from "./SubscriptionCard";
+
+import useSubscriptionManager from "../../../hooks/data/subscriptions-hooks";
 
 const Subscriptions = () => {
-    const { fetchSubscriptions } = useSubscriptionManager()
-    const [subscriptions, setSubscriptions] = useState([])
+    const { fetchSubscriptions } = useSubscriptionManager();
+    const [subscriptions, setSubscriptions] = useState([]);
 
     useEffect(() => {
         const handleFetch = async () => {
             try {
-                const res = await fetchSubscriptions()
-                setSubscriptions(res)
+                const res = await fetchSubscriptions();
+                setSubscriptions(res);
             } catch (err) {}
-        }
-        handleFetch()
-    }, [])
+        };
+        handleFetch();
+    }, []);
 
     return (
-        <div className={styles['container']}>
-            <div className={styles['nav-container']}>
+        <div className={styles["container"]}>
+            <div className={styles["nav-container"]}>
                 <Link
-                    to="/myunit-landlord"
-                    onClick={(e) => {
-                        e.preventDefault()
-                        navigate(-1)
-                    }}
-                    className={`${styles['link-button']}`}
+                    to="/manage_unit"
+                    // onClick={(e) => {
+                    //     e.preventDefault();
+                    //     navigate(-1);
+                    // }}
+                    className={`${styles["link-button"]}`}
                 >
                     <IconButton size="large" color="inherit" aria-label="menu">
                         <FiChevronLeft
                             style={{
-                                color: 'var(--fc-strong)',
-                                fill: 'transparent',
+                                color: "var(--fc-strong)",
+                                fill: "transparent",
                             }}
                         />
                     </IconButton>
                 </Link>
             </div>
-            <div className={styles['header-container']}>
+            <div className={styles["header-container"]}>
                 <h1>Subscription</h1>
                 <h3>THE RIGHT PLAN FOR YOUR BUSINESS</h3>
                 <p className="smaller-text">
@@ -61,48 +66,49 @@ const Subscriptions = () => {
                     tenants!
                 </p>
             </div>
-            <div className={styles['subscriptions-container']}>
-                <div className={styles['cards-container']}>
+            <div className={styles["subscriptions-container"]}>
+                <div className={styles["cards-container"]}>
                     <Swiper
-                        slidesPerView={1}
+                        effect={"coverflow"}
+                        grabCursor={true}
                         centeredSlides={true}
-                        spaceBetween={30}
+                        slidesPerView={"auto"}
+                        spaceBetween={14}
+                        coverflowEffect={{
+                            rotate: 50,
+                            stretch: 0,
+                            depth: 100,
+                            modifier: 1,
+                            slideShadows: true,
+                        }}
                         pagination={{
-                            clickable: true,
+                            dynamicBullets: true,
+                            dynamicMainBullets: 3,
                         }}
+                        autoplay={{ delay: 3000 }}
                         modules={[Pagination]}
-                        breakpoints={{
-                            '@0.00': {
-                                slidesPerView: 1,
-                                spaceBetween: 100,
-                            },
-                            '@0.75': {
-                                slidesPerView: 2,
-                                spaceBetween: 250,
-                            },
-                            '@1.00': {
-                                slidesPerView: 3,
-                                spaceBetween: 250,
-                            },
-                        }}
+                        className="subscription-swiper"
                     >
                         {subscriptions &&
                             subscriptions.map((sub) => (
-                                <SwiperSlide
+                                <div>
+                                    <SwiperSlide
                                     key={sub.id}
                                     style={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
+                                        display: "flex",
+                                        justifyContent: "center",
                                     }}
+                                    className="subscription-swiper-slide"
                                 >
                                     <SubscriptionCard subscription={sub} />
                                 </SwiperSlide>
+                                </div>
                             ))}
                     </Swiper>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Subscriptions
+export default Subscriptions;
