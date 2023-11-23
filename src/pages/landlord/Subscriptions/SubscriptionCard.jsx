@@ -4,7 +4,6 @@ import { FaCheck } from 'react-icons/fa6'
 
 import BorderedButton from '../../../components/Button/BorderedButton'
 import SubscriptionIcon from './SubscriptionIcon'
-import BorderlessButton from '../../../components/Button/BorderlessButton'
 import SubscriptionModal from './SubscriptionModal'
 
 import styles from './Subscriptions.module.css'
@@ -26,7 +25,21 @@ const SubscriptionCard = (props) => {
 
     const features = subscription.features.split(';') ?? []
 
-    const seeAllFeatureButton = showAllFeatures ? (<BorderlessButton rightIcon={<KeyboardArrowUpIcon />} onClick={showAllFeaturesHandler}>See less features</BorderlessButton>) : (<BorderlessButton rightIcon={<KeyboardArrowDownIcon />} onClick={showAllFeaturesHandler}>See all features</BorderlessButton>)
+    const seeAllFeatureButton = showAllFeatures ? (
+        <div className={styles['see-all-features-button']} onClick={showAllFeaturesHandler}>
+            See less features
+            <span className={styles['arrow-icon']}>
+                <KeyboardArrowUpIcon />
+            </span>
+        </div>
+    ) : (
+        <div className={styles['see-all-features-button']} onClick={showAllFeaturesHandler}>
+            See all features
+            <span className={styles['arrow-icon']}>
+                <KeyboardArrowDownIcon />
+            </span>
+        </div>
+    );
 
     return (
         <div className={styles['card']}>
@@ -36,7 +49,7 @@ const SubscriptionCard = (props) => {
                         <div className={styles['subscriptions-icon']}>
                             <SubscriptionIcon hex_color={subscription.hex_color}/>
                         </div>
-                        <h2>{subscription.name}</h2>
+                        <h2>{subscription.name.toUpperCase()}</h2> 
                     </div>
                 </div>
             </div>
@@ -46,7 +59,7 @@ const SubscriptionCard = (props) => {
                 <div className={styles['month-label']}>/month</div>
             </div>
 
-            <p className={`${styles['subscription-details']}`}>{subscription.details}</p>
+            {/* <p className={`${styles['subscription-details']}`}>{subscription.details}</p> */}
             <div className={styles['features-container']}>
                 {features &&
                     features.map((feature, index) => {

@@ -29,6 +29,7 @@ const buttonContainerStyle = {
     justifyContent: "center",
     marginTop: "35px",
     gap: "16px",
+    width : '100%',
 };
 
 function SubscriptionModal({ open, onClose, onTerminate, subscriptionId }) {
@@ -69,12 +70,13 @@ function SubscriptionModal({ open, onClose, onTerminate, subscriptionId }) {
                     component="h2"
                     sx={{
                         fontWeight: "bolder",
-                        color: 'var(--accent)'
+                        color: 'var(--accent)',
+                        fontSize: '24px',
                     }}
                 >
                     Subscribe
                 </Typography>
-                <Typography id="terminate-modal-description" sx={{ mt: 2 }}>
+                <Typography id="terminate-modal-description" sx={{ mt: 2, fontSize: '15px'}}>
                     Are you sure you want to subscribe?
                 </Typography>
 
@@ -83,12 +85,15 @@ function SubscriptionModal({ open, onClose, onTerminate, subscriptionId }) {
                         sx={{ mt: 2 }}
                         loadingText="Terminate"
                         onClick={subscriptionHandler}
+                        width="100%"
                     >
                         Subscribe
                     </PrimaryButton>
                     <BorderedButton
+                        btnType="danger"
                         variant="outlined"
                         onClick={onClose}
+                        width="100%"
                         sx={{ mt: 2, ml: 2 }}
                     >
                         Cancel
