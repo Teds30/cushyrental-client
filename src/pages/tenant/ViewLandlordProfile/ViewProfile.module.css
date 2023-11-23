@@ -57,7 +57,7 @@
     align-items: flex-start;
     justify-content: center;
     padding: 0px;
-    gap: 4px;
+    gap: 2px;
 }
 
 .profile-details-name {
@@ -121,7 +121,8 @@
 
 .filter-button p {
     font-weight: 500;
-    color: var(--fc-body);
+    color: var(--fc-body-light);
+
 }
 
 .filter-button:hover,
@@ -253,7 +254,11 @@
     align-items: center;
     width: 100%;
     margin-top: 20px;
-    margin-bottom: 20px;
+    padding-bottom: 100px;
+}
+
+.bottom-text-container p {
+    color: var(--fc-body-light);
 }
 
 @media (max-width: 367px) {

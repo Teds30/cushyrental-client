@@ -2,22 +2,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
-import IconButton from "@mui/material/IconButton";
-
 import styles from "./ViewProfile.module.css";
 import LandlordUnitAttribute from "./LandlordUnitAttribute";
 import LandlordUnitImage from "./LandlordUnitImage";
 import LandlordUnitRating from "./LandlordUnitRating";
 import LandlordProfileBookmark from "./LandlordProfileBookmark";
 
-// import useBookmark from '../../../hooks/data/bookmark-hook'
-
 const LandlordUnit = (props) => {
     const { unit } = props;
     const [isBookmarked, setIsBookmarked] = useState([]);
-    // const {addBookmark } = useBookmark();
-
-    console.log(isBookmarked);
 
     const displayAmenities = unit.amenities.slice(0, 1);
     const excessAmenities = unit.amenities.slice(1);
@@ -27,7 +20,10 @@ const LandlordUnit = (props) => {
         .shift();
 
     return (
-        <Link to={`/unit/${unit.id}`} className={`${styles["unit-container"]} `}>
+        <Link
+            to={`/unit/${unit.id}`}
+            className={`${styles["unit-container"]} `}
+        >
             <div className={`${styles["image-unit-container"]} `}>
                 <LandlordUnitImage
                     images={
@@ -40,10 +36,7 @@ const LandlordUnit = (props) => {
                     <LandlordProfileBookmark unitId={unit.id} />
                 </div>
             </div>
-            <Link
-                to={`/unit/${unit.id}`}
-                className={`${styles["content-container"]} `}
-            >
+            <div className={`${styles["content-container"]} `}>
                 <div className={`${styles["text-container"]} `}>
                     <div className={`${styles["top-text-container"]} `}>
                         <div className={`${styles["left-side"]} `}>
@@ -52,7 +45,7 @@ const LandlordUnit = (props) => {
                     </div>
 
                     <div className={`${styles["name-container"]}`}>
-                        <p>{unit.name}</p>
+                        <p className="smaller-text">{unit.name}</p>
                     </div>
                 </div>
 
@@ -95,7 +88,7 @@ const LandlordUnit = (props) => {
                         </div>
                     )}
                 </div>
-            </Link>
+            </div>
         </Link>
     );
 };
