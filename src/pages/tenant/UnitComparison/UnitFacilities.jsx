@@ -5,11 +5,11 @@ import styles from "./UnitComparison.module.css";
 
 const facilityExclusive = [
     {
-        id: 0,
+        id: 1,
         name: "Owned",
     },
     {
-        id: 1,
+        id: 2,
         name: "Shared",
     },
 ];
@@ -18,7 +18,7 @@ const UnitFacilities = (props) => {
     const { unitFacilities } = props;
 
     const { fetchFacilities, isLoading } = useAttributeManager();
-    const [facilities, setfacilities] = useState([]);
+    const [facilities, setfacilities] = useState([]);  
 
     useEffect(() => {
         const handleFetch = async () => {
@@ -48,7 +48,7 @@ const UnitFacilities = (props) => {
                 <CheckBox
                     isDisabled={"True"}
                     items={facilityExclusive}
-                    selectedValue={[exclusive.is_shared]}
+                    selectedValue={[exclusive.is_shared + 1]}
                     labelSize={"10px"}
                 />
             </div>
