@@ -91,7 +91,6 @@ const UnitAfterSearch = () => {
             setUnits([...units].sort((a, b) => a.price - b.price))
         }
 
-        console.log('asd')
         setOpen(false)
         setUnitOptionVisible(!unitOptionVisible)
     }
