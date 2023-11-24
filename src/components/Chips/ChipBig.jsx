@@ -88,7 +88,7 @@ const ChipBig = (props) => {
                 fontWeight: '500',
                 fontSize: '14px',
                 background: chips.includes(item.id) ? colorStyle : 'inherit',
-                color: chips.includes(item.id) ? 'var(--bg-layer1)' : 'inherit',
+                color: chips.includes(item.id) ? '#fff' : 'inherit',
                 border: chips.includes(item.id)
                     ? '1px solid ' + colorStyle
                     : '1px solid inherit',
@@ -96,22 +96,14 @@ const ChipBig = (props) => {
                     ? borderShadowStyle
                     : 'inherit',
                 '& svg': {
-                    fill: chips.includes(item.id)
-                        ? 'var(--bg-layer1)'
-                        : '#8A93A6',
+                    color: chips.includes(item.id) && '#fff',
                     height: '32px',
                     width: '32px',
                 },
                 '&:hover': {
-                    // Add this to remove the hover effect
-                    background: chips.includes(item.id) && colorStyle,
-                    color: chips.includes(item.id) && colorStyle,
-                    border: chips.includes(item.id)
-                        ? '1px solid ' + colorStyle
-                        : '1px solid inherit',
-                    '& svg': {
-                        fill: chips.includes(item.id) ? colorStyle : '#8A93A6',
-                    },
+                    background:
+                        chips.includes(item.id) &&
+                        'rgba(var(--accent-rgb), .8) !important',
                 },
             }}
             onClick={clickable ? () => handleClick(item.id) : undefined}
