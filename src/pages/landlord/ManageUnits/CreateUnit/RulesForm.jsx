@@ -42,6 +42,7 @@ const RulesForm = (props) => {
         event.preventDefault();
 
         if (ruleValue.length === 0) {
+            onNext()
             return;
         }
 

@@ -1,85 +1,86 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from 'react'
 
-import useAttributeManager from "../../../../hooks/data/attribute-hook";
-import ChipBig from "../../../../components/Chips/ChipBig";
-import PrimaryButton from "../../../../components/Button/PrimaryButton";
-import BorderlessButton from "../../../../components/Button/BorderlessButton";
-import CreateUnitContext from "../../../../context/create-unit-context";
-import useUnitManager from "../../../../hooks/data/units-hook";
+import useAttributeManager from '../../../../hooks/data/attribute-hook'
+import ChipBig from '../../../../components/Chips/ChipBig'
+import PrimaryButton from '../../../../components/Button/PrimaryButton'
+import BorderlessButton from '../../../../components/Button/BorderlessButton'
+import CreateUnitContext from '../../../../context/create-unit-context'
+import useUnitManager from '../../../../hooks/data/units-hook'
 
-import styles from "./CreateUnit.module.css";
-import EastIcon from "@mui/icons-material/East";
+import styles from './CreateUnit.module.css'
+import EastIcon from '@mui/icons-material/East'
 
 const AmenitiesForm = (props) => {
-    const { onBack, onNext } = props;
-    const createUnitCtx = useContext(CreateUnitContext);
+    const { onBack, onNext } = props
+    const createUnitCtx = useContext(CreateUnitContext)
     const amenityData = createUnitCtx.unitData.amenities
         ? createUnitCtx.unitData.amenities
-        : [];
-    const { createUnit } = useUnitManager();
-    const id = 1;
+        : []
+    const { createUnit } = useUnitManager()
+    const id = 1
 
-    const { isLoading, fetchAmenities } = useAttributeManager();
-    const [amenityValue, setAmenityValue] = useState([]);
-    const [amenities, setAmenities] = useState([]);
+    const { isLoading, fetchAmenities } = useAttributeManager()
+    const [amenityValue, setAmenityValue] = useState([])
+    const [amenities, setAmenities] = useState([])
 
     const chipValueHandler = (amenityValue) => {
-        setAmenityValue(amenityValue);
-    };
+        setAmenityValue(amenityValue)
+    }
 
     const backHandler = (event) => {
-        event.preventDefault();
+        event.preventDefault()
 
         if (amenityValue) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
                 amenities: amenityValue,
-            });
+            })
         }
 
-        onBack();
-    };
+        onBack()
+    }
 
     const submitHandler = (event) => {
-        event.preventDefault();
+        event.preventDefault()
 
         if (amenityValue.length === 0) {
-            return;
+            onNext()
+            return
         }
 
         createUnitCtx.onUnitData({
             ...createUnitCtx.unitData,
             amenities: amenityValue,
-        });
+        })
 
-        setAmenityValue([]);
+        setAmenityValue([])
 
-        onNext();
-    };
+        onNext()
+    }
 
     useEffect(() => {
         const handleFetch = async () => {
             try {
-                const res = await fetchAmenities();
-                setAmenities(res);
+                const res = await fetchAmenities()
+                setAmenities(res)
 
                 if (res.length !== 0 && amenityData.length !== 0) {
                     const selectedAmenities = amenityData.filter((id) => {
                         return res.some(
                             (amenityfetch) => amenityfetch.id === id
-                        );
-                    });
+                        )
+                    })
 
-                    setAmenityValue(selectedAmenities);
+                    setAmenityValue(selectedAmenities)
                 }
             } catch (err) {}
-        };
-        handleFetch();
-    }, []);
+        }
+        handleFetch()
+    }, [])
 
     return (
         <form
-            className={`${styles["basic-details-form"]}`}
+            className={`${styles['basic-details-form']}`}
             onSubmit={submitHandler}
         >
             <div className={`${styles.title}`}>
@@ -87,7 +88,7 @@ const AmenitiesForm = (props) => {
             </div>
 
             {isLoading ? (
-                "Loading..."
+                'Loading...'
             ) : (
                 <ChipBig
                     items={amenities}
@@ -96,12 +97,12 @@ const AmenitiesForm = (props) => {
                 />
             )}
 
-            <div className={`${styles["basic-details-button"]}`}>
+            <div className={`${styles['basic-details-button']}`}>
                 <BorderlessButton onClick={backHandler}>Back</BorderlessButton>
                 <PrimaryButton rightIcon={<EastIcon />}>Next</PrimaryButton>
             </div>
         </form>
-    );
-};
+    )
+}
 
-export default AmenitiesForm;
+export default AmenitiesForm
