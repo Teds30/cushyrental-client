@@ -20,7 +20,7 @@ const RecommendedUnits = () => {
     }, [])
     return (
         <div className={styles['container']}>
-            <h3>Recommended Units</h3>
+            <h4>Recommended for you</h4>
             <div className={styles['units-container']}>
                 {units ? (
                     units.map((unit) => {
