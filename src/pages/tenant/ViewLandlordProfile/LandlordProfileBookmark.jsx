@@ -18,13 +18,18 @@ export default function LandlordProfileBookmark(props) {
 
     const [isBookmark, setIsBookmark] = useState();
 
-    const bookmarkHandler = async () => {
-        // setIsBookmark((prevIsBookmark) => !prevIsBookmark);
+    const bookmarkHandler = async (event) => {
+        event.preventDefault();
 
-        const data = { user_id: userCtx.user.id, unit_id: unitId };
-        const res = await addToBookmark(data);
-
-        setIsBookmark(res.unit_id === unitId ? true : false);
+        try {
+            const data = { user_id: userCtx.user.id, unit_id: unitId };
+            console.log(data);
+            const res = await addToBookmark(data);
+            console.log(res);
+            setIsBookmark(res.unit_id === unitId ? true : false);
+        } catch (err) {
+            console.log(err)
+        }
     };
 
     useEffect(() => {

@@ -17,13 +17,16 @@ const ManageUnit = () => {
     const { fetchUserUnits, isLoading } = useUserManager()
 
     const [userUnits, setUserUnits] = useState([])
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    const deleteUnitHandler = (id) => {
+        setUserUnits(userUnits.filter(unit => unit.id !== id));
+    }
 
     useEffect(() => {
         const handleFetch = async () => {
             try {
                 const res = await fetchUserUnits(userCtx.user.id)
-                // console.log(res);
                 setUserUnits(res)
             } catch (err) {}
         }
@@ -53,10 +56,10 @@ const ManageUnit = () => {
                             >
                                 <Link
                                     to={`/myunit-landlord`}
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        navigate(-1)
-                                    }}
+                                    // onClick={(e) => {
+                                    //     e.preventDefault()
+                                    //     navigate(-1)
+                                    // }}
                                     className={`${styles['link-button']}`}
                                 >
                                     <IconButton
@@ -92,7 +95,7 @@ const ManageUnit = () => {
                     </Box>
 
                     <div className={`${styles['main-container']}`}>
-                        <ManageUnitTabs userUnits={userUnits} />
+                        <ManageUnitTabs userUnits={userUnits} onDeleteUnit={deleteUnitHandler} />
                     </div>
                 </Fragment>
             )}

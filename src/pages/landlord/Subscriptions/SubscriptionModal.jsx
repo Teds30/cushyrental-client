@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
-import styles from "./ManageRenters.module.css";
+// import styles from "./ManageRenters.module.css";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
@@ -16,6 +17,11 @@ const style = {
     borderRadius: "16px",
     boxShadow: 24,
     p: 4,
+    height: '389px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
 };
 
 const buttonContainerStyle = {
@@ -23,9 +29,16 @@ const buttonContainerStyle = {
     justifyContent: "center",
     marginTop: "35px",
     gap: "16px",
+    width : '100%',
 };
 
-function TerminateConfirmationModal({ open, onClose, onTerminate, isLoading }) {
+function SubscriptionModal({ open, onClose, onTerminate, subscriptionId }) {
+    const navigate = useNavigate();
+
+    const subscriptionHandler = () => {
+        navigate(`/avail_subscriptions/${subscriptionId}`)
+    }
+
     return (
         <Modal
             open={open}
@@ -44,10 +57,10 @@ function TerminateConfirmationModal({ open, onClose, onTerminate, isLoading }) {
                         width: "50%",
                     },
                     "@media (min-width: 1280px)": {
-                        width: "40%",
+                        width: "30%",
                     },
                     "@media (min-width: 1920px)": {
-                        width: "30%",
+                        width: "20%",
                     },
                 }}
             >
@@ -57,27 +70,30 @@ function TerminateConfirmationModal({ open, onClose, onTerminate, isLoading }) {
                     component="h2"
                     sx={{
                         fontWeight: "bolder",
+                        color: 'var(--accent)',
+                        fontSize: '24px',
                     }}
                 >
-                    Confirm Termination
+                    Subscribe
                 </Typography>
-                <Typography id="terminate-modal-description" sx={{ mt: 2 }}>
-                    Are you sure you want to terminate the selected users?
+                <Typography id="terminate-modal-description" sx={{ mt: 2, fontSize: '15px'}}>
+                    Are you sure you want to subscribe?
                 </Typography>
 
                 <div style={buttonContainerStyle}>
                     <PrimaryButton
-                        btnType="danger"
-                        onClick={onTerminate}
                         sx={{ mt: 2 }}
-                        isLoading={isLoading}
                         loadingText="Terminate"
+                        onClick={subscriptionHandler}
+                        width="100%"
                     >
-                        Terminate
+                        Subscribe
                     </PrimaryButton>
                     <BorderedButton
+                        btnType="danger"
                         variant="outlined"
                         onClick={onClose}
+                        width="100%"
                         sx={{ mt: 2, ml: 2 }}
                     >
                         Cancel
@@ -88,4 +104,4 @@ function TerminateConfirmationModal({ open, onClose, onTerminate, isLoading }) {
     );
 }
 
-export default TerminateConfirmationModal;
+export default SubscriptionModal;

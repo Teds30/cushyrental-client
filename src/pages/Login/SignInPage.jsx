@@ -203,7 +203,7 @@ const SignInPage = () => {
                 <div>
                     <div className={`${styles['sign-up__container']}`}>
                         <div className={styles.hr}></div>
-                        <div className={styles.option}>Or Sign Up with</div>
+                        <div className={styles.option}>Or Sign In with</div>
                         <div className={styles.hr}></div>
                     </div>
 

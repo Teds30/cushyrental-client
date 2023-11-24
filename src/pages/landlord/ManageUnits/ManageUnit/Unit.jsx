@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import CardPlain from "../../../../components/Card/CardPlain";
@@ -6,18 +7,21 @@ import PrimaryButton from "../../../../components/Button/PrimaryButton";
 import BorderedButton from "../../../../components/Button/BorderedButton";
 import useImageManager from "../../../../hooks/data/image-hook";
 import useSubscriptionManager from "../../../../hooks/data/subscriptions-hooks";
+import useUnitManager from "../../../../hooks/data/units-hook";
 
 import styles from "./ManageUnit.module.css";
 import photo from "../../../../assets/cushyrental.svg";
 import { CiLocationOn } from "react-icons/ci";
-import { useEffect, useState } from "react";
 import UnitImage from "./UnitImage";
 
 const Unit = (props) => {
-    const { user_unit: unitSubscriptions } = props;
-    const { deleteUnitSubscription, isLoading } = useSubscriptionManager();
+    const { user_unit: unitSubscriptions, onDeleteUnit } = props;
+    // const { deleteUnitSubscription, isLoading } = useSubscriptionManager();
+    const {deleteUnit, isLoading} = useUnitManager();
     const [userUnit, setUserUnit] = useState(unitSubscriptions);
-    // console.log(userUnit);
+    console.log(userUnit);
+
+    // Dito na ako
 
     let gender;
 
@@ -29,19 +33,12 @@ const Unit = (props) => {
         gender = "All";
     }
 
-    const cancelUnitRequestHandler = async (id) => {
-        // console.log(id);
+    const cancelUnitRequestHandler = async () => {
         try {
-            const res = await deleteUnitSubscription(id);
-            const sample = userUnit.subscriptions.filter(
-                (unitSubscribe) => unitSubscribe.id !== id
-            );
-            // console.log(sample);
-            setUserUnit({
-                ...userUnit,
-                subscriptions: sample,
-            });
-        } catch (err) {}
+            const res = await deleteUnit(userUnit.id);
+            onDeleteUnit(userUnit.id);
+        } catch(err) {}
+
     };
 
     const subscriptions = userUnit.subscriptions.filter((subscription) => {
@@ -67,8 +64,6 @@ const Unit = (props) => {
             return subscription;
         }
     });
-
-    // console.log(subscriptions);
 
     const requestStatus =
         userUnit.request_status === 0
@@ -166,32 +161,15 @@ const Unit = (props) => {
                     </div>
                 </div>
 
-                {subscriptions.length === 0 ? (
-                    <div className={`${styles["unit-button"]}`}>
-                        <Link
-                            to={`/manage_unit/edit/${userUnit.id}`}
-                            style={{ width: "100%" }}
-                        >
-                            <PrimaryButton width="100%">
-                                Manage Unit
-                            </PrimaryButton>
-                        </Link>
-                        <Link to="/avail_subscriptions">
-                            <BorderedButton>Promote</BorderedButton>
-                        </Link>
-                    </div>
-                ) : subscriptions[0].request_status === 0 ? (
-                    <BorderedButton
+                {userUnit.request_status === 0 ? ( <BorderedButton
                         width="100%"
                         btnType="danger"
-                        onClick={() =>
-                            cancelUnitRequestHandler(subscriptions[0].id)
-                        }
+                        onClick={cancelUnitRequestHandler}
+                        isLoading={isLoading}
+                        loadingText="Cancel Unit Request"
                     >
                         Cancel Unit Request
-                    </BorderedButton>
-                ) : (
-                    <div className={`${styles["unit-button"]}`}>
+                    </BorderedButton>) : ( <div className={`${styles["unit-button"]}`}>
                         <Link
                             to={`/manage_unit/edit/${userUnit.id}`}
                             style={{ width: "100%" }}
@@ -200,8 +178,10 @@ const Unit = (props) => {
                                 Manage Unit
                             </PrimaryButton>
                         </Link>
-                    </div>
-                )}
+                        <Link to="/subscriptions">
+                            <BorderedButton disabled={subscriptions.length === 0 ? false : true}>Promote</BorderedButton>
+                        </Link>
+                    </div>)}
             </CardPlain>
         </div>
     );

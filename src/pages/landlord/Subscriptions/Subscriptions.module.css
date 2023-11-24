@@ -1,7 +1,7 @@
 .container {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    /* gap: 24px; */
 
     width: 100%;
     height: 100vh;
@@ -12,8 +12,8 @@
 }
 
 .nav-container {
-    /* border: 1px solid red; */
     max-width: 768px;
+    position: fixed;
 }
 
 .header-container {
@@ -22,9 +22,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* gap: 16px; */
-    /* border: 1px solid red; */
+    gap: 16px;
     padding-inline: 24px;
+    margin-top: 52px;
 }
 
 .header-container h1 {
@@ -42,20 +42,38 @@
     -webkit-text-fill-color: transparent;
 }
 
+.header-container h3 {
+    color: var(--fc-body);
+    text-align: center;
+}
+
 .header-container p {
+    font-size: 14px;
     text-align: center;
     max-width: 425px;
 }
 
+.subscriptions-container {
+    height: 100vh;
+    /* margin-top: 50px; */
+    /* border: 1px solid red; */
+}
+
+/* .subscriptions-container {
+    height: 100vh;
+    border: 1px solid red;
+} */
+
 .cards-container {
-    overflow: auto;
+    display: flex;
+    flex: 1;
 }
 
 .card {
     background: var(--bg-layer1);
     box-shadow: rgb(238, 243, 251) 0px 4px 8px;
     border: 1px solid #dee6f1;
-    padding: 24px;
+    padding: 24px 22px;
     min-width: 280px;
     border-radius: 16px;
     display: flex;
@@ -82,8 +100,9 @@
 }
 
 .subscription-title h2 {
+    font-size: 30px;
     margin: 0;
-    color: var(--fc-body);
+    color: black;
 }
 
 .currency {
@@ -119,9 +138,12 @@
     display: flex;
     flex-direction: column;
     border-top: 1px solid var(--border-color);
-    padding-top: 16px;
-    gap: 1em;
+    padding-top: 20px;
+    gap: 9px;
+    padding-left: 6px;
+    padding-right: 13px;
 }
+
 .feature {
     display: flex;
     gap: 8px;
@@ -135,8 +157,66 @@
 .feature p {
     color: var(--fc-strong);
     font-weight: 500;
+    text-align: justify;
+    word-spacing: 0px;
+    font-size: 15px;
 }
 
-.action {
+.see-all-features-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    margin-top: 4px;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.arrow-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    color: var(--accent);
+    margin-top: -2px;
+}
+/* .action {
     margin-top: 24px;
+} */
+
+@media (min-width: 640px) {
+    .container {
+        width: 768px;
+        margin: 0 auto;
+        position: relative;
+    }
+}
+
+@media (max-width: 768px) {
+    /* .container {
+        width: 768px;
+        margin: 0 auto;
+        position: relative;
+    } */
+
+    .header-container p {
+        font-size: 10px;
+    }
+    .subscription-title h2, .price-container .currency {
+        font-size: 30px;
+    }
+
+    .subscription-details p, .price-container .month-label, .subscription-details {
+        font-size: 12px;
+    }
+
+    .price-container h1 {
+        font-size: 60px;
+    }
+
+    .feature p {
+        font-size: 12px;
+    }
 }

@@ -371,7 +371,25 @@ const useUnitManager = () => {
         [sendRequest]
     )
 
-    // unit_amenities
+    const deleteUnit = useCallback(
+        async (id) => {
+            let responseData
+            try {
+                responseData = await sendRequest({
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/units/${id}`,
+                    method: 'DELETE',
+
+                })
+            } catch (err) {
+                throw err.message
+            }
+
+            return responseData
+        },
+        [sendRequest]
+    )
 
     return {
         isLoading,
@@ -392,6 +410,7 @@ const useUnitManager = () => {
         editUnitRule,
         editUnitfacility,
         fetchUnitReviews,
+        deleteUnit
     }
 }
 

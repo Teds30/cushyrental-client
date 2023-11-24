@@ -1,4 +1,5 @@
 import React, { Fragment, useRef, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 import { HiPhoto } from 'react-icons/hi2'
 import { BsFillArrowUpSquareFill } from 'react-icons/bs'
@@ -19,6 +20,7 @@ const PaymentProof = (props) => {
     const fileRef = useRef()
     const { uploadImage, isLoading } = useImageManager()
     const { subscribeUnit } = useSubscriptionManager()
+    const {id} = useParams();
 
     const checkFileSize = (file) => {
         const fileSizeInMB = file.size / (1024 * 1024)
@@ -77,7 +79,7 @@ const PaymentProof = (props) => {
 
             const subscribeRes = await subscribeUnit({
                 unit_id: form.selectedUnit.unitId,
-                subscription_id: 1,
+                subscription_id: id,
                 pop_image_id: res.image.id,
                 account_name: form.gcash_name,
                 account_number: form.gcash_account,

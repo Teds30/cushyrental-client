@@ -121,7 +121,7 @@ function App() {
                         element={<Subscriptions />}
                     ></Route>
                     <Route
-                        path="/avail_subscriptions"
+                        path="/avail_subscriptions/:id"
                         element={<AvailSubscription />}
                     ></Route>
                     <Route

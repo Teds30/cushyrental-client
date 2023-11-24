@@ -1,29 +1,30 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
-import moment from 'moment'
-import Moment from 'react-moment'
-import useHttp from '../../../hooks/http-hook'
-import Checkbox from '@mui/material/Checkbox'
+import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import moment from "moment";
+import useHttp from "../../../hooks/http-hook";
+import Checkbox from "@mui/material/Checkbox";
 
-import SearchField from '../../../components/Search/SearchField'
-import BorderlessButton from '../../../components/Button/BorderlessButton'
-import PrimaryButton from '../../../components/Button/PrimaryButton'
-import CheckBox from '../../../components/CheckBox/CheckBox'
-import TerminateConfirmationModal from './Modal'
-import ManageRenterImage from './ManageRenterImage'
+import SearchField from "../../../components/Search/SearchField";
+import BorderlessButton from "../../../components/Button/BorderlessButton";
+import PrimaryButton from "../../../components/Button/BorderlessButton";
+import CheckBox from "../../../components/CheckBox/CheckBox";
+import TerminateConfirmationModal from "./Modal";
+import ManageRenterImage from "./ManageRenterImage";
+import useRental from "../../../hooks/data/rental-hook";
 
 import styles from './ManageRenters.module.css'
 
 const ManageTenants = (props) => {
-    const { tenants, setTenants, onRefresh } = props
-    const [filteredData, setFilteredData] = useState(tenants)
-    const [selectedUsers, setSelectedUsers] = useState([])
-    const [showCheckboxes, setShowCheckboxes] = useState(false)
-    const [selectAllChecked, setSelectAllChecked] = useState(false)
-    const [terminateModalOpen, setTerminateModalOpen] = useState(false)
-    const [checked, setChecked] = useState(false)
-    const cbRef = useRef(null)
-    const { isLoading, error, sendRequest } = useHttp()
+    const { tenants, onRefresh } = props;
+
+    const [filteredData, setFilteredData] = useState(tenants);
+    const [selectedUsers, setSelectedUsers] = useState([]);
+    const [showCheckboxes, setShowCheckboxes] = useState(false);
+    const [selectAllChecked, setSelectAllChecked] = useState(false);
+    const [terminateModalOpen, setTerminateModalOpen] = useState(false);
+    const [checked, setChecked] = useState(false);
+    const cbRef = useRef(null);
+    const { terminateUser, isLoading } = useRental();
 
     // useEffect(() => {
     //     setFilteredData(tenants)
@@ -81,8 +82,6 @@ const ManageTenants = (props) => {
     //         setSelectedUsers(allUserIds);
     //     }
     //     setSelectAllChecked(!selectAllChecked);
-
-    //     console.log("Selected User IDs:", selectedUsers);
     // };
 
     const handleToggleCheckboxes = () => {
@@ -101,25 +100,17 @@ const ManageTenants = (props) => {
         }
     }
 
-    const handleTerminateConfirm = () => {
+    const handleTerminateConfirm = async () => {
         if (selectedUsers.length > 0) {
             for (const userId of selectedUsers) {
-                const terminate = async () => {
-                    await sendRequest({
-                        url: `${
-                            import.meta.env.VITE_BACKEND_LOCALHOST
-                        }/api/terminate-rentals/${userId}`,
-                        method: 'POST',
-                    })
-                }
-                terminate()
-                onRefresh()
-                setSelectedUsers([])
+                const res = await terminateUser(userId);
+                onRefresh();
+                setFilteredData(filteredData.filter(tenant => tenant.id !== userId));
+                setTerminateModalOpen(false);
             }
         } else {
         }
-        setTerminateModalOpen(false)
-    }
+    };
 
     return (
         <div className={`${styles['main-container']} `}>
@@ -290,6 +281,7 @@ const ManageTenants = (props) => {
                 open={terminateModalOpen}
                 onClose={() => setTerminateModalOpen(false)}
                 onTerminate={handleTerminateConfirm}
+                isLoading={isLoading}
             />
         </div>
     )
