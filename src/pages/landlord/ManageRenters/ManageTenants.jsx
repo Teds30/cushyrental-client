@@ -1,47 +1,48 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import moment from "moment";
-import useHttp from "../../../hooks/http-hook";
-import Checkbox from "@mui/material/Checkbox";
+import React, { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
+import moment from 'moment'
+import Moment from 'react-moment'
+import useHttp from '../../../hooks/http-hook'
+import Checkbox from '@mui/material/Checkbox'
 
-import SearchField from "../../../components/Search/SearchField";
-import BorderlessButton from "../../../components/Button/BorderlessButton";
-import PrimaryButton from "../../../components/Button/BorderlessButton";
-import CheckBox from "../../../components/CheckBox/CheckBox";
-import TerminateConfirmationModal from "./Modal";
-import ManageRenterImage from "./ManageRenterImage";
+import SearchField from '../../../components/Search/SearchField'
+import BorderlessButton from '../../../components/Button/BorderlessButton'
+import PrimaryButton from '../../../components/Button/PrimaryButton'
+import CheckBox from '../../../components/CheckBox/CheckBox'
+import TerminateConfirmationModal from './Modal'
+import ManageRenterImage from './ManageRenterImage'
 
-import styles from "./ManageRenters.module.css";
+import styles from './ManageRenters.module.css'
 
 const ManageTenants = (props) => {
-    const { tenants, setTenants, onRefresh } = props;
-    const [filteredData, setFilteredData] = useState(tenants);
-    const [selectedUsers, setSelectedUsers] = useState([]);
-    const [showCheckboxes, setShowCheckboxes] = useState(false);
-    const [selectAllChecked, setSelectAllChecked] = useState(false);
-    const [terminateModalOpen, setTerminateModalOpen] = useState(false);
-    const [checked, setChecked] = useState(false);
-    const cbRef = useRef(null);
-    const { isLoading, error, sendRequest } = useHttp();
+    const { tenants, setTenants, onRefresh } = props
+    const [filteredData, setFilteredData] = useState(tenants)
+    const [selectedUsers, setSelectedUsers] = useState([])
+    const [showCheckboxes, setShowCheckboxes] = useState(false)
+    const [selectAllChecked, setSelectAllChecked] = useState(false)
+    const [terminateModalOpen, setTerminateModalOpen] = useState(false)
+    const [checked, setChecked] = useState(false)
+    const cbRef = useRef(null)
+    const { isLoading, error, sendRequest } = useHttp()
 
     // useEffect(() => {
     //     setFilteredData(tenants)
     // }, [tenants])
 
     const handleSearch = (event) => {
-        const keywords = event.target.value.toLowerCase();
+        const keywords = event.target.value.toLowerCase()
         const newList = tenants.filter((data) => {
-            const fullName = `${data.user.first_name} ${data.user.middle_name} ${data.user.last_name}`;
-            return fullName.toLowerCase().includes(keywords);
-        });
-        setFilteredData(newList);
-    };
+            const fullName = `${data.user.first_name} ${data.user.last_name}`
+            return fullName.toLowerCase().includes(keywords)
+        })
+        setFilteredData(newList)
+    }
 
     const formatDate = (dateString) => {
-        const date = moment(dateString);
-        const formattedDate = date.format("DD/MM/YYYY | hh:mm A");
-        return formattedDate;
-    };
+        const date = moment(dateString)
+        const formattedDate = date.format('DD/MM/YYYY | hh:mm A')
+        return formattedDate
+    }
 
     // const GenderToText = (gender) => {
     //     if (gender === 1) {
@@ -57,20 +58,20 @@ const ManageTenants = (props) => {
 
     const handleChange = (event) => {
         if (checked) {
-            setSelectedUsers([]);
+            setSelectedUsers([])
         } else {
-            const allUserIds = tenants.map((user) => user.id);
-            setSelectedUsers(allUserIds);
+            const allUserIds = tenants.map((user) => user.id)
+            setSelectedUsers(allUserIds)
         }
-        setSelectAllChecked(!selectAllChecked);
-        setChecked(event.target.checked);
-    };
+        setSelectAllChecked(!selectAllChecked)
+        setChecked(event.target.checked)
+    }
 
     useEffect(() => {
         if (selectedUsers.length === 0) {
-            setChecked(false);
+            setChecked(false)
         }
-    }, [selectedUsers, setChecked]);
+    }, [selectedUsers, setChecked])
 
     // const handleSelectAllChecked = () => {
     //     if (selectAllChecked) {
@@ -85,42 +86,44 @@ const ManageTenants = (props) => {
     // };
 
     const handleToggleCheckboxes = () => {
-        setShowCheckboxes(true);
-    };
+        setShowCheckboxes(true)
+    }
 
     const handleCancelClick = () => {
-        setSelectedUsers([]);
-        setShowCheckboxes(false);
-        setSelectAllChecked(false);
-    };
+        setSelectedUsers([])
+        setShowCheckboxes(false)
+        setSelectAllChecked(false)
+    }
 
     const handleTerminateClick = () => {
         if (selectedUsers.length > 0) {
-            setTerminateModalOpen(true);
+            setTerminateModalOpen(true)
         }
-    };
+    }
 
     const handleTerminateConfirm = () => {
         if (selectedUsers.length > 0) {
             for (const userId of selectedUsers) {
                 const terminate = async () => {
                     await sendRequest({
-                        url: `http://127.0.0.1:8000/api/terminate-rentals/${userId}`,
-                        method: "POST",
-                    });
-                };
-                terminate();
-                onRefresh();
-                setSelectedUsers([]);
+                        url: `${
+                            import.meta.env.VITE_BACKEND_LOCALHOST
+                        }/api/terminate-rentals/${userId}`,
+                        method: 'POST',
+                    })
+                }
+                terminate()
+                onRefresh()
+                setSelectedUsers([])
             }
         } else {
         }
-        setTerminateModalOpen(false);
-    };
+        setTerminateModalOpen(false)
+    }
 
     return (
-        <div className={`${styles["main-container"]} `}>
-            <div className={`${styles["search-box"]} `}>
+        <div className={`${styles['main-container']} `}>
+            <div className={`${styles['search-box']} `}>
                 <SearchField
                     placeholder="Search"
                     onChange={handleSearch}
@@ -128,16 +131,16 @@ const ManageTenants = (props) => {
             </div>
 
             {tenants.length === 0 ? (
-                <p className={`${styles["no-tenants-message"]} `}>
+                <p className={`${styles['no-tenants-message']} `}>
                     No Tenants Found.
                 </p>
             ) : (
                 <>
                     {!showCheckboxes && (
-                        <div className={`${styles["select-container"]} `}>
+                        <div className={`${styles['select-container']} `}>
                             <Link
                                 onClick={handleToggleCheckboxes}
-                                style={{ color: "var(--accent)" }}
+                                style={{ color: 'var(--accent)' }}
                             >
                                 Select
                             </Link>
@@ -145,29 +148,29 @@ const ManageTenants = (props) => {
                     )}
 
                     {showCheckboxes && (
-                        <div className={`${styles["selectall-container"]} `}>
+                        <div className={`${styles['selectall-container']} `}>
                             <Checkbox
                                 checked={checked}
                                 inputRef={cbRef}
                                 onChange={handleChange}
-                                inputProps={{ "aria-label": "controlled" }}
+                                inputProps={{ 'aria-label': 'controlled' }}
                                 sx={{
-                                    marginRight: "-8px",
-                                    border: "var(--accent)",
-                                    color: "var(--accent)",
-                                    "&.Mui-checked": {
-                                        color: "var(--accent)",
+                                    marginRight: '-8px',
+                                    border: 'var(--accent)',
+                                    color: 'var(--accent)',
+                                    '&.Mui-checked': {
+                                        color: 'var(--accent)',
                                     },
-                                    "&:hover": {
-                                        color: "var(--accent)",
+                                    '&:hover': {
+                                        color: 'var(--accent)',
                                     },
                                 }}
                             />
                             <Link
                                 onClick={() => {
-                                    cbRef.current.click();
+                                    cbRef.current.click()
                                 }}
-                                style={{ color: "var(--accent)" }}
+                                style={{ color: 'var(--accent)' }}
                             >
                                 Select All
                             </Link>
@@ -177,47 +180,69 @@ const ManageTenants = (props) => {
                     {filteredData.map((user) => (
                         <div
                             key={user.id}
-                            className={`${styles["tenants-main-box_container"]} `}
+                            className={`${styles['tenants-main-box_container']} `}
                             id={`user-${user.user.id}`}
                         >
                             <div
-                                className={`${styles["box-container"]} ${
+                                className={`${styles['box-container']} ${
                                     showCheckboxes
-                                        ? styles["box-container-clicked"]
-                                        : ""
+                                        ? styles['box-container-clicked']
+                                        : ''
                                 }`}
                             >
-                                <div className={`${styles["box-image"]} `}>
+                                <div className={`${styles['box-image']} `}>
                                     <ManageRenterImage
                                         image={user.user.profile_picture_img}
                                     />
                                 </div>
-                                <div className={`${styles["box-details"]} `}>
+                                <div className={`${styles['box-details']} `}>
                                     <p
-                                        className={`${styles["box-details-name"]} `}
+                                        className={`${styles['box-details-name']} `}
                                     >
-                                        {user.user.first_name}{" "}
-                                        {user.user.middle_name}{" "}
+                                        {user.user.first_name}{' '}
                                         {user.user.last_name}
+                                        {/* {''}
+                                        <span
+                                            style={{
+                                                fontWeight: 400,
+                                                fontSize: '10px',
+                                                color: 'var(--fc-body)',
+                                            }}
+                                        >
+                                            • 2 others
+                                        </span> */}
                                     </p>
                                     <p
-                                        className={`${styles["box-details-unit"]} `}
+                                        className={`${styles['box-details-unit']} `}
                                     >
                                         {user.unit.name}
+                                    </p>
+                                    <p>
+                                        Availed slot:{' '}
+                                        <span
+                                            style={{
+                                                color: 'var(--accent)',
+                                                fontWeight: 700,
+                                            }}
+                                        >
+                                            {user.slots}
+                                        </span>
                                     </p>
 
                                     {/* <p className={`${styles["box-details-gender"]} `}>
                                 {GenderToText(user.user.gender)}
                             </p> */}
                                     <p
-                                        className={`${styles["box-details-time"]} `}
+                                        className={`${styles['box-details-time']} `}
                                     >
-                                        {formatDate(user.date_start)}
+                                        <Moment format="MMM DD, YYYY">
+                                            {user.date_start}
+                                        </Moment>{' '}
                                     </p>
-                                </div>{" "}
+                                </div>{' '}
                                 {showCheckboxes && (
                                     <div
-                                        className={`${styles["box-selected"]} `}
+                                        className={`${styles['box-selected']} `}
                                     >
                                         <CheckBox
                                             items={[{ id: user.id }]}
@@ -233,9 +258,9 @@ const ManageTenants = (props) => {
                         </div>
                     ))}
                     {showCheckboxes && (
-                        <div className={`${styles["terminate-container"]} `}>
+                        <div className={`${styles['terminate-container']} `}>
                             <div
-                                className={`${styles["terminate-container-top"]} `}
+                                className={`${styles['terminate-container-top']} `}
                             >
                                 <div>
                                     <p>Selected ({selectedUsers.length})</p>
@@ -267,7 +292,7 @@ const ManageTenants = (props) => {
                 onTerminate={handleTerminateConfirm}
             />
         </div>
-    );
-};
+    )
+}
 
-export default ManageTenants;
+export default ManageTenants
