@@ -27,9 +27,30 @@ const useSchoolManager = () => {
         [sendRequest]
     )
 
+    const fetchSchoolIcon = useCallback(
+        async (file_name) => {
+            let responseData
+            try {
+                responseData = await fetch(
+                    `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/school_icons/${file_name}`
+                )
+
+                const imageBlob = await responseData.blob()
+                responseData = URL.createObjectURL(imageBlob)
+            } catch (err) {
+                throw err.message
+            }
+            return responseData
+        },
+        [sendRequest]
+    )
+
     return {
         isLoading,
         fetchSchools,
+        fetchSchoolIcon,
     }
 }
 
