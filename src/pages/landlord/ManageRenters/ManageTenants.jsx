@@ -13,6 +13,7 @@ import ManageRenterImage from "./ManageRenterImage";
 import useRental from "../../../hooks/data/rental-hook";
 
 import styles from './ManageRenters.module.css'
+import Moment from "react-moment";
 
 const ManageTenants = (props) => {
     const { tenants, onRefresh } = props;
