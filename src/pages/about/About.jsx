@@ -36,7 +36,9 @@ const About = () => {
                     <li>Home</li>
                 </ul>
                 <div className={styles['cta']}>
-                    <Link className={styles['primary-btn']}>Board Now</Link>
+                    <Link className={styles['primary-btn']} to={'/'}>
+                        Board Now
+                    </Link>
                 </div>
             </div>
             <section className={styles['intro']}>
@@ -282,7 +284,7 @@ const About = () => {
                             </AnimatedElement>
                         </div>
                         <h3>JOHN</h3>
-                        <p>Project Manager</p>
+                        <p>Developer</p>
                     </div>
                 </div>
             </section>
@@ -302,19 +304,28 @@ const About = () => {
                 <div className={styles['metrics']}>
                     <div className={styles['metric']}>
                         <h1>
-                            <AnimatedNumber name='units' number={50}></AnimatedNumber>
+                            <AnimatedNumber
+                                name="units"
+                                number={50}
+                            ></AnimatedNumber>
                         </h1>
                         <h3>Units Listed</h3>
                     </div>
                     <div className={styles['metric']}>
                         <h1>
-                            <AnimatedNumber name='landlords' number={20}></AnimatedNumber>
+                            <AnimatedNumber
+                                name="landlords"
+                                number={20}
+                            ></AnimatedNumber>
                         </h1>
                         <h3>Landlords Registered</h3>
                     </div>
                     <div className={styles['metric']}>
                         <h1>
-                            <AnimatedNumber name='tenants' number={51}></AnimatedNumber>
+                            <AnimatedNumber
+                                name="tenants"
+                                number={51}
+                            ></AnimatedNumber>
                         </h1>
                         <h3>Tenants Registered</h3>
                     </div>
@@ -429,26 +440,36 @@ const About = () => {
             <section className={styles['discover']}>
                 <h2>Discover boarding house with us!</h2>
                 <div className={styles['actions']}>
-                    <div
-                        className={`${styles['discover-btn']} ${styles['btn-primary']}`}
-                    >
-                        Browse Units
-                        <span>
-                            <TbArrowNarrowRight
-                                style={{ width: 'inherit', height: 'inherit' }}
-                            />
-                        </span>
-                    </div>
-                    <div
-                        className={`${styles['discover-btn']} ${styles['btn-outlined']}`}
-                    >
-                        Advertise Your Unit
-                        <span>
-                            <TbArrowNarrowRight
-                                style={{ width: 'inherit', height: 'inherit' }}
-                            />
-                        </span>
-                    </div>
+                    <Link to={'/'}>
+                        <div
+                            className={`${styles['discover-btn']} ${styles['btn-primary']}`}
+                        >
+                            Browse Units
+                            <span>
+                                <TbArrowNarrowRight
+                                    style={{
+                                        width: 'inherit',
+                                        height: 'inherit',
+                                    }}
+                                />
+                            </span>
+                        </div>
+                    </Link>
+                    <Link to={'/'}>
+                        <div
+                            className={`${styles['discover-btn']} ${styles['btn-outlined']}`}
+                        >
+                            Advertise Your Unit
+                            <span>
+                                <TbArrowNarrowRight
+                                    style={{
+                                        width: 'inherit',
+                                        height: 'inherit',
+                                    }}
+                                />
+                            </span>
+                        </div>
+                    </Link>
                 </div>
             </section>
             <section className={styles['contact-container']}>
@@ -457,6 +478,10 @@ const About = () => {
                     <div className={styles['contact-shape']}></div>
                 </div>
                 <div className={styles['contact']}>
+                    <div className={styles['contact-item']}>
+                        <p className="title">Socials</p>
+                        <p>O</p>
+                    </div>
                     <div className={styles['contact-item']}>
                         <p className="title">Email Address</p>
                         <p>cushyrental@gmail.com</p>
