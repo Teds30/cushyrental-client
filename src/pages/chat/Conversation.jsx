@@ -7,7 +7,12 @@ import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 
-import { TbChevronLeft, TbDotsVertical } from 'react-icons/tb'
+import {
+    TbChevronLeft,
+    TbDotsVertical,
+    TbFlag,
+    TbFlagFilled,
+} from 'react-icons/tb'
 
 import styles from './Conversation.module.css'
 import AvailModal from './AvailModal'
@@ -16,6 +21,9 @@ import MessageBox from './MessageBox'
 
 import useHttp from '../../hooks/http-hook'
 import AuthContext from '../../context/auth-context'
+import { Menu, MenuItem } from '@mui/material'
+import SwipeableCard from '../../components/SwipeableCard/SwipeableCard'
+import ReportUser from './ReportUser'
 
 const Conversation = (props) => {
     const authCtx = useContext(AuthContext)
@@ -43,43 +51,32 @@ const Conversation = (props) => {
     const [typing, setTyping] = useState(false)
     const container = useRef()
 
+    const [cardOpen, setCardOpen] = useState()
+    const [cardTitle, setCardTitle] = useState()
+    const [anchorEl, setAnchorEl] = useState(null)
+    const open = Boolean(anchorEl)
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget)
+    }
+    const handleClose = () => {
+        setAnchorEl(null)
+    }
+
+    const toggleDrawer = (newOpen) => {
+        setCardOpen(newOpen)
+    }
+
+    const handleCloseDrawer = () => {
+        setCardOpen(false)
+    }
+
     useEffect(() => {
         setSocket(
             io(import.meta.env.VITE_CHAT_LOCALHOST, {
                 transports: ['websocket'],
             })
         )
-
-        const fetchUnit = async (unit_id) => {
-            const res = await sendRequest({
-                url: `${
-                    import.meta.env.VITE_BACKEND_LOCALHOST
-                }/api/units/${unit_id}`,
-            })
-            setUnit(res)
-        }
-
-        const fetchRoomDetails = async (room_id) => {
-            const res = await sendRequest({
-                url: `${import.meta.env.VITE_CHAT_LOCALHOST}/rooms/${room_id}`,
-            })
-
-            const landlord = await fetchUserDetails(res.landlord_id)
-            const tenant = await fetchUserDetails(res.tenant_id)
-            fetchUnit(res.unit_id)
-            setRoom({ ...res, landlord: landlord, tenant: tenant })
-        }
-
-        const fetchUserDetails = async (userId) => {
-            const res = await sendRequest({
-                url: `${
-                    import.meta.env.VITE_BACKEND_LOCALHOST
-                }/api/users/${userId}`,
-            })
-            return res
-        }
-
-        fetchRoomDetails(room_id)
     }, [])
 
     const getChats = async (room_id) => {
@@ -100,19 +97,74 @@ const Conversation = (props) => {
                 'Content-Type': 'application/json',
             },
         })
+
+        console.log(res)
+    }
+
+    const fetchUnit = async (unit_id) => {
+        const res = await sendRequest({
+            url: `${
+                import.meta.env.VITE_BACKEND_LOCALHOST
+            }/api/units/${unit_id}`,
+        })
+        setUnit(res)
+    }
+
+    const fetchUserDetails = async (userId) => {
+        const res = await sendRequest({
+            url: `${
+                import.meta.env.VITE_BACKEND_LOCALHOST
+            }/api/users/${userId}`,
+        })
+        return res
+    }
+
+    const fetchRoomDetails = async (room_id) => {
+        const res = await sendRequest({
+            url: `${import.meta.env.VITE_CHAT_LOCALHOST}/rooms/${room_id}`,
+        })
+
+        const landlord = await fetchUserDetails(res.landlord_id)
+        const tenant = await fetchUserDetails(res.tenant_id)
+        setRoom({ ...res, landlord: landlord, tenant: tenant })
     }
 
     useEffect(() => {
-        readChat(room_id, user_id)
-        getChats(room_id)
-    }, [user_id, room_id])
+        if (authCtx.user) {
+            fetchRoomDetails(room_id)
+        }
+    }, [authCtx.user])
 
     useEffect(() => {
-        if (!socket) return
+        if (room) {
+            if (
+                room.landlord_id !== authCtx.user.id &&
+                room.tenant_id !== authCtx.user.id
+            ) {
+                navigate('/')
+                return
+            }
+
+            // console.log(room.unit_id)
+
+            fetchUnit(room.unit_id)
+            readChat(room._id, authCtx.user.id)
+        }
+    }, [room])
+
+    useEffect(() => {
+        if (!socket || !room) return
+
+        if (
+            room.landlord_id !== authCtx.user.id &&
+            room.tenant_id !== authCtx.user.id
+        )
+            return
 
         socket.emit('room-join', { room_id: room_id })
         socket.on('room-joined', () => {
             getChats(room_id)
+            readChat(room_id, authCtx.user.id)
         })
         socket.on('message-sent', ({ message }) => {
             setChats((prev) => [...prev, { ...message, read: true }])
@@ -125,7 +177,7 @@ const Conversation = (props) => {
         socket.on('receiver-seen', () => {
             getChats(room_id)
         })
-    }, [socket])
+    }, [socket, room])
 
     const handleSend = (message) => {
         if (!message) return
@@ -205,10 +257,7 @@ const Conversation = (props) => {
                             size="large"
                             edge="start"
                             color="inherit"
-                            aria-label="menu"
-                            // onClick={() => {
-                            //     user_id === 1 ? setUserId(2) : setUserId(1)
-                            // }}
+                            onClick={handleClick}
                         >
                             <TbDotsVertical
                                 style={{
@@ -217,9 +266,44 @@ const Conversation = (props) => {
                                 }}
                             />
                         </IconButton>
+
+                        <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            MenuListProps={{
+                                'aria-labelledby': 'basic-button',
+                            }}
+                        >
+                            <MenuItem
+                                onClick={() => {
+                                    // handleDateType(id, 0)
+                                    handleClose()
+                                    toggleDrawer(true)
+                                }}
+                            >
+                                <Box
+                                    sx={{
+                                        background: 'var(--bg-layer3)',
+                                        borderRadius: '50%',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        width: '14px',
+                                        height: '14px',
+                                        padding: '8px',
+                                        marginRight: '8px',
+                                    }}
+                                >
+                                    <TbFlagFilled size={'14px'} />
+                                </Box>
+                                <span>Report user</span>
+                            </MenuItem>
+                        </Menu>
                     </Toolbar>
                 </AppBar>
-                {socket && (
+                {socket && room && (
                     <AvailModal
                         unit={unit}
                         user_id={user_id}
@@ -229,6 +313,25 @@ const Conversation = (props) => {
                     />
                 )}
             </Box>
+
+            <SwipeableCard
+                open={cardOpen}
+                onOpen={toggleDrawer}
+                closeDrawer={handleCloseDrawer}
+                title={`Report`}
+            >
+                {room && (
+                    <ReportUser
+                        handleCloseDrawer={handleCloseDrawer}
+                        reportedBy={user_id}
+                        reportingUser={
+                            room && user_id === room.tenant_id
+                                ? room.landlord_id
+                                : room.tenant_id
+                        }
+                    />
+                )}
+            </SwipeableCard>
 
             <Messages
                 isLoading={isLoading}
@@ -240,6 +343,7 @@ const Conversation = (props) => {
                 setTyping={setTyping}
                 user_id={user_id}
                 room_id={room_id}
+                room={room}
             />
 
             <MessageBox
