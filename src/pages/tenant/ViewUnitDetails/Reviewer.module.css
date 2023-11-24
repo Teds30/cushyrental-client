@@ -1,0 +1,20 @@
+.review-user-profile {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.review-user-data {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    /* gap: 1px; */
+}
+.review-message {
+    line-height: 1em;
+}
+
+.review-message p {
+    text-align: start;
+    font-size: 10px;
+}

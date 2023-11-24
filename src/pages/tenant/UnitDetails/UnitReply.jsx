@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
-import styles from "./UnitDetails.module.css";
-import moment from "moment";
-import { IoSend } from "react-icons/io5";
-import { TbFlag } from "react-icons/tb";
-import UnitDetailsRating from "./UnitDetailsRating";
-import TextField from "../../../components/TextField/TextField";
+import React, { useEffect, useState } from 'react'
+import styles from './UnitReviews.module.css'
+import moment from 'moment'
+import { IoSend } from 'react-icons/io5'
+import { TbFlag } from 'react-icons/tb'
+import UnitDetailsRating from './UnitDetailsRating'
+import TextField from '../../../components/TextField/TextField'
+import UserAvatar from '../../../components/Avatar/UserAvatar'
+import Moment from 'react-moment'
 
 const UnitReply = ({
     review,
@@ -13,76 +15,53 @@ const UnitReply = ({
     handleSendClick,
     loggedInUserId,
 }) => {
-    const [reviewReply, setReviewReply] = useState(review);
-    const [landlordReply, setLandlordReply] = useState("");
-
-
+    const [reviewReply, setReviewReply] = useState(review)
+    const [landlordReply, setLandlordReply] = useState('')
 
     const formatDate = (dateString) => {
-        const date = moment(dateString);
-        return date.format("DD/MM/YYYY | hh:mm A");
-    };
+        const date = moment(dateString)
+        return date.format('DD/MM/YYYY | hh:mm A')
+    }
 
     useEffect(() => {
         const displayReview = () => {
-            
             // const targetReview = review.find();
         }
         // console.log(review);
-        displayReview();
-    }, [review]);
-
-    const formatTimeDifference = (dateString) => {
-        const now = moment();
-        const date = moment(dateString);
-        const diffInSeconds = now.diff(date, "seconds");
-
-        if (diffInSeconds < 60) {
-            return `${diffInSeconds} second${
-                diffInSeconds !== 1 ? "s" : ""
-            } ago`;
-        }
-
-        const diffInMinutes = now.diff(date, "minutes");
-        if (diffInMinutes < 60) {
-            return `${diffInMinutes} minute${
-                diffInMinutes !== 1 ? "s" : ""
-            } ago`;
-        }
-
-        const diffInHours = now.diff(date, "hours");
-        if (diffInHours < 24) {
-            return `${diffInHours} hour${diffInHours !== 1 ? "s" : ""} ago`;
-        }
-
-        const diffInDays = now.diff(date, "days");
-        return `${diffInDays} day${diffInDays !== 1 ? "s" : ""} ago`;
-    };
+        displayReview()
+    }, [review])
 
     const handleSendButtonClick = () => {
         if (landlordReply) {
-            handleSendClick(reviewReply.id, landlordReply);
-            setReviewReply({...review, landlord_reply: landlordReply, updated_at: new Date()});
+            handleSendClick(reviewReply.id, landlordReply)
+            setReviewReply({
+                ...review,
+                landlord_reply: landlordReply,
+                updated_at: new Date(),
+            })
         }
-    };
+    }
 
     const handleInputChange = (event) => {
-        setLandlordReply(event.target.value);
-    };
+        setLandlordReply(event.target.value)
+    }
 
     return (
-        <div className={styles["card-container"]} key={reviewReply.id}>
-            <div className={`${styles["top-card-container"]}`}>
-                <div className={`${styles["inside-card-container"]}`}>
-                    <div className={`${styles["image-card-container"]}`}>
-                        <img src="" alt="" />
-                    </div>
-                    <div className={`${styles["text-card-container"]}`}>
+        <div className={styles['card-container']} key={reviewReply.id}>
+            <div className={`${styles['top-card-container']}`}>
+                <div className={`${styles['inside-card-container']}`}>
+                    <UserAvatar
+                        avatar_url={
+                            reviewReply.rental.unit.landlord.profile_picture_img
+                        }
+                        size="40px"
+                    />
+                    <div className={`${styles['text-card-container']}`}>
                         <p>
-                            {`${reviewReply.user.first_name} ${reviewReply.user.middle_name} ${reviewReply.user.last_name}`}
+                            {`${reviewReply.user.first_name} ${reviewReply.user.last_name}`}
                         </p>
-                        <div className={`${styles["profile-star-container"]}`}>
-                            <div className={`${styles["prof-star-container"]}`}>
+                        <div className={`${styles['profile-star-container']}`}>
+                            <div className={`${styles['prof-star-container']}`}>
                                 {
                                     <UnitDetailsRating
                                         average_ratings={reviewReply.star}
@@ -99,25 +78,25 @@ const UnitReply = ({
                     </div>
                 </div>
                 <div>
-                    <button className={`${styles["button-flag-container"]}`}>
+                    <button className={`${styles['button-flag-container']}`}>
                         <TbFlag />
                     </button>
                 </div>
             </div>
 
-            <div className={`${styles["details-container"]}`}>
+            <div className={`${styles['details-container']}`}>
                 <p>{reviewReply.message}</p>
             </div>
 
-            <div className={styles["hr"]}></div>
+            <div className={styles['hr']}></div>
 
-            <div className={`${styles["ratings-container"]}`}>
-                <div className={`${styles["ratings-left-container"]}`}>
+            <div className={`${styles['ratings-container']}`}>
+                <div className={`${styles['ratings-left-container']}`}>
                     <p>Environment</p>
                     <p>Boarding House</p>
                     <p>Landlord</p>
                 </div>
-                <div className={`${styles["ratings-right-container"]}`}>
+                <div className={`${styles['ratings-right-container']}`}>
                     <UnitDetailsRating
                         average_ratings={reviewReply.environment_star}
                     />
@@ -130,37 +109,45 @@ const UnitReply = ({
                 </div>
             </div>
 
-            <div className={`${styles["date-container"]}`}>
-                <p>{formatDate(reviewReply.created_at)}</p>
+            <div className={`${styles['date-container']}`}>
+                <p>
+                    <Moment format="DD/MM/YYYY h:mm a">
+                        {reviewReply.created_at}
+                    </Moment>
+                </p>
                 {reviewReply.landlord_reply && (
                     <button
                         onClick={toggleShowLandlordReply}
-                        className={`${styles["button-show-container"]}`}
+                        className={`${styles['button-show-container']}`}
                     >
-                        {showLandlordReply ? "Hide Replies" : "Show Replies"}
+                        {showLandlordReply ? 'Hide Replies' : 'Show Replies'}
                     </button>
                 )}
             </div>
 
             {showLandlordReply && reviewReply.landlord_reply && (
-                <div className={styles["landlord-reply-container"]}>
-                    <div className={`${styles["landlord-top-container"]}`}>
+                <div className={styles['landlord-reply-container']}>
+                    <div className={`${styles['landlord-top-container']}`}>
                         <p>Landlord's Reply</p>
                     </div>
-                    <div className={`${styles["landlord-bottom-container"]}`}>
-                        <div>
-                            <img src="" alt="" />
-                        </div>
+                    <div className={`${styles['landlord-bottom-container']}`}>
+                        <UserAvatar
+                            avatar_url={
+                                reviewReply.rental.unit.landlord
+                                    .profile_picture_img
+                            }
+                        />
                         <div>
                             <p className="strong">
-                                {reviewReply.rental.unit.landlord.first_name}{" "}
-                                {reviewReply.rental.unit.landlord.middle_name}{" "}
-                                {reviewReply.rental.unit.landlord.last_name} •{" "}
+                                {reviewReply.rental.unit.landlord.first_name}{' '}
+                                {reviewReply.rental.unit.landlord.last_name[0]}
+                                {'. '}
                                 <span className="smaller-text">
-                                    {" "}
-                                    {formatTimeDifference(
-                                        reviewReply.updated_at
-                                    )}
+                                    •{' '}
+                                    <Moment fromNow ago>
+                                        {reviewReply.updated_at}
+                                    </Moment>{' '}
+                                    ago
                                 </span>
                             </p>
                             <p className="smaller-text">
@@ -173,7 +160,7 @@ const UnitReply = ({
 
             {!reviewReply.landlord_reply &&
                 loggedInUserId === reviewReply.rental.unit.landlord_id && (
-                    <div className={styles["reply-container"]}>
+                    <div className={styles['reply-container']}>
                         <TextField
                             multiline
                             fullWidth
@@ -184,15 +171,15 @@ const UnitReply = ({
                         />
                         <button
                             onClick={handleSendButtonClick}
-                            className={styles["button-send-container"]}
-                            style={{ fontSize: "25px" }}
+                            className={styles['button-send-container']}
+                            style={{ fontSize: '25px' }}
                         >
                             <IoSend />
                         </button>
                     </div>
                 )}
         </div>
-    );
-};
+    )
+}
 
-export default UnitReply;
+export default UnitReply
