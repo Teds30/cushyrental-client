@@ -157,7 +157,7 @@ const BottomNavigation = (props) => {
             setNotifCtr(ctr)
         })
         socket.on('notification-joined', () => {
-            // console.log('i joined!')
+            // console.log('i joined notif!')
         })
     }, [socket])
 
