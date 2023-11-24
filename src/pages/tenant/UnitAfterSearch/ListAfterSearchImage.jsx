@@ -24,7 +24,10 @@ const ListAfterSearchImage = (props) => {
         !isLoading &&
         unitImages.map((image, index) => (
             <SwiperSlide key={index}>
-                <img src={image} style={{ height: '100%' }} />
+                <img
+                    src={image}
+                    style={{ height: '100%', objectFit: 'cover' }}
+                />
             </SwiperSlide>
         ))
 
