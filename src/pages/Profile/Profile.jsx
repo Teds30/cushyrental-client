@@ -18,14 +18,12 @@ import { FiChevronLeft } from 'react-icons/fi'
 import { LiaScrollSolid } from 'react-icons/lia'
 import logo from '../../assets/cushyrental.svg'
 import RulesAndRegulationIcon from './RulesAndRegulationIcon'
+import UserAvatar from '../../components/Avatar/UserAvatar'
 
 const Profile = () => {
     const userCtx = useContext(AuthContext)
-    const { fetchAvatar, fetchImage, isLoading } = useImageManager()
     const [image, setImage] = useState()
     const navigate = useNavigate()
-
-    // console.log(userCtx.user.profile_picture_img)
 
     const logoutHandler = (event) => {
         event.preventDefault()
@@ -33,15 +31,6 @@ const Profile = () => {
         navigate('/signin')
     }
 
-    useEffect(() => {
-        const handleFetch = async () => {
-            try {
-                const res = await fetchAvatar(userCtx.user.profile_picture_img)
-                setImage(res)
-            } catch (err) {}
-        }
-        handleFetch()
-    }, [userCtx])
     return (
         <div className={`${styles['profile-container']}`}>
             <ProfileDesign className={`${styles['profile-design']}`} />
@@ -94,13 +83,12 @@ const Profile = () => {
                     {userCtx.user && (
                         <div className={`${styles['user-profile']}`}>
                             <div className={`${styles['photo']}`}>
-                                <img
-                                    src={image}
-                                    alt={
-                                        userCtx.user.first_name +
-                                        ' ' +
-                                        userCtx.user.last_name
+                                <UserAvatar
+                                    avatar_url={
+                                        userCtx.user &&
+                                        userCtx.user.profile_picture_img
                                     }
+                                    size="80px"
                                 />
                             </div>
                             <div className={`${styles['user']}`}>
@@ -115,11 +103,14 @@ const Profile = () => {
                                             userCtx.user.middle_name}{' '}
                                         {userCtx.user.last_name}
                                     </p>
-                                    {userCtx.user.is_verified !== false && userCtx.user.user_type_id === 2 && (
-                                        <VerifiedIcon
-                                            style={{ color: 'var(--accent)' }}
-                                        />
-                                    )}
+                                    {userCtx.user.is_verified !== false &&
+                                        userCtx.user.user_type_id === 2 && (
+                                            <VerifiedIcon
+                                                style={{
+                                                    color: 'var(--accent)',
+                                                }}
+                                            />
+                                        )}
                                 </div>
                                 {userCtx.user.user_type_id === 3 ? (
                                     <p>Tenant</p>
@@ -157,8 +148,10 @@ const Profile = () => {
                     <div className={styles['hr']}></div>
 
                     <div className={`${styles['about-row']}`}>
-                        <Link to={`/about`}
-                           className={`${styles['about-col']}`}>
+                        <Link
+                            to={`/about`}
+                            className={`${styles['about-col']}`}
+                        >
                             <div className={`${styles['about-image']}`}>
                                 <img src={logo} alt="CushyRental" />
                             </div>
@@ -168,7 +161,7 @@ const Profile = () => {
                         <Link to="/rules" className={`${styles['about-col']}`}>
                             <div className={`${styles['about-rule']}`}>
                                 <div className={`${styles['rule']}`}>
-                                    <RulesAndRegulationIcon/>
+                                    <RulesAndRegulationIcon />
                                     {/* <LiaScrollSolid
                                         style={{
                                             height: '44px',
