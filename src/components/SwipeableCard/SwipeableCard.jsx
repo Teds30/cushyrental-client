@@ -34,6 +34,7 @@ const SwipeableCard = (props) => {
         children,
         fullWidth = false,
         title = '',
+        titleComponent = null,
         action,
     } = props
 
@@ -89,7 +90,7 @@ const SwipeableCard = (props) => {
                     >
                         <Puller />
                     </Box>
-                    {title && (
+                    {title && !titleComponent && (
                         <Box
                             sx={{
                                 display: 'flex',
@@ -100,6 +101,19 @@ const SwipeableCard = (props) => {
                             }}
                         >
                             <p className="title">{title}</p>
+                        </Box>
+                    )}
+
+                    {titleComponent && (
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                borderBottom: '1px solid var(--border-color)',
+                                paddingBottom: '8px',
+                            }}
+                        >
+                            {titleComponent}
                         </Box>
                     )}
                 </StyledBox>

@@ -1,10 +1,14 @@
 .card {
-    backdrop-filter: blur(1px);
-    background: rgba(255, 255, 255, 0.80);
+    background: rgba(255, 255, 255, 0.8);
     display: flex;
     flex-direction: column;
     padding: 15px;
     box-sizing: border-box;
+    backdrop-filter: blur(10px);/* The `box-shadow` property is used to add a shadow effect to an
+    element. In this case, the `box-shadow` property is adding a
+    shadow to the bottom of the `.card` element. */
+    
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .card-fill {

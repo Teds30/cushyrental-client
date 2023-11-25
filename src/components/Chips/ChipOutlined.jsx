@@ -81,7 +81,7 @@ const ChipOutlined = (props) => {
                 label={item.name}
                 sx={{
                     fontFamily: 'inherit',
-                    padding: '8px 18px',
+                    padding: '8px 12px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -93,16 +93,15 @@ const ChipOutlined = (props) => {
                         : 'inherit',
                     color: chips.includes(item.id)
                         ? 'var(--accent)'
-                        : '#8A93A6',
+                        : 'var(--fc-body)',
                     border: chips.includes(item.id)
                         ? '1px solid var(--accent)'
                         : '1px solid inherit',
                     '& svg': {
-                        fill: chips.includes(item.id)
-                            ? 'var(--accent)'
-                            : '#8A93A6',
-                        height: '14px',
-                        width: '14px',
+                        color: chips.includes(item.id) && 'var(--accent)',
+                        height: '16px',
+                        width: '16px',
+                        
                     },
                     '& span': {
                         padding: '0',

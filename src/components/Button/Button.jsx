@@ -17,7 +17,7 @@ const Button = (props) => {
         disabled = false,
         width,
         btnStyle,
-        rounded = false
+        rounded = false,
     } = props
 
     const styles = { ...btn, ...btnStyle }
@@ -44,13 +44,13 @@ const Button = (props) => {
         <button
             className={`${styles.btn} ${btnTypeStyle} ${btnIconPos} ${btnRounded}`}
             onClick={onClick}
-            disabled={disabled}
+            disabled={disabled || isLoading}
             style={{ width }}
         >
             {leftIcon && <div className={styles.icon}>{leftIcon}</div>}
             <span>{!isLoading && children}</span>
-            {isLoading && loadingText}
             {isLoading && <LoadingSpinner width={16} color={loadingColor} />}
+            {isLoading && loadingText}
             {rightIcon && <div className={styles.icon}>{rightIcon}</div>}
         </button>
     )

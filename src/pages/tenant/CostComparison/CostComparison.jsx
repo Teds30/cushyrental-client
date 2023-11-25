@@ -17,15 +17,18 @@ import SwipeableCard from '../../../components/SwipeableCard/SwipeableCard'
 import UnitSelection from './UnitSelection'
 import PrimaryButton from '../../../components/Button/PrimaryButton'
 import FloatingActionButton from '../../../components/Button/FloatingActionButton'
-import AddIcon from '@mui/icons-material/Add'
-import { Fab } from '@mui/material'
+import useBookmark from '../../../hooks/data/bookmark-hook'
+
+import AuthContext from '../../../context/auth-context'
 
 const CostComparison = (props) => {
     const cctool = useContext(ComparisonToolContext)
+
     const { selectedUnits, total, month, handleSelectUnits } = cctool
 
     const navigate = useNavigate()
-    const { fetchUnits, isLoading } = useUnitManager()
+    const { fetchBookmarkUnits, isLoading } = useBookmark()
+    const authCtx = useContext(AuthContext)
 
     const [favorites, setFavorites] = useState([])
 
@@ -48,12 +51,12 @@ const CostComparison = (props) => {
     }
     useEffect(() => {
         const loadData = async () => {
-            const res = await fetchUnits()
+            const res = await fetchBookmarkUnits(authCtx.user.id)
             setFavorites(res)
         }
 
-        loadData()
-    }, [])
+        if (authCtx.user) loadData()
+    }, [authCtx.user])
 
     return (
         <div className={styles['container']}>

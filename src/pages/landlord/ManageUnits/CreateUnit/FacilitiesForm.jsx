@@ -33,7 +33,6 @@ const FacilitiesForm = (props) => {
               .map((facility) => facility.id)
         : [];
 
-    console.log(test);
 
     const [cRSelectedValue, setCRSelectedValue] = useState(
         facilityData.length !== 0

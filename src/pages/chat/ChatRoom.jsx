@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, cache } from 'react'
 import useHttp from '../../hooks/http-hook'
 
 import Moment from 'react-moment'
@@ -7,11 +7,30 @@ import moment from 'moment'
 import styles from './Chats.module.css'
 import { Link } from 'react-router-dom'
 
+import useUserManager from '../../hooks/data/users-hook'
+import useUnitManager from '../../hooks/data/units-hook'
+import useImageManager from '../../hooks/data/image-hook'
+
 const ChatRoom = ({ room, user_id, socket }) => {
     const [chat, setChat] = useState('')
     const [chatCount, setChatCount] = useState()
+    const [unitImg, setUnitImg] = useState(null)
+
+    const recipient_id =
+        user_id === room.landlord_id ? room.tenant_id : room.landlord_id
+
+    const { fetchUser } = useUserManager()
+    const { fetchUnit } = useUnitManager()
+    const { fetchImage } = useImageManager()
 
     const { sendRequest } = useHttp()
+
+    const getUnitImage = async () => {
+        const res = await fetchUnit(room.unit_id)
+
+        const img = await fetchImage(res.images[0].image)
+        setUnitImg(img)
+    }
 
     const getChats = async (room_id) => {
         const res = await sendRequest({
@@ -37,6 +56,7 @@ const ChatRoom = ({ room, user_id, socket }) => {
     useEffect(() => {
         getChats(room._id)
         getChatCount(room._id)
+        getUnitImage()
     }, [])
 
     useEffect(() => {
@@ -83,7 +103,7 @@ const ChatRoom = ({ room, user_id, socket }) => {
             <Link to={`/chats/${room.id}`}>
                 <div className={styles['chat']}>
                     <div className={styles['chat-img']}>
-                        <img src="" alt="" />
+                        <img src={unitImg} alt="" />
                     </div>
                     <div className={styles['chat-content']}>
                         <div

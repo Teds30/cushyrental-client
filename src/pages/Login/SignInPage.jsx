@@ -1,28 +1,28 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import FacebookLogin, { FacebookLoginResponse } from "rc-facebook-login";
+import React, { useState, useEffect, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import FacebookLogin, { FacebookLoginResponse } from 'rc-facebook-login'
 
-import styles from "../Login/SignInPage.module.css";
-import PrimaryButton from "../../components/Button/PrimaryButton";
-import TextField from "../../components/TextField/TextField";
-import CheckBox from "../../components/CheckBox/CheckBox";
-import Logo from "../../assets/cushyrental.svg";
-import useLogin from "../../hooks/data/login-hook";
-import SocialMediaLogin from "./SocialMedia";
-import AuthContext from "../../context/auth-context";
-import Alert from "../../components/Alert/Alert";
-import TextFieldAdornedPassword from "../../components/TextFieldAdorned/TextFieldAdornedPassword";
-import useValidate from "../../hooks/validate-input-hook";
+import styles from '../Login/SignInPage.module.css'
+import PrimaryButton from '../../components/Button/PrimaryButton'
+import TextField from '../../components/TextField/TextField'
+import CheckBox from '../../components/CheckBox/CheckBox'
+import Logo from '../../assets/cushyrental.svg'
+import useLogin from '../../hooks/data/login-hook'
+import SocialMediaLogin from './SocialMedia'
+import AuthContext from '../../context/auth-context'
+import Alert from '../../components/Alert/Alert'
+import TextFieldAdornedPassword from '../../components/TextFieldAdorned/TextFieldAdornedPassword'
+import useValidate from '../../hooks/validate-input-hook'
 
 const SignInPage = () => {
-    const { loginUser, isLoading } = useLogin();
-    const [isInvalid, setIsInvalid] = useState(false);
+    const { loginUser, isLoading } = useLogin()
+    const [isInvalid, setIsInvalid] = useState(false)
     // const [emailInput, setEmailInput] = useState("");
     // const [passwordInput, setPasswordInput] = useState("");
-    const [emailError, setEmailError] = useState("");
-    const [passwordError, setPasswordError] = useState("");
+    const [emailError, setEmailError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
 
-    const regex = /^(?=.*\d)(?=.*[!@#$%^&*._])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    const regex = /^(?=.*\d)(?=.*[!@#$%^&*._])(?=.*[a-z])(?=.*[A-Z]).{8,}$/
 
     const {
         value: emailInput,
@@ -31,13 +31,7 @@ const SignInPage = () => {
         valueChangeHandler: emailInputChangeHandler,
         inputBlurHandler: emailInputBlurHandler,
         reset: emailInputReset,
-    } = useValidate(
-        (value) =>
-            value.trim() !== "" &&
-            value.includes("@") &&
-            value.includes("gmail") &&
-            value.includes(".com")
-    );
+    } = useValidate((value) => value.trim() !== '' && value.includes('@'))
 
     const {
         value: passwordInput,
@@ -46,18 +40,16 @@ const SignInPage = () => {
         valueChangeHandler: passwordInputChangeHandler,
         inputBlurHandler: passwordInputBlurHandler,
         reset: passwordInputReset,
-    } = useValidate(
-        (value) => value.trim() !== "" && value.length >= 8 && regex.test(value)
-    );
+    } = useValidate((value) => value.trim() !== '')
 
-    const [checkBoxItems, setCheckBoxItems] = useState([]);
-    const userCtx = useContext(AuthContext);
-    const navigate = useNavigate();
+    const [checkBoxItems, setCheckBoxItems] = useState([])
+    const userCtx = useContext(AuthContext)
+    const navigate = useNavigate()
 
-    let formIsValid = false;
+    let formIsValid = false
 
     if (enteredEmailInputValid && enteredPasswordInputIsValid) {
-        formIsValid = true;
+        formIsValid = true
     }
 
     // const handleEmailChange = (event) => {
@@ -83,52 +75,54 @@ const SignInPage = () => {
     // };
 
     const rememberMeHandler = (items) => {
-        setCheckBoxItems(items);
-    };
+        setCheckBoxItems(items)
+    }
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
+        event.preventDefault()
 
         if (!formIsValid) {
-            return;
+            return
         }
 
         try {
             const res = await loginUser({
                 email: emailInput,
                 password: passwordInput,
-            });
+            })
 
             if (res.token) {
-                setIsInvalid(false);
-                userCtx.onLogin({ user: res.user, token: res.token });
-                navigate("/");
+                setIsInvalid(false)
+                userCtx.onLogin({ user: res.user, token: res.token })
+                navigate('/')
             } else {
-                setIsInvalid(true);
+                setIsInvalid(true)
             }
         } catch (error) {}
-    };
+    }
 
     return (
         <form
-            className={`${styles["main-container"]} `}
+            className={`${styles['main-container']} `}
             onSubmit={handleSubmit}
         >
             <div>
                 <div className="logo">
-                    <img src={Logo} alt="Cushy Rental Icon" />{" "}
+                    <img src={Logo} alt="Cushy Rental Icon" />{' '}
                 </div>
 
-                <div className={`${styles["component-title"]} `}>
+                <div className={`${styles['component-title']} `}>
                     <h2>Sign In to</h2>
-                    <h2 className={`${styles["component-title1"]} `}>Cushy Rental</h2>
+                    <h2 className={`${styles['component-title1']} `}>
+                        Cushy Rental
+                    </h2>
                 </div>
             </div>
 
-            <div className={`${styles["sign-in"]} `}>
+            <div className={`${styles['sign-in']} `}>
                 {isInvalid && <Alert />}
-                <div className={`${styles["textfield_container"]} `}>
-                    <div className={`${styles["custom__inputs"]} `}>
+                <div className={`${styles['textfield_container']} `}>
+                    <div className={`${styles['custom__inputs']} `}>
                         {/* <TextField
                             fullWidth
                             label="Email"
@@ -138,22 +132,22 @@ const SignInPage = () => {
                             onBlur={handleEmailBlur}
                         />
                         <p className={styles["error"]}>{emailError}</p> */}
-                    <TextField
-                        type="email"
-                        fullWidth
-                        label="Email"
-                        value={emailInput}
-                        onChange={emailInputChangeHandler}
-                        onBlur={emailInputBlurHandler}
-                        helperText={
-                            enteredEmailInputHasError &&
-                            "Please enter your valid email address."
-                        }
-                        error
-                    />
+                        <TextField
+                            type="email"
+                            fullWidth
+                            label="Email"
+                            value={emailInput}
+                            onChange={emailInputChangeHandler}
+                            onBlur={emailInputBlurHandler}
+                            helperText={
+                                enteredEmailInputHasError &&
+                                'Please enter your valid email address.'
+                            }
+                            error
+                        />
                     </div>
 
-                    <div className={`${styles["custom__inputs"]} `}>
+                    <div className={`${styles['custom__inputs']} `}>
                         {/* <TextFieldAdornedPassword
                             label="Password"
                             type="password"
@@ -164,45 +158,50 @@ const SignInPage = () => {
                                 passwordError && "Please confirm your password."
                             }
                     /> */}
-                    <TextFieldAdornedPassword
-                    label="Password"
-                    value={passwordInput}
-                    onChange={passwordInputChangeHandler}
-                    onBlur={passwordInputBlurHandler}
-                    helperText={
-                        enteredPasswordInputHasError &&
-                        "Password must contain 8+ characters, symbol, upper and lowercase letters and a number."
-                    }
-                    />
+                        <TextFieldAdornedPassword
+                            label="Password"
+                            value={passwordInput}
+                            onChange={passwordInputChangeHandler}
+                            onBlur={passwordInputBlurHandler}
+                            helperText={
+                                enteredPasswordInputHasError &&
+                                'Password must contain 8+ characters, symbol, upper and lowercase letters and a number.'
+                            }
+                        />
                         {/* <div className={styles['error']}>{passwordError}</div> */}
                     </div>
                 </div>
 
-                <div className={`${styles["remember-forgot"]} `}>
-                    <div className={`${styles["remember-me"]} `}>
+                <div className={`${styles['remember-forgot']} `}>
+                    <div className={`${styles['remember-me']} `}>
                         {/* <CheckBox
                             items={[{ id: 1, name: "Remember Me" }]}
                             onCheckBox={rememberMeHandler}
                         /> */}
                     </div>
-                    <div className={`${styles["remember-me"]} `}>
+                    <div className={`${styles['remember-me']} `}>
                         <Link
                             to="/signin/forgotpassword"
-                            className={`${styles["forgot-password"]} `}
+                            className={`${styles['forgot-password']} `}
                         >
                             Forgot Password?
                         </Link>
                     </div>
                 </div>
 
-                <div className={`${styles["loginButton-container"]} `}>
-                    <PrimaryButton type="submit" isLoading={isLoading} width="100%" loadingText="LOGIN">
+                <div className={`${styles['loginButton-container']} `}>
+                    <PrimaryButton
+                        type="submit"
+                        isLoading={isLoading}
+                        width="100%"
+                        loadingText="LOGIN"
+                    >
                         LOGIN
                     </PrimaryButton>
                 </div>
 
                 <div>
-                    <div className={`${styles["sign-up__container"]}`}>
+                    <div className={`${styles['sign-up__container']}`}>
                         <div className={styles.hr}></div>
                         <div className={styles.option}>Or Sign In with</div>
                         <div className={styles.hr}></div>
@@ -211,12 +210,12 @@ const SignInPage = () => {
                     <SocialMediaLogin />
                 </div>
 
-                <div className={`${styles["login-option"]}`}>
+                <div className={`${styles['login-option']}`}>
                     <span>Don't have an account? </span>
-                    <span className={`${styles["signup-link"]}`}>
+                    <span className={`${styles['signup-link']}`}>
                         <Link
                             to="/register"
-                            className={`${styles["signup-word"]}`}
+                            className={`${styles['signup-word']}`}
                         >
                             Sign Up
                         </Link>
@@ -224,7 +223,7 @@ const SignInPage = () => {
                 </div>
             </div>
         </form>
-    );
-};
+    )
+}
 
-export default SignInPage;
+export default SignInPage

@@ -80,10 +80,10 @@ const Chats = () => {
                 <div className={styles['col1']}>
                     <Link
                         to="/"
-                        onClick={(e) => {
-                            e.preventDefault()
-                            navigate(-1)
-                        }}
+                        // onClick={(e) => {
+                        //     e.preventDefault()
+                        //     navigate(-1)
+                        // }}
                     >
                         <IconButton
                             size="large"
@@ -101,11 +101,11 @@ const Chats = () => {
                     </Link>
                     <h2>Chats</h2>
                 </div>
-                <div className={styles['col2']}>
+                {/* <div className={styles['col2']}>
                     <div className={styles['profile-pic']}>
                         <img src="" alt="" />
                     </div>
-                </div>
+                </div> */}
             </div>
 
             <div className={styles['content']}>

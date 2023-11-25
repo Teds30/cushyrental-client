@@ -42,6 +42,10 @@
     background-color: #fff;
     height: 100%;
     padding: 32px 12px 12px 12px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 .chats {
     display: flex;
@@ -58,7 +62,7 @@
 
 .chat-img {
     background-color: var(--bg-layer4);
-    min-width: 48px;
+    width: 48px;
     height: 48px;
     border-radius: 8px;
     overflow: hidden;

@@ -58,6 +58,24 @@ const useUnitManager = () => {
         [sendRequest]
     )
 
+    const fetchUnitReviews = useCallback(
+        async (id) => {
+            let responseData
+            try {
+                responseData = await sendRequest({
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/unit_reviews/${id}`,
+                })
+            } catch (err) {
+                throw err.message
+            }
+
+            return responseData
+        },
+        [sendRequest]
+    )
+
     const fetchUnitAmenities = useCallback(
         async (id, body) => {
             let responseData
@@ -192,13 +210,14 @@ const useUnitManager = () => {
         [sendRequest]
     )
 
-
     const deleteUnitAmenity = useCallback(
         async (body) => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/unit_amenities`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/unit_amenities`,
                     method: 'DELETE',
                     body: JSON.stringify(body),
                     headers: {
@@ -219,7 +238,9 @@ const useUnitManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/unit_amenities`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/unit_amenities`,
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {
@@ -240,7 +261,9 @@ const useUnitManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/unit_inclusions`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/unit_inclusions`,
                     method: 'DELETE',
                     body: JSON.stringify(body),
                     headers: {
@@ -261,7 +284,9 @@ const useUnitManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/unit_inclusions`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/unit_inclusions`,
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {
@@ -282,7 +307,9 @@ const useUnitManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/unit_rules`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/unit_rules`,
                     method: 'DELETE',
                     body: JSON.stringify(body),
                     headers: {
@@ -303,7 +330,9 @@ const useUnitManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/unit_rules`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/unit_rules`,
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {
@@ -324,7 +353,9 @@ const useUnitManager = () => {
             let responseData
             try {
                 responseData = await sendRequest({
-                    url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/unit_facilities`,
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/unit_facilities`,
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {
@@ -378,6 +409,7 @@ const useUnitManager = () => {
         deleteUnitRule,
         editUnitRule,
         editUnitfacility,
+        fetchUnitReviews,
         deleteUnit
     }
 }

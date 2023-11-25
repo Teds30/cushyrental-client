@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { GoogleMap, Marker, Circle } from '@react-google-maps/api'
-import { useLoadScript } from '@react-google-maps/api'
+
+import useSchoolManager from '../../../hooks/data/school-hook'
 
 import styles from './Map.module.css'
 
@@ -13,17 +14,17 @@ const Map = (props) => {
         searchType,
         coordinates,
         setCoordinates,
+        onMapLoad,
     } = props
 
     const [circleRef, setCircleRef] = useState(null)
 
-    const { isLoaded } = useLoadScript({
-        googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API,
-    })
+    const [schoolIcon, setSchoolIcon] = useState('')
+    const { fetchSchoolIcon } = useSchoolManager()
 
-    const handleOnLoad = (map) => {
-        setMapRef(map)
-    }
+    // const { isLoaded } = useLoadScript({
+    //     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API,
+    // })
 
     let red
 
@@ -76,14 +77,25 @@ const Map = (props) => {
         }
     )
 
+    const loadSchool = async () => {
+        const res = await fetchSchoolIcon(location.icon)
+        setSchoolIcon(res)
+    }
+
     useEffect(() => {
         if (location && location.location) {
             setCenter(location.location)
+            loadSchool()
             if (circleRef) {
                 circleRef.setCenter(location.location)
             }
+        } else {
+            setCenter(coordinates)
+            if (circleRef) {
+                circleRef.setCenter(coordinates)
+            }
         }
-    }, [location])
+    }, [location, coordinates])
 
     const handleMapDrag = (e) => {
         if (searchType === 1) {
@@ -95,8 +107,6 @@ const Map = (props) => {
             //     lat: mapref.getCenter().lat(),
             //     lng: mapref.getCenter().lng(),
             // })
-
-            console.log('hi')
         }
     }
 
@@ -132,7 +142,7 @@ const Map = (props) => {
 
     return (
         <div className={`${styles['map-container']}`}>
-            {isLoaded && (
+            {
                 <GoogleMap
                     id="map"
                     zoom={14}
@@ -145,7 +155,7 @@ const Map = (props) => {
                     }}
                     center={center}
                     mapContainerClassName={styles['map-container']}
-                    onLoad={handleOnLoad}
+                    onLoad={onMapLoad}
                     onDragEnd={handleMapDrag}
                 >
                     {searchType === 2 && location && (
@@ -153,7 +163,7 @@ const Map = (props) => {
                             position={location.location}
                             icon={{
                                 // url: icon,
-                                url: `/assets/universities/${location.icon}`,
+                                url: schoolIcon,
                                 scaledSize: new google.maps.Size(48, 60),
                             }}
                         />
@@ -162,7 +172,7 @@ const Map = (props) => {
                         <div className={styles['centerMarker']}></div>
                     )}
                 </GoogleMap>
-            )}
+            }
         </div>
     )
 }
