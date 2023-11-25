@@ -28,6 +28,10 @@
     /* position: absolute; */
     height: 325px;
     overflow: hidden;
+    font-size: 10px;
+    /* box-shadow: rgb(238, 243, 251) 0px 4px 8px; */
+    /* border: 1px solid #dee6f1; */
+    /* border: 1px solid red; */
   }
   
 .subscription-swiper-slide img {

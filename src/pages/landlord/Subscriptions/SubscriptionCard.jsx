@@ -63,7 +63,7 @@ const SubscriptionCard = (props) => {
             <div className={styles['features-container']}>
                 {features &&
                     features.map((feature, index) => {
-                        if (showAllFeatures === false && index === 2) {
+                        if (showAllFeatures === false && index > 2) {
                             return;
                         } else {
                             return (<div className={styles['feature']} key={index}>

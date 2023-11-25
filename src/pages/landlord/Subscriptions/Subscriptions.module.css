@@ -71,14 +71,15 @@
 
 .card {
     background: var(--bg-layer1);
-    box-shadow: rgb(238, 243, 251) 0px 4px 8px;
-    border: 1px solid #dee6f1;
+    /* box-shadow: rgb(238, 243, 251) 0px 4px 8px; */
+    /* border: 1px solid #dee6f1; */
     padding: 24px 22px;
     min-width: 280px;
     border-radius: 16px;
     display: flex;
     flex-direction: column;
     gap: 16px;
+    /* border: 1px solid red; */
 }
 
 .subscription-title-container {
