@@ -3,6 +3,7 @@ import styles from "../Login/SignInPage.module.css";
 import PrimaryButton from "../../components/Button/PrimaryButton";
 import useSendEmail from "./send-email-hook";
 import useLogin from "../../hooks/data/login-hook";
+import ForgotPasswordInfo from "./ForgotPasswordInfo";
 
 import { AiOutlineInfoCircle } from "react-icons/ai";
 
@@ -12,12 +13,12 @@ const ForgotPassword = (props) => {
     const { forgotPassword, isLoading } = useLogin();
 
     const [otpDigits, setOtpDigits] = useState(Array(5).fill(""));
-    const [showInfo, setShowInfo] = useState(false);
     const [otp, setOtp] = useState([]);
     const [isVerified, setIsVerified] = useState(false);
     const [error, setError] = useState(false);
     const [time, setTime] = useState(60);
     const [isHasTime, SetItHasTime] = useState(false);
+    const [dialogOpen, setDialogOpen] = useState(false);
 
     const otpDigitChangeHandler = (index, value) => {
         const updatedOtpDigits = [...otpDigits];
@@ -42,13 +43,14 @@ const ForgotPassword = (props) => {
     };
 
     const toggleInfo = () => {
-        setShowInfo(!showInfo);
+        setDialogOpen(true);
+        console.log("clicked!");
     };
 
     const generateRandomNumbers = () => {
         const newRandomNumbers = [];
         for (let i = 0; i < 5; i++) {
-            const randomNumber = Math.floor(Math.random() * 10); // Generates a random number between 0 and 9
+            const randomNumber = Math.floor(Math.random() * 10); 
             newRandomNumbers.push(randomNumber);
         }
         return newRandomNumbers;
@@ -107,14 +109,10 @@ const ForgotPassword = (props) => {
                 <AiOutlineInfoCircle size={20} onClick={toggleInfo} />
             </div>
 
-            {showInfo && (
-                <div
-                    className={`${styles["overlay-bubble"]} ${styles["show"]}`}
-                >
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quae, hic.
-                </div>
-            )}
+            <ForgotPasswordInfo
+                open={dialogOpen}
+                onClose={() => setDialogOpen(false)}
+            />
 
             <div className={`${styles["otp-main"]}`}>
                 <div className={`${styles["otp-row"]}`}>
