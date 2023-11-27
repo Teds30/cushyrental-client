@@ -21,7 +21,7 @@ const Submitted = () => {
             </p>
             <PrimaryButton
                 onClick={() => {
-                    navigate('/manage_subscriptions')
+                    navigate('/manage_unit')
                 }}
             >
                 Finish
