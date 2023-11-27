@@ -12,6 +12,8 @@ import styles from "./EditAmenities.module.css";
 
 const EditAmenities = (props) => {
     const { unitAmenities, unitId } = props;
+    console.log(unitAmenities);
+
     const { fetchAmenities } = useAttributeManager();
     const { notify } = useNotistack();
     const navigate = useNavigate();

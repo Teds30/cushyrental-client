@@ -65,7 +65,17 @@ const PersonalInformation = (props) => {
                 }/api/user_units/${authCtx.user.id}`,
             })
 
-            setUnits(res.filter((unit) => unit.request_status === 1))
+            const data = res.filter((unit) => {
+                if (unit.request_status === 1) {
+                    const subscription = unit.subscriptions.filter((subscribe) => subscribe.request_status === 0 || subscribe.request_status === 1 && subscribe.type === 0);
+
+                    if (subscription.length === 0) {
+                        return unit;
+                    }
+                }
+            })
+
+            setUnits(data)
         }
         authCtx.user && loadUnits()
     }, [authCtx.user])

@@ -19,9 +19,6 @@ const Unit = (props) => {
     // const { deleteUnitSubscription, isLoading } = useSubscriptionManager();
     const {deleteUnit, isLoading} = useUnitManager();
     const [userUnit, setUserUnit] = useState(unitSubscriptions);
-    console.log(userUnit);
-
-    // Dito na ako
 
     let gender;
 
@@ -127,7 +124,7 @@ const Unit = (props) => {
                 <div className={`${styles["col-data-2"]}`}>
                     <div className={`${styles["unit-datas"]}`}>
                         <div className="pre-title">Rating</div>
-                        <p className="title">{userUnit.average_ratings}</p>
+                        <p className="title">{userUnit.average_ratings === 0 ? 'N/A' : userUnit.average_ratings.toFixed(1)}</p>
                     </div>
 
                     <div className={`${styles["hr-horizontal"]}`}></div>
@@ -169,7 +166,7 @@ const Unit = (props) => {
                         loadingText="Cancel Unit Request"
                     >
                         Cancel Unit Request
-                    </BorderedButton>) : ( <div className={`${styles["unit-button"]}`}>
+                    </BorderedButton>) : userUnit.request_status === 1 && ( <div className={`${styles["unit-button"]}`}>
                         <Link
                             to={`/manage_unit/edit/${userUnit.id}`}
                             style={{ width: "100%" }}

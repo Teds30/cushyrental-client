@@ -35,7 +35,7 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
-    background: var(--bg-layer2);
+    /* background: var(--bg-layer2); */
     /* height: 100vh; */
 }
 

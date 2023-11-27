@@ -98,9 +98,9 @@ const Profile = () => {
                                         style={{ fontSize: '16px' }}
                                     >
                                         {userCtx.user.first_name}{' '}
-                                        {userCtx.user.middle_name !==
+                                        {/* {userCtx.user.middle_name !==
                                             'middle_name' &&
-                                            userCtx.user.middle_name}{' '}
+                                            userCtx.user.middle_name}{' '} */}
                                         {userCtx.user.last_name}
                                     </p>
                                     {userCtx.user.is_verified !== false &&
