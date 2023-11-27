@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useState } from 'react'
 import useHttp from '../http-hook'
+import { useNavigate } from 'react-router-dom'
 
 const useAuth = () => {
     const { sendRequest, isLoading } = useHttp()
 
     const [user, setUser] = useState()
     const [token, setToken] = useState('')
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [isLoggedIn, setIsLoggedIn] = useState('initial')
+    const navigate = useNavigate()
 
     const logoutHandler = () => {
         setIsLoggedIn(false)
@@ -26,21 +28,25 @@ const useAuth = () => {
                 token: token,
             })
         )
+        navigate('/')
     }, [])
 
     const fetchUserData = useCallback(async (token) => {
         try {
-            console.log('tioke: ', token)
+            // console.log('tioke: ', token)
             const response = await sendRequest({
                 url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/user_data`,
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             })
-            setUser(response) // Set the user data in the component state
+            console.log(response)
+            if (response)
+                setUser(response.length > 0 || response.id ? response : null) // Set the user data in the component state
+            // navigate('/')
         } catch (error) {
             // Handle errors if needed
-            console.log(error)
+            console.log('error: ', error)
         }
     }, [])
 
@@ -54,6 +60,8 @@ const useAuth = () => {
                 setIsLoggedIn(true)
             }
             loadData()
+        } else {
+            setIsLoggedIn(false)
         }
     }, [])
 

@@ -69,7 +69,7 @@ function App() {
 
     let routes
 
-    if (!storedData) {
+    if (isLoggedIn !== 'initial' && !isLoggedIn) {
         routes = (
             <Routes>
                 <Route path="/signin" element={<SignInPage />}></Route>
@@ -82,11 +82,11 @@ function App() {
                 <Route path="/about" element={<About />}></Route>
                 <Route
                     path="*"
-                    element={<Navigate replace to="/about" />}
+                    element={<Navigate replace to="/signin" />}
                 ></Route>
             </Routes>
         )
-    } else {
+    } else if (isLoggedIn !== 'initial' && isLoggedIn) {
         routes = (
             <Suspense fallback={<LinearProgress />}>
                 <Routes>
