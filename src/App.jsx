@@ -78,12 +78,12 @@ function App() {
                     element={<ForgotPasswordMain />}
                 ></Route>
                 <Route path="/register" element={<CreateAccount />}></Route>
-                <Route
-                    path="*"
-                    element={<Navigate replace to="/signin" />}
-                ></Route>
 
                 <Route path="/about" element={<About />}></Route>
+                <Route
+                    path="*"
+                    element={<Navigate replace to="/about" />}
+                ></Route>
             </Routes>
         )
     } else {
