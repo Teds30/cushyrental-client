@@ -15,9 +15,12 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogActions-root': {
     padding: theme.spacing(1),
   },
+  '& .css-1t1j96h-MuiPaper-root-MuiDialog-paper': {
+    borderRadius: '8px',
+  },
 }));
 
-function ForgotPasswordInfo({ open, onClose, onTerminate, subscriptionId }) {
+function ForgotPasswordInfo({ open, onClose }) {
 
     const handleClose = () => {
         if (onClose) {
@@ -32,7 +35,7 @@ function ForgotPasswordInfo({ open, onClose, onTerminate, subscriptionId }) {
           aria-labelledby="customized-dialog-title"
           open={open}
         >
-          <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+          <DialogTitle sx={{ m: 0, p: 2, }} id="customized-dialog-title">
             Enter Code
           </DialogTitle>
           <IconButton

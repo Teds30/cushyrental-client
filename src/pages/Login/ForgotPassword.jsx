@@ -105,7 +105,7 @@ const ForgotPassword = (props) => {
     return (
         <div className={`${styles["forgot-password-code-row"]}`}>
             <div className={`${styles["enter-code"]} `}>
-                Enter Code
+                <p>Enter Code</p>
                 <AiOutlineInfoCircle size={20} onClick={toggleInfo} />
             </div>
 
