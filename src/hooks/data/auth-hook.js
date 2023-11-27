@@ -40,7 +40,6 @@ const useAuth = () => {
                     Authorization: `Bearer ${token}`,
                 },
             })
-            console.log(response)
             if (response)
                 setUser(response.length > 0 || response.id ? response : null) // Set the user data in the component state
             // navigate('/')
