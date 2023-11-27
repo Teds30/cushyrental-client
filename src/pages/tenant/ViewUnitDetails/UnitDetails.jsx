@@ -87,18 +87,25 @@ const UnitDetails = (props) => {
                         </div>
                         <p className={styles.details}>{unit.name}</p>
                         <div className={styles.ratings}>
-                            <Rating
-                                value={unit.average_ratings}
-                                precision={0.5}
-                                sx={{
-                                    fontSize: '14px',
-                                    color: 'var(--accent)',
-                                    '& svg': {
-                                        fill: 'var(--accent)',
-                                    },
-                                }}
-                            />
-                            <p>{unit.average_ratings}</p>
+                            {unit.average_ratings !== 0 && (
+                                <Rating
+                                    value={unit.average_ratings}
+                                    precision={0.5}
+                                    sx={{
+                                        fontSize: '14px',
+                                        color: 'var(--accent)',
+                                        '& svg': {
+                                            fill: 'var(--accent)',
+                                        },
+                                    }}
+                                />
+                            )}
+
+                            <p>
+                                {unit.average_ratings !== 0
+                                    ? unit.average_ratings
+                                    : 'No ratings yet.'}
+                            </p>
                             <div className={`${styles['vertical-line']}`}></div>
                             <p>{unit.slots} Slots</p>
                         </div>
@@ -161,14 +168,15 @@ const UnitDetails = (props) => {
                         style={{ textAlign: 'justify' }}
                     >
                         <p className="title">Details</p>
-                        <p style={{ textIndent: '4%' }}>
-                            {readMore === true
+                        <p style={{ textIndent: '4%', whiteSpace: 'pre-line' }}>
+                            {readMore
+                                ? unit.details
+                                : unit.details.length < 300
                                 ? unit.details
                                 : unit.details.substring(0, 300) + '...'}
                         </p>
                         <div>
-                            {/* Use onClick instead of onChange */}
-                            {unit.details.length > 300 && (
+                            {unit.details.length >= 300 && (
                                 <BorderlessButton
                                     onClick={readMoreChangeHandler}
                                 >
@@ -182,7 +190,7 @@ const UnitDetails = (props) => {
                 <div className={`${styles['reviews']}`}>
                     <p className="title">Reviews</p>
 
-                    <TenantReviews userId={unit.id} />
+                    <TenantReviews unitId={unit.id} />
                 </div>
 
                 <CardShadow>
@@ -209,7 +217,7 @@ const UnitDetails = (props) => {
                     </div>
                 </CardShadow>
 
-                {/* <CardShadow>
+                <CardShadow>
                     <div className={`${styles['unit-detials-col']}`}>
                         <p className="title">Payment & Inclusions</p>
 
@@ -221,7 +229,7 @@ const UnitDetails = (props) => {
                             }}
                         />
                     </div>
-                </CardShadow> */}
+                </CardShadow>
 
                 <CardShadow>
                     <div className={`${styles['unit-detials-col']}`}>

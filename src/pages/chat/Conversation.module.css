@@ -10,3 +10,16 @@
     /* border: 1px solid red; */
     height: 100vh;
 }
+
+.swipeable-card-title {
+    /* margin: -8px 0; */
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.swipeable-card-title p {
+    border: 1px solid red;
+    flex: 1;
+    margin-left: -32px;
+    text-align: center;
+}

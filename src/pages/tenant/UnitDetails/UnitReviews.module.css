@@ -46,10 +46,10 @@
     overflow-x: auto;
     white-space: nowrap;
     justify-content: center;
-    padding-left: 100px; 
-  }
-  
-  /* .sort-container button {
+    padding-left: 100px;
+}
+
+/* .sort-container button {
     margin-right: 10px;
   } */
 .sort-container button {
@@ -109,7 +109,6 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    border: 2px solid red;
 }
 
 .text-card-container {
@@ -197,20 +196,12 @@
     font-weight: 500;
 }
 
-.landlord-bottom-container img {
-    display: flex;
-    width: 32px;
-    height: 32px;
-    border: 2px solid red;
-    border-radius: 50%;
-}
-
 .landlord-bottom-container {
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 0px 12px;
-    gap: 11px;
+    gap: 8px;
     border-left: 1px solid #898989;
 }
 .reply-container {

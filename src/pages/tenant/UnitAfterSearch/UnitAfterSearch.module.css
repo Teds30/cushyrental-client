@@ -198,7 +198,7 @@
     /* left: 100px; */
     border-radius: 8px;
     background: #f6f8fc;
-    height: 45px;
+    height: fit-content;
 }
 .price-container {
     display: flex;
@@ -260,16 +260,6 @@
     }
     .top-back-container {
         max-width: 100%;
-        min-height: 64px;
-    }
-}
-
-@media (min-width: 375px) {
-    .main-container {
-        max-width: 375px;
-    }
-    .top-back-container {
-        max-width: 375px;
         min-height: 64px;
     }
 }

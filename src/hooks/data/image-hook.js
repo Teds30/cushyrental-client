@@ -66,16 +66,21 @@ const useImageManager = () => {
         async (image_path) => {
             let responseData
             try {
-                const pic = await fetch(
-                    `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/avatar/`,
-                    {
-                        method: 'POST',
-                        body: JSON.stringify({ image_path: image_path }),
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    }
-                )
+                let pic
+                if (image_path.includes('https')) {
+                    pic = await fetch(image_path)
+                } else {
+                    pic = await fetch(
+                        `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/avatar/`,
+                        {
+                            method: 'POST',
+                            body: JSON.stringify({ image_path: image_path }),
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        }
+                    )
+                }
                 const imageBlob = await pic.blob()
                 responseData = URL.createObjectURL(imageBlob)
             } catch (err) {

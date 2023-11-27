@@ -10,3 +10,7 @@
 .container {
     padding-inline: 8px;
 }
+
+.container h4 {
+    letter-spacing: 1px;
+}

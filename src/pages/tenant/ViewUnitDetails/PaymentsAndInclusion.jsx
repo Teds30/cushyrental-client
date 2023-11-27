@@ -1,38 +1,40 @@
-import React from "react";
-import ChipBig from "../../../components/Chips/ChipBig";
+import React from 'react'
+import ChipBig from '../../../components/Chips/ChipBig'
 
 const PaymentAndInclusion = (props) => {
-    const { paymentAndInclusions } = props;
+    const { paymentAndInclusions } = props
 
     const paymentOptions = [
         {
-            id: -1,
-            icon: "advance_deposit.svg",
+            id: 0,
+            icon: 'advance_deposit.svg',
             name: (
                 <>
                     Advance Deposit
                     <br />
-                    {paymentAndInclusions.month_deposit} Month/s
+                    {paymentAndInclusions.month_deposit} Month
+                    {paymentAndInclusions.month_deposit > 1 && 's'}
                 </>
             ),
         },
         {
-            id: -2,
-            icon: "advance_payment.svg",
+            id: 1,
+            icon: 'advance_payment.svg',
             name: (
                 <>
                     Advance Payment
-                    <br /> {paymentAndInclusions.month_advance} Month/s
+                    <br /> {paymentAndInclusions.month_advance} Month{' '}
+                    {paymentAndInclusions.month_advance > 1 && 's'}
                 </>
             ),
         },
-    ];
+    ]
 
     paymentAndInclusions.inclusions.forEach((inclusion) => {
-        paymentOptions.push(inclusion);
-    });
+        paymentOptions.push(inclusion)
+    })
 
-    return <ChipBig items={paymentOptions} clickable={false} />;
-};
+    return <ChipBig items={paymentOptions} clickable={false} />
+}
 
-export default PaymentAndInclusion;
+export default PaymentAndInclusion

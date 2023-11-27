@@ -8,6 +8,8 @@ import { PiDownloadSimple } from 'react-icons/pi'
 import Moment from 'react-moment'
 import moment from 'moment'
 
+import useImageManager from '../../hooks/data/image-hook'
+
 import styles from './Messages.module.css'
 
 const Messages = (props) => {
@@ -20,12 +22,16 @@ const Messages = (props) => {
         user_id,
         room_id,
         isLoading,
+        room,
     } = props
+
+    const { fetchAvatar } = useImageManager()
 
     const [open, setOpen] = useState(false)
     const [fullImage, setFullImage] = useState(null)
     const [imageFullScreen, setImageFullScreen] = useState(false)
     const [focusedMessage, setFocusedMessage] = useState(null)
+    const [avatar, setAvatar] = useState()
 
     const handleClose = () => {
         setOpen(false)
@@ -47,6 +53,20 @@ const Messages = (props) => {
     const handleUnfocus = (id) => {
         setFocusedMessage(null)
     }
+
+    useEffect(() => {
+        if (room) {
+            const recipient =
+                user_id === room.landlord_id ? room.tenant : room.landlord
+            // console.log(recipient)
+
+            const loadAvatar = async () => {
+                const res = await fetchAvatar(recipient.profile_picture_img)
+                setAvatar(res)
+            }
+            loadAvatar()
+        }
+    }, [room])
 
     let tmpChat = []
     let lastReadItem
@@ -157,9 +177,9 @@ const Messages = (props) => {
                                         }
                                     >
                                         {data.sender_id !== user_id && (
-                                            <div
-                                                className={styles['chat-img']}
-                                            ></div>
+                                            <div className={styles['chat-img']}>
+                                                <img src={avatar} alt="" />
+                                            </div>
                                         )}
                                         <div
                                             className={msgStyle}

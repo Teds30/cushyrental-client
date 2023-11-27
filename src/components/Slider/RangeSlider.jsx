@@ -3,6 +3,7 @@ import Slider, { SliderThumb } from '@mui/material/Slider'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 
+import TextFieldAdorned from '../../components/TextFieldAdorned/TextFieldAdorned'
 import styles from './RangeSlider.module.css'
 
 function valuetext(value) {
@@ -82,14 +83,26 @@ const RangeSlider = (props) => {
         <Box sx={{ width: '100%' }}>
             <div className={styles.slider}>
                 <div className={`${styles['slider-content']}`}>
-                    <div className={`${styles['slider-minimum']}`}>
-                        <p>minimum</p>
-                        <div>{sliderValue[0]}</div>
-                    </div>
-                    <div className={`${styles['slider-maximum']}`}>
-                        <p>maximum</p>
-                        <div>{sliderValue[1]}</div>
-                    </div>
+                    <TextFieldAdorned
+                        adornment="PHP"
+                        label="Minimum"
+                        value={sliderValue[0]}
+                        onChange={(e) => {
+                            setSliderValue((prev) => {
+                                return [e.target.value, prev[1]]
+                            })
+                        }}
+                    />
+                    <TextFieldAdorned
+                        adornment="PHP"
+                        label="Maximum"
+                        value={sliderValue[1]}
+                        onChange={(e) => {
+                            setSliderValue((prev) => {
+                                return [prev[0], e.target.value]
+                            })
+                        }}
+                    />
                 </div>
                 <PrettoSlider
                     value={sliderValue}

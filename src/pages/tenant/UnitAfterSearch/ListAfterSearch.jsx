@@ -12,17 +12,15 @@ import IconButton from '@mui/material/IconButton'
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
 import { TbMapPin } from 'react-icons/tb'
 import ListAfterSearchImage from './ListAfterSearchImage'
-import ListAfterSearchBookmark from "../UnitAfterSearch/ListAfterSearchBookmark";
+import ListAfterSearchBookmark from '../UnitAfterSearch/ListAfterSearchBookmark'
 
 import useImageManager from '../../../hooks/data/image-hook'
+import UserAvatar from '../../../components/Avatar/UserAvatar'
 
 const ListAfterSearch = ({ units }) => {
     // const { ListAfterSearch } = props;
     const [isBookmarked, setIsBookmarked] = useState([])
     const swiperRef = useRef(null)
-
-    const { fetchAvatar, isLoading } = useImageManager()
-    const [image, setImage] = useState()
 
     // console.log(isBookmarked);
 
@@ -40,14 +38,6 @@ const ListAfterSearch = ({ units }) => {
             const swiper = swiperRef.current.swiper
             swiper.navigation.update()
         }
-
-        const handleFetch = async () => {
-            try {
-                const res = await fetchAvatar('default/1.png')
-                setImage(res)
-            } catch (err) {}
-        }
-        handleFetch()
     }, [])
 
     const formatDistance = (distance) => {
@@ -72,9 +62,9 @@ const ListAfterSearch = ({ units }) => {
                 >
                     <Link to={`/unit/${units.id}`}>
                         <div className={`${styles['top-unit-container']} `}>
-                            <div className={`${styles['top-image-container']}`}>
-                                <img src={image} alt="" />
-                            </div>
+                            <UserAvatar
+                                avatar_url={units.landlord.profile_picture_img}
+                            />
                             <p className="title">
                                 {units.landlord.first_name}{' '}
                                 {units.landlord.middle_name}{' '}
@@ -134,7 +124,7 @@ const ListAfterSearch = ({ units }) => {
                                 >
                                     <p
                                         style={{
-                                            fontWeight: '500',
+                                            fontWeight: '700',
                                             fontSize: '20px',
                                             color: 'var(--accent)',
                                         }}
@@ -155,7 +145,7 @@ const ListAfterSearch = ({ units }) => {
                         </Link>
 
                         <div className={`${styles['bookmark-container']}`}>
-                           <ListAfterSearchBookmark unitId={units.id} />
+                            <ListAfterSearchBookmark unitId={units.id} />
                         </div>
                     </div>
                 </div>

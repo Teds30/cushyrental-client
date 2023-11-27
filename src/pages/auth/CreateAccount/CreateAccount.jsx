@@ -18,7 +18,7 @@ const CreateAccount = () => {
     const { facebookAccountRegistration } = useFacebookAuth()
     const ctx = useContext(AuthContext)
     const navigate = useNavigate()
-    const {notify} = useNotistack();
+    const { notify } = useNotistack()
 
     const [counter, setCounter] = useState(0)
     const [userType, setUserType] = useState({ user_type_id: '2' })
@@ -38,10 +38,11 @@ const CreateAccount = () => {
 
         try {
             const res = await accountRegistration(data)
+
             ctx.onLogin({ user: res.user, token: res.token })
-            navigate('/');
+            navigate('/')
         } catch (error) {
-            notify('Email already exist.','info');
+            notify('Email already exist.', 'info')
         }
     }
 
@@ -59,10 +60,12 @@ const CreateAccount = () => {
                 }
 
                 const registerGoogleRes = await googleAccountRegistration(data)
-                ctx.onLogin(registerGoogleRes.user, registerGoogleRes.token)
-                navigate('/');
-            } catch (error) {
-            }
+                ctx.onLogin({
+                    user: registerGoogleRes.user,
+                    token: registerGoogleRes.token,
+                })
+                navigate('/')
+            } catch (error) {}
         },
     })
 
@@ -101,9 +104,8 @@ const CreateAccount = () => {
         try {
             const res = await facebookAccountRegistration(data)
             ctx.onLogin(res.user, res.token)
-            navigate('/');
-        } catch (error) {
-        }
+            navigate('/')
+        } catch (error) {}
     }
 
     return (

@@ -145,6 +145,7 @@ const AvailModal = (props) => {
                     : `${roomDetails.data.landlord.first_name} ${roomDetails.data.landlord.last_name}`,
             read: false,
             user_id: roomDetails.data && roomDetails.data.tenant_id,
+            unit_name: unit && unit.name,
         })
         addRental()
     }

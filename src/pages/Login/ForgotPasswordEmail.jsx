@@ -47,6 +47,10 @@ const ForgotPasswordEmail = (props) => {
 
     return (
         <div className={`${styles["forgot-password-email-row"]}`}>
+            {/* <div>
+                <h2>Forgot Password?</h2>
+                <p>Enter your email, and we will send you a code to reset your password.</p>
+            </div> */}
             <div className={`${styles["enter-email"]} `}>
                 <TextField
                     fullWidth

@@ -1,242 +1,247 @@
 .main-container {
-  max-width: 100%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  background: var(--bg-layer1);
-  transition: max-width 0.3s ease-in-out;
-  padding: 20px 26px;
-  gap: 25px;
+    max-width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-layer1);
+    transition: max-width 0.3s ease-in-out;
+    padding: 20px 26px;
+    gap: 25px;
 }
 
 .top-back-container {
-  width: 100%;
-  max-width: 100%;
-  flex: 1;
-  align-self: stretch;
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  background: var(--bg-layer1);
-  z-index: 100;
-  transition: max-width 0.3s ease-in-out;
+    width: 100%;
+    max-width: 100%;
+    flex: 1;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background: var(--bg-layer1);
+    z-index: 100;
+    transition: max-width 0.3s ease-in-out;
 }
 
 .logo {
-  display: flex;
-  flex-direction: flex-start;
-  align-items: start;
-  position: relative;
-  left: -10px;
-  top: 15px;
+    display: flex;
+    flex-direction: flex-start;
+    align-items: start;
+    position: relative;
+    left: -10px;
+    top: 15px;
 }
 
 .component-title1 {
-  margin-top: -10px;
+    margin-top: -10px;
 }
 .sign-in {
-  margin-top: 19px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    margin-top: 19px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .textfield_container {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
 }
 
 .remember-forgot {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
 }
 
 .remember-me {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .forgot-password {
-  color: var(--accent);
+    color: var(--accent);
 }
 
 .loginButton-container {
-  margin-top: 30px;
+    margin-top: 30px;
 }
 .checkbox-container {
-  border: 1px solid var(--border-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 
-  gap: 1em;
-  padding: 10px;
-  margin: 20px 0;
+    gap: 1em;
+    padding: 10px;
+    margin: 20px 0;
 }
 
 .dont-have-account {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
-
 .sign-up__container {
-  margin: 0 0 0 0;
-  width: 100%;
-  margin-top: 40px;
-  display: flex;
-  align-items: center;
+    margin: 0 0 0 0;
+    width: 100%;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
 }
 
 .sign-up__container .option {
-  color: #757171;
-  font-size: 12px;
-  font-weight: 400;
-  padding: 0 6px;
+    color: #757171;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 0 6px;
 }
 
 .sign-up__container .hr {
-  flex: 1;
-  width: 100%;
-  height: 1px;
-  background-color: #a39797;
+    flex: 1;
+    width: 100%;
+    height: 1px;
+    background-color: #a39797;
 }
 
 .back {
-  align-items: center;
-  color: #000;
-  display: flex;
-  font-size: 16px;
-  font-weight: 500;
-  gap: 8px;
-  margin-bottom: 50px;
+    align-items: center;
+    color: #000;
+    display: flex;
+    font-size: 16px;
+    font-weight: 500;
+    gap: 8px;
+    margin-bottom: 50px;
 }
 
 .background {
-  align-items: center;
-  color: #000;
-  display: flex;
-  font-size: 16px;
-  font-weight: 500;
-  gap: 8px;
+    align-items: center;
+    color: #000;
+    display: flex;
+    font-size: 16px;
+    font-weight: 500;
+    gap: 8px;
 }
 
 .socmed {
-  width: 100%;
+    width: 100%;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
 }
 
 .socmed {
-  margin: 30px 0 0 0;
+    margin: 30px 0 0 0;
 }
 
 .googleIcon {
-  height: 22px;
-  width: 22px;
+    height: 22px;
+    width: 22px;
 }
 
 .login-option {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 15px 0 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0 0 0;
 }
 
 .login-option span {
-  margin-right: 10px;
+    margin-right: 10px;
 }
 
 .error {
-  color: red;
-  font-size: 14px;
-  margin-top: 5px;
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
 }
 
 .back {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .otp {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 .otp-input {
-  /* flex: 1; */
-  width: 50px; /* Adjust the initial width */
-  height: 50px; /* Adjust the initial height */
-  background-color: white;
-  color: #000;
-  font-size: 18px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  text-align: center;
-  margin: 0 5px;
-  padding: 5px;
-  outline: none;
+    /* flex: 1; */
+    width: 50px; /* Adjust the initial width */
+    height: 50px; /* Adjust the initial height */
+    background-color: white;
+    color: #000;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    margin: 0 5px;
+    padding: 5px;
+    outline: none;
 }
 
 .otp .otp-input:focus,
 .otp-input:focus-visible {
-  border: 2px solid var(--accent);
+    border: 2px solid var(--accent);
 }
 .otp-input.error {
-  border: 2px solid var(--accent-danger);
+    border: 2px solid var(--accent-danger);
 }
 
 .signup-word {
-  color: var(--accent-danger);
+    color: var(--accent-danger);
 }
 
 .enter-email {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 .enter-code {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
+}
+
+.enter-code p {
+    color: #000;
+    font-size: 16px;
+    font-weight: 600;
 }
 .enter-code svg {
-  margin-left: 5px;
-  fill: #000;
+    margin-left: 5px;
+    fill: #000;
 }
 
 .enter-code {
-  position: relative;
+    position: relative;
 }
 
 .overlay-bubble {
-  position: absolute;
-  margin: 120px 80px;
-  background-color: #ffffff;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  width: 300px;
-  z-index: 1;
-  display: none;
+    position: absolute;
+    margin: 120px 80px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    z-index: 1;
+    display: none;
 }
 
 .show {
-  display: block;
+    display: block;
 }
 
 .forgot-password-code-row {
-  padding: 0 26px;
+    padding: 0 26px;
 }
 
 .resend-button {
@@ -259,7 +264,7 @@
 }
 
 .resend-button.has-time button {
-    color: #8A93A6;
+    color: #8a93a6;
 }
 
 .otp-row {
@@ -275,99 +280,99 @@
 }
 
 @media (max-width: 768px) {
-  .otp {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+    .otp {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 
-  .otp-input {
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
-    margin: 5px;
-  }
+    .otp-input {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        margin: 5px;
+    }
 }
 
 @media (min-width: 375px) {
-  .main-container {
-    max-width: 375px;
-  }
+    .main-container {
+        max-width: 375px;
+    }
 
-  .overlay-bubble {
-    position: absolute;
-    margin: 95px 80px;
-    width: 250px;
-    z-index: 1;
-    display: none;
-  }
+    .overlay-bubble {
+        position: absolute;
+        margin: 95px 80px;
+        width: 250px;
+        z-index: 1;
+        display: none;
+    }
 
-  .show {
-    display: block;
-  }
+    .show {
+        display: block;
+    }
 
-  .otp-input {
-    width: 32px;
-    height: 35px;
-    font-size: 25px;
-  }
+    .otp-input {
+        width: 32px;
+        height: 35px;
+        font-size: 25px;
+    }
 }
 
 @media (min-width: 475px) {
-  .main-container {
-    max-width: 475px;
-  }
+    .main-container {
+        max-width: 475px;
+    }
 
-  .overlay-bubble {
-    position: absolute;
-    margin: 118px 80px;
-    width: 300px;
-    z-index: 1;
-    display: none;
-  }
+    .overlay-bubble {
+        position: absolute;
+        margin: 118px 80px;
+        width: 300px;
+        z-index: 1;
+        display: none;
+    }
 
-  .show {
-    display: block;
-  }
+    .show {
+        display: block;
+    }
 
-  .otp-input {
-    width: 75px;
-    height: 75px;
-    font-size: 25px;
-  }
+    .otp-input {
+        width: 75px;
+        height: 75px;
+        font-size: 25px;
+    }
 }
 
 @media (min-width: 640px) {
-  .main-container {
-    max-width: 640px;
-  }
+    .main-container {
+        max-width: 640px;
+    }
 
-  .overlay-bubble {
-    position: absolute;
-    margin: 118px 80px;
-    width: 300px;
-    z-index: 1;
-    display: none;
-  }
+    .overlay-bubble {
+        position: absolute;
+        margin: 118px 80px;
+        width: 300px;
+        z-index: 1;
+        display: none;
+    }
 
-  .show {
-    display: block;
-  }
+    .show {
+        display: block;
+    }
 
-  .otp-input {
-    width: 80px;
-    height: 90px;
-    font-size: 38px;
-  }
+    .otp-input {
+        width: 80px;
+        height: 90px;
+        font-size: 38px;
+    }
 }
 
 @media (min-width: 768px) {
-  .main-container {
-    max-width: 768px;
-  }
+    .main-container {
+        max-width: 768px;
+    }
 
-  .otp-input {
-    width: 110px;
-    height: 110px;
-    font-size: 50px;
-  }
+    .otp-input {
+        width: 110px;
+        height: 110px;
+        font-size: 50px;
+    }
 }

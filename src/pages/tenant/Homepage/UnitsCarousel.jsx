@@ -88,19 +88,16 @@ const UnitsCarousel = () => {
             >
                 {content}
             </Swiper>
-            <div
-                className={styles['wave2']}
-                style={{ marginTop: '-20px', zIndex: '1' }}
-            >
+            <div className={styles['wave2']} style={{ marginTop: '-1px' }}>
                 <svg
-                    width="514"
-                    height="125"
-                    viewBox="0 0 514 125"
-                    fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    width="514"
+                    height="98"
+                    viewBox="0 0 514 98"
+                    fill="none"
                 >
                     <path
-                        d="M143.5 54.5C23.4106 11.3632 19.3333 26 0 54.5V0H514V54.5C485.5 141.5 420.5 154 143.5 54.5Z"
+                        d="M35.5997 0.138585C15.8548 1.48322 9.94636 12.4763 0 27.1386V0.138578L35.5997 0.138585C38.2765 -0.0437036 41.2076 -0.0486688 44.4375 0.138586L514 0.138672V27.1386C485.5 114.139 420.5 126.639 143.5 27.1386C93.5682 9.2028 63.6926 1.25492 44.4375 0.138586L35.5997 0.138585Z"
                         fill="url(#paint0_linear_5587_5365)"
                     />
                     <defs>
@@ -109,7 +106,7 @@ const UnitsCarousel = () => {
                             x1="257"
                             y1="0"
                             x2="257"
-                            y2="124.516"
+                            y2="97.1545"
                             gradientUnits="userSpaceOnUse"
                         >
                             <stop stopColor="#1D6156" stopOpacity="0.7" />

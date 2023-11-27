@@ -9,10 +9,6 @@
     background-color: #026a47;
 }
 
-.btn:disabled {
-    background-color: #85d5bc;
-}
-
 .btn-danger {
     background-color: var(--accent-danger) !important;
 }
@@ -21,9 +17,15 @@
     background-color: var(--accent-danger-secondary) !important;
 }
 
-svg {
-    fill: #fff;
+.btn:disabled {
+    background-color: #85d5bc !important;
+    /* background-color: rgba(var(--accent-rgb), 0.65) !important; */
 }
+
+.btn-danger:disabled {
+    background-color: rgba(var(--accent-danger-rgb), 0.65) !important;
+}
+
 .icon path {
     fill: #fff;
 }
