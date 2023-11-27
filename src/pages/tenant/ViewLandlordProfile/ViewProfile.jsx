@@ -128,7 +128,7 @@ const ViewProfile = () => {
                     <div className={`${styles["profile-details-container"]} `}>
                         <div className={`${styles["profile-details-name"]} `}>
                             <p>
-                                {user.first_name} {user.middle_name}{" "}
+                                {user.first_name} {' '}
                                 {user.last_name}
                                 {user.is_verified && (
                                     <BiSolidBadgeCheck
