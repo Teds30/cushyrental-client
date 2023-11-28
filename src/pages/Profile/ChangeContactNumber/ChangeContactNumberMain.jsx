@@ -23,20 +23,19 @@ const ChangeContactNumberMain = () => {
     const [number, setNumber] = useState('')
 
     const numberHandler = async (number) => {
-        
         // REMOVE COMMENT FOR LIVE
 
-        // const res = await sendRequest({
-        //     url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/request_otp`,
-        //     method: 'POST',
-        //     body: JSON.stringify({ number: number }),
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        // })
+        const res = await sendRequest({
+            url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/request_otp`,
+            method: 'POST',
+            body: JSON.stringify({ number: number }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
 
         // remove || true for live
-        if (res.status === 'pending' || true) {
+        if (res.status === 'pending') {
             setStep(step + 1)
             setNumber(number)
         }

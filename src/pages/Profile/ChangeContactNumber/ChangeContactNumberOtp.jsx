@@ -52,17 +52,16 @@ const ChangeContactNumberOtp = (props) => {
     }
 
     const generateOTP = async () => {
-        
         // REMOVE COMMENT FOR LIVE
 
-        // const res = await sendRequest({
-        //     url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/request_otp`,
-        //     method: 'POST',
-        //     body: JSON.stringify({ number: user.phone_number }),
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        // })
+        const res = await sendRequest({
+            url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/request_otp`,
+            method: 'POST',
+            body: JSON.stringify({ number: user.phone_number }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
 
         setTime(120)
     }
@@ -86,20 +85,20 @@ const ChangeContactNumberOtp = (props) => {
         console.log({ number: user.phone_number, otp: otpCode })
 
         // REMOVE COMMENT FOR LIVE
-        
-        // const res = await sendRequest({
-        //     url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/validate_otp`,
-        //     method: 'POST',
-        //     body: JSON.stringify({ number: user.phone_number, otp: otpCode }),
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        // })
+
+        const res = await sendRequest({
+            url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/validate_otp`,
+            method: 'POST',
+            body: JSON.stringify({ number: user.phone_number, otp: otpCode }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
 
         const isEqual = res.status === 'approved'
 
         // remove || true for live
-        if (isEqual || true) {
+        if (isEqual) {
             try {
                 console.log({ ...user, phone_number: user.phone_number })
                 const res = await updateUser(
