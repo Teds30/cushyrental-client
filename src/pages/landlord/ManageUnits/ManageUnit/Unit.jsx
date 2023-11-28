@@ -54,10 +54,10 @@ const Unit = (props) => {
             return subscription;
         } else if (
             formattedDate >= subscription.date_start.split(" ")[0] &&
-            formattedDate <= subscription.date_end.split(" ")[0]
+            formattedDate <= subscription.date_end.split(" ")[0] &&
+            subscription.type === 0 && 
+            subscription.request_status === 1
         ) {
-            return subscription;
-        } else if (subscription.request_status === 0) {
             return subscription;
         }
     });
