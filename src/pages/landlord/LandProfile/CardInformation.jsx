@@ -6,6 +6,7 @@ import PrimaryButton from "../../../components/Button/PrimaryButton";
 import VerificationDropdown from "./VerificationDropdown";
 import VerifyAccountContext from "../../../context/verify-account-context";
 import useNotistack from "../../../hooks/notistack-hook";
+import useImageManager from "../../../hooks/data/image-hook";
 
 import styles from "./AccountVerification.module.css";
 import { HiPhoto } from "react-icons/hi2";
@@ -15,6 +16,7 @@ const CardInformation = (props) => {
     const { onNext } = props;
     const verifyCtx = useContext(VerifyAccountContext);
     const { notify } = useNotistack();
+    const {uploadImage} = useImageManager();
 
     const [id, setId] = useState("");
     const [idImage, setIdImage] = useState({});
@@ -40,19 +42,10 @@ const CardInformation = (props) => {
     };
 
     const handleFileUpload = async () => {
-        const formData = new FormData();
-
-        formData.append("image", idImage.file);
-        formData.append("name", idImage.name);
-        formData.append("path", "images");
 
         try {
-            const res = await fetch("http://127.0.0.1:8000/api/image-upload", {
-                method: "POST",
-                body: formData,
-            });
 
-            const data = await res.json();
+            const data =  await uploadImage({file: idImage.file, name: idImage.name, path: "identification_card"});
 
             verifyCtx.onVerify({
                 ...verifyCtx.userAccount,
