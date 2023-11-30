@@ -33,7 +33,6 @@ const UnitLocation = () => {
         lat,
         lng,
     }
-    console.log('cener: ', center)
     // const [center, setCenter] = useState({
     //     lat: 13.14457855948287,
     //     lng: 123.72523867131375,
@@ -62,6 +61,7 @@ const UnitLocation = () => {
                     <Toolbar className={`${styles['toolbar-container']}`}>
                         <Link
                             to={`/unit/${id}`}
+                            replace
                             // onClick={(e) => {
                             //     e.preventDefault();
                             //     navigate(-1);
