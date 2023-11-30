@@ -77,11 +77,11 @@ const UnitReply = ({
                         </div>
                     </div>
                 </div>
-                <div>
+                {/* <div>
                     <button className={`${styles['button-flag-container']}`}>
                         <TbFlag />
                     </button>
-                </div>
+                </div> */}
             </div>
 
             <div className={`${styles['details-container']}`}>

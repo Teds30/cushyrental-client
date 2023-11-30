@@ -1,30 +1,31 @@
 import { Link, useNavigate } from 'react-router-dom'
 import React, { useRef, useState, useEffect, Fragment } from 'react'
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react'
-
-// Import Swiper styles
-import 'swiper/css'
-import 'swiper/css/effect-coverflow'
-import 'swiper/css/pagination'
 
 import useUnitManager from '../../../hooks/data/units-hook'
 import useImageManager from '../../../hooks/data/image-hook'
 import BorderedButton from '../../../components/Button/BorderedButton'
 
-import { EffectCoverflow } from 'swiper/modules'
-
 import './TenantReviews.css'
 
-import { Pagination } from 'swiper/modules'
 import Reviewer from './Reviewer'
 import UnitReviews from '../UnitDetails/UnitReviews'
+import { Swiper, SwiperSlide } from 'swiper/react'
+
+// Import Swiper styles
+import 'swiper/css'
+import 'swiper/css/free-mode'
+import 'swiper/css/navigation'
+import 'swiper/css/thumbs'
+
+import { FreeMode, Navigation, Thumbs } from 'swiper/modules'
 
 const TenantReviews = (props) => {
     const { unitId } = props
 
     const { fetchUnitReviews, isLoading } = useUnitManager()
     const [reviews, setReviews] = useState([])
+
+    const [thumbsSwiper, setThumbsSwiper] = useState(null)
 
     useEffect(() => {
         const handleFetch = async () => {
@@ -49,8 +50,11 @@ const TenantReviews = (props) => {
                 grabCursor={true}
                 centeredSlides={true}
                 slidesPerView={'auto'}
-                pagination={true}
-                modules={[Pagination]}
+                // navigation={true}
+                watchSlidesProgress={true}
+                // thumbs={{ swiper: thumbsSwiper }}
+                freeMode={true}
+                modules={[FreeMode]}
                 className="tenant-review-swiper"
                 style={{ transform: '0' }}
             >

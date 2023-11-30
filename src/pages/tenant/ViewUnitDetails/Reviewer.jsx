@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import useUnitManager from '../../../hooks/data/units-hook'
 import useImageManager from '../../../hooks/data/image-hook'
+import Moment from 'react-moment'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
 
@@ -31,6 +32,7 @@ const Reviewer = (props) => {
     } else {
         reviewRating = 'Excellent'
     }
+
     let content = (
         <CardShadow>
             <div className="review-detials-col">
@@ -57,9 +59,13 @@ const Reviewer = (props) => {
                                 fontWeight: '500',
                             }}
                         >
-                            {review.user.user_type_id === 1
+                            {/* {review.user.user_type_id === 1
                                 ? 'Tenant'
-                                : 'Landlord'}
+                                : 'Landlord'} */}
+                            <Moment fromNow ago>
+                                {review.created_at}
+                            </Moment>{' '}
+                            ago
                         </p>
                     </div>
                 </div>
@@ -67,6 +73,7 @@ const Reviewer = (props) => {
                 <div className="review-main">
                     <div className="review-rating">
                         <Rating
+                            readOnly
                             value={review.star}
                             precision={0.5}
                             sx={{

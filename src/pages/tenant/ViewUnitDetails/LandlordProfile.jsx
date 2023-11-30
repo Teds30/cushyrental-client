@@ -6,27 +6,18 @@ import styles from './ViewUnitDetails.module.css'
 import { CiLocationOn } from 'react-icons/ci'
 import { Link } from 'react-router-dom'
 import VerifiedIcon from '@mui/icons-material/Verified'
+import UserAvatar from '../../../components/Avatar/UserAvatar'
 
 const LandlordProfile = (props) => {
     const { user } = props
     const { fetchAvatar, isLoading } = useImageManager()
 
-    const [landlord, setLandlord] = useState({})
+    const [landlord, setLandlord] = useState(user || {})
 
     const [lastActiveTimestamp, setLastActiveTimestamp] = useState(
         landlord.updated_at
     )
     const [timeElapsed, setTimeElapsed] = useState('')
-
-    useEffect(() => {
-        const handleFetch = async () => {
-            try {
-                const res = await fetchAvatar(user.profile_picture_img)
-                setLandlord({ ...user, profile_picture_img: res })
-            } catch (err) {}
-        }
-        handleFetch()
-    }, [])
 
     useEffect(() => {
         const now = new Date()
@@ -54,12 +45,10 @@ const LandlordProfile = (props) => {
     return (
         !isLoading && (
             <div className={`${styles['profile']}`}>
-                <div className={styles.photo}>
-                    <img
-                        src={landlord.profile_picture_img}
-                        alt={landlord.name}
-                    />
-                </div>
+                <UserAvatar
+                    avatar_url={landlord.profile_picture_img}
+                    size="60px"
+                />
 
                 <div className={`${styles['user-data']}`}>
                     <div className={`${styles['user-data-name']}`}>

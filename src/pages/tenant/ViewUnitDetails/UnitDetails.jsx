@@ -45,9 +45,9 @@ const UnitDetails = (props) => {
     const navigate = useNavigate()
     const url_location = useLocation()
 
-    const handleUnitLocationClick = () => {
-        navigate('/unit_location')
-    }
+    // const handleUnitLocationClick = () => {
+    //     navigate('/unit_location')
+    // }
 
     const location = unit.location.replace(/\s/g, '')
 
@@ -136,7 +136,7 @@ const UnitDetails = (props) => {
                             </div>
                             <Link
                                 to={`/unit/unit_address/${unit.id}?center=${location}`}
-                                onClick={handleUnitLocationClick}
+                                // onClick={handleUnitLocationClick}
                                 style={{ color: 'var(--accent)' }}
                             >
                                 <BorderlessButton width="100%">
@@ -219,15 +219,25 @@ const UnitDetails = (props) => {
 
                 <CardShadow>
                     <div className={`${styles['unit-detials-col']}`}>
-                        <p className="title">Payment & Inclusions</p>
+                        <p className="title">Payment Inclusions</p>
 
-                        <PaymentAndInclusion
-                            paymentAndInclusions={{
-                                month_advance: unit.month_advance,
-                                month_deposit: unit.month_deposit,
-                                inclusions: unit.inclusions,
-                            }}
-                        />
+                        {unit.inclusions &&
+                        unit.month_advance &&
+                        unit.month_deposit ? (
+                            <PaymentAndInclusion
+                                paymentAndInclusions={{
+                                    month_advance: unit.month_advance,
+                                    month_deposit: unit.month_deposit,
+                                    inclusions: unit.inclusions,
+                                }}
+                            />
+                        ) : (
+                            <p>
+                                The displayed price is for renting the unit only
+                                and does not have payment inclusions. Kindly ask
+                                the landlord regarding additional payment.
+                            </p>
+                        )}
                     </div>
                 </CardShadow>
 
@@ -239,9 +249,16 @@ const UnitDetails = (props) => {
                     </div>
                 </CardShadow>
 
-                <div className={`${styles['similar-units']}`}>
-                    <p className="title">Similar Units</p>
-                    <SimilarUnits unitPrice={unit.price} />
+                <div
+                    className={`${styles['similar-units']}`}
+                    style={{
+                        marginTop: '16px',
+                        paddingTop: '24px',
+                        borderTop: '1px solid var(--border-color)',
+                    }}
+                >
+                    <h3>You might also like</h3>
+                    <SimilarUnits unitId={unit.id} unitPrice={unit.price} />
                 </div>
             </div>
         </div>
