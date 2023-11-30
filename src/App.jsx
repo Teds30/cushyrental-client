@@ -171,7 +171,7 @@ function App() {
                         element={<EditProfile />}
                     ></Route>
                     <Route
-                        path="/profile/user_profile/verify/:id"
+                        path="/profile/user_profile/verify"
                         element={<AccountVerification />}
                     ></Route>
                     {/* Landlord Profile */}

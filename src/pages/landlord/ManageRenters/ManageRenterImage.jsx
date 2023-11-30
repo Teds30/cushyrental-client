@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-
 import useImageManager from "../../../hooks/data/image-hook";
-
-import photo from "../../../assets/cushyrental.svg";
 
 const ManageRenterImage = (props) => {
     const { image } = props;
@@ -21,7 +18,6 @@ const ManageRenterImage = (props) => {
     }, []);
 
     return profile !== "" && <img src={profile} alt="Renter" />;
-    return;
 };
 
 export default ManageRenterImage;

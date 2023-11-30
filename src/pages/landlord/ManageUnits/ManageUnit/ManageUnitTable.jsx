@@ -163,7 +163,7 @@ const ManageUnitTabs = (props) => {
             <TabPanel value={value} index={3}>
                 {userUnitPending.length === 0 ? (
                     <p style={{ textAlign: "center" }}>No pending units</p>
-                ) : (
+                ) : (   
                     <Units userUnits={userUnitPending} onDeleteUnit={deleteUnitHandler} />
                 )}
             </TabPanel>
@@ -173,7 +173,7 @@ const ManageUnitTabs = (props) => {
                 ) : (
                     <Units userUnits={userUnitRejected} />
                 )}
-            </TabPanel>
+            </TabPanel> 
             <div className={`${styles["create-unit-button"]}`}>
                 <div className={`${styles['button']}`}>
                 <Link to="/manage_unit/create_unit">

@@ -9,7 +9,7 @@ const LandlordUnitImage = (props) => {
     const { fetchImages, fetchImage, isLoading } = useImageManager();
     const [unitPhoto, setUnitPhoto] = useState("");
 
-    console.log(images);
+    // console.log(images);
 
     useEffect(() => {
         const handleFetch = async () => {

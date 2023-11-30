@@ -82,8 +82,6 @@ const ChangeContactNumberOtp = (props) => {
 
         const otpCode = otpDigits.join('')
 
-        console.log({ number: user.phone_number, otp: otpCode })
-
         // REMOVE COMMENT FOR LIVE
 
         const res = await sendRequest({
@@ -100,7 +98,6 @@ const ChangeContactNumberOtp = (props) => {
         // remove || true for live
         if (isEqual) {
             try {
-                console.log({ ...user, phone_number: user.phone_number })
                 const res = await updateUser(
                     {
                         ...user,

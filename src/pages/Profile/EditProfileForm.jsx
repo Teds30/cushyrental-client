@@ -10,10 +10,8 @@ import useNotistack from "../../hooks/notistack-hook";
 import useVerificationManager from "../../hooks/data/verifications-hook";
 
 import styles from "./EditProfile.module.css";
-import photo from "../../assets/Units/pics.png";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import BorderlessButton from "../../components/Button/BorderlessButton";
 
 const EditProfileForm = (props) => {
     const { userData = {} } = props;
@@ -30,8 +28,6 @@ const EditProfileForm = (props) => {
     const [middleName, setMiddleName] = useState(userData.middle_name);
     const [lastName, setLastName] = useState(userData.last_name);
     const [isSaving, setISaving] = useState(false);
-
-    console.log(user);
 
     const addImageChangeHandler = (event) => {
         const image = URL.createObjectURL(event.target.files[0]);
@@ -60,7 +56,6 @@ const EditProfileForm = (props) => {
 
     const genderChangeHandler = (event) => {
         const gender = event.target.value;
-        console.log(gender);
         setUser({
             ...user,
             gender: gender === "Male" ? 0 : gender === "Female" ? 1 : 2,
@@ -136,10 +131,15 @@ const EditProfileForm = (props) => {
 
     useEffect(() => {
         const handleFetch = async () => {
-            console.log(user.id);
             try {
                 const res = await fetchLandlordVerification(user.id);
-                console.log(res);
+                if (res.data.verdict === 0 && res.data.reason_denied !== null) {
+                    notify(
+                        "Verification denied, please verify account again!",
+                        "info"
+                    );
+                }
+
                 setAccountVerification(res);
             } catch (err) {}
         };
@@ -237,8 +237,13 @@ const EditProfileForm = (props) => {
                                 error
                             />
 
-                            <div className={`${styles['change-button']}`}>
-                                <Link to={`/change_contact_number`} className={`${styles['change']}`}>CHANGE</Link>
+                            <div className={`${styles["change-button"]}`}>
+                                <Link
+                                    to={`/change_contact_number`}
+                                    className={`${styles["change"]}`}
+                                >
+                                    CHANGE
+                                </Link>
                             </div>
                         </div>
 
@@ -282,15 +287,29 @@ const EditProfileForm = (props) => {
                                     <ErrorOutlineIcon />
                                     <p>We are verifying your account.</p>
                                 </div>
-                            ) : (
+                            ) : accountVerification.data !== null &&
+                              accountVerification.data.verdict === 0 ? (
                                 <Link
-                                    to="/profile/user_profile/verify/1"
-                                    className={`${styles["verify-account"]}`}
+                                    to="/profile/user_profile/verify"
+                                    className={styles["verify-account"]}
                                     style={{ textDecoration: "none" }}
                                 >
-                                    <ErrorOutlineIcon
-                                        style={{ fill: "var(--accent-danger)" }}
-                                    />
+                                    <ErrorOutlineIcon fill="var(--accent-danger)" />
+                                    <p
+                                        style={{
+                                            color: "var(--accent-danger)",
+                                        }}
+                                    >
+                                        Verify your account
+                                    </p>
+                                </Link>
+                            ) : (
+                                <Link
+                                    to="/profile/user_profile/verify"
+                                    className={styles["verify-account"]}
+                                    style={{ textDecoration: "none" }}
+                                >
+                                    <ErrorOutlineIcon fill="var(--accent-danger)" />
                                     <p
                                         style={{
                                             color: "var(--accent-danger)",

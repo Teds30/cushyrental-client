@@ -12,6 +12,8 @@ const LandlordUnit = (props) => {
     const { unit } = props;
     const [isBookmarked, setIsBookmarked] = useState([]);
 
+    // console.log(unit.id)
+
     const displayAmenities = unit.amenities.slice(0, 1);
     const excessAmenities = unit.amenities.slice(1);
 
