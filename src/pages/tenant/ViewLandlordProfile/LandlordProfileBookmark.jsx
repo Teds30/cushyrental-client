@@ -1,31 +1,26 @@
 import { useEffect, useContext, useState } from "react";
 import * as React from "react";
 import Checkbox from "@mui/material/Checkbox";
-import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
-import Favorite from "@mui/icons-material/Favorite";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
-
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
 import AuthContext from "../../../context/auth-context";
 import useBookmark from "../../../hooks/data/bookmark-hook";
 
 export default function LandlordProfileBookmark(props) {
-    const { adjustSize = "false", unitId } = props;
+    const { adjustSize = false, unitId } = props;
 
     const { fetchBookmark, addToBookmark, isLoading } = useBookmark();
     const userCtx = useContext(AuthContext);
 
-    const [isBookmark, setIsBookmark] = useState();
+    const [isBookmark, setIsBookmark] = useState(false);
 
     const bookmarkHandler = async (event) => {
         event.preventDefault();
 
         try {
             const data = { user_id: userCtx.user.id, unit_id: unitId };
-            console.log(data);
+            // console.log(data);
             const res = await addToBookmark(data);
-            console.log(res);
+            // console.log(res);
             setIsBookmark(res.unit_id === unitId ? true : false);
         } catch (err) {
             console.log(err)
