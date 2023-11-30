@@ -9,6 +9,7 @@
     flex-direction: column;
     align-items: start;
     /* gap: 1px; */
+    line-height: 1em;
 }
 .review-message {
     line-height: 1em;

@@ -27,12 +27,12 @@
 }
 
 .unitSwiperImage .swiper-button-prev,
-.swiper-button-next {
+.unitSwiperImage .swiper-button-next {
     display: block;
 }
 
 .unitSwiperImage .swiper-button-prev:after,
-.swiper-button-next:after {
+.unitSwiperImage .swiper-button-next:after {
     background: rgba(255, 255, 255, 0.75);
     border-radius: 50%;
     font-size: 18px;

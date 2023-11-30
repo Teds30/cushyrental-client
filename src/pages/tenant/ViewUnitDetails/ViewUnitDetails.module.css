@@ -1,3 +1,8 @@
+html {
+    height: 100%;
+    /* background-color: var(--bg); */
+    background-color: var(--bg) !important;
+}
 .unit-details-container {
     position: relative;
 
@@ -62,15 +67,11 @@
 .unit-details-main {
     display: flex;
     flex-direction: column;
-}
-
-.unit-photo {
-    height: 249px;
-    position: relative;
+    gap: 12px;
 }
 
 .unit-details-row {
-    margin-top: -10px;
+    /* margin-top: 100px; */
     z-index: 10;
 
     display: flex;
