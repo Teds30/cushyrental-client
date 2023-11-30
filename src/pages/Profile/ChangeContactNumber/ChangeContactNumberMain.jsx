@@ -25,20 +25,20 @@ const ChangeContactNumberMain = () => {
     const numberHandler = async (number) => {
         // REMOVE COMMENT FOR LIVE
 
-        const res = await sendRequest({
-            url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/request_otp`,
-            method: 'POST',
-            body: JSON.stringify({ number: number }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
+        // const res = await sendRequest({
+        //     url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/request_otp`,
+        //     method: 'POST',
+        //     body: JSON.stringify({ number: number }),
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        // })
 
         // remove || true for live
-        if (res.status === 'pending') {
-            setStep(step + 1)
-            setNumber(number)
-        }
+        // if (res.status === 'pending') {
+        //     setStep(step + 1)
+        //     setNumber(number)
+        // }
 
         setStep(step + 1)
         setNumber(number)
@@ -51,8 +51,6 @@ const ChangeContactNumberMain = () => {
     let content
 
     if (step === 1) {
-        content = <ChangeContactNumber onNumber={numberHandler} />
-    } else if (step === 2) {
         userCtx.user.is_social && AuthenticatedUser()
         content = (
             <ChangeContactNumberPassword
@@ -60,6 +58,8 @@ const ChangeContactNumberMain = () => {
                 onAuthenticatedUser={AuthenticatedUser}
             />
         )
+    } else if (step === 2) {
+        content = <ChangeContactNumber onNumber={numberHandler} />
     } else {
         content = (
             <ChangeContactNumberOtp
