@@ -1,64 +1,73 @@
-import React, { useRef, useState, Fragment, useEffect } from "react";
+import React, { useRef, useState, Fragment, useEffect } from 'react'
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide } from 'swiper/react'
 
-import useImageManager from "../../../hooks/data/image-hook";
+import useImageManager from '../../../hooks/data/image-hook'
 
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/navigation";
-import "swiper/css/thumbs";
+import 'swiper/css'
+import 'swiper/css/free-mode'
+import 'swiper/css/navigation'
+import 'swiper/css/thumbs'
 
-import "./UnitPhoto.css";
+import './UnitPhoto.css'
 
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import { FreeMode, Navigation, Thumbs } from 'swiper/modules'
+import { Box } from '@mui/material'
+import { useQueries, useQuery } from '@tanstack/react-query'
 
 export default function UnitPhoto(props) {
-    const { images } = props;
-    const { fetchImage, isLoading } = useImageManager();
+    const { images } = props
+    const { fetchImage, isLoading } = useImageManager()
 
-    const [thumbsSwiper, setThumbsSwiper] = useState(null);
-    const [unitImages, setUnitImages] = useState([]);
+    const [thumbsSwiper, setThumbsSwiper] = useState(null)
+    const [unitImages, setUnitImages] = useState([])
 
     const imageContent1 =
         !isLoading &&
         unitImages.map((image, index) => (
-            <SwiperSlide key={index}>
+            <SwiperSlide key={index} className="swiperSlide">
                 <img src={image} />
             </SwiperSlide>
-        ));
+        ))
     const imageContent2 =
         !isLoading &&
         unitImages.map((image, index) => (
-            <SwiperSlide key={index}>
+            <SwiperSlide key={index + 10} className="swiperSlide">
                 <img src={image} />
             </SwiperSlide>
-        ));
+        ))
+
+    const imageQueries = useQueries({
+        queries: images.map((image) => ({
+            queryKey: ['unit_images', image.id],
+            queryFn: () => fetchImage(image.image.replace('images/', '')),
+            refetchOnWindowFocus: false,
+        })),
+    })
 
     useEffect(() => {
         const handleFetch = async () => {
-            try {
-                const promises = images.map(async (image) => {
-                    const unitImage = await fetchImage(
-                        image.image.replace("images/", "")
-                    );
-                    return unitImage;
-                });
+            const unit_images = imageQueries.map((query) => query.data)
 
-                const resolvedImages = await Promise.all(promises);
-                setUnitImages(resolvedImages);
-            } catch (err) {}
-        };
-        handleFetch();
-    }, []);
+            setUnitImages(unit_images)
+        }
+        if (imageQueries[0] && imageQueries[0].data && unitImages.length === 0)
+            handleFetch()
+    }, [imageQueries])
 
     return (
-        <Fragment>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: 'fit-content',
+                // gap: '12px',
+            }}
+        >
             <Swiper
                 style={{
-                    "--swiper-navigation-color": "#fff",
-                    "--swiper-pagination-color": "#fff",
+                    '--swiper-navigation-color': '#fff',
                 }}
                 loop={true}
                 spaceBetween={0}
@@ -81,6 +90,6 @@ export default function UnitPhoto(props) {
             >
                 {imageContent2}
             </Swiper>
-        </Fragment>
-    );
+        </Box>
+    )
 }

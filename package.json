@@ -24,6 +24,8 @@
     "@react-google-maps/api": "^2.19.2",
     "@react-oauth/google": "^0.11.1",
     "@tabler/icons-react": "^2.42.0",
+    "@tanstack/react-query": "^5.8.9",
+    "@tanstack/react-query-devtools": "^5.9.0",
     "dayjs": "^1.11.9",
     "framer-motion": "^10.16.4",
     "notistack": "^3.0.1",

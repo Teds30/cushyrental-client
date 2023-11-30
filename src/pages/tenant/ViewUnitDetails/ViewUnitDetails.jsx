@@ -1,4 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+
+import { useQuery } from '@tanstack/react-query'
+
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar'
@@ -30,26 +33,27 @@ import AuthContext from '../../../context/auth-context'
 import UnitBookmark from './UnitBookmark'
 
 const ViewUnitDetails = () => {
+    // Access the client
+    // const queryClient = useQueryClient()
+
     const { id } = useParams()
-    const { fetchUnit, isLoading } = useUnitManager()
+    const { fetchUnit } = useUnitManager()
     const navigate = useNavigate()
 
     const { sendRequest } = useHttp()
     const authCtx = useContext(AuthContext)
 
-    const [unitData, setUnitData] = useState({})
+    // const [unitData, setUnitData] = useState({})
     const [scrolling, setScrolling] = useState(false)
 
-    useEffect(() => {
-        const handleFetch = async () => {
-            try {
-                const res = await fetchUnit(id)
-                console.log(res)
-                setUnitData(res)
-            } catch (err) {}
-        }
-        handleFetch()
-    }, [id])
+    const { data: unitData, isLoading: unitLoading } = useQuery({
+        queryKey: ['unit', id],
+        queryFn: () => {
+            return fetchUnit(id)
+        },
+        refetchOnWindowFocus: false,
+        enabled: !!id,
+    })
 
     useEffect(() => {
         const handleScroll = () => {
@@ -103,9 +107,10 @@ const ViewUnitDetails = () => {
         }
     }
 
-    return (
-        Object.keys(unitData).length !== 0 &&
-        !isLoading && (
+    return unitLoading ? (
+        <p>Loading...</p>
+    ) : (
+        Object.keys(unitData).length !== 0 && (
             <div className={`${styles['unit-details-container']}`}>
                 <Box
                     className={`${styles['top-back-container']} ${
@@ -129,7 +134,7 @@ const ViewUnitDetails = () => {
                                     // to={`/manage_unit/edit/`}
                                     onClick={(e) => {
                                         e.preventDefault()
-                                        navigate(-1)
+                                        navigate(-1, { replace: true })
                                     }}
                                     className={`${styles['link-button']}`}
                                 >
@@ -154,38 +159,50 @@ const ViewUnitDetails = () => {
                                 </Box>
                             </div>
                             <div className={`${styles['bookmark']}`}>
-                                <UnitBookmark scrolling={scrolling} unitId={unitData.id}/>
+                                <UnitBookmark
+                                    scrolling={scrolling}
+                                    unitId={unitData.id}
+                                />
                             </div>
                         </Toolbar>
                     </AppBar>
                 </Box>
-
                 <UnitDetails unit={unitData} />
-
                 <div className={`${styles['view-details-botton-section']}`}>
                     <CardBlur style={{ display: 'flex' }}>
-                        <div className={`${styles['view-details-botton']}`}>
-                            <a
-                                // href={`tel:${unitData.landlord.phone_number}`}
-                                href="tel:+63963-276-6237"
-                                target="_parent"
-                                style={{ width: '100%' }}
-                            >
-                                <BorderedButton
-                                    width="100%"
-                                    leftIcon={<BsFillTelephoneOutboundFill />}
+                        {authCtx.user &&
+                        authCtx.user.id !== unitData.landlord_id ? (
+                            <div className={`${styles['view-details-botton']}`}>
+                                <a
+                                    href={`tel:${unitData.landlord.phone_number}`}
+                                    // href="tel:+63963-276-6237"
+                                    target="_parent"
+                                    style={{ width: '100%' }}
                                 >
-                                    Call
-                                </BorderedButton>
-                            </a>
-                            <PrimaryButton
-                                width="100%"
-                                leftIcon={<BsChatSquare />}
-                                onClick={handleInquire}
-                            >
-                                Inquire Now
-                            </PrimaryButton>
-                        </div>
+                                    <BorderedButton
+                                        width="100%"
+                                        leftIcon={
+                                            <BsFillTelephoneOutboundFill />
+                                        }
+                                    >
+                                        Call
+                                    </BorderedButton>
+                                </a>
+                                <PrimaryButton
+                                    width="100%"
+                                    leftIcon={<BsChatSquare />}
+                                    onClick={handleInquire}
+                                >
+                                    Inquire Now
+                                </PrimaryButton>
+                            </div>
+                        ) : (
+                            <Link to={'/manage_unit/edit/:id'}>
+                                <PrimaryButton width="100%">
+                                    Manage unit
+                                </PrimaryButton>
+                            </Link>
+                        )}
                     </CardBlur>
                 </div>
             </div>
