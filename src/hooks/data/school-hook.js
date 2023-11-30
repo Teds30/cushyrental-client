@@ -13,9 +13,6 @@ const useSchoolManager = () => {
                         import.meta.env.VITE_BACKEND_LOCALHOST
                     }/api/schools`,
                     method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
 
                 return responseData
@@ -34,7 +31,10 @@ const useSchoolManager = () => {
                 responseData = await fetch(
                     `${
                         import.meta.env.VITE_BACKEND_LOCALHOST
-                    }/api/school_icons/${file_name}`
+                    }/api/school_icons/${file_name}`,
+                    {
+                        Accept: 'application/json',
+                    }
                 )
 
                 const imageBlob = await responseData.blob()

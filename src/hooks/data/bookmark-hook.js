@@ -14,9 +14,6 @@ const useBookmark = () => {
                     }/api/add_bookmark`,
                     method: 'POST',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
 
                 return responseData
@@ -37,9 +34,6 @@ const useBookmark = () => {
                         import.meta.env.VITE_BACKEND_LOCALHOST
                     }/api/bookmark/${id}`,
                     method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message
@@ -58,9 +52,6 @@ const useBookmark = () => {
                         import.meta.env.VITE_BACKEND_LOCALHOST
                     }/api/bookmark_units/${id}`,
                     method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
 
                 return responseData

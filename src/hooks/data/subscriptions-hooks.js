@@ -150,7 +150,7 @@ const useSubscriptionManager = () => {
         subscribeUnit,
         fetchSilverUnits,
         fetchGoldUnits,
-        deleteUnitSubscription
+        deleteUnitSubscription,
     }
 }
 

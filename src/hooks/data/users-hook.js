@@ -63,9 +63,6 @@ const useUserManager = () => {
                     }/api/unit_amenities`,
                     method: 'POST',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message
@@ -86,9 +83,6 @@ const useUserManager = () => {
                     }/api/unit_inclusions`,
                     method: 'POST',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message
@@ -109,9 +103,6 @@ const useUserManager = () => {
                     }/api/unit_rules`,
                     method: 'POST',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message
@@ -132,9 +123,6 @@ const useUserManager = () => {
                     }/api/unit_facilities`,
                     method: 'POST',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message
@@ -155,9 +143,6 @@ const useUserManager = () => {
                     }/api/unit_images`,
                     method: 'POST',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message
@@ -178,9 +163,6 @@ const useUserManager = () => {
                     }/api/unit_images`,
                     method: 'DELETE',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message
@@ -201,9 +183,6 @@ const useUserManager = () => {
                     }/api/users/update/${id}`,
                     method: 'PUT',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message

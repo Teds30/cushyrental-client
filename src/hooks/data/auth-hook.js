@@ -32,17 +32,34 @@ const useAuth = () => {
     }, [])
 
     const fetchUserData = useCallback(async (token) => {
+        const storedData = JSON.parse(localStorage.getItem('userData'))
+
         try {
-            // console.log('tioke: ', token)
-            const response = await sendRequest({
-                url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/user_data`,
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            if (response)
-                setUser(response.length > 0 || response.id ? response : null) // Set the user data in the component state
-            // navigate('/')
+            console.log('tioke: ', token)
+            const response = await fetch(
+                `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/user_data`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        Accept: 'application/json',
+                    },
+                }
+            )
+
+            const data = await response.json()
+
+            const { user } = data
+            if (response) {
+                setUser(user)
+                setToken(storedData.token)
+                setIsLoggedIn(true)
+            }
+            if (!response.ok) {
+                setUser(null)
+                setIsLoggedIn(false)
+                navigate('/signin')
+            }
+            navigate('/')
         } catch (error) {
             // Handle errors if needed
             console.log('error: ', error)
@@ -55,8 +72,6 @@ const useAuth = () => {
         if (storedData) {
             const loadData = async () => {
                 await fetchUserData(storedData.token)
-                setToken(storedData.token)
-                setIsLoggedIn(true)
             }
             loadData()
         } else {

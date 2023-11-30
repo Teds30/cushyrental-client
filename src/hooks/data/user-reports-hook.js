@@ -14,9 +14,6 @@ const useUserReports = () => {
                     }/api/user_reports`,
                     method: 'POST',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
 
                 return responseData

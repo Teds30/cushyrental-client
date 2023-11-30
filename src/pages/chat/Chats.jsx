@@ -32,9 +32,6 @@ const Chats = () => {
             url: `${import.meta.env.VITE_CHAT_LOCALHOST}/rooms`,
             method: 'POST',
             body: JSON.stringify({ userId: userId }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
         })
 
         setRooms(res.rooms)
@@ -47,7 +44,6 @@ const Chats = () => {
             })
         )
 
-        console.log(authCtx.user)
         if (authCtx.user) fetchRooms(authCtx.user.id)
     }, [authCtx.user])
 

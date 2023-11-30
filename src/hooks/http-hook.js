@@ -11,12 +11,18 @@ export const useHttp = () => {
 
     const activeHttpRequests = useRef([])
 
+    const storedData = JSON.parse(localStorage.getItem('userData'))
+
     const sendRequest = useCallback(
         async ({
             url,
             method = 'GET',
             body = null,
-            headers = { Accept: 'application/json' },
+            headers = {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                Authorization: `Bearer ${storedData.token}`,
+            },
             expectText = false,
             notifyError = false,
         }) => {

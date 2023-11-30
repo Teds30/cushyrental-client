@@ -380,7 +380,24 @@ const useUnitManager = () => {
                         import.meta.env.VITE_BACKEND_LOCALHOST
                     }/api/units/${id}`,
                     method: 'DELETE',
+                })
+            } catch (err) {
+                throw err.message
+            }
 
+            return responseData
+        },
+        [sendRequest]
+    )
+
+    const fetchSimilarUnits = useCallback(
+        async (id) => {
+            let responseData
+            try {
+                responseData = await sendRequest({
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/similar_units/${id}`,
                 })
             } catch (err) {
                 throw err.message
@@ -393,6 +410,7 @@ const useUnitManager = () => {
 
     return {
         isLoading,
+        fetchSimilarUnits,
         fetchUnits,
         fetchUnit,
         fetchUnitAmenities,
@@ -410,7 +428,7 @@ const useUnitManager = () => {
         editUnitRule,
         editUnitfacility,
         fetchUnitReviews,
-        deleteUnit
+        deleteUnit,
     }
 }
 

@@ -81,7 +81,9 @@ const Conversation = (props) => {
 
     const getChats = async (room_id) => {
         const res = await sendRequest({
-            url: `${import.meta.env.VITE_CHAT_LOCALHOST}/chats/${room_id}`,
+            url: `${
+                import.meta.env.VITE_CHAT_LOCALHOST
+            }/chats/${room_id}/token=${authCtx.token}`,
         })
         setChatReady(true)
         setChats(res)
@@ -121,7 +123,9 @@ const Conversation = (props) => {
 
     const fetchRoomDetails = async (room_id) => {
         const res = await sendRequest({
-            url: `${import.meta.env.VITE_CHAT_LOCALHOST}/rooms/${room_id}`,
+            url: `${
+                import.meta.env.VITE_CHAT_LOCALHOST
+            }/rooms/${room_id}/token=${authCtx.token}`,
         })
 
         const landlord = await fetchUserDetails(res.landlord_id)

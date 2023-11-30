@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import Box from '@mui/material/Box'
 import PrimaryButton from '../../components/Button/PrimaryButton'
@@ -13,9 +13,12 @@ import { BsExclamationCircle } from 'react-icons/bs'
 import { TbCircleCheck } from 'react-icons/tb'
 
 import styles from './AvailModal.module.css'
+import AuthContext from '../../context/auth-context'
 
 const AvailModal = (props) => {
     const { user_id, socket, room_id, room, unit } = props
+
+    const authCtx = useContext(AuthContext)
     const { sendRequest, isLoading } = useHttp()
 
     const [roomDetails, setRoomDetails] = useState({
@@ -28,15 +31,16 @@ const AvailModal = (props) => {
 
     useEffect(() => {
         const fetchData = async (room_id) => {
-            const res = await fetch(
-                `${import.meta.env.VITE_CHAT_LOCALHOST}/rooms/${room_id}`
-            )
-            const data = await res.json()
+            const res = await sendRequest({
+                url: `${
+                    import.meta.env.VITE_CHAT_LOCALHOST
+                }/rooms/${room_id}/token=${authCtx.token}`,
+            })
 
             setRoomDetails({
-                data: data,
-                request: data.request_status,
-                req_slots: data.slots,
+                data: res,
+                request: res.request_status,
+                req_slots: res.slots,
             })
         }
 
@@ -58,7 +62,9 @@ const AvailModal = (props) => {
             const formattedDate = `${year}-${month}-${day}`
 
             const res1 = await fetch(
-                `${import.meta.env.VITE_CHAT_LOCALHOST}/rooms/${room_id}`
+                `${
+                    import.meta.env.VITE_CHAT_LOCALHOST
+                }/rooms/${room_id}/token=${authCtx.token}`
             )
             const data1 = await res1.json()
 
@@ -74,10 +80,6 @@ const AvailModal = (props) => {
                     date_start: formattedDate,
                     date_end: '',
                 }),
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                },
             })
         } catch (err) {
             console.log(err)

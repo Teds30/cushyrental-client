@@ -40,7 +40,7 @@ const CreateAccount = () => {
             const res = await accountRegistration(data)
 
             ctx.onLogin({ user: res.user, token: res.token })
-            navigate('/')
+            // navigate('/')
         } catch (error) {
             notify('Email already exist.', 'info')
         }
