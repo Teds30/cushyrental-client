@@ -95,9 +95,9 @@ function App() {
                     <Route
                         path="/"
                         element={
-                            user && user.user_type_id === 2 ? (
+                            user && user.user_type_id == 2 ? (
                                 <Dashboard />
-                            ) : user && user.user_type_id === 3 ? (
+                            ) : user && user.user_type_id == 3 ? (
                                 <Homepage />
                             ) : (
                                 <SplashScreen />
