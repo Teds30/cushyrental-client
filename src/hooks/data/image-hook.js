@@ -1,8 +1,11 @@
 import { useCallback, useContext, useState } from 'react'
 import useHttp from '../http-hook'
 
+import AuthContext from '../../context/auth-context'
+
 const useImageManager = () => {
     const { sendRequest, isLoading } = useHttp()
+    const authCtx = useContext(AuthContext)
 
     const uploadImage = useCallback(
         async ({ file = null, name = '', path = 'images' }) => {
@@ -20,6 +23,9 @@ const useImageManager = () => {
                     {
                         method: 'POST',
                         body: formData,
+                        headers: {
+                            Authorization: `Bearer ${authCtx.token}`,
+                        },
                     }
                 )
                 responseData = await res.json()
