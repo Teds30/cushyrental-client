@@ -37,23 +37,20 @@ const useVerificationManager = () => {
         [sendRequest]
     )
 
-    const fetchIdentificationCards = useCallback(
-        async () => {
-            let responseData
-            try {
-                responseData = await sendRequest({
-                    url: `${
-                        import.meta.env.VITE_BACKEND_LOCALHOST
-                    }/api/identification_cards`,
-                })
-            } catch (err) {
-                throw err.message
-            }
+    const fetchIdentificationCards = useCallback(async () => {
+        let responseData
+        try {
+            responseData = await sendRequest({
+                url: `${
+                    import.meta.env.VITE_BACKEND_LOCALHOST
+                }/api/identification_cards`,
+            })
+        } catch (err) {
+            throw err.message
+        }
 
-            return responseData
-        },
-        [sendRequest]
-    )
+        return responseData
+    }, [sendRequest])
 
     const accountVerification = useCallback(
         async (body) => {
@@ -65,9 +62,6 @@ const useVerificationManager = () => {
                     }/api/account_verifications`,
                     method: 'POST',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
                 })
             } catch (err) {
                 throw err.message
@@ -83,7 +77,7 @@ const useVerificationManager = () => {
         fetchLandlordsVerifications,
         fetchLandlordVerification,
         fetchIdentificationCards,
-        accountVerification
+        accountVerification,
     }
 }
 

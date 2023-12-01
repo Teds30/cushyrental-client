@@ -45,9 +45,6 @@ const useUnitManager = () => {
                     }/api/units/${id}`,
                     method: 'PUT',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message
@@ -86,9 +83,6 @@ const useUnitManager = () => {
                     }/api/unit_amenities/${id}`,
                     method: 'GET',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message
@@ -109,9 +103,6 @@ const useUnitManager = () => {
                     }/api/unit_facilities/${id}`,
                     method: 'GET',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message
@@ -132,9 +123,6 @@ const useUnitManager = () => {
                     }/api/unit_inclusions/${id}`,
                     method: 'GET',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message
@@ -155,9 +143,6 @@ const useUnitManager = () => {
                     }/api/unit_rules/${id}`,
                     method: 'GET',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message
@@ -176,9 +161,6 @@ const useUnitManager = () => {
                     url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/units`,
                     method: 'POST',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
 
                 return responseData
@@ -197,9 +179,6 @@ const useUnitManager = () => {
                     url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/search`,
                     method: 'POST',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message
@@ -220,9 +199,6 @@ const useUnitManager = () => {
                     }/api/unit_amenities`,
                     method: 'DELETE',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message
@@ -243,9 +219,6 @@ const useUnitManager = () => {
                     }/api/unit_amenities`,
                     method: 'POST',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message
@@ -266,9 +239,6 @@ const useUnitManager = () => {
                     }/api/unit_inclusions`,
                     method: 'DELETE',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message
@@ -289,9 +259,6 @@ const useUnitManager = () => {
                     }/api/unit_inclusions`,
                     method: 'POST',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message
@@ -312,9 +279,6 @@ const useUnitManager = () => {
                     }/api/unit_rules`,
                     method: 'DELETE',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message
@@ -335,9 +299,6 @@ const useUnitManager = () => {
                     }/api/unit_rules`,
                     method: 'POST',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message
@@ -358,9 +319,6 @@ const useUnitManager = () => {
                     }/api/unit_facilities`,
                     method: 'POST',
                     body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
             } catch (err) {
                 throw err.message

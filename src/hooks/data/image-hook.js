@@ -13,13 +13,16 @@ const useImageManager = () => {
             formData.append('name', name)
             formData.append('path', path)
             try {
-                responseData = await sendRequest({
-                    url: `${
+                let res = await fetch(
+                    `${
                         import.meta.env.VITE_BACKEND_LOCALHOST
                     }/api/image-upload`,
-                    method: 'POST',
-                    body: formData,
-                })
+                    {
+                        method: 'POST',
+                        body: formData,
+                    }
+                )
+                responseData = await res.json()
             } catch (err) {
                 throw err.message
             }
@@ -77,6 +80,7 @@ const useImageManager = () => {
                             body: JSON.stringify({ image_path: image_path }),
                             headers: {
                                 'Content-Type': 'application/json',
+                                Accept: 'application/json',
                             },
                         }
                     )

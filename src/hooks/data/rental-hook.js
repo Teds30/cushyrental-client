@@ -13,9 +13,6 @@ const useRental = () => {
                         import.meta.env.VITE_BACKEND_LOCALHOST
                     }/api/landlord-rentals/${id}`,
                     method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                 })
 
                 return responseData
@@ -50,7 +47,7 @@ const useRental = () => {
     return {
         isLoading,
         fetchRentals,
-        terminateUser
+        terminateUser,
     }
 }
 
