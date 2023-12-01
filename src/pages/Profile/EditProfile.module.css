@@ -58,18 +58,23 @@
 
 .edit-profile {
     color: #8a93a6;
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
     position: absolute;
     right: 4px;
     bottom: 8px;
     cursor: pointer;
 
     display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg-layer2);
+    border-radius: 50%;
+    border: 3px solid var(--border-color);
 }
 
 .edit-profile .camera-icon {
-    fill: #8A93A6;
+    fill: var(--fc-body);
 }
 
 .edit-input {
