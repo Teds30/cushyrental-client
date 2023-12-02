@@ -67,6 +67,8 @@ function App() {
 
     const storedData = JSON.parse(localStorage.getItem('userData'))
 
+    console.log('app.jsx mounted with isLoggedIn value of: ', isLoggedIn)
+
     let routes
 
     if (isLoggedIn !== 'initial' && !isLoggedIn) {
@@ -82,7 +84,7 @@ function App() {
                 <Route path="/about" element={<About />}></Route>
                 <Route
                     path="*"
-                    element={<Navigate replace to="/signin" />}
+                    element={<Navigate replace to="/about" />}
                 ></Route>
             </Routes>
         )

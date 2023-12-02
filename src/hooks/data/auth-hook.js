@@ -48,6 +48,8 @@ const useAuth = () => {
 
             const data = await response.json()
 
+            console.log('res.ok? ', response)
+
             const { user } = data
             if (response) {
                 setUser(user)
