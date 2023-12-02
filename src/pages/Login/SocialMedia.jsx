@@ -30,8 +30,7 @@ const SocialMediaLogin = () => {
                 token: registerGoogleRes.token,
             })
             navigate('/')
-        } catch (error) {
-        }
+        } catch (error) {}
     }
 
     const nameTransFunction = (nameParts) => {
@@ -69,8 +68,7 @@ const SocialMediaLogin = () => {
         try {
             const res = await facebookAccountRegistration(data)
             ctx.onLogin({ user: res.user, token: res.token })
-        } catch (error) {
-        }
+        } catch (error) {}
     }
 
     const responseFacebook = (response) => {
@@ -79,13 +77,12 @@ const SocialMediaLogin = () => {
 
     const googleRegisterHandle = useGoogleLogin({
         onSuccess: onGoogleAuth,
-        onFailure: (error) => {
-        },
+        onFailure: (error) => {},
     })
 
     return (
         <div className={styles.socmed}>
-          <FacebookLogin
+            {/* <FacebookLogin
             appId={"782460463883150"}
             fields="name,email,picture"
             callback={responseFacebook}
@@ -101,14 +98,18 @@ const SocialMediaLogin = () => {
                 </div>
               </Link>
             )}
-          />
-    
-          <Link onClick={googleRegisterHandle}>
-            <div className={styles["background"]}>
-              <img src={Google} alt="Google Icon" className={styles.googleIcon} />{" "}
-              Google
-            </div>
-          </Link>
+          /> */}
+
+            <Link onClick={googleRegisterHandle} style={{ width: '100%' }}>
+                <div className={styles['background']}>
+                    <img
+                        src={Google}
+                        alt="Google Icon"
+                        className={styles.googleIcon}
+                    />{' '}
+                    Login with Google
+                </div>
+            </Link>
         </div>
     )
 }

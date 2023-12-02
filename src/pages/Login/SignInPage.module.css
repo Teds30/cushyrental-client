@@ -38,7 +38,7 @@
     margin-top: 19px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 24px;
 }
 
 .textfield_container {
@@ -50,7 +50,7 @@
 .remember-forgot {
     display: flex;
     justify-content: space-between;
-    margin-top: 10px;
+    /* margin-top: 10px; */
 }
 
 .remember-me {
@@ -64,7 +64,7 @@
 }
 
 .loginButton-container {
-    margin-top: 30px;
+    /* margin-top: 30px; */
 }
 .checkbox-container {
     border: 1px solid var(--border-color);
@@ -86,7 +86,7 @@
 .sign-up__container {
     margin: 0 0 0 0;
     width: 100%;
-    margin-top: 40px;
+    /* margin-top: 24px; */
     display: flex;
     align-items: center;
 }
@@ -119,9 +119,17 @@
     align-items: center;
     color: #000;
     display: flex;
+    justify-content: center;
     font-size: 16px;
     font-weight: 500;
     gap: 8px;
+
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+
+    padding: 12px;
+    /* width: 100%; */
+    flex: 1;
 }
 
 .socmed {
@@ -130,11 +138,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 22px;
-}
-
-.socmed {
-    margin: 30px 0 0 0;
+    gap: 12px;
+    /* margin: 30px 0 0 0; */
 }
 
 .googleIcon {
@@ -146,7 +151,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 15px 0 0 0;
+    /* margin: 15px 0 0 0; */
 }
 
 .login-option span {
