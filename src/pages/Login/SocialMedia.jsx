@@ -8,10 +8,12 @@ import styles from '../Login/SignInPage.module.css'
 import useGoogleAuth from '../../hooks/data/google-auth-hook'
 import useFacebookAuth from '../../hooks/data/facebook-auth'
 import AuthContext from '../../context/auth-context'
+import useNotistack from '../../hooks/notistack-hook'
 
 const SocialMediaLogin = () => {
     const { googleAccountLogin, googleAuth } = useGoogleAuth()
     const { facebookAccountRegistration } = useFacebookAuth()
+    const { notify } = useNotistack()
     const ctx = useContext(AuthContext)
     const navigate = useNavigate()
 
@@ -25,12 +27,18 @@ const SocialMediaLogin = () => {
 
             const registerGoogleRes = await googleAccountLogin(data)
 
-            ctx.onLogin({
-                user: registerGoogleRes.user,
-                token: registerGoogleRes.token,
-            })
-            navigate('/')
-        } catch (error) {}
+            if (registerGoogleRes.user) {
+                ctx.onLogin({
+                    user: registerGoogleRes.user,
+                    token: registerGoogleRes.token,
+                })
+                navigate('/')
+            } else {
+                notify('Email not registered!', 'info')
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const nameTransFunction = (nameParts) => {
