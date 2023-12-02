@@ -80,14 +80,11 @@ const useImageManager = () => {
                     pic = await fetch(image_path)
                 } else {
                     pic = await fetch(
-                        `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/avatar/`,
+                        `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/avatar`,
                         {
                             method: 'POST',
                             body: JSON.stringify({ image_path: image_path }),
-                            headers: {
-                                'Content-Type': 'application/json',
-                                Accept: 'application/json',
-                            },
+                            // headers: {},
                         }
                     )
                 }
