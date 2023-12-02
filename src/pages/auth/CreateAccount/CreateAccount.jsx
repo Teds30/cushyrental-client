@@ -20,12 +20,11 @@ const CreateAccount = () => {
     const navigate = useNavigate()
     const { notify } = useNotistack()
     const receivedData = useLocation()
-    console.log(receivedData.state.user_type_id)
 
     const [counter, setCounter] = useState(0)
     const [userType, setUserType] = useState({
         user_type_id:
-            receivedData && receivedData.state.user_type_id
+            receivedData.state && receivedData.state.user_type_id
                 ? receivedData.state.user_type_id
                 : 2,
     })
