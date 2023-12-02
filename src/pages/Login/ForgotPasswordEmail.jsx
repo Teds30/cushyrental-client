@@ -1,16 +1,16 @@
-import TextField from "../../components/TextField/TextField";
-import useValidate from "../../hooks/validate-input-hook";
-import PrimaryButton from "../../components/Button/PrimaryButton";
-import useUserManager from "../../hooks/data/users-hook";
-import useNotistack from "../../hooks/notistack-hook";
+import TextField from '../../components/TextField/TextField'
+import useValidate from '../../hooks/validate-input-hook'
+import PrimaryButton from '../../components/Button/PrimaryButton'
+import useUserManager from '../../hooks/data/users-hook'
+import useNotistack from '../../hooks/notistack-hook'
 
-import styles from "./ForgotPassword.module.css";
+import styles from './ForgotPassword.module.css'
 
 const ForgotPasswordEmail = (props) => {
-    const { onEmail, onReset } = props;
-    const { notify } = useNotistack();
+    const { onEmail, onReset } = props
+    const { notify } = useNotistack()
 
-    const { fetchEmail, isLoading } = useUserManager();
+    const { fetchEmail, isLoading } = useUserManager()
     const {
         value: enteredEmail,
         isValid: enteredEmailIsValid,
@@ -19,39 +19,40 @@ const ForgotPasswordEmail = (props) => {
         inputBlurHandler: emailBlurHandler,
         reset: emailReset,
     } = useValidate(
-        (value) => value.trim() !== "" && value.includes("@")
+        (value) => value.trim() !== '' && value.includes('@')
         // && value.includes(".com")
-    );
+    )
 
-    let formIsValid = false;
+    let formIsValid = false
 
     if (enteredEmailIsValid) {
-        formIsValid = true;
+        formIsValid = true
     }
 
     const submitHandler = async () => {
         if (!formIsValid) {
-            return;
+            return
         }
 
         try {
-            const res = await fetchEmail(enteredEmail);
-
+            const res = await fetchEmail(enteredEmail)
             if (res.length === 0) {
-                notify("Email not registered!", "info");
+                notify('Email not registered!', 'info')
             } else {
-                onEmail(res);
+                onEmail(res)
             }
-        } catch (error) {}
-    };
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
-        <div className={`${styles["forgot-password-email-row"]}`}>
+        <div className={`${styles['forgot-password-email-row']}`}>
             {/* <div>
                 <h2>Forgot Password?</h2>
                 <p>Enter your email, and we will send you a code to reset your password.</p>
             </div> */}
-            <div className={`${styles["enter-email"]} `}>
+            <div className={`${styles['enter-email']} `}>
                 <TextField
                     fullWidth
                     label="Email Address"
@@ -60,7 +61,7 @@ const ForgotPasswordEmail = (props) => {
                     onChange={emailChangeHandler}
                     onBlur={emailBlurHandler}
                     helperText={
-                        enteredEmailHasError && "Please enter your email."
+                        enteredEmailHasError && 'Please enter your email.'
                     }
                     error
                 />
@@ -75,7 +76,7 @@ const ForgotPasswordEmail = (props) => {
                 SUBMIT
             </PrimaryButton>
         </div>
-    );
-};
+    )
+}
 
-export default ForgotPasswordEmail;
+export default ForgotPasswordEmail

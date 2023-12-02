@@ -80,6 +80,8 @@ const EditProfileForm = (props) => {
                 path: 'profile_pictures',
             })
 
+            console.log('image uploaded')
+
             const userUpdate = {
                 first_name: firstName,
                 middle_name: middleName,
@@ -89,8 +91,11 @@ const EditProfileForm = (props) => {
                 profile_picture_img: res.name,
             }
 
+            console.log('updating user')
             const resUpdate = await updateUser(userUpdate, user.id)
-            userCtx.onLogin({ user: resUpdate, token: userCtx.token })
+
+            console.log('updated user')
+            // userCtx.onLogin({ user: resUpdate, token: userCtx.token })
             navigate('/profile')
             notify('User update successfully!', 'success')
         } catch (err) {}
@@ -107,13 +112,14 @@ const EditProfileForm = (props) => {
             return
         }
 
+        console.log('saving')
+
         setISaving(true)
+        console.log('state saved')
 
         if (Object.keys(newIimage).length > 0) {
-            console.log('00')
             handleFileUpload()
         } else {
-            console.log('1')
             try {
                 const userUpdate = {
                     first_name: firstName,
@@ -124,8 +130,10 @@ const EditProfileForm = (props) => {
                     profile_picture_img: userCtx.user.profile_picture_img,
                 }
 
+                console.log('updating user...')
                 const resUpdate = await updateUser(userUpdate, user.id)
-                userCtx.onLogin({ user: resUpdate, token: userCtx.token })
+                console.log('saved')
+                // userCtx.onLogin({ user: resUpdate, token: userCtx.token })
                 navigate('/profile')
                 notify('User update successfully!', 'success')
             } catch (err) {}

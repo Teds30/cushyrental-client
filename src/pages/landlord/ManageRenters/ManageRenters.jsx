@@ -34,7 +34,7 @@ const ManageRenters = () => {
         try {
             const res = await fetchRentals(userCtx.user.id)
             const availableRentals = res.filter(
-                (rental) => rental.rental_status === 0
+                (rental) => rental.rental_status === 1
             )
             setTenantsData(availableRentals)
         } catch (error) {}
@@ -46,7 +46,7 @@ const ManageRenters = () => {
                 const response = await sendRequest({
                     url: `${import.meta.env.VITE_CHAT_LOCALHOST}/inquiries/${
                         userCtx.user.id
-                    }`,
+                    }/token=${userCtx.token}`,
                 })
                 setInquiriesData(response)
             } catch (error) {

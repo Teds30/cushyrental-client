@@ -18,10 +18,11 @@ export const useHttp = () => {
             url,
             method = 'GET',
             body = null,
+            noToken = false,
             headers = {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
-                Authorization: `Bearer ${storedData.token}`,
+                Authorization: !noToken && `Bearer ${storedData.token}`,
             },
             expectText = false,
             notifyError = false,

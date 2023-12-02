@@ -19,25 +19,9 @@ import styles from './ViewUnitDetails.module.css'
 import { CiLocationOn } from 'react-icons/ci'
 import { TbMapPin } from 'react-icons/tb'
 
-import { useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 
-const genders = [
-    {
-        id: '1',
-        name: 'Male',
-        icon: 'male.svg',
-    },
-    {
-        id: '2',
-        name: 'Female',
-        icon: 'female.svg',
-    },
-    {
-        id: '3',
-        name: 'Both',
-        icon: 'allgender.svg',
-    },
-]
+import AuthContext from '../../../context/auth-context'
 
 const UnitDetails = (props) => {
     const { unit } = props
@@ -45,11 +29,31 @@ const UnitDetails = (props) => {
     const navigate = useNavigate()
     const url_location = useLocation()
 
+    const authCtx = useContext(AuthContext)
+
     // const handleUnitLocationClick = () => {
     //     navigate('/unit_location')
     // }
 
     const location = unit.location.replace(/\s/g, '')
+
+    const genders = [
+        {
+            id: '1',
+            name: 'Male',
+            icon: 'male.svg',
+        },
+        {
+            id: '2',
+            name: 'Female',
+            icon: 'female.svg',
+        },
+        {
+            id: '3',
+            name: 'Both',
+            icon: 'allgender.svg',
+        },
+    ]
 
     const [gender, setGender] = useState(
         unit.gender === 1 ? 'Male' : unit.gender === 2 ? 'Female' : 'Both'
@@ -240,26 +244,32 @@ const UnitDetails = (props) => {
                         )}
                     </div>
                 </CardShadow>
+                {authCtx.user && authCtx.user.id !== unit.landlord_id && (
+                    <CardShadow>
+                        <div className={`${styles['unit-detials-col']}`}>
+                            <LandlordProfile
+                                user={{
+                                    ...unit.landlord,
+                                    address: unit.address,
+                                }}
+                            />
+                        </div>
+                    </CardShadow>
+                )}
 
-                <CardShadow>
-                    <div className={`${styles['unit-detials-col']}`}>
-                        <LandlordProfile
-                            user={{ ...unit.landlord, address: unit.address }}
-                        />
+                {authCtx.user && authCtx.user.id !== unit.landlord_id && (
+                    <div
+                        className={`${styles['similar-units']}`}
+                        style={{
+                            marginTop: '16px',
+                            paddingTop: '24px',
+                            borderTop: '1px solid var(--border-color)',
+                        }}
+                    >
+                        <h3>You might also like</h3>
+                        <SimilarUnits unitId={unit.id} unitPrice={unit.price} />
                     </div>
-                </CardShadow>
-
-                <div
-                    className={`${styles['similar-units']}`}
-                    style={{
-                        marginTop: '16px',
-                        paddingTop: '24px',
-                        borderTop: '1px solid var(--border-color)',
-                    }}
-                >
-                    <h3>You might also like</h3>
-                    <SimilarUnits unitId={unit.id} unitPrice={unit.price} />
-                </div>
+                )}
             </div>
         </div>
     )

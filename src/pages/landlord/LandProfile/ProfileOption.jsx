@@ -21,14 +21,14 @@ const ProfileOption = (props) => {
                 <p className="smaller-text">My Profile</p>
             </Link>
 
-            {user_type_id === 2 && (
+            {user_type_id == 2 && (
                 <Link to="/manage_subscriptions" className={styles.col}>
-                    <SubscriptionIcon/>
+                    <SubscriptionIcon />
                     <p className="smaller-text">Subscription</p>
                 </Link>
             )}
 
-            {user_type_id === 2 && (
+            {user_type_id == 2 && (
                 <Link to="/myunit-landlord" className={styles.col}>
                     <BiBuildingHouse
                         style={{

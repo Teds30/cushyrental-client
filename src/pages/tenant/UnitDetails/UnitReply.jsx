@@ -51,9 +51,7 @@ const UnitReply = ({
             <div className={`${styles['top-card-container']}`}>
                 <div className={`${styles['inside-card-container']}`}>
                     <UserAvatar
-                        avatar_url={
-                            reviewReply.rental.unit.landlord.profile_picture_img
-                        }
+                        avatar_url={reviewReply.user.profile_picture_img}
                         size="40px"
                     />
                     <div className={`${styles['text-card-container']}`}>

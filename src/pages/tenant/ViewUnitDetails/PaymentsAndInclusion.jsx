@@ -6,7 +6,7 @@ const PaymentAndInclusion = (props) => {
 
     const paymentOptions = [
         {
-            id: 0,
+            id: -1,
             icon: 'advance_deposit.svg',
             name: (
                 <>
@@ -18,7 +18,7 @@ const PaymentAndInclusion = (props) => {
             ),
         },
         {
-            id: 1,
+            id: -2,
             icon: 'advance_payment.svg',
             name: (
                 <>

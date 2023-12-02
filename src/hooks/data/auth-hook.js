@@ -55,11 +55,12 @@ const useAuth = () => {
                 setIsLoggedIn(true)
             }
             if (!response.ok) {
+                localStorage.removeItem('userData')
                 setUser(null)
                 setIsLoggedIn(false)
                 navigate('/signin')
             }
-            navigate('/')
+            // navigate('/')
         } catch (error) {
             // Handle errors if needed
             console.log('error: ', error)

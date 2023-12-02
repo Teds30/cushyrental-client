@@ -40,7 +40,7 @@ const ChipBig = (props) => {
         }
 
         fetchIcons()
-    }, [originalItems, fetchIcon])
+    }, [originalItems])
 
     const handleClick = (id) => {
         if (button === 'checkbox') {
@@ -64,7 +64,7 @@ const ChipBig = (props) => {
             ? '0px 0px 0px 5px rgba(3, 176, 119, 0.20)'
             : '0px 0px 0px 5px rgba(235, 88, 88, 0.20)'
 
-    const content = items.map((item) => (
+    const content = items.map((item, index) => (
         <Chip
             key={item.id}
             variant="outlined"

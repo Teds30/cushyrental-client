@@ -48,7 +48,7 @@
 .tab-child div {
     padding: 2px 6px;
     border-radius: 3px;
-    background: #ECEDF1;
+    background: #ecedf1;
     font-weight: 600;
 
     display: flex;
@@ -71,11 +71,11 @@
 
 .unit-col {
     display: flex;
-    gap:12px;
+    gap: 12px;
 }
 
 .unit-images {
-    background: #F5F5F9;
+    background: #f5f5f9;
     width: 100px;
     height: 100px;
 }
@@ -131,8 +131,7 @@
     margin: 0 auto;
     position: fixed;
     bottom: 50px;
-    width: 100%;
-    padding: 17px;
+    right: 18px;
     box-sizing: border-box;
 }
 
@@ -148,7 +147,7 @@
     }
 
     .create-unit-button {
-        width:  768px;
+        width: 768px;
     }
 }
 

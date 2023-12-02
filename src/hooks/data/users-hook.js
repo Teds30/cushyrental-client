@@ -214,6 +214,7 @@ const useUserManager = () => {
                     url: `${
                         import.meta.env.VITE_BACKEND_LOCALHOST
                     }/api/users/email/${email}`,
+                    noToken: true,
                 })
             } catch (err) {
                 throw err.message

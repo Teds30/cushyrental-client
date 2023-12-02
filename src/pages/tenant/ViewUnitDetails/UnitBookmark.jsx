@@ -57,7 +57,7 @@ const UnitBookmark = (props) => {
     })
 
     const handleBookmarkClick = async () => {
-        await mutation.mutate()
+        mutation.mutate()
     }
 
     useEffect(() => {

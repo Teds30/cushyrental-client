@@ -49,6 +49,7 @@ const ViewUnitDetails = () => {
     const { data: unitData, isLoading: unitLoading } = useQuery({
         queryKey: ['unit', id],
         queryFn: () => {
+            console.log('asd')
             return fetchUnit(id)
         },
         refetchOnWindowFocus: false,
@@ -56,19 +57,17 @@ const ViewUnitDetails = () => {
     })
 
     useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 20) {
-                setScrolling(true)
-            } else {
-                setScrolling(false)
-            }
-        }
-
-        window.addEventListener('scroll', handleScroll)
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll)
-        }
+        // const handleScroll = () => {
+        //     if (window.scrollY > 20) {
+        //         setScrolling(true)
+        //     } else {
+        //         setScrolling(false)
+        //     }
+        // }
+        // window.addEventListener('scroll', handleScroll)
+        // return () => {
+        //     window.removeEventListener('scroll', handleScroll)
+        // }
     }, [scrolling])
 
     const handleInquire = async () => {
@@ -158,12 +157,15 @@ const ViewUnitDetails = () => {
                                     <p className="title">{unitData.name}</p>
                                 </Box>
                             </div>
-                            <div className={`${styles['bookmark']}`}>
-                                <UnitBookmark
-                                    scrolling={scrolling}
-                                    unitId={unitData.id}
-                                />
-                            </div>
+                            {authCtx.user &&
+                                authCtx.user.id !== unitData.landlord_id && (
+                                    <div className={`${styles['bookmark']}`}>
+                                        <UnitBookmark
+                                            scrolling={scrolling}
+                                            unitId={unitData.id}
+                                        />
+                                    </div>
+                                )}
                         </Toolbar>
                     </AppBar>
                 </Box>
@@ -197,7 +199,7 @@ const ViewUnitDetails = () => {
                                 </PrimaryButton>
                             </div>
                         ) : (
-                            <Link to={'/manage_unit/edit/:id'}>
+                            <Link to={`/manage_unit/edit/${unitData.id}`}>
                                 <PrimaryButton width="100%">
                                     Manage unit
                                 </PrimaryButton>

@@ -52,9 +52,6 @@ const UnitReviews = (props) => {
                 }/api/reviews-landlord-reply`,
                 method: 'POST',
                 body: JSON.stringify(replyData),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
             })
         } catch (error) {
             console.error('Error sending reply:', error)

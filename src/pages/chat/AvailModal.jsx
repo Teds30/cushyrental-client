@@ -69,7 +69,7 @@ const AvailModal = (props) => {
             const data1 = await res1.json()
 
             const res = await sendRequest({
-                url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/rentals/`,
+                url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/rentals`,
                 method: 'POST',
                 body: JSON.stringify({
                     user_id: room.tenant_id,
@@ -78,9 +78,18 @@ const AvailModal = (props) => {
                     monthly_amount: unit.price,
                     due_date: 28,
                     date_start: formattedDate,
-                    date_end: '',
+                    rental_status: 1,
+                    // date_end: '',
                 }),
+
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    Authorization: `Bearer ${authCtx.token}`,
+                },
             })
+
+            console.log(res)
         } catch (err) {
             console.log(err)
         }
@@ -112,12 +121,26 @@ const AvailModal = (props) => {
     }, [socket])
 
     const handleAvail = () => {
+        console.log(user_id)
+        console.log(roomDetails.data)
+        console.log('emiting: ', {
+            slots: quantity.value,
+            room_id: room_id,
+            request_status: 'avail',
+            name:
+                roomDetails.data && user_id == roomDetails.data.tenant_id
+                    ? `${roomDetails.data.tenant.first_name} ${roomDetails.data.tenant.last_name}`
+                    : `${roomDetails.data.landlord.first_name} ${roomDetails.data.landlord.last_name}`,
+            read: false,
+            user_id: roomDetails.data && roomDetails.data.landlord_id,
+            unit_name: unit && unit.name,
+        })
         socket.emit('unit-avail', {
             slots: quantity.value,
             room_id: room_id,
             request_status: 'avail',
             name:
-                user_id !== roomDetails.data && roomDetails.data.tenant_id
+                roomDetails.data && user_id == roomDetails.data.tenant_id
                     ? `${roomDetails.data.tenant.first_name} ${roomDetails.data.tenant.last_name}`
                     : `${roomDetails.data.landlord.first_name} ${roomDetails.data.landlord.last_name}`,
             read: false,

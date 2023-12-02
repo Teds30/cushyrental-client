@@ -13,7 +13,9 @@ import 'swiper/css/thumbs'
 import './UnitPhoto.css'
 
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules'
-import { Box } from '@mui/material'
+import { Backdrop, Box, IconButton } from '@mui/material'
+import { IoClose } from 'react-icons/io5'
+
 import { useQueries, useQuery } from '@tanstack/react-query'
 
 export default function UnitPhoto(props) {
@@ -23,17 +25,39 @@ export default function UnitPhoto(props) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null)
     const [unitImages, setUnitImages] = useState([])
 
+    const [open, setOpen] = useState(false)
+    const [fullImage, setFullImage] = useState(null)
+    const [imageFullScreen, setImageFullScreen] = useState(false)
+
+    const handleClose = () => {
+        setOpen(false)
+        setFullImage(null)
+        setImageFullScreen(false)
+    }
+    const handleFullScreen = () => {
+        setImageFullScreen(!imageFullScreen)
+    }
+
     const imageContent1 =
         !isLoading &&
         unitImages.map((image, index) => (
             <SwiperSlide key={index} className="swiperSlide">
-                <img src={image} />
+                <img
+                    src={image}
+                    onClick={(e) => {
+                        setFullImage(e)
+                        setOpen(true)
+                    }}
+                />
             </SwiperSlide>
         ))
     const imageContent2 =
         !isLoading &&
         unitImages.map((image, index) => (
-            <SwiperSlide key={index + 10} className="swiperSlide">
+            <SwiperSlide
+                key={index + unitImages.length + 1}
+                className="swiperSlide"
+            >
                 <img src={image} />
             </SwiperSlide>
         ))
@@ -90,6 +114,80 @@ export default function UnitPhoto(props) {
             >
                 {imageContent2}
             </Swiper>
+            {fullImage && (
+                <Backdrop
+                    sx={{
+                        color: '#fff',
+                        zIndex: (theme) => theme.zIndex.drawer + 1,
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                        backgroundColor: imageFullScreen
+                            ? 'rgba(0,0,0,1)'
+                            : 'rgba(255,255,255,1)',
+                        transition: '.5s',
+                    }}
+                    open={open}
+                    // onClick={handleClose}
+                >
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            height: '100%',
+                        }}
+                        onClick={() => imageFullScreen && handleFullScreen()}
+                    >
+                        {!imageFullScreen && (
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    paddingInline: '8px',
+                                }}
+                            >
+                                <IconButton
+                                    sx={{
+                                        alignSelf: 'flex-start',
+                                    }}
+                                    size="large"
+                                    color="inherit"
+                                    aria-label="menu"
+                                    onClick={handleClose}
+                                >
+                                    <IoClose
+                                        style={{ fill: 'var(--accent)' }}
+                                    />
+                                </IconButton>
+                            </Box>
+                        )}
+
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                paddingInline: !imageFullScreen && '8px',
+                                transition: '.5s',
+                                overflow: 'hidden',
+                            }}
+                        >
+                            <img
+                                src={fullImage.target.src}
+                                alt=""
+                                style={{
+                                    width: '100%',
+                                    maxWidth: '500px',
+                                    height: 'auto',
+                                    borderRadius: !imageFullScreen && '16px',
+                                    transition: '.5s',
+                                }}
+                                onClick={handleFullScreen}
+                            />
+                        </Box>
+                    </Box>
+                </Backdrop>
+            )}
         </Box>
     )
 }

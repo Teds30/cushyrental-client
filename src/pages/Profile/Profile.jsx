@@ -103,8 +103,8 @@ const Profile = () => {
                                             userCtx.user.middle_name}{' '} */}
                                         {userCtx.user.last_name}
                                     </p>
-                                    {userCtx.user.is_verified !== false &&
-                                        userCtx.user.user_type_id === 2 && (
+                                    {userCtx.user.is_verified &&
+                                        userCtx.user.user_type_id == 2 && (
                                             <VerifiedIcon
                                                 style={{
                                                     color: 'var(--accent)',
@@ -112,17 +112,19 @@ const Profile = () => {
                                             />
                                         )}
                                 </div>
-                                {userCtx.user.user_type_id === 3 ? (
+                                {userCtx.user.user_type_id == 3 ? (
                                     <p>Tenant</p>
-                                ) : (
+                                ) : userCtx.user.user_type_id == 2 ? (
                                     <p>Landlord</p>
+                                ) : (
+                                    ''
                                 )}
                             </div>
                         </div>
                     )}
 
                     <div className={`${styles['user-menu']}`}>
-                        {userCtx.user && userCtx.user.user_type_id === 2 ? (
+                        {userCtx.user && userCtx.user.user_type_id == 2 ? (
                             <ProfileOption
                                 user_type_id={
                                     userCtx.user && userCtx.user.user_type_id
