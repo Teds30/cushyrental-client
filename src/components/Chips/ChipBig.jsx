@@ -102,8 +102,7 @@ const ChipBig = (props) => {
                 },
                 '&:hover': {
                     background:
-                        chips.includes(item.id) &&
-                        'rgba(var(--accent-rgb), .8) !important',
+                        chips.includes(item.id) && `${colorStyle} !important`,
                 },
             }}
             onClick={clickable ? () => handleClick(item.id) : undefined}
