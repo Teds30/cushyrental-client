@@ -84,7 +84,9 @@ const useImageManager = () => {
                         {
                             method: 'POST',
                             body: JSON.stringify({ image_path: image_path }),
-                            // headers: {},
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
                         }
                     )
                 }
