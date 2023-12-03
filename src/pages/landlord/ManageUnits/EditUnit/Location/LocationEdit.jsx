@@ -10,7 +10,6 @@ import IconButton from '@mui/material/IconButton'
 import PrimaryButton from '../../../../../components/Button/PrimaryButton'
 import SearchField from '../../../../../components/Search/SearchField'
 import CreateUnitContext from '../../../../../context/create-unit-context'
-
 import styles from '../../CreateUnit/CreateUnit.module.css'
 import photo from '../../../../../assets/Units/pics.png'
 import { FiChevronLeft } from 'react-icons/fi'
@@ -29,20 +28,18 @@ import {
     geocode,
     RequestType,
 } from 'react-geocode'
+import useUnitManager from '../../../../../hooks/data/units-hook'
 
 const lib = ['places']
 
 const Location = (props) => {
-    // const { isLoaded } = useLoadScript({
-    //     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API,
-    // })
-    // const history = useHistory();
     const { oldLocation } = props
     const { id } = useParams()
     const createUnitCtx = useContext(CreateUnitContext)
     const navigate = useNavigate()
     const location = useLocation()
     const receivedData = location.state
+    const { updateLocation, isLoading } = useUnitManager()
 
     const [lat, lng] = receivedData.location.split(', ').map(parseFloat);
 
@@ -65,11 +62,6 @@ const Location = (props) => {
     const [newCenter, setNewCenter] = useState(center)
 
     const handleCurrentLocation = () => {
-        // navigator.geolocation.getCurrentPosition((position) => {
-        //     const { latitude, longitude } = position.coords
-        //     setCenter({ lat: latitude, lng: longitude })
-        // })
-        // options for current position
         const navigatorLocationOptions = {
             enableHighAccuracy: true,
             timeout: 7000,
@@ -89,8 +81,8 @@ const Location = (props) => {
         }
     }
 
-    const saveHandler = async (event) => {
-        event.preventDefault()
+    const saveHandler = async () => {
+        // event.preventDefault()
         setKey(import.meta.env.VITE_GOOGLE_MAP_API)
         let address
 
@@ -105,13 +97,20 @@ const Location = (props) => {
         const unit_new_location = JSON.stringify(newCenter)
         const location = JSON.parse(unit_new_location)
 
-        createUnitCtx.onUnitData({
-            ...createUnitCtx.unitData,
-            location: location.lat + ', ' + location.lng,
-            address: address,
-            location_done: true
-        })
-        navigate(`/manage_unit/edit/${id}`)
+        // const res = await updateLocation(id, location.lat, location.lng, address)
+        
+        try {
+            const res = await updateLocation({id: id, location: location.lat + ', ' + location.lng, address: address});
+            console.log(res)
+        } catch (error){}
+
+        // createUnitCtx.onUnitData({
+        //     ...createUnitCtx.unitData,
+        //     location: location.lat + ', ' + location.lng,
+        //     address: address,
+        //     location_done: true
+        // })
+        // navigate(`/manage_unit/edit/${id}`)
         // save
     }
 
@@ -162,7 +161,7 @@ const Location = (props) => {
                         <Box>
                             <p className="title">Location</p>
                         </Box>
-                        <PrimaryButton onClick={saveHandler}>
+                        <PrimaryButton onClick={saveHandler} isLoading={isLoading} disabled={isLoading}>
                             Save
                         </PrimaryButton>
                     </Toolbar>

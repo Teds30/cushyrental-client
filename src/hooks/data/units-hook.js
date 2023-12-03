@@ -366,6 +366,26 @@ const useUnitManager = () => {
         [sendRequest]
     )
 
+    const updateLocation = useCallback(
+        async (body) => {
+            let responseData
+            try {
+                responseData = await sendRequest({
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/unit_location`,
+                    method: 'PUT',
+                    body: JSON.stringify(body),
+                })
+            } catch (err) {
+                throw err.message
+            }
+
+            return responseData
+        },
+        [sendRequest]
+    )
+
     return {
         isLoading,
         fetchSimilarUnits,
@@ -387,6 +407,7 @@ const useUnitManager = () => {
         editUnitfacility,
         fetchUnitReviews,
         deleteUnit,
+        updateLocation,
     }
 }
 
