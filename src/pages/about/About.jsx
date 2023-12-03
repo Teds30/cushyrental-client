@@ -38,7 +38,7 @@ const About = () => {
                     <li>Home</li>
                 </ul>
 
-                <Link className={styles['primary-btn']} to={'/signin'}>
+                <Link className={styles['primary-btn']} to={'/'}>
                     Board Now
                 </Link>
             </div>
