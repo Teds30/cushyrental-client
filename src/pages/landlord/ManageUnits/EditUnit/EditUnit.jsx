@@ -107,6 +107,7 @@ const EditUnit = (props) => {
         } catch (error) {}
     };
 
+    console.log(unit.location)
     const deleteHandler = () => {
         if (unit.name === "" || unit.details === "" || unit.price === "") {
             return;
@@ -291,7 +292,19 @@ const EditUnit = (props) => {
                                 {unit.address}
                             </p>
                             <div className={styles.point}></div>
-                            <Link style={{ color: "var(--accent)" }}>Edit</Link>
+                            <Link
+                                onClick={(e) => { e.preventDefault() 
+                                    navigate(`/manage_unit/edit/location/${unit.id}`, {
+                                    state: {
+                                        location: unit.location,
+                                        }
+                                    },
+                                )}}
+                                // to={`/manage_unit/edit/location/${unit.id}`}
+                                style={{ color: "var(--accent)" }}
+                            >
+                                Edit
+                            </Link>
                         </div>
                     </div>
 

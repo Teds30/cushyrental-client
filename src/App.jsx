@@ -60,6 +60,7 @@ import { LinearProgress } from '@mui/material'
 import About from './pages/about/About'
 import ChangeContactNumberMain from './pages/Profile/ChangeContactNumber/ChangeContactNumberMain'
 import SplashScreen from './components/SplashScreen/SplashScreen'
+import LocationEdit from './pages/landlord/ManageUnits/EditUnit/Location/LocationEdit'
 
 function App() {
     const { user, token, loginHandler, logoutHandler, isLoggedIn } = useAuth()
@@ -137,7 +138,7 @@ function App() {
                     <Route
                         path="/manage_unit/create_unit/location"
                         element={<Location />}
-                    ></Route>
+                    ></Route>                
                     <Route
                         path="/manage_unit/edit/:id"
                         element={<UnitData />}
@@ -162,6 +163,10 @@ function App() {
                         path="/manage_unit/edit/rules/:id"
                         element={<UserRules />}
                     ></Route>
+                    <Route
+                        path="/manage_unit/edit/location/:id"
+                        element={<LocationEdit />}
+                    ></Route>    
                     {/* Manage Landlord Unit */}
                     {/* Profile */}
                     <Route path="/profile" element={<Profile />}></Route>
