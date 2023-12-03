@@ -373,7 +373,7 @@ const useUnitManager = () => {
                 responseData = await sendRequest({
                     url: `${
                         import.meta.env.VITE_BACKEND_LOCALHOST
-                    }/api/unit_location`,
+                    }/api/update_unit_location`,
                     method: 'PUT',
                     body: JSON.stringify(body),
                 })

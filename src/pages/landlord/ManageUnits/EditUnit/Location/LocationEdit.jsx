@@ -6,6 +6,7 @@ import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
+import useNotistack from '../../../../../hooks/notistack-hook'
 
 import PrimaryButton from '../../../../../components/Button/PrimaryButton'
 import SearchField from '../../../../../components/Search/SearchField'
@@ -40,6 +41,7 @@ const Location = (props) => {
     const location = useLocation()
     const receivedData = location.state
     const { updateLocation, isLoading } = useUnitManager()
+    const {notify} = useNotistack();
 
     const [lat, lng] = receivedData.location.split(', ').map(parseFloat);
 
@@ -99,9 +101,14 @@ const Location = (props) => {
 
         // const res = await updateLocation(id, location.lat, location.lng, address)
         
+        const data = {id: Number(id), location: location.lat + ', ' + location.lng, address: address};
+
+        console.log(data);
+
         try {
-            const res = await updateLocation({id: id, location: location.lat + ', ' + location.lng, address: address});
-            console.log(res)
+            const res = await updateLocation(data);
+            navigate(`/manage_unit/edit/${id}`)
+            notify("Location updated successfully", "success" );
         } catch (error){}
 
         // createUnitCtx.onUnitData({
