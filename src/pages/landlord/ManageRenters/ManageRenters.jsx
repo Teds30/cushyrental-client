@@ -54,8 +54,10 @@ const ManageRenters = () => {
             }
         }
 
-        fetchTenantsData()
-        fetchInquiriesData()
+        if (userCtx && userCtx.token) {
+            fetchTenantsData()
+            fetchInquiriesData()
+        }
     }, [])
 
     return (

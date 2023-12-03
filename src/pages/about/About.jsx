@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 
 import styles from './About.module.css'
 import { Link, useNavigate } from 'react-router-dom'
@@ -19,9 +19,12 @@ import { TbArrowNarrowRight } from 'react-icons/tb'
 import { Box } from '@mui/material'
 import AnimatedElement from './AnimatedElement'
 import AnimatedNumber from './AnimatedNumber'
+import AuthContext from '../../context/auth-context'
 
 const About = () => {
     const navigate = useNavigate()
+
+    const authCtx = useContext(AuthContext)
 
     return (
         <main className={styles['container']}>
@@ -38,7 +41,10 @@ const About = () => {
                     <li>Home</li>
                 </ul>
 
-                <Link className={styles['primary-btn']} to={'/'}>
+                <Link
+                    className={styles['primary-btn']}
+                    to={authCtx && authCtx.user ? '/' : '/signin'}
+                >
                     Board Now
                 </Link>
             </div>
