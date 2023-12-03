@@ -250,12 +250,14 @@
     transition: width 0.5s ease;
 
     position: relative;
+    z-index: 100;
 }
 
 .member-img img {
     width: inherit;
     height: inherit;
     object-fit: cover;
+    z-index: 100;
 }
 
 .member h3 {
@@ -480,16 +482,28 @@
 .socials {
     display: flex;
     gap: 8px;
+    margin-top: 12px;
 }
 .social-brand {
-    border: 1px solid red;
     width: 24px;
     height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    fill: #fff;
 }
 
 .social-brand img {
     width: inherit;
     height: inherit;
+    color: #fff;
+    fill: #fff;
+}
+.social-brand:focus,
+.social-brand:hover,
+.social-brand:active,
+.social-brand:visited {
     color: #fff;
     fill: #fff;
 }

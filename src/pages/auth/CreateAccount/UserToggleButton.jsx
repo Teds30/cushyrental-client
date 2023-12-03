@@ -3,8 +3,10 @@ import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 
 export default function UserToggleButton(props) {
-    const { onUserType } = props
-    const [alignment, setAlignment] = useState('tenant')
+    const { onUserType, initialSelected = { user_type_id: 3 } } = props
+    const [alignment, setAlignment] = useState(
+        initialSelected.user_type_id == 2 ? 'landlord' : 'tenant' || 'tenant'
+    )
 
     const handleChange = (event, newAlignment) => {
         if (

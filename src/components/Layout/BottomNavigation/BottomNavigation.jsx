@@ -76,7 +76,8 @@ const BottomNavigation = (props) => {
 
     const authCtx = useContext(AuthContext)
     const { sendRequest, isLoading } = useHttp()
-    const { fetchUserNotifications } = useNotificationManager()
+    const { fetchUserNotifications, isLoading: notificationLoading } =
+        useNotificationManager()
 
     const [selected, setSelected] = useState(current)
     const [navData, setNavData] = useState(nav_data)
@@ -162,88 +163,89 @@ const BottomNavigation = (props) => {
     }, [socket])
 
     return (
-        <React.Fragment>
-            {/* <CssBaseline /> */}
-            {
-                <HideOnScroll {...props}>
-                    <AppBar
-                        position="fixed"
-                        sx={{
-                            background: 'var(--bg-layer1)',
-                            color: 'var(--fc-body-light)',
-                            top: 'auto',
-                            bottom: 0,
-                        }}
-                    >
-                        <Toolbar
+        !notificationLoading && (
+            <React.Fragment>
+                {/* <CssBaseline /> */}
+                {
+                    <HideOnScroll {...props}>
+                        <AppBar
+                            position="fixed"
                             sx={{
+                                background: 'var(--bg-layer1)',
+                                color: 'var(--fc-body-light)',
                                 top: 'auto',
                                 bottom: 0,
-                                padding: 0,
                             }}
                         >
-                            {navData.map((data, index) => {
-                                const nav_style =
-                                    index === selected
-                                        ? {
-                                              ...itemStyles,
-                                              color: 'var(--accent)',
-                                              fill: 'var(--accent)',
-                                          }
-                                        : {
-                                              ...itemStyles,
-                                              color: 'var(--fc-body-light)',
-                                              fill: 'var(--fc-body-light)',
-                                          }
+                            <Toolbar
+                                sx={{
+                                    top: 'auto',
+                                    bottom: 0,
+                                    padding: 0,
+                                }}
+                            >
+                                {navData.map((data, index) => {
+                                    const nav_style =
+                                        index === selected
+                                            ? {
+                                                  ...itemStyles,
+                                                  color: 'var(--accent)',
+                                                  fill: 'var(--accent)',
+                                              }
+                                            : {
+                                                  ...itemStyles,
+                                                  color: 'var(--fc-body-light)',
+                                                  fill: 'var(--fc-body-light)',
+                                              }
 
-                                return data.main === true ? (
-                                    <div key={index} style={{ flex: '1' }}>
-                                        <StyledFab
-                                            color="secondary"
-                                            aria-label="add"
-                                        >
-                                            {data.icon}
-                                        </StyledFab>
-                                        <Box sx={itemStyles}>
-                                            <Box
-                                                sx={{
-                                                    width: '24px',
-                                                    height: '24px',
-                                                }}
-                                            />
-                                            {data.name}
-                                        </Box>
-                                    </div>
-                                ) : (
-                                    <Box
-                                        sx={{
-                                            ...nav_style,
-                                            position: 'relative',
-                                        }}
-                                        key={index}
-                                        onClick={() => {
-                                            selectHandler(index)
-                                        }}
-                                    >
-                                        {data.name === 'Notification' && (
-                                            <CustomBadge
-                                                badgeContent={notifCtr}
+                                    return data.main === true ? (
+                                        <div key={index} style={{ flex: '1' }}>
+                                            <StyledFab
+                                                color="secondary"
+                                                aria-label="add"
                                             >
-                                                {index === selected
-                                                    ? data.selectedIcon
-                                                    : data.icon}
-                                            </CustomBadge>
-                                        )}
-                                        {data.name !== 'Notification' && (
-                                            <>
-                                                {index === selected
-                                                    ? data.selectedIcon
-                                                    : data.icon}
-                                            </>
-                                        )}
-                                        {data.name}
+                                                {data.icon}
+                                            </StyledFab>
+                                            <Box sx={itemStyles}>
+                                                <Box
+                                                    sx={{
+                                                        width: '24px',
+                                                        height: '24px',
+                                                    }}
+                                                />
+                                                {data.name}
+                                            </Box>
+                                        </div>
+                                    ) : (
+                                        <Box
+                                            sx={{
+                                                ...nav_style,
+                                                position: 'relative',
+                                            }}
+                                            key={index}
+                                            onClick={() => {
+                                                selectHandler(index)
+                                            }}
+                                        >
+                                            {data.name === 'Notification' && (
+                                                <CustomBadge
+                                                    badgeContent={notifCtr}
+                                                >
+                                                    {index === selected
+                                                        ? data.selectedIcon
+                                                        : data.icon}
+                                                </CustomBadge>
+                                            )}
+                                            {data.name !== 'Notification' && (
+                                                <>
+                                                    {index === selected
+                                                        ? data.selectedIcon
+                                                        : data.icon}
+                                                </>
+                                            )}
+                                            {data.name}
 
-                                        {/* {data.name === 'Notification' &&
+                                            {/* {data.name === 'Notification' &&
                                                 notifCtr > 0 && (
                                                     <span
                                                         className={
@@ -253,16 +255,17 @@ const BottomNavigation = (props) => {
                                                         {notifCtr}
                                                     </span>
                                                 )} */}
-                                    </Box>
-                                )
-                            })}
-                        </Toolbar>
-                    </AppBar>
-                </HideOnScroll>
-            }
-            <Toolbar />
-            <Container>{children}</Container>
-        </React.Fragment>
+                                        </Box>
+                                    )
+                                })}
+                            </Toolbar>
+                        </AppBar>
+                    </HideOnScroll>
+                }
+                <Toolbar />
+                <Container>{children}</Container>
+            </React.Fragment>
+        )
     )
 }
 

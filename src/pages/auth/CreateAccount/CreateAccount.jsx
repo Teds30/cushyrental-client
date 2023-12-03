@@ -1,5 +1,5 @@
 import { useState, useCallback, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import UserToggleButton from './UserToggleButton'
 import CreateAccountForm from './CreateAccountForm'
@@ -19,9 +19,15 @@ const CreateAccount = () => {
     const ctx = useContext(AuthContext)
     const navigate = useNavigate()
     const { notify } = useNotistack()
+    const receivedData = useLocation()
 
     const [counter, setCounter] = useState(0)
-    const [userType, setUserType] = useState({ user_type_id: '2' })
+    const [userType, setUserType] = useState({
+        user_type_id:
+            receivedData.state && receivedData.state.user_type_id
+                ? receivedData.state.user_type_id
+                : 2,
+    })
 
     const userTypeHandler = useCallback(
         (userType) => {
@@ -115,7 +121,10 @@ const CreateAccount = () => {
             </div>
             <div className={`${styles['main-container']}`}>
                 <div className={`${styles['main-container-type']}`}>
-                    <UserToggleButton onUserType={userTypeHandler} />
+                    <UserToggleButton
+                        onUserType={userTypeHandler}
+                        initialSelected={userType}
+                    />
                 </div>
 
                 <div className={`${styles['main-container-form']}`}>

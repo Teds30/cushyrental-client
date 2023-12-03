@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 
 import styles from './About.module.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import brandLogo from '../../assets/cr_light.svg'
 import blurLogo from '../../assets/cr_filled_blur.svg'
@@ -21,6 +21,8 @@ import AnimatedElement from './AnimatedElement'
 import AnimatedNumber from './AnimatedNumber'
 
 const About = () => {
+    const navigate = useNavigate()
+
     return (
         <main className={styles['container']}>
             <div className={styles['header']}>
@@ -259,7 +261,7 @@ const About = () => {
                                 animation="zoom-in"
                                 transition={{ duration: 0.25, delay: 0.25 }}
                                 classes={styles['blob']}
-                                showOnce={true}
+                                // showOnce={true}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -439,7 +441,16 @@ const About = () => {
             <section className={styles['discover']}>
                 <h2>Discover boarding house with us!</h2>
                 <div className={styles['actions']}>
-                    <Link to={'/'}>
+                    <Link
+                        onClick={(e) => {
+                            e.preventDefault()
+                            navigate('/register', {
+                                state: {
+                                    user_type_id: 3,
+                                },
+                            })
+                        }}
+                    >
                         <div
                             className={`${styles['discover-btn']} ${styles['btn-primary']}`}
                         >
@@ -454,7 +465,16 @@ const About = () => {
                             </span>
                         </div>
                     </Link>
-                    <Link to={'/'}>
+                    <Link
+                        onClick={(e) => {
+                            e.preventDefault()
+                            navigate('/register', {
+                                state: {
+                                    user_type_id: 2,
+                                },
+                            })
+                        }}
+                    >
                         <div
                             className={`${styles['discover-btn']} ${styles['btn-outlined']}`}
                         >
@@ -480,7 +500,11 @@ const About = () => {
                     <div className={styles['contact-item']}>
                         <p className="title">Socials</p>
                         <div className={styles['socials']}>
-                            <div className={styles['social-brand']}>
+                            <a
+                                className={styles['social-brand']}
+                                href="https://www.facebook.com/profile.php?id=61553585090103"
+                                target="_blank"
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     class="icon icon-tabler icon-tabler-brand-facebook"
@@ -500,8 +524,12 @@ const About = () => {
                                     />
                                     <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
                                 </svg>
-                            </div>
-                            <div className={styles['social-brand']}>
+                            </a>
+                            <a
+                                className={styles['social-brand']}
+                                href="https://www.instagram.com/cushyrental"
+                                target="_blank"
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     class="icon icon-tabler icon-tabler-brand-instagram"
@@ -523,7 +551,7 @@ const About = () => {
                                     <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
                                     <path d="M16.5 7.5l0 .01" />
                                 </svg>
-                            </div>
+                            </a>
                         </div>
                     </div>
                     <div className={styles['contact-item']}>

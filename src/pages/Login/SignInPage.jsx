@@ -200,15 +200,13 @@ const SignInPage = () => {
                     </PrimaryButton>
                 </div>
 
-                <div>
-                    <div className={`${styles['sign-up__container']}`}>
-                        <div className={styles.hr}></div>
-                        <div className={styles.option}>Or Sign In with</div>
-                        <div className={styles.hr}></div>
-                    </div>
-
-                    <SocialMediaLogin />
+                <div className={`${styles['sign-up__container']}`}>
+                    <div className={styles.hr}></div>
+                    <div className={styles.option}>OR</div>
+                    <div className={styles.hr}></div>
                 </div>
+
+                <SocialMediaLogin />
 
                 <div className={`${styles['login-option']}`}>
                     <span>Don't have an account? </span>
