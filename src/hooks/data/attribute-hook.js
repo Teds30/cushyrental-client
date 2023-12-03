@@ -9,9 +9,6 @@ const useAttributeManager = () => {
         try {
             responseData = await sendRequest({
                 url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/amenities`,
-                headers: {
-                    Accept: 'application/json',
-                },
             })
         } catch (err) {
             throw err.message
@@ -427,7 +424,7 @@ const useAttributeManager = () => {
         deleteFacility,
         deleteInclusion,
         deleteRule,
-        fetchAttributes
+        fetchAttributes,
     }
 }
 
