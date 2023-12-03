@@ -6,6 +6,7 @@
     background: var(--bg-layer1);
     transition: max-width 0.3s ease-in-out;
     gap:27px;
+    height: 100vh;
 }
 
 .change-number-row {

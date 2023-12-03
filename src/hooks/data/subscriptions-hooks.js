@@ -82,7 +82,7 @@ const useSubscriptionManager = () => {
                 responseData = await sendRequest({
                     url: `${
                         import.meta.env.VITE_BACKEND_LOCALHOST
-                    }/api/unit_subscriptions/`,
+                    }/api/unit_subscriptions`,
                     method: 'POST',
                     body: JSON.stringify(body),
                     headers: {

@@ -51,7 +51,7 @@ const UnitImage = (props) => {
                 <p>
                     Promote this unit to reach more people.{' '}
                     <Link
-                        to="/avail_subscriptions"
+                        to="/subscriptions"
                         style={{ color: 'var(--accent)' }}
                     >
                         {' '}

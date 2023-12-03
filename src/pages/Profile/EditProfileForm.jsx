@@ -219,10 +219,10 @@ const EditProfileForm = (props) => {
                         label="Middle Name"
                         defaultValue={middleName}
                         onChange={middleNameChangeHandler}
-                        helperText={
-                            middleName === '' &&
-                            'Please enter your middle name.'
-                        }
+                        // helperText={
+                        //     middleName === '' &&
+                        //     'Please enter your middle name.'
+                        // }
                         error
                     />
 
