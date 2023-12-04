@@ -48,6 +48,7 @@ export default function UnitPhoto(props) {
                         setFullImage(e)
                         setOpen(true)
                     }}
+                    loading="lazy"
                 />
             </SwiperSlide>
         ))
@@ -73,13 +74,14 @@ export default function UnitPhoto(props) {
     })
 
     useEffect(() => {
+        const allQueriesCompleted = imageQueries.every(
+            (query) => query.status === 'success'
+        )
         const handleFetch = async () => {
             const unit_images = imageQueries.map((query) => query.data)
-
             setUnitImages(unit_images)
         }
-        if (imageQueries[0] && imageQueries[0].data && unitImages.length === 0)
-            handleFetch()
+        if (allQueriesCompleted && unitImages.length === 0) handleFetch()
     }, [imageQueries])
 
     return (
@@ -100,6 +102,8 @@ export default function UnitPhoto(props) {
                 navigation={true}
                 thumbs={{ swiper: thumbsSwiper }}
                 modules={[FreeMode, Navigation, Thumbs]}
+                lazyPreloadPrevNext={true}
+                lazy="true"
                 className="mySwiper2"
             >
                 {imageContent1}
