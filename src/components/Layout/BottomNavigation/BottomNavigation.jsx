@@ -75,7 +75,6 @@ const BottomNavigation = (props) => {
     const { current = 0, children, isTenant = false } = props
 
     const authCtx = useContext(AuthContext)
-    const { sendRequest, isLoading } = useHttp()
     const { fetchUserNotifications, isLoading: notificationLoading } =
         useNotificationManager()
 
@@ -105,6 +104,22 @@ const BottomNavigation = (props) => {
                 transports: ['websocket'],
             })
         )
+    }, [])
+
+    useEffect(() => {
+        if (!socket || !authCtx.user) return
+
+        loadData()
+        socket.emit('notification-join', { user_id: authCtx.user.id })
+        socket.on('notification-update', async () => {
+            const res = await fetchUserNotifications(authCtx.user.id)
+
+            const ctr = res.filter((notif) => notif.is_read === 0).length
+            setNotifCtr(ctr)
+        })
+        socket.on('notification-joined', () => {
+            // console.log('i joined notif!')
+        })
 
         const mainNav = !isTenant
             ? {
@@ -144,23 +159,7 @@ const BottomNavigation = (props) => {
               }
 
         setNavData([...nav_data.slice(0, 2), mainNav, ...nav_data.slice(2)])
-    }, [authCtx.user, notifCtr])
-
-    useEffect(() => {
-        if (!socket || !authCtx.user) return
-
-        loadData()
-        socket.emit('notification-join', { user_id: authCtx.user.id })
-        socket.on('notification-update', async () => {
-            const res = await fetchUserNotifications(authCtx.user.id)
-
-            const ctr = res.filter((notif) => notif.is_read === 0).length
-            setNotifCtr(ctr)
-        })
-        socket.on('notification-joined', () => {
-            // console.log('i joined notif!')
-        })
-    }, [socket])
+    }, [socket, authCtx.user, notifCtr])
 
     return (
         !notificationLoading && (
