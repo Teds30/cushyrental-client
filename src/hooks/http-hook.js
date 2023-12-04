@@ -30,7 +30,6 @@ export const useHttp = () => {
             setIsLoading(true)
             const httpAbortCtrl = new AbortController()
             activeHttpRequests.current.push(httpAbortCtrl)
-            console.log(headers)
             try {
                 const response = await fetch(url, {
                     method,
