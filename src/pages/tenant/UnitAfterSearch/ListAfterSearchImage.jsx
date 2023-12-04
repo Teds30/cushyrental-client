@@ -25,6 +25,7 @@ const ListAfterSearchImage = (props) => {
         unitImages.map((image, index) => (
             <SwiperSlide key={index}>
                 <img
+                    loading="lazy"
                     src={image}
                     style={{ height: '100%', objectFit: 'cover' }}
                 />
@@ -57,6 +58,8 @@ const ListAfterSearchImage = (props) => {
                 pagination={{
                     clickable: true,
                 }}
+                lazyPreloadPrevNext={true}
+                lazy={true}
                 navigation={true}
                 modules={[Pagination, Navigation]}
                 className="unitSwiperImage"
