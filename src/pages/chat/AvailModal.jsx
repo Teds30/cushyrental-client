@@ -89,7 +89,6 @@ const AvailModal = (props) => {
                 },
             })
 
-            console.log(res)
         } catch (err) {
             console.log(err)
         }
@@ -121,21 +120,8 @@ const AvailModal = (props) => {
     }, [socket])
 
     const handleAvail = () => {
-        console.log(user_id)
-        console.log(roomDetails.data)
-        console.log('emiting: ', {
-            slots: quantity.value,
-            room_id: room_id,
-            request_status: 'avail',
-            name:
-                roomDetails.data && user_id == roomDetails.data.tenant_id
-                    ? `${roomDetails.data.tenant.first_name} ${roomDetails.data.tenant.last_name}`
-                    : `${roomDetails.data.landlord.first_name} ${roomDetails.data.landlord.last_name}`,
-            read: false,
-            user_id: roomDetails.data && roomDetails.data.landlord_id,
-            unit_name: unit && unit.name,
-        })
         socket.emit('unit-avail', {
+            token: authCtx.token ?? '',
             slots: quantity.value,
             room_id: room_id,
             request_status: 'avail',
@@ -150,6 +136,7 @@ const AvailModal = (props) => {
     }
     const handleCancel = () => {
         socket.emit('unit-avail', {
+            token: authCtx.token ?? '',
             room_id: room_id,
             request_status: 'cancel',
             name:
@@ -161,7 +148,9 @@ const AvailModal = (props) => {
     }
 
     const handleAccept = () => {
+        addRental()
         socket.emit('unit-avail', {
+            token: authCtx.token ?? '',
             room_id: room_id,
             request_status: 'accept',
             name:
@@ -172,11 +161,11 @@ const AvailModal = (props) => {
             user_id: roomDetails.data && roomDetails.data.tenant_id,
             unit_name: unit && unit.name,
         })
-        addRental()
     }
 
     const handleReject = () => {
         socket.emit('unit-avail', {
+            token: authCtx.token ?? '',
             room_id: room_id,
             request_status: 'reject',
             name:
@@ -286,10 +275,16 @@ const AvailModal = (props) => {
                             btnType="danger"
                             btnSize="small"
                             onClick={handleReject}
+                            disabled={isLoading}
                         >
                             Reject
                         </BorderedButton>
-                        <PrimaryButton width="100%" onClick={handleAccept}>
+                        <PrimaryButton
+                            width="100%"
+                            onClick={handleAccept}
+                            isLoading={isLoading}
+                            loadingText='Accepting'
+                        >
                             Accept
                         </PrimaryButton>
                     </Box>
