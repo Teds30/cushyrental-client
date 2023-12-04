@@ -19,7 +19,7 @@ const UnitBookmark = (props) => {
     const { fetchBookmark, addToBookmark, isLoading } = useBookmark()
     const userCtx = useContext(AuthContext)
 
-    const [isBookmarked, setIsBookmarked] = useState([])
+    const [isBookmarked, setIsBookmarked] = useState(false)
 
     const {
         data: bookmarks,
@@ -36,6 +36,7 @@ const UnitBookmark = (props) => {
 
             console.log(isUnitBookmarked.length !== 0)
             setIsBookmarked(isBookmarked.length !== 0)
+
             return isUnitBookmarked
         },
         refetchOnWindowFocus: false,
@@ -44,7 +45,7 @@ const UnitBookmark = (props) => {
 
     const mutation = useMutation({
         mutationFn: async () => {
-            console.log('fdfd')
+            console.log('added/removed bookmark')
             await addToBookmark({
                 user_id: userCtx.user.id,
                 unit_id: unitId,
@@ -75,7 +76,7 @@ const UnitBookmark = (props) => {
                     size={24}
                     sx={{ color: scrolling ? 'var(--fc-strong)' : '#fff' }}
                 />
-            ) : isBookmarked === true ? (
+            ) : isBookmarked ? (
                 <BsBookmarkFill
                     style={{
                         fill: 'var(--accent)',

@@ -49,7 +49,6 @@ const ViewUnitDetails = () => {
     const { data: unitData, isLoading: unitLoading } = useQuery({
         queryKey: ['unit', id],
         queryFn: () => {
-            console.log('asd')
             return fetchUnit(id)
         },
         refetchOnWindowFocus: false,
