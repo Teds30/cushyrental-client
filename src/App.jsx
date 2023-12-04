@@ -68,8 +68,6 @@ function App() {
 
     const storedData = JSON.parse(localStorage.getItem('userData'))
 
-    console.log('app.jsx mounted with isLoggedIn value of: ', isLoggedIn)
-
     let routes
 
     if (isLoggedIn !== 'initial' && !isLoggedIn) {
@@ -140,7 +138,7 @@ function App() {
                     <Route
                         path="/manage_unit/create_unit/location"
                         element={<Location />}
-                    ></Route>                
+                    ></Route>
                     <Route
                         path="/manage_unit/edit/:id"
                         element={<UnitData />}
@@ -168,7 +166,7 @@ function App() {
                     <Route
                         path="/manage_unit/edit/location/:id"
                         element={<LocationEdit />}
-                    ></Route>    
+                    ></Route>
                     {/* Manage Landlord Unit */}
                     {/* Profile */}
                     <Route path="/profile" element={<Profile />}></Route>
