@@ -1,65 +1,63 @@
-import { Link } from "react-router-dom";
-import React, { useRef, useState, useEffect, Fragment } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Link } from 'react-router-dom'
+import React, { useRef, useState, useEffect, Fragment } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
 
-import "swiper/css";
-import "swiper/css/effect-coverflow";
-import "swiper/css/pagination";
-import Rating from "@mui/material/Rating";
+import 'swiper/css'
+import 'swiper/css/effect-coverflow'
+import 'swiper/css/pagination'
+import Rating from '@mui/material/Rating'
 
-import CardShadow from "../../../components/Card/CardShadow";
-import useUnitManager from "../../../hooks/data/units-hook";
-import useImageManager from "../../../hooks/data/image-hook";
+import CardShadow from '../../../components/Card/CardShadow'
+import useUnitManager from '../../../hooks/data/units-hook'
+import useImageManager from '../../../hooks/data/image-hook'
 
-import { EffectCoverflow } from "swiper/modules";
+import { EffectCoverflow } from 'swiper/modules'
 
-import "./SimilarUnits.css";
-import { GrGallery } from "react-icons/gr";
+import './SimilarUnits.css'
+import { GrGallery } from 'react-icons/gr'
 
-import { Pagination } from "swiper/modules";
-import Inclusions from "./Inclusions";
-import Bookmark from "./Bookmark";
+import { Pagination } from 'swiper/modules'
+import Inclusions from './Inclusions'
+import Bookmark from './Bookmark'
 
 export default function SimilarUnits(props) {
-    const { unitPrice } = props;
+    const { unitId, unitPrice } = props
 
-    const { fetchUnits } = useUnitManager();
-    const { fetchImage, isLoading } = useImageManager();
+    const { fetchSimilarUnits } = useUnitManager()
+    const { fetchImage, isLoading } = useImageManager()
 
-    const [units, setUnits] = useState([]);
+    const [units, setUnits] = useState([])
 
     useEffect(() => {
         const handleFetch = async () => {
             try {
-                const res = await fetchUnits();
+                const res = await fetchSimilarUnits(unitId)
 
-                let units = res.filter((unit) => unit.price <= unitPrice);
-
-                units = await Promise.all(
-                    units.map(async (unit) => {
+                let sim_units = await Promise.all(
+                    res.map(async (unit) => {
                         const images = unit.images.filter(
                             (image) => image.is_thumbnail === 1
-                        );
+                        )
 
                         if (images.length > 0) {
                             const image = await fetchImage(
-                                images[0].image.replace("images/", "")
-                            );
-                            return { ...unit, thumbnail_image: image };
+                                images[0].image.replace('images/', '')
+                            )
+                            return { ...unit, thumbnail_image: image }
                         } else {
                             const image = await fetchImage(
-                                unit.images[0].image.replace("images/", "")
-                            );
-                            return { ...unit, thumbnail_image: image };
+                                unit.images[0].image.replace('images/', '')
+                            )
+                            return { ...unit, thumbnail_image: image }
                         }
-                        return unit;
+                        return unit
                     })
-                );
-                setUnits(units);
+                )
+                setUnits(sim_units)
             } catch (err) {}
-        };
-        handleFetch();
-    }, []);
+        }
+        handleFetch()
+    }, [])
 
     const content =
         !isLoading && units.length !== 0 ? (
@@ -68,7 +66,7 @@ export default function SimilarUnits(props) {
                     key={unit.id}
                     className="similar-unit-swiper-slide"
                 >
-                    <CardShadow style={{ padding: "0" }}>
+                    <CardShadow style={{ padding: '0' }}>
                         <div className="unit-detials-col">
                             <div className="unitImage">
                                 <img
@@ -82,9 +80,9 @@ export default function SimilarUnits(props) {
                                 <div className="units">
                                     <GrGallery
                                         style={{
-                                            height: "14px",
-                                            width: "14px",
-                                            fill: "var(--border-color)",
+                                            height: '14px',
+                                            width: '14px',
+                                            fill: 'var(--border-color)',
                                         }}
                                     />
                                     <p className="smaller-text">
@@ -96,15 +94,15 @@ export default function SimilarUnits(props) {
                             <div className="unit-main">
                                 <p
                                     className="title"
-                                    style={{ fontSize: "12px" }}
+                                    style={{ fontSize: '12px' }}
                                 >
                                     PHP {unit.price}
                                 </p>
                                 <p
                                     className="pre-title"
                                     style={{
-                                        fontWeight: "400",
-                                        fontSize: "11px",
+                                        fontWeight: '400',
+                                        fontSize: '11px',
                                     }}
                                 >
                                     {unit.name}
@@ -113,7 +111,7 @@ export default function SimilarUnits(props) {
                                 <div className="rating">
                                     <p
                                         className="caption"
-                                        style={{ fontSize: "10px" }}
+                                        style={{ fontSize: '10px' }}
                                     >
                                         Rating
                                     </p>
@@ -124,10 +122,10 @@ export default function SimilarUnits(props) {
                                         value={unit.average_rating}
                                         disabled
                                         sx={{
-                                            color: "var(--accent)",
-                                            fontSize: "10px",
-                                            "& svg": {
-                                                fill: "var(--accent)",
+                                            color: 'var(--accent)',
+                                            fontSize: '10px',
+                                            '& svg': {
+                                                fill: 'var(--accent)',
                                             },
                                         }}
                                     />
@@ -153,10 +151,10 @@ export default function SimilarUnits(props) {
                 </SwiperSlide>
             ))
         ) : (
-            <p className="caption" style={{ textAlign: "center" }}>
+            <p className="caption" style={{ textAlign: 'center' }}>
                 No similar units
             </p>
-        );
+        )
 
     return (
         <Fragment>
@@ -177,10 +175,10 @@ export default function SimilarUnits(props) {
                 autoplay={{ delay: 3000 }}
                 modules={[Pagination]}
                 className="similar-unit-swiper"
-                style={{ transform: "0" }}
+                style={{ transform: '0' }}
             >
                 {content}
             </Swiper>
         </Fragment>
-    );
+    )
 }
