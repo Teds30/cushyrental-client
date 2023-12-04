@@ -2,3 +2,16 @@
     flex: 1;
     text-align: center;
 }
+
+.create-unit-button {
+    margin: 0 auto;
+    position: fixed;
+    bottom: 50px;
+    right: 18px;
+    box-sizing: border-box;
+}
+
+.create-unit-button .button {
+    display: flex;
+    justify-content: end;
+}
