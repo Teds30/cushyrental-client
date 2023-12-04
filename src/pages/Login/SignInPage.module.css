@@ -7,6 +7,7 @@
     transition: max-width 0.3s ease-in-out;
     padding: 20px 26px;
     gap: 25px;
+    height: 100vh;
 }
 
 .top-back-container {
