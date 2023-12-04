@@ -28,16 +28,10 @@ const UnitBookmark = (props) => {
     } = useQuery({
         queryKey: ['is_bookmarked', unitId],
         queryFn: async () => {
-            console.log('refreshhh')
+            // console.log('refreshhh')
             const res = await fetchBookmark(userCtx.user.id)
-            const isUnitBookmarked = res.filter(
-                (bookmark) => bookmark.unit_id === unitId
-            )
 
-            console.log(isUnitBookmarked.length !== 0)
-            setIsBookmarked(isBookmarked.length !== 0)
-
-            return isUnitBookmarked
+            return res
         },
         refetchOnWindowFocus: false,
         enabled: !!userCtx.user.id && !!unitId,
@@ -45,7 +39,6 @@ const UnitBookmark = (props) => {
 
     const mutation = useMutation({
         mutationFn: async () => {
-            console.log('added/removed bookmark')
             await addToBookmark({
                 user_id: userCtx.user.id,
                 unit_id: unitId,
@@ -62,8 +55,12 @@ const UnitBookmark = (props) => {
     }
 
     useEffect(() => {
-        console.log('current: ', isBookmarked)
-    }, [isBookmarked])
+        const isUnitBookmarked = bookmarks?.filter(
+            (bookmark) => bookmark.unit_id === unitId
+        )
+
+        setIsBookmarked(isUnitBookmarked?.length !== 0)
+    }, [bookmarks])
 
     return (
         <IconButton
@@ -71,7 +68,7 @@ const UnitBookmark = (props) => {
             aria-label="menu"
             onClick={handleBookmarkClick}
         >
-            {bookmarkLoading ? (
+            {isLoading ? (
                 <CircularProgress
                     size={24}
                     sx={{ color: scrolling ? 'var(--fc-strong)' : '#fff' }}
