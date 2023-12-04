@@ -14,7 +14,9 @@ const UnitCard = (props) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetchImage(unit.unit.images[0].image.image.replace("images/", ""))
+            const res = await fetchImage(
+                unit.unit.images[0].image.image.replace('images/', '')
+            )
             setImage(res)
         }
 
