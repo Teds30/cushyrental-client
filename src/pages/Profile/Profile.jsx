@@ -40,7 +40,8 @@ const Profile = () => {
                     position="static"
                     sx={{
                         margin: 0,
-                        backgroundColor: '#fff',
+                        // backgroundColor: '#fff',
+                        backgroundColor: 'transparent',
                         color: 'var(--fc-body)',
                         fontFamily: 'Inter',
                         boxShadow: 'none',
