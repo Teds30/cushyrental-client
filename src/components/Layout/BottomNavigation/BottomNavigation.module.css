@@ -16,3 +16,14 @@
     min-width: 18px;
     line-height: 1.75em;
 }
+.nav_link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.nav_link:active,
+.nav_link:focus,
+.nav_link:visited {
+    color: inherit;
+}

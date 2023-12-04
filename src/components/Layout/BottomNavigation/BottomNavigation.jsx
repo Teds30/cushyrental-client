@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -83,6 +83,7 @@ const BottomNavigation = (props) => {
     const [user, setUser] = useState()
     const [socket, setSocket] = useState(null)
     const [notifCtr, setNotifCtr] = useState(0)
+    const navigate = useNavigate()
 
     const selectHandler = (id) => {
         setSelected(id)
@@ -124,38 +125,20 @@ const BottomNavigation = (props) => {
         const mainNav = !isTenant
             ? {
                   name: 'Calendar',
-                  icon: (
-                      <Link
-                          to="/calendar"
-                          style={{
-                              display: 'flex',
-                              justifyContent: 'centers',
-                              alignItems: 'center',
-                          }}
-                      >
-                          <IoIosCalendar size={32} style={{ fill: '#fff' }} />
-                      </Link>
-                  ),
+                  icon: <IoIosCalendar size={32} style={{ fill: '#fff' }} />,
                   main: true,
+                  redirect_url: '/calendar',
               }
             : {
                   name: 'Search',
                   icon: (
-                      <Link
-                          to="/search"
-                          style={{
-                              display: 'flex',
-                              justifyContent: 'centers',
-                              alignItems: 'center',
-                          }}
-                      >
-                          <FiSearch
-                              size={32}
-                              style={{ color: '#fff', fill: 'transparent' }}
-                          />
-                      </Link>
+                      <FiSearch
+                          size={32}
+                          style={{ color: '#fff', fill: 'transparent' }}
+                      />
                   ),
                   main: true,
+                  redirect_url: '/search',
               }
 
         setNavData([...nav_data.slice(0, 2), mainNav, ...nav_data.slice(2)])
@@ -202,6 +185,11 @@ const BottomNavigation = (props) => {
                                             <StyledFab
                                                 color="secondary"
                                                 aria-label="add"
+                                                onClick={(e) => {
+                                                    e.preventDefault()
+                                                    selectHandler(index)
+                                                    navigate(data.redirect_url)
+                                                }}
                                             >
                                                 {data.icon}
                                             </StyledFab>
@@ -222,29 +210,37 @@ const BottomNavigation = (props) => {
                                                 position: 'relative',
                                             }}
                                             key={index}
-                                            onClick={() => {
-                                                selectHandler(index)
-                                            }}
                                         >
-                                            {data.name === 'Notification' && (
-                                                <CustomBadge
-                                                    badgeContent={notifCtr}
-                                                >
-                                                    {index === selected
-                                                        ? data.selectedIcon
-                                                        : data.icon}
-                                                </CustomBadge>
-                                            )}
-                                            {data.name !== 'Notification' && (
-                                                <>
-                                                    {index === selected
-                                                        ? data.selectedIcon
-                                                        : data.icon}
-                                                </>
-                                            )}
-                                            {data.name}
+                                            <Link
+                                                // to={data.redirect_url}
+                                                className={styles['nav_link']}
+                                                onClick={(e) => {
+                                                    e.preventDefault()
+                                                    selectHandler(index)
+                                                    navigate(data.redirect_url)
+                                                }}
+                                            >
+                                                {data.name ===
+                                                    'Notification' && (
+                                                    <CustomBadge
+                                                        badgeContent={notifCtr}
+                                                    >
+                                                        {index === selected
+                                                            ? data.selectedIcon
+                                                            : data.icon}
+                                                    </CustomBadge>
+                                                )}
+                                                {data.name !==
+                                                    'Notification' && (
+                                                    <>
+                                                        {index === selected
+                                                            ? data.selectedIcon
+                                                            : data.icon}
+                                                    </>
+                                                )}
+                                                {data.name}
 
-                                            {/* {data.name === 'Notification' &&
+                                                {/* {data.name === 'Notification' &&
                                                 notifCtr > 0 && (
                                                     <span
                                                         className={
@@ -254,6 +250,7 @@ const BottomNavigation = (props) => {
                                                         {notifCtr}
                                                     </span>
                                                 )} */}
+                                            </Link>
                                         </Box>
                                     )
                                 })}

@@ -13,86 +13,36 @@ const nav_data = [
         name: 'Home',
         icon: <PiHouseLight style={{ fill: 'inherit' }} size={24} />,
         selectedIcon: <PiHouseFill style={{ fill: 'inherit' }} size={24} />,
+        redirect_url: '/',
     },
     {
         name: 'Chats',
         icon: (
-            <Link
-                to="/chats"
-                style={{
-                    display: 'flex',
-                    justifyContent: 'centers',
-                    alignItems: 'center',
-                }}
-            >
-                <BsChatSquare
-                    style={{ fill: 'inherit' }}
-                    color="red"
-                    size={24}
-                />
-            </Link>
+            <BsChatSquare style={{ fill: 'inherit' }} color="red" size={24} />
         ),
         selectedIcon: (
-            <Link
-                to="/chats"
-                style={{
-                    display: 'flex',
-                    justifyContent: 'centers',
-                    alignItems: 'center',
-                }}
-            >
-                <BsChatSquareFill style={{ fill: 'inherit' }} size={24} />
-            </Link>
+            <BsChatSquareFill style={{ fill: 'inherit' }} size={24} />
         ),
+        redirect_url: '/chats',
     },
     {
         name: 'Notification',
-        icon: (
-            <Link
-                to="/notifications"
-                style={{
-                    display: 'flex',
-                    justifyContent: 'centers',
-                    alignItems: 'center',
-                }}
-            >
-                <BsBell style={{ fill: 'inherit' }} size={24} />
-            </Link>
-        ),
-        selectedIcon: (
-            <Link
-                to="/notifications"
-                style={{
-                    display: 'flex',
-                    justifyContent: 'centers',
-                    alignItems: 'center',
-                }}
-            >
-                <BsBellFill style={{ fill: 'inherit' }} size={24} />
-            </Link>
-        ),
+        icon: <BsBell style={{ fill: 'inherit' }} size={24} />,
+        selectedIcon: <BsBellFill style={{ fill: 'inherit' }} size={24} />,
+        redirect_url: '/notifications',
     },
     {
         name: 'Profile',
         icon: (
-            <Link
-                to="/profile"
+            <BiUser
                 style={{
-                    display: 'flex',
-                    justifyContent: 'centers',
-                    alignItems: 'center',
+                    fill: 'inherit',
                 }}
-            >
-                <BiUser
-                    style={{
-                        fill: 'inherit',
-                    }}
-                    size={24}
-                />
-            </Link>
+                size={24}
+            />
         ),
-
         selectedIcon: <BiSolidUser style={{ fill: 'inherit' }} size={24} />,
+        redirect_url: '/profile',
     },
 ]
 
