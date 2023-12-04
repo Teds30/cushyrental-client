@@ -63,11 +63,13 @@ export default function UnitPhoto(props) {
         ))
 
     const imageQueries = useQueries({
-        queries: images.map((image) => ({
-            queryKey: ['unit_images', image.id],
-            queryFn: () => fetchImage(image.image.replace('images/', '')),
-            refetchOnWindowFocus: false,
-        })),
+        queries: images
+            .sort((a, b) => b.is_thumbnail - a.is_thumbnail)
+            .map((image) => ({
+                queryKey: ['unit_images', image.id],
+                queryFn: () => fetchImage(image.image.replace('images/', '')),
+                refetchOnWindowFocus: false,
+            })),
     })
 
     useEffect(() => {

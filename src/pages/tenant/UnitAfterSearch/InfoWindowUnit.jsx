@@ -17,7 +17,10 @@ const InfoWindowUnit = (props) => {
         const handleFetch = async () => {
             console.log(unit)
             try {
-                const res = await fetchImage(unit.images[0].image)
+                console.log(unit.images[0].image)
+                const res = await fetchImage(
+                    unit.images[0].image.replace('images/', '')
+                )
                 setUnitImg(res)
             } catch (err) {
                 console.log(err)

@@ -1,56 +1,56 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState, Fragment } from "react";
+import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useState, Fragment } from 'react'
 
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import CheckIcon from "@mui/icons-material/Check";
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
+import CheckIcon from '@mui/icons-material/Check'
 
-import PrimaryButton from "../../../../../components/Button/PrimaryButton";
-import SecondaryButton from "../../../../../components/Button/SecondaryButton";
-import BorderlessButton from "../../../../../components/Button/BorderlessButton";
-import BorderedButton from "../../../../../components/Button/BorderedButton";
-import useImageManager from "../../../../../hooks/data/image-hook";
-import useUserManager from "../../../../../hooks/data/users-hook";
-import useNotistack from "../../../../../hooks/notistack-hook";
+import PrimaryButton from '../../../../../components/Button/PrimaryButton'
+import SecondaryButton from '../../../../../components/Button/SecondaryButton'
+import BorderlessButton from '../../../../../components/Button/BorderlessButton'
+import BorderedButton from '../../../../../components/Button/BorderedButton'
+import useImageManager from '../../../../../hooks/data/image-hook'
+import useUserManager from '../../../../../hooks/data/users-hook'
+import useNotistack from '../../../../../hooks/notistack-hook'
 
-import styles from "./EditUnitImages.module.css";
-import { FiChevronLeft } from "react-icons/fi";
-import { BiImageAdd } from "react-icons/bi";
-import { BsTrashFill } from "react-icons/bs";
-import ImageIcon from "@mui/icons-material/Image";
+import styles from './EditUnitImages.module.css'
+import { FiChevronLeft } from 'react-icons/fi'
+import { BiImageAdd } from 'react-icons/bi'
+import { BsTrashFill } from 'react-icons/bs'
+import ImageIcon from '@mui/icons-material/Image'
 
 // import photo from "../../../../../assets/Units/pics.png"
 
 // import photo from "../../../../../assets/Units/pics.png";
 
 const EditUnitImages = (props) => {
-    const { unitImages, unitId } = props;
+    const { unitImages, unitId } = props
 
-    const { fetchImage, isLoading } = useImageManager();
-    const { updateUserImages, deleteUserImages } = useUserManager();
-    const { notify } = useNotistack();
-    const navigate = useNavigate();
+    const { fetchImage, isLoading } = useImageManager()
+    const { updateUserImages, deleteUserImages } = useUserManager()
+    const { notify } = useNotistack()
+    const navigate = useNavigate()
 
-    const [imagesData, setImagesData] = useState([]);
-    const [selectedImage, setSelectedImage] = useState([]);
-    const [imagesDeleted, setImagesDeleted] = useState(false);
-    const [isSaving, setIsSaving] = useState(false);
+    const [imagesData, setImagesData] = useState([])
+    const [selectedImage, setSelectedImage] = useState([])
+    const [imagesDeleted, setImagesDeleted] = useState(false)
+    const [isSaving, setIsSaving] = useState(false)
 
     const imageHandler = (index) => {
-        const isIncluded = selectedImage.includes(index);
+        const isIncluded = selectedImage.includes(index)
 
         if (isIncluded) {
-            setSelectedImage(selectedImage.filter((id) => id != index));
+            setSelectedImage(selectedImage.filter((id) => id != index))
         } else {
-            setSelectedImage([...selectedImage, index]);
+            setSelectedImage([...selectedImage, index])
         }
-    };
+    }
 
     const addImageChangeHandler = (event) => {
-        setImagesDeleted(false);
-        const image = URL.createObjectURL(event.target.files[0]);
+        setImagesDeleted(false)
+        const image = URL.createObjectURL(event.target.files[0])
         setImagesData([
             ...imagesData,
             {
@@ -59,64 +59,63 @@ const EditUnitImages = (props) => {
                 is_thumbnail: 0,
                 file: event.target.files[0],
             },
-        ]);
-    };
+        ])
+    }
 
     const selectAllHandler = () => {
-        setSelectedImage(imagesData.map((image, index) => index));
-    };
+        setSelectedImage(imagesData.map((image, index) => index))
+    }
 
     const cancelHandler = () => {
-        setSelectedImage([]);
-    };
+        setSelectedImage([])
+    }
 
     const deleteImageHandler = async () => {
-        const updatedImages = [];
+        const updatedImages = []
 
         for (let index = 0; index < imagesData.length; index++) {
-            const data = imagesData[index];
+            const data = imagesData[index]
 
             if (data.id !== undefined && selectedImage.includes(index)) {
                 try {
                     const imageData = {
                         unit_id: Number(unitId),
                         image_id: data.id,
-                    };
-                    const result = await deleteUserImages(imageData);
-                } catch (error) {
-                }
+                    }
+                    const result = await deleteUserImages(imageData)
+                } catch (error) {}
             } else {
-                updatedImages.push(data);
+                updatedImages.push(data)
             }
         }
 
-        setImagesData(updatedImages);
+        setImagesData(updatedImages)
 
         if (updatedImages.length === 0) {
-            setImagesDeleted(true);
+            setImagesDeleted(true)
         }
-        setSelectedImage([]);
-    };
+        setSelectedImage([])
+    }
 
     const makeThumbnailHandler = () => {
-        const imageIndex = selectedImage[0];
+        const imageIndex = selectedImage[0]
 
         setImagesData(
             imagesData.map((data, index) => {
                 if (data.is_thumbnail === 1) {
-                    return { ...data, is_thumbnail: 0 };
+                    return { ...data, is_thumbnail: 0 }
                 } else if (index === imageIndex) {
-                    console.log("pumasok dito");
-                    return { ...data, is_thumbnail: 1 };
+                    console.log('pumasok dito')
+                    return { ...data, is_thumbnail: 1 }
                 } else {
-                    return data;
+                    return data
                 }
             })
-        );
-    };
+        )
+    }
 
     const handleFileUpload = async (image, index) => {
-        let exit = false;
+        let exit = false
 
         if (image.id !== undefined) {
             try {
@@ -124,86 +123,89 @@ const EditUnitImages = (props) => {
                     unit_id: Number(unitId),
                     image_id: image.id,
                     is_thumbnail: image.is_thumbnail,
-                };
-                const result = await updateUserImages(imageData);
-                exit = true;
+                }
+                const result = await updateUserImages(imageData)
+                exit = true
             } catch (error) {}
         }
 
         if (exit === true) {
             if (index === imagesData.length - 1) {
-                setIsSaving(false);
-                navigate("/manage_unit/edit/" + unitId);
-                notify("Save successfully", "success");
+                setIsSaving(false)
+                navigate('/manage_unit/edit/' + unitId)
+                notify('Save successfully', 'success')
             }
-            return;
+            return
         }
 
-        const formData = new FormData();
+        const formData = new FormData()
 
-        formData.append("image", image.file);
-        formData.append("name", image.name);
-        formData.append("path", "images");
+        formData.append('image', image.file)
+        formData.append('name', image.name)
+        formData.append('path', 'images')
 
         try {
-            const res = await fetch(`${import.meta.env.VITE_BACKEND_LOCALHOST}/api/image-upload`, {
-                method: "POST",
-                body: formData,
-            });
+            const res = await fetch(
+                `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/image-upload`,
+                {
+                    method: 'POST',
+                    body: formData,
+                }
+            )
 
-            const data = await res.json();
+            const data = await res.json()
 
             const imageData = {
                 unit_id: Number(unitId),
                 image_id: data.image.id,
                 is_thumbnail: image.is_thumbnail,
-            };
-            const result = await updateUserImages(imageData);
+            }
+            const result = await updateUserImages(imageData)
 
             if (index === imagesData.length - 1) {
-                setIsSaving(false);
-                navigate("/manage_unit/edit/" + unitId);
-                notify("Save successfully", "success");
+                setIsSaving(false)
+                navigate('/manage_unit/edit/' + unitId)
+                notify('Save successfully', 'success')
             }
         } catch (err) {}
-    };
+    }
 
     const saveHandler = (event) => {
-        event.preventDefault();
+        event.preventDefault()
 
         if (imagesData.length === 0) {
-            return;
+            return
         }
 
-        setIsSaving(true);
+        setIsSaving(true)
 
         imagesData.forEach((element, index) => {
-            handleFileUpload(element, index);
-        });
-    };
+            handleFileUpload(element, index)
+        })
+    }
 
     useEffect(() => {
         const handleFetch = async () => {
             try {
                 const promise = unitImages.map(async (data) => {
                     const res = await fetchImage(
-                        data.image.replace("images/", "")
-                    );
-                    return { ...data, image: res };
-                });
+                        data.image.replace('images/', '')
+                    )
+                    return { ...data, image: res }
+                })
 
-                const newDataUpdate = await Promise.all(promise);
-                setImagesData(newDataUpdate);
+                const newDataUpdate = await Promise.all(promise)
+                setImagesData(newDataUpdate)
             } catch (err) {}
-        };
-        handleFetch();
-    }, []);
+        }
+        handleFetch()
+    }, [])
 
     const content = imagesData.map((image, index) => (
         <button
             key={index}
-            className={`${styles["image-col"]} ${
-                imagesData.length === 0 ? styles["image-col-hidden"] : ""
+            className={`${styles['image-col']} ${
+                imagesData.length === 0 ? styles['image-col-hidden'] : ''
             }`}
             onClick={() => imageHandler(index)}
         >
@@ -211,7 +213,7 @@ const EditUnitImages = (props) => {
                 src={image.image}
                 alt={image.name}
                 className={`${
-                    selectedImage.includes(index) && styles["image-background"]
+                    selectedImage.includes(index) && styles['image-background']
                 }`}
             />
             {image.is_thumbnail === 1 && (
@@ -221,31 +223,31 @@ const EditUnitImages = (props) => {
             )}
 
             {selectedImage.includes(index) && (
-                <div className={`${styles["selected-image"]}`}>
+                <div className={`${styles['selected-image']}`}>
                     <CheckIcon />
                 </div>
             )}
         </button>
-    ));
+    ))
 
     return (
-        <div className={`${styles["edit-image-container"]}`}>
-            <Box className={`${styles["top-back-container"]} `}>
+        <div className={`${styles['edit-image-container']}`}>
+            <Box className={`${styles['top-back-container']} `}>
                 <AppBar
                     position="static"
                     sx={{
                         margin: 0,
-                        backgroundColor: "#fff",
-                        color: "var(--fc-body)",
-                        fontFamily: "Inter",
-                        boxShadow: "none",
-                        borderBottom: "1px solid var(--border-color)",
+                        backgroundColor: '#fff',
+                        color: 'var(--fc-body)',
+                        fontFamily: 'Inter',
+                        boxShadow: 'none',
+                        borderBottom: '1px solid var(--border-color)',
                     }}
                 >
                     <Toolbar
                         sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
+                            display: 'flex',
+                            justifyContent: 'space-between',
                         }}
                     >
                         <Link to={`/manage_unit/edit/${unitId}`}>
@@ -257,8 +259,8 @@ const EditUnitImages = (props) => {
                             >
                                 <FiChevronLeft
                                     style={{
-                                        color: "var(--fc-strong)",
-                                        fill: "transparent",
+                                        color: 'var(--fc-strong)',
+                                        fill: 'transparent',
                                     }}
                                 />
                             </IconButton>
@@ -278,22 +280,22 @@ const EditUnitImages = (props) => {
                 </AppBar>
             </Box>
 
-            <div className={`${styles["edit-image-main"]}`}>
+            <div className={`${styles['edit-image-main']}`}>
                 {isLoading ? (
-                    "Loading"
+                    'Loading'
                 ) : imagesDeleted ? (
                     <p>No image uploaded</p>
                 ) : (
                     content
                 )}
 
-                <div className={`${styles["edit-image-button"]}`}>
+                <div className={`${styles['edit-image-button']}`}>
                     {selectedImage.length === 1 ? (
                         <Fragment>
                             <BorderlessButton onClick={cancelHandler}>
                                 Cancel
                             </BorderlessButton>
-                            <div className={`${styles["upload-image-button"]}`}>
+                            <div className={`${styles['upload-image-button']}`}>
                                 <SecondaryButton
                                     width="100%"
                                     leftIcon={<ImageIcon />}
@@ -315,9 +317,9 @@ const EditUnitImages = (props) => {
                                 Cancel
                             </BorderlessButton>
                             <div
-                                className={`${styles["upload-image-button"]} ${styles["many-selected-image"]}`}
+                                className={`${styles['upload-image-button']} ${styles['many-selected-image']}`}
                             >
-                                <p style={{ color: "var(--fc-strong)" }}>
+                                <p style={{ color: 'var(--fc-strong)' }}>
                                     Selected ({selectedImage.length})
                                 </p>
                             </div>
@@ -330,7 +332,7 @@ const EditUnitImages = (props) => {
                         </Fragment>
                     ) : (
                         <Fragment>
-                            <div className={`${styles["upload-image-button"]}`}>
+                            <div className={`${styles['upload-image-button']}`}>
                                 <input
                                     type="file"
                                     accept="image/jpeg, image/png"
@@ -353,7 +355,7 @@ const EditUnitImages = (props) => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default EditUnitImages;
+export default EditUnitImages

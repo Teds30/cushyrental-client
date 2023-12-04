@@ -28,7 +28,8 @@ const ChatRoom = ({ room, user_id, socket }) => {
     const getUnitImage = async () => {
         const res = await fetchUnit(room.unit_id)
 
-        const img = await fetchImage(res.images[0].image)
+        const img = await fetchImage(res.images[0].image.replace('images/', ''))
+        console.log('img: ', img)
         setUnitImg(img)
     }
 

@@ -1,167 +1,167 @@
-import { Link, useNavigate } from "react-router-dom";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import useNotistack from "../../../../hooks/notistack-hook";
+import { Link, useNavigate } from 'react-router-dom'
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
+import useNotistack from '../../../../hooks/notistack-hook'
 
-import PrimaryButton from "../../../../components/Button/PrimaryButton";
-import UnitImage from "./UnitImage";
-import TextField from "../../../../components/TextField/TextField";
-import CardShadow from "../../../../components/Card/CardShadow";
-import ButtonSwitch from "../../../../components/Switch/ButtonSwitch";
-import Quantity from "../../../../components/Quantity/Quantity";
-import UnitFeatures from "./UnitFeatures";
-import EditUnitTargetGender from "./EditUnitTargetGender";
-import BorderedButton from "../../../../components/Button/BorderedButton";
-import useUnitManager from "../../../../hooks/data/units-hook";
-import TerminateConfirmationModal from "../../ManageRenters/Modal";
+import PrimaryButton from '../../../../components/Button/PrimaryButton'
+import UnitImage from './UnitImage'
+import TextField from '../../../../components/TextField/TextField'
+import CardShadow from '../../../../components/Card/CardShadow'
+import ButtonSwitch from '../../../../components/Switch/ButtonSwitch'
+import Quantity from '../../../../components/Quantity/Quantity'
+import UnitFeatures from './UnitFeatures'
+import EditUnitTargetGender from './EditUnitTargetGender'
+import BorderedButton from '../../../../components/Button/BorderedButton'
+import useUnitManager from '../../../../hooks/data/units-hook'
+import TerminateConfirmationModal from '../../ManageRenters/Modal'
 
-import styles from "./EditUnit.module.css";
-import { FiChevronLeft } from "react-icons/fi";
-import { BsTrashFill } from "react-icons/bs";
-import { useState } from "react";
+import styles from './EditUnit.module.css'
+import { FiChevronLeft } from 'react-icons/fi'
+import { BsTrashFill } from 'react-icons/bs'
+import { useState } from 'react'
 
 const EditUnit = (props) => {
-    const { userUnit } = props;
+    const { userUnit } = props
 
-    const { updateUnit, isLoading } = useUnitManager();
-    const { notify } = useNotistack();
-    const navigate = useNavigate();
+    const { updateUnit, isLoading } = useUnitManager()
+    const { notify } = useNotistack()
+    const navigate = useNavigate()
 
-    const [unit, setUnit] = useState(userUnit);
-    const [terminateModalOpen, setTerminateModalOpen] = useState(false);
+    const [unit, setUnit] = useState(userUnit)
+    const [terminateModalOpen, setTerminateModalOpen] = useState(false)
 
     const unitNameChangeHandler = (event) => {
-        setUnit({ ...unit, name: event.target.value });
-    };
+        setUnit({ ...unit, name: event.target.value })
+    }
 
     const descriptionChangeHandler = (event) => {
-        setUnit({ ...unit, details: event.target.value });
-    };
+        setUnit({ ...unit, details: event.target.value })
+    }
 
     const unitPriceChangeHandler = (event) => {
-        setUnit({ ...unit, price: event.target.value });
-    };
+        setUnit({ ...unit, price: event.target.value })
+    }
 
     const swithDepositHandler = (value) => {
-        setUnit({ ...unit, month_deposit: value.value === true ? 1 : 0 });
-    };
+        setUnit({ ...unit, month_deposit: value.value === true ? 1 : 0 })
+    }
 
     const quantityPaymentHandler = (value) => {
-        setUnit({ ...unit, month_advance: value.value });
-    };
+        setUnit({ ...unit, month_advance: value.value })
+    }
 
     const swithAdvanceHandler = (value) => {
-        setUnit({ ...unit, month_advance: value.value === true ? 1 : 0 });
-    };
+        setUnit({ ...unit, month_advance: value.value === true ? 1 : 0 })
+    }
 
     const targetGenderHandler = (value) => {
-        setUnit({ ...unit, target_gender: value[0] });
-    };
+        setUnit({ ...unit, target_gender: value[0] })
+    }
 
     const quantitySlotsHandler = (value) => {
-        setUnit({ ...unit, slots: value.value });
-    };
+        setUnit({ ...unit, slots: value.value })
+    }
 
     const swithIsListedHandler = (value) => {
-        setUnit({ ...unit, is_listed: value.value === true ? 1 : 0 });
-    };
+        setUnit({ ...unit, is_listed: value.value === true ? 1 : 0 })
+    }
 
     function filterObject(obj, excludeProperties) {
-        const filtered = {};
+        const filtered = {}
         for (const key in obj) {
             if (!excludeProperties.includes(key)) {
-                filtered[key] = obj[key];
+                filtered[key] = obj[key]
             }
         }
-        return filtered;
+        return filtered
     }
 
     const saveHandler = async (event) => {
-        event.preventDefault();
+        event.preventDefault()
 
-        if (unit.name === "" || (unit.details === "" && unit.price === "")) {
-            return;
+        if (unit.name === '' || (unit.details === '' && unit.price === '')) {
+            return
         }
 
         const excludeProperties = [
-            "landlord",
-            "amenities",
-            "facilities",
-            "inclusions",
-            "rules",
-            "images",
-            "subscriptions",
-            "rentals",
-        ];
+            'landlord',
+            'amenities',
+            'facilities',
+            'inclusions',
+            'rules',
+            'images',
+            'subscriptions',
+            'rentals',
+        ]
 
-        const filteredData = filterObject(unit, excludeProperties);
+        const filteredData = filterObject(unit, excludeProperties)
 
-        const id = filteredData.id;
+        const id = filteredData.id
 
         try {
-            const res = await updateUnit(id, filteredData);
-            notify("Update successfully!", "success");
-            navigate("/manage_unit");
+            const res = await updateUnit(id, filteredData)
+            notify('Update successfully!', 'success')
+            navigate('/manage_unit')
         } catch (error) {}
-    };
+    }
 
     console.log(unit.location)
     const deleteHandler = () => {
-        if (unit.name === "" || unit.details === "" || unit.price === "") {
-            return;
+        if (unit.name === '' || unit.details === '' || unit.price === '') {
+            return
         }
-        setTerminateModalOpen(true);
-    };
+        setTerminateModalOpen(true)
+    }
 
     const handleDeleteConfirm = async () => {
-        setTerminateModalOpen(false);
+        setTerminateModalOpen(false)
         const excludeProperties = [
-            "landlord",
-            "amenities",
-            "facilities",
-            "inclusions",
-            "rules",
-            "images",
-            "subscriptions",
-            "rentals",
-        ];
+            'landlord',
+            'amenities',
+            'facilities',
+            'inclusions',
+            'rules',
+            'images',
+            'subscriptions',
+            'rentals',
+        ]
 
-        const filteredData = filterObject(unit, excludeProperties);
+        const filteredData = filterObject(unit, excludeProperties)
 
-        const id = filteredData.id;
+        const id = filteredData.id
 
         try {
-            const res = await updateUnit(id, { ...filteredData, status: 0 });
-            notify("Deleted successfully!", "success");
-            navigate("/manage_unit/" + res.id);
+            const res = await updateUnit(id, { ...filteredData, status: 0 })
+            notify('Deleted successfully!', 'success')
+            navigate('/manage_unit/' + res.id)
         } catch (error) {}
-    };
+    }
 
     return (
-        <div className={`${styles["edit-unit-container"]}`}>
+        <div className={`${styles['edit-unit-container']}`}>
             <TerminateConfirmationModal
                 open={terminateModalOpen}
                 onClose={() => setTerminateModalOpen(false)}
                 onTerminate={handleDeleteConfirm}
             />
-            <Box className={`${styles["top-back-container"]} `}>
+            <Box className={`${styles['top-back-container']} `}>
                 <AppBar
                     position="static"
                     sx={{
                         margin: 0,
-                        backgroundColor: "#fff",
-                        color: "var(--fc-body)",
-                        fontFamily: "Inter",
-                        boxShadow: "none",
-                        borderBottom: "1px solid var(--border-color)",
+                        backgroundColor: '#fff',
+                        color: 'var(--fc-body)',
+                        fontFamily: 'Inter',
+                        boxShadow: 'none',
+                        borderBottom: '1px solid var(--border-color)',
                     }}
                 >
                     <Toolbar
                         sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
+                            display: 'flex',
+                            justifyContent: 'space-between',
                         }}
                     >
                         <Link to={`/manage_unit`}>
@@ -173,8 +173,8 @@ const EditUnit = (props) => {
                             >
                                 <FiChevronLeft
                                     style={{
-                                        color: "var(--fc-strong)",
-                                        fill: "transparent",
+                                        color: 'var(--fc-strong)',
+                                        fill: 'transparent',
                                     }}
                                 />
                             </IconButton>
@@ -194,18 +194,23 @@ const EditUnit = (props) => {
                 </AppBar>
             </Box>
 
-            <div className={`${styles["main-container"]}`}>
-                <UnitImage unitImages={unit.images} unitId={userUnit.id} />
+            <div className={`${styles['main-container']}`}>
+                <UnitImage
+                    unitImages={unit.images.sort(
+                        (a, b) => b.is_thumbnail - a.is_thumbnail
+                    )}
+                    unitId={userUnit.id}
+                />
 
-                <div className={`${styles["unit-details"]}`}>
+                <div className={`${styles['unit-details']}`}>
                     <p>Unit Name</p>
                     <TextField
                         label=""
                         defaultValue={unit.name}
                         onChange={unitNameChangeHandler}
                         helperText={
-                            unit.name === "" &&
-                            "Please enter valid boarding house name."
+                            unit.name === '' &&
+                            'Please enter valid boarding house name.'
                         }
                         error
                     />
@@ -218,15 +223,15 @@ const EditUnit = (props) => {
                         multiline
                         onChange={descriptionChangeHandler}
                         helperText={
-                            unit.details === "" &&
-                            "Please enter your boarding house details."
+                            unit.details === '' &&
+                            'Please enter your boarding house details.'
                         }
                         error
                     />
 
-                    <div className={styles["hr"]}></div>
+                    <div className={styles['hr']}></div>
 
-                    <p className={`${styles["unit-details-title"]}`}>
+                    <p className={`${styles['unit-details-title']}`}>
                         Pricing Details
                     </p>
                     <p>Price</p>
@@ -236,14 +241,14 @@ const EditUnit = (props) => {
                         defaultValue={unit.price}
                         onChange={unitPriceChangeHandler}
                         helperText={
-                            unit.price === "" &&
-                            "Please enter the price of your unit."
+                            unit.price === '' &&
+                            'Please enter the price of your unit.'
                         }
                         error
                     />
 
-                    <CardShadow filled={"false"}>
-                        <div className={`${styles["price-deposit"]}`}>
+                    <CardShadow filled={'false'}>
+                        <div className={`${styles['price-deposit']}`}>
                             <p>Deposit</p>
                             <ButtonSwitch
                                 defaultChecked={
@@ -253,7 +258,7 @@ const EditUnit = (props) => {
                             />
                         </div>
 
-                        <div className={styles["hr"]}></div>
+                        <div className={styles['hr']}></div>
 
                         <div className={styles.payments}>
                             <p>Month</p>
@@ -265,8 +270,8 @@ const EditUnit = (props) => {
                         </div>
                     </CardShadow>
 
-                    <CardShadow filled={"false"}>
-                        <div className={`${styles["price-advance"]}`}>
+                    <CardShadow filled={'false'}>
+                        <div className={`${styles['price-advance']}`}>
                             <p>Month Advance</p>
                             <ButtonSwitch
                                 defaultChecked={unit.month_advance >= 1 && true}
@@ -275,54 +280,58 @@ const EditUnit = (props) => {
                         </div>
                     </CardShadow>
 
-                    <div className={styles["hr"]}></div>
+                    <div className={styles['hr']}></div>
 
                     <div>
-                        <p className={`${styles["unit-details-title"]}`}>
+                        <p className={`${styles['unit-details-title']}`}>
                             Location
                         </p>
-                        <div className={`${styles["unit-location"]}`}>
+                        <div className={`${styles['unit-location']}`}>
                             <p
                                 className="smaller-text"
                                 style={{
-                                    fontSize: "14px",
-                                    color: "var()--body",
+                                    fontSize: '14px',
+                                    color: 'var()--body',
                                 }}
                             >
                                 {unit.address}
                             </p>
                             <div className={styles.point}></div>
                             <Link
-                                onClick={(e) => { e.preventDefault() 
-                                    navigate(`/manage_unit/edit/location/${unit.id}`, {
-                                    state: {
-                                        location: unit.location,
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    navigate(
+                                        `/manage_unit/edit/location/${unit.id}`,
+                                        {
+                                            state: {
+                                                location: unit.location,
+                                            },
                                         }
-                                    },
-                                )}}
+                                    )
+                                }}
                                 // to={`/manage_unit/edit/location/${unit.id}`}
-                                style={{ color: "var(--accent)" }}
+                                style={{ color: 'var(--accent)' }}
                             >
                                 Edit
                             </Link>
                         </div>
                     </div>
 
-                    <div className={styles["hr"]}></div>
+                    <div className={styles['hr']}></div>
 
                     <UnitFeatures id={unit.id} />
 
-                    <div className={styles["hr"]}></div>
+                    <div className={styles['hr']}></div>
 
                     <EditUnitTargetGender
                         targetGender={unit.target_gender}
                         onTargetGender={targetGenderHandler}
                     />
 
-                    <div className={styles["hr"]}></div>
+                    <div className={styles['hr']}></div>
 
-                    <div className={`${styles["unit-slot"]}`}>
-                        <p className={`${styles["unit-details-title"]}`}>
+                    <div className={`${styles['unit-slot']}`}>
+                        <p className={`${styles['unit-details-title']}`}>
                             Slots
                         </p>
 
@@ -336,25 +345,25 @@ const EditUnit = (props) => {
                         </div>
                     </div>
 
-                    <div className={`${styles["unit-management"]}`}>
-                        <p className={`${styles["unit-details-title"]}`}>
+                    <div className={`${styles['unit-management']}`}>
+                        <p className={`${styles['unit-details-title']}`}>
                             Unit Management
                         </p>
 
-                        <div className={`${styles["list-unit"]}`}>
+                        <div className={`${styles['list-unit']}`}>
                             <div>
                                 <p
                                     style={{
-                                        fontWeight: "400",
-                                        color: "var(--fc-strong)",
+                                        fontWeight: '400',
+                                        color: 'var(--fc-strong)',
                                     }}
                                 >
                                     List Unit
                                 </p>
                                 <p
                                     style={{
-                                        fontWeight: "400",
-                                        color: "var(--body_light, #959CB0)",
+                                        fontWeight: '400',
+                                        color: 'var(--body_light, #959CB0)',
                                     }}
                                 >
                                     Make This unit available for listings
@@ -382,7 +391,7 @@ const EditUnit = (props) => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default EditUnit;
+export default EditUnit

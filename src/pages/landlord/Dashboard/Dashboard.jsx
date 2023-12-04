@@ -14,6 +14,7 @@ import profile from '../../../assets/Units/pics.png'
 import { Link } from 'react-router-dom'
 
 import AuthContext from '../../../context/auth-context'
+import UserAvatar from '../../../components/Avatar/UserAvatar'
 
 const Dashboard = () => {
     const authCtx = useContext(AuthContext)
@@ -191,13 +192,13 @@ const Dashboard = () => {
                                                 )}
                                             </p>
                                             <div className={styles['tenant']}>
-                                                <div
-                                                    className={
-                                                        styles['tenant-img']
+                                                <UserAvatar
+                                                    avatar_url={
+                                                        event.user
+                                                            .profile_picture_img
                                                     }
-                                                >
-                                                    <img src={profile} alt="" />
-                                                </div>
+                                                    size="24px"
+                                                />
                                                 {`${event.user.first_name} ${event.user.last_name}`}
                                             </div>
                                         </div>
