@@ -79,7 +79,6 @@ const useImageManager = () => {
                 if (image_path.includes('https')) {
                     pic = await fetch(image_path)
                 } else {
-                    console.log('im here!')
                     pic = await fetch(
                         `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/avatar`,
                         {
@@ -90,7 +89,6 @@ const useImageManager = () => {
                             },
                         }
                     )
-                    console.log(pic)
                 }
                 const imageBlob = await pic.blob()
                 responseData = URL.createObjectURL(imageBlob)

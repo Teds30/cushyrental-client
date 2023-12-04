@@ -58,8 +58,8 @@ const ListAfterSearchImage = (props) => {
                 pagination={{
                     clickable: true,
                 }}
-                lazyPreloadPrevNext={true}
-                lazy={true}
+                // lazyPreloadPrevNext={true}
+                // lazy={true}
                 navigation={true}
                 modules={[Pagination, Navigation]}
                 className="unitSwiperImage"
