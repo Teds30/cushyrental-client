@@ -2,14 +2,9 @@
     width: 100%;
     /* height: auto; */
     height: fit-content;
-    max-height: 200px;
+    max-height: 150px;
     /* background: var(--accent-dark); */
-    background: linear-gradient(
-        180deg,
-        rgba(29, 97, 86, 1) 0%,
-        rgba(29, 97, 86, 1) 50%,
-        rgba(29, 97, 86, 0.7) 100%
-    );
+    background: linear-gradient(180deg, #1d6156 78.49%, #5fa494 100%);
     z-index: 100;
 }
 
