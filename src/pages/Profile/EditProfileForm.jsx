@@ -95,7 +95,7 @@ const EditProfileForm = (props) => {
             const resUpdate = await updateUser(userUpdate, user.id)
 
             console.log('updated user')
-            // userCtx.onLogin({ user: resUpdate, token: userCtx.token })
+            userCtx.onLogin({ user: resUpdate, token: userCtx.token })
             navigate('/profile')
             notify('User update successfully!', 'success')
         } catch (err) {}
