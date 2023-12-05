@@ -13,6 +13,8 @@ import RentedUnitList from "./RentedUnitList.jsx";
 const RentedUnitTabs = (props) => {
     const { rentedUnit = [], onRefresh } = props;
 
+    console.log(rentedUnit);
+
     const [value, setValue] = useState(0);
     const [rentedUnitActive, setRentedUnitActive] = useState([]);
     const [rentedUnitInactive, setRentedUnitInactive] = useState([]);

@@ -13,6 +13,8 @@ const ChangeContactNumberPassword = (props) => {
     const { notify } = useNotistack()
     const { loginUser, isLoading } = useLogin()
 
+    console.log(user);
+
     const regex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/
 
     const {
@@ -38,13 +40,20 @@ const ChangeContactNumberPassword = (props) => {
             return
         }
 
-        if (user.password === enteredPassword) {
-            onAuthenticatedUser()
-        } else {
-            notify('Incorrect password', 'error')
-        }
+        try {
+            const res = await loginUser({
+                email: email,
+                password: enteredPassword,
+            });
 
-        // onNumber(enteredNumber);
+            console.log(res);
+            onAuthenticatedUser();
+            if (res.user === null) {
+                notify('Incorrect password', 'error')
+            }
+        } catch(err) {}
+
+        onAuthenticatedUser()
     }
 
     return (
