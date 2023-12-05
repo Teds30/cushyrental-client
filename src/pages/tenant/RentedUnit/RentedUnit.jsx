@@ -144,7 +144,7 @@ const RentedUnit = (props) => {
                 <div className={`${styles['image-unit_data']} `}>
                     <RentedUnitImage
                         images={
-                            imageThumbnail !== undefined
+                            imageThumbnail
                                 ? imageThumbnail
                                 : rental.unit.images[0]
                         }

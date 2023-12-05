@@ -16,8 +16,6 @@ const RentedUnitMain = () => {
     const authCtx = useContext(AuthContext)
     const { sendRequest } = useHttp()
 
-    console.log(rentedUnit)
-
     const formatDate = (dateString) => {
         const date = moment(dateString)
         return date.format('MMMM DD, YYYY')
