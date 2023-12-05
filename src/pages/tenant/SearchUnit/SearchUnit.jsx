@@ -22,7 +22,7 @@ const SearchUnit = () => {
     const { fetchAttributes, isLoading: attributeLoading } =
         useAttributeManager()
     const { fetchSchools, isLoading: schoolLoading } = useSchoolManager()
-    const { searchUnits } = useUnitManager()
+    const { searchUnits, isLoading: searchLoading } = useUnitManager()
     const [value, setValue] = useState(0)
     const [attribtes, setAttributes] = useState([])
     const [universities, setUniversities] = useState([])
@@ -208,7 +208,7 @@ const SearchUnit = () => {
                 </TabPanel>
 
                 <div className={`${styles['search-button']}`}>
-                    <PrimaryButton onClick={submitSearch} width="100%">
+                    <PrimaryButton onClick={submitSearch} width="100%" isLoading={searchLoading} loadingText='Searching'>
                         Search
                     </PrimaryButton>
                 </div>
