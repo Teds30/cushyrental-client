@@ -90,7 +90,7 @@ const SocialMediaLogin = () => {
 
     return (
         <div className={styles.socmed}>
-            <FacebookLogin
+            {/* <FacebookLogin
             appId={"6722357257784876"}
             fields="name,email,picture"
             callback={responseFacebook}
@@ -106,7 +106,7 @@ const SocialMediaLogin = () => {
                 </div>
               </Link>
             )}
-          />
+          /> */}
 
             <Link onClick={googleRegisterHandle} style={{ width: '100%' }}>
                 <div className={styles['background']}>

@@ -258,7 +258,7 @@ const CreateAccountForm = (props) => {
             </div>
 
             <div className={styles.socmed}>
-                <FacebookLogin
+                {/* <FacebookLogin
                     appId={"6722357257784876"}
                     fields="name,email,picture"
                     callback={responseFacebook}
@@ -278,7 +278,7 @@ const CreateAccountForm = (props) => {
                             </div>
                         </Link>
                     )}
-                />
+                /> */}
 
                 <Link
                     onClick={registerGoogleAuthHandler}
