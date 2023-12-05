@@ -30,8 +30,6 @@ const UnitComparisonTable = (props) => {
 
     let unitIndex;
 
-    console.log(userCtx.user);
-
     const removeUnitHandler = (id) => {
         setUnits(units.filter((unit) => unit.id !== id));
     };
@@ -45,24 +43,7 @@ const UnitComparisonTable = (props) => {
     };
 
     const selectedUnitHandler = (data) => {
-        setUnits(prevUnits => {
-            const unitIds = prevUnits.map(unit => unit.id);
-            const presentUnits = data.map(unit => unit.id);
-            const newData = data.filter(element => !unitIds.includes(element.id));
-    
-            console.log(newData);
-
-            if (newData.length === 0) {
-                return prevUnits.filter(unit => presentUnits.includes(unit.id));
-            } else {
-                if (data.lenth === 3) {
-                    return data;
-                }
-                const updatedUnits = [...prevUnits, ...newData];
-                console.log('pumasok dito');
-                return updatedUnits;
-            }
-        });
+        setUnits(data);
 
         setOpen(false);
     };
@@ -134,7 +115,6 @@ const UnitComparisonTable = (props) => {
         const handleFetch = async () => {
             try {
                 const res = await fetchBookmarkUnits(userCtx.user.id);
-                console.log(res);
                 setBookmarks(res);
             } catch (err) {}
         };

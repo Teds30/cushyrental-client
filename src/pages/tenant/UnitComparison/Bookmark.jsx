@@ -21,11 +21,10 @@ const Bookmark = (props) => {
     }
 
     const comapareHandler = () => {
-        const selectedUnits = units.filter((unit) => {
-            if (selectedUnit.includes(unit.id)) {
-                return unit
-            }
-        });
+        const selectedUnits = units.filter((unit) => selectedUnit.includes(unit.id));
+
+        // console.log(selectedUnits);
+
 
 
         // console.log(selectedUnits);

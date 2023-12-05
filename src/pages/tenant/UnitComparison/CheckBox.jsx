@@ -30,31 +30,35 @@ const CheckBox = (props) => {
     //     props.onCheckBox(checkItems);
     // }, [checkItems]);
 
-    const content = items.map(item => (<FormControlLabel
-        control={
-          
-          <Checkbox
-            disabled={isDisabled !== false ? true : false}
-            checked={checkItems.find(checkItem => checkItem === item.id) ? true : false}
-            onChange={() => checkedItemsHandler(item)}
-            sx={{
-              height: checkBoxSize,
-              width: checkBoxSize,
-              border: 'var(--accent)',
-              color: "var(--accent)",
-              "&.Mui-checked": {
-                color: "var(--accent)",
-              },
-              "&:hover": {
-                color: "var(--accent)",
-              }
-            }}
-          />
+    const content = items.map(item => {
+        if (selectedValue.includes(item.id)) {
+            return (<FormControlLabel
+                control={
+                  
+                  <Checkbox
+                    disabled={isDisabled !== false ? true : false}
+                    checked={checkItems.find(checkItem => checkItem === item.id) ? true : false}
+                    onChange={() => checkedItemsHandler(item)}
+                    sx={{
+                      height: checkBoxSize,
+                      width: checkBoxSize,
+                      border: 'var(--accent)',
+                      color: "var(--accent)",
+                      "&.Mui-checked": {
+                        color: "var(--accent)",
+                      },
+                      "&:hover": {
+                        color: "var(--accent)",
+                      }
+                    }}
+                  />
+                }
+                key={item.id}
+                label={item.name}
+                sx={{"& span": {fontSize: labelSize, fontFamily: 'inter'} }}
+              />)
         }
-        key={item.id}
-        label={item.name}
-        sx={{"& span": {fontSize: labelSize, fontFamily: 'inter'} }}
-      />));
+    });
 
     return (
       <FormGroup>

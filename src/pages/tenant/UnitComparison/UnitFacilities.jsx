@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useAttributeManager from "../../../hooks/data/attribute-hook";
-import CheckBox from "../../../components/CheckBox/CheckBox";
+import CheckBox from "./CheckBox";
 import styles from "./UnitComparison.module.css";
 
 const facilityExclusive = [
@@ -18,7 +18,7 @@ const UnitFacilities = (props) => {
     const { unitFacilities } = props;
 
     const { fetchFacilities, isLoading } = useAttributeManager();
-    const [facilities, setfacilities] = useState([]);  
+    const [facilities, setfacilities] = useState([]);
 
     useEffect(() => {
         const handleFetch = async () => {
@@ -39,20 +39,24 @@ const UnitFacilities = (props) => {
             })
             .shift();
 
-            console.log(exclusive);
-
-        if (exclusive !== undefined) { return (
-            <div key={facility.id} className={`${styles["facilities"]}`}>
-                <p className={`${styles["facility-name"]}`}>{facility.name}</p>
-
-                <CheckBox
-                    isDisabled={"True"}
-                    items={facilityExclusive}
-                    selectedValue={[exclusive.is_shared + 1]}
-                    labelSize={"10px"}
-                />
-            </div>
-        );}
+        if (exclusive !== undefined) {
+            if (exclusive.is_shared === 0) {
+                return (
+                    <div key={facility.id} className={`${styles["facilities"]}`}>
+                        <p className={`${styles["facility-name"]}`}>
+                            {facility.name}
+                        </p>
+    
+                        <CheckBox
+                            isDisabled={"True"}
+                            items={facilityExclusive}
+                            selectedValue={[exclusive.is_shared + 1]}
+                            labelSize={"10px"}
+                        />
+                    </div>
+                );
+            }
+        }
     });
 
     return (
@@ -61,7 +65,6 @@ const UnitFacilities = (props) => {
             <div className={`${styles["attributes"]}`}>{content}</div>
         )
     );
-
 };
 
 export default UnitFacilities;
