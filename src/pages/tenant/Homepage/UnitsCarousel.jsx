@@ -54,13 +54,13 @@ const UnitsCarousel = () => {
                 <div className={styles['wave1']}>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="514"
-                        height="116"
-                        viewBox="0 0 514 116"
+                        width="360"
+                        height="114"
+                        viewBox="0 0 360 114"
                         fill="none"
                     >
                         <path
-                            d="M514 3.05176e-05C463.6 191.6 150.333 79.8334 0 3.05176e-05V116H514V3.05176e-05Z"
+                            d="M360.001 0.499207C324.701 192.099 105.292 84.3318 0 4.49841L0.0010376 113.5L360.001 113.5V0.499207Z"
                             fill="#1D6156"
                         />
                     </svg>
@@ -88,32 +88,38 @@ const UnitsCarousel = () => {
             >
                 {content}
             </Swiper>
-            <div className={styles['wave2']} style={{ marginTop: '-1px' }}>
+            <div
+                className={styles['wave2']}
+                style={{
+                    marginTop: '0px',
+                    marginRight: '-30px !important',
+                }}
+            >
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="514"
-                    height="98"
-                    viewBox="0 0 514 98"
+                    width="360"
+                    height="109"
+                    viewBox="0 0 360 109"
                     fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
                 >
                     <path
-                        d="M35.5997 0.138585C15.8548 1.48322 9.94636 12.4763 0 27.1386V0.138578L35.5997 0.138585C38.2765 -0.0437036 41.2076 -0.0486688 44.4375 0.138586L514 0.138672V27.1386C485.5 114.139 420.5 126.639 143.5 27.1386C93.5682 9.2028 63.6926 1.25492 44.4375 0.138586L35.5997 0.138585Z"
-                        fill="url(#paint0_linear_5587_5365)"
+                        d="M0 -0.000732422C0 -0.000732422 49.835 -2.86102e-06 143 -2.86102e-06C236.165 -2.86102e-06 360 -0.000729561 360 -0.000729561C356.216 25.3868 351.202 32.8311 344.732 47.2918C273.443 206.624 0 -114.156 0 47.2918C0 208.739 0 -0.000732422 0 -0.000732422Z"
+                        fill="url(#paint0_linear_8141_5622)"
                     />
                     <defs>
                         <linearGradient
-                            id="paint0_linear_5587_5365"
-                            x1="257"
-                            y1="0"
-                            x2="257"
-                            y2="97.1545"
+                            id="paint0_linear_8141_5622"
+                            x1="182.255"
+                            y1="-252.938"
+                            x2="182.255"
+                            y2="93.0661"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop stopColor="#1D6156" stopOpacity="0.7" />
+                            <stop offset="0.598958" stop-color="#1D6156" />
                             <stop
                                 offset="1"
-                                stopColor="#1D6156"
-                                stopOpacity="0"
+                                stop-color="#03B077"
+                                stop-opacity="0"
                             />
                         </linearGradient>
                     </defs>

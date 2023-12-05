@@ -44,17 +44,13 @@ export default function Bookmark(props) {
     }, [userCtx])
 
     return (
-        isBookmark && (
-            <div>
-                <Checkbox
-                    checked={isBookmark}
-                    icon={<BookmarkBorderIcon sx={{ fill: 'var(--accent)' }} />}
-                    checkedIcon={
-                        <BookmarkIcon sx={{ fill: 'var(--accent)' }} />
-                    }
-                    onClick={bookmarkHandler}
-                />
-            </div>
-        )
+        <div>
+            <Checkbox
+                checked={isBookmark}
+                icon={<BookmarkBorderIcon sx={{ fill: 'var(--accent)' }} />}
+                checkedIcon={<BookmarkIcon sx={{ fill: 'var(--accent)' }} />}
+                onClick={bookmarkHandler}
+            />
+        </div>
     )
 }

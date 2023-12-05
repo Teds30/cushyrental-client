@@ -23,15 +23,8 @@ const RecommendedUnits = () => {
             <h4>Recommended for you</h4>
             <div className={styles['units-container']}>
                 {units ? (
-                    units.map((unit) => {
-                        return (
-                            <Link
-                                to={`/unit/${unit.unit.id}`}
-                                key={unit.unit.id}
-                            >
-                                <LandlordUnit unit={unit.unit} />
-                            </Link>
-                        )
+                    units.map((unit, index) => {
+                        return <LandlordUnit unit={unit.unit} key={index} />
                     })
                 ) : (
                     <p>No units found.</p>
