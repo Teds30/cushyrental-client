@@ -258,8 +258,8 @@ const CreateAccountForm = (props) => {
             </div>
 
             <div className={styles.socmed}>
-                {/* <FacebookLogin
-                    appId={"782460463883150"}
+                <FacebookLogin
+                    appId={"6722357257784876"}
                     fields="name,email,picture"
                     callback={responseFacebook}
                     // custom button using render props
@@ -278,7 +278,7 @@ const CreateAccountForm = (props) => {
                             </div>
                         </Link>
                     )}
-                /> */}
+                />
 
                 <Link
                     onClick={registerGoogleAuthHandler}

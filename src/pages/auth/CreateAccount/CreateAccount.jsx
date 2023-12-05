@@ -92,6 +92,7 @@ const CreateAccount = () => {
     }
 
     const facebookRegisterHandler = async (response) => {
+        console.log(response);
         const user_name = response.name.split(' ')
 
         const transform_name = nameTransFunction(user_name)
@@ -107,10 +108,13 @@ const CreateAccount = () => {
             user_type_id: userType.user_type_id,
         }
 
+        console.log(data);
+
         try {
             const res = await facebookAccountRegistration(data)
-            ctx.onLogin(res.user, res.token)
-            navigate('/')
+            console.log(res);
+            ctx.onLogin({ user: res.user, token: res.token })
+            navigate('/');
         } catch (error) {}
     }
 
