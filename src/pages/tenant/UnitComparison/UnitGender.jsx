@@ -1,4 +1,4 @@
-import CheckBox from "../../../components/CheckBox/CheckBox";
+import CheckBox from "./CheckBox";
 import styles from './UnitComparison.module.css';
 
 const gender = [
