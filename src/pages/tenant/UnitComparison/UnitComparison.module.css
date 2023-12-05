@@ -120,7 +120,7 @@
 
 .bookmark-content {
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     justify-content: center;
 }
 
@@ -128,7 +128,7 @@
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     text-align: center;
 }
 
