@@ -11,6 +11,7 @@ import moment from 'moment'
 import useImageManager from '../../hooks/data/image-hook'
 
 import styles from './Messages.module.css'
+import { useQuery } from '@tanstack/react-query'
 
 const Messages = (props) => {
     const {
@@ -54,19 +55,24 @@ const Messages = (props) => {
         setFocusedMessage(null)
     }
 
-    useEffect(() => {
-        if (room) {
-            const recipient =
-                user_id === room.landlord_id ? room.tenant : room.landlord
-            // console.log(recipient)
-
-            const loadAvatar = async () => {
-                const res = await fetchAvatar(recipient.profile_picture_img)
-                setAvatar(res)
+    const { data: convoAvatarData, isLoading: convoAvatarLoading } = useQuery({
+        queryKey: ['convoAvatar', room?.unit_id],
+        queryFn: async () => {
+            let res = null
+            if (room) {
+                const recipient =
+                    user_id === room.landlord_id ? room.tenant : room.landlord
+                res = await fetchAvatar(recipient.profile_picture_img)
             }
-            loadAvatar()
-        }
-    }, [room])
+            return res
+        },
+        refetchOnWindowFocus: false,
+        enabled: !!room,
+    })
+
+    useEffect(() => {
+        if (convoAvatarData) setAvatar(convoAvatarData)
+    }, [convoAvatarData])
 
     let tmpChat = []
     let lastReadItem
