@@ -16,6 +16,7 @@ import ChatRoom from './ChatRoom'
 import SearchField from '../../components/Search/SearchField'
 
 import AuthContext from '../../context/auth-context'
+import { useQuery } from '@tanstack/react-query'
 
 const Chats = () => {
     const navigate = useNavigate()
@@ -27,16 +28,24 @@ const Chats = () => {
 
     const { sendRequest, isLoading } = useHttp()
 
-    const fetchRooms = async (userId) => {
-        const res = await sendRequest({
-            url: `${import.meta.env.VITE_CHAT_LOCALHOST}/rooms`,
-            method: 'POST',
-            body: JSON.stringify({ userId: userId }),
-        })
+    const { data: chatRoomsData, isLoading: chatRoomsLoading } = useQuery({
+        queryKey: ['chatRooms'],
+        queryFn: async () => {
+            const res = await sendRequest({
+                url: `${import.meta.env.VITE_CHAT_LOCALHOST}/rooms`,
+                method: 'POST',
+                body: JSON.stringify({
+                    userId: authCtx.user.id,
+                    token: authCtx.token,
+                }),
+            })
 
-        setRooms(res.rooms)
-        setInitialRooms(res.rooms)
-    }
+            return res.rooms
+        },
+        refetchOnWindowFocus: false,
+        enabled: !!authCtx.user && !!authCtx.token,
+    })
+
     useEffect(() => {
         setSocket(
             io(import.meta.env.VITE_CHAT_LOCALHOST, {
@@ -44,8 +53,15 @@ const Chats = () => {
             })
         )
 
-        if (authCtx.user) fetchRooms(authCtx.user.id)
-    }, [authCtx.user])
+        // if (authCtx.user) fetchRooms(authCtx.user.id)
+    }, [])
+
+    useEffect(() => {
+        if (chatRoomsData) {
+            setRooms(chatRoomsData)
+            setInitialRooms(chatRoomsData)
+        }
+    }, [chatRoomsData])
 
     const handleSearch = (e) => {
         const keywords = e.target.value
@@ -113,7 +129,7 @@ const Chats = () => {
                 </div>
                 <h3>Recents</h3>
                 <div className={styles['chats']}>
-                    {isLoading ? <p>Loading...</p> : chatRooms}
+                    {chatRoomsLoading ? <p>Loading...</p> : chatRooms}
                 </div>
             </div>
         </div>

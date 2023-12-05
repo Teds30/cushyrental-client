@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 
 import IconButton from '@mui/material/IconButton'
 import { BsCamera, BsThreeDotsVertical } from 'react-icons/bs'
+import { IoImageOutline } from 'react-icons/io5'
 import { IoSend } from 'react-icons/io5'
 import TextField from '../../components/TextField/TextField'
 
@@ -77,7 +78,7 @@ const MessageBox = (props) => {
                 aria-label="menu"
                 onClick={selectFile}
             >
-                <BsCamera style={{ fill: 'var(--fc-body)' }} />
+                <IoImageOutline style={{ fill: 'var(--fc-body)' }} />
             </IconButton>
             <TextField
                 autoComplete="off"

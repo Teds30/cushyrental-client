@@ -24,9 +24,12 @@ import AuthContext from '../../context/auth-context'
 import { Menu, MenuItem } from '@mui/material'
 import SwipeableCard from '../../components/SwipeableCard/SwipeableCard'
 import ReportUser from './ReportUser'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 const Conversation = (props) => {
     const authCtx = useContext(AuthContext)
+    // Get QueryClient from the context
+    const queryClient = useQueryClient()
 
     const [user_id, setUserId] = useState()
 
@@ -79,15 +82,81 @@ const Conversation = (props) => {
         )
     }, [])
 
-    const getChats = async (room_id) => {
-        const res = await sendRequest({
-            url: `${
-                import.meta.env.VITE_CHAT_LOCALHOST
-            }/chats/${room_id}/token=${authCtx.token}`,
-        })
-        setChatReady(true)
-        setChats(res)
-    }
+    const {
+        data: convoData,
+        isLoading: convoLoading,
+        refetch: convoDataRefetch,
+    } = useQuery({
+        queryKey: ['convo', room_id],
+        queryFn: () => {
+            const res = sendRequest({
+                url: `${
+                    import.meta.env.VITE_CHAT_LOCALHOST
+                }/chats/${room_id}/token=${authCtx.token}`,
+            })
+            return res
+        },
+        refetchOnWindowFocus: false,
+        enabled: !!room_id && !!authCtx.token,
+    })
+
+    const { data: convoRoomData, isLoading: convoRoomLoading } = useQuery({
+        queryKey: ['convoRoom', room_id],
+        queryFn: async () => {
+            console.log('sdasd')
+            const res = await sendRequest({
+                url: `${
+                    import.meta.env.VITE_CHAT_LOCALHOST
+                }/rooms/${room_id}/token=${authCtx.token}`,
+            })
+
+            if (res) {
+                const landlord = await fetchUserDetails(res.landlord_id)
+                const tenant = await fetchUserDetails(res.tenant_id)
+                // conole.log('asd: ', {
+                //     ...res,
+                //     landlord: landlord,
+                //     tenant: tenant,
+                // })
+                return { ...res, landlord: landlord, tenant: tenant }
+            }
+
+            return res
+        },
+        refetchOnWindowFocus: false,
+        enabled: !!room_id && !!authCtx.token,
+    })
+
+    useEffect(() => {
+        if (authCtx.user) {
+            setRoom(convoRoomData)
+        }
+    }, [authCtx.user, convoRoomData])
+
+    const { data: convoUnitData, isLoading: convoUnitLoading } = useQuery({
+        queryKey: ['convoUnit', room?.unit_id],
+        queryFn: async () => {
+            let res = null
+            if (room) {
+                res = await sendRequest({
+                    url: `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/units/${
+                        convoRoomData.unit_id
+                    }`,
+                })
+            }
+            return res
+        },
+        refetchOnWindowFocus: false,
+        enabled: !!convoRoomData,
+    })
+
+    useEffect(() => {
+        if (convoData) {
+            setChatReady(true)
+            setChats(convoData)
+        }
+    }, [convoData])
+
     const readChat = async (room_id, user_id) => {
         const res = await sendRequest({
             url: `${import.meta.env.VITE_CHAT_LOCALHOST}/read-chats/${room_id}`,
@@ -95,22 +164,14 @@ const Conversation = (props) => {
             body: JSON.stringify({
                 user_id: user_id,
             }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
         })
-
-        console.log(res)
     }
 
-    const fetchUnit = async (unit_id) => {
-        const res = await sendRequest({
-            url: `${
-                import.meta.env.VITE_BACKEND_LOCALHOST
-            }/api/units/${unit_id}`,
-        })
-        setUnit(res)
-    }
+    useEffect(() => {
+        if (convoUnitData) {
+            setUnit(convoUnitData)
+        }
+    }, [convoUnitData])
 
     const fetchUserDetails = async (userId) => {
         const res = await sendRequest({
@@ -120,24 +181,6 @@ const Conversation = (props) => {
         })
         return res
     }
-
-    const fetchRoomDetails = async (room_id) => {
-        const res = await sendRequest({
-            url: `${
-                import.meta.env.VITE_CHAT_LOCALHOST
-            }/rooms/${room_id}/token=${authCtx.token}`,
-        })
-
-        const landlord = await fetchUserDetails(res.landlord_id)
-        const tenant = await fetchUserDetails(res.tenant_id)
-        setRoom({ ...res, landlord: landlord, tenant: tenant })
-    }
-
-    useEffect(() => {
-        if (authCtx.user) {
-            fetchRoomDetails(room_id)
-        }
-    }, [authCtx.user])
 
     useEffect(() => {
         if (room) {
@@ -151,7 +194,7 @@ const Conversation = (props) => {
 
             // console.log(room.unit_id)
 
-            fetchUnit(room.unit_id)
+            // fetchUnit(room.unit_id)
             readChat(room._id, authCtx.user.id)
         }
     }, [room])
@@ -167,19 +210,24 @@ const Conversation = (props) => {
 
         socket.emit('room-join', { room_id: room_id })
         socket.on('room-joined', () => {
-            getChats(room_id)
+            // convoDataRefetch()
             readChat(room_id, authCtx.user.id)
         })
         socket.on('message-sent', ({ message }) => {
             setChats((prev) => [...prev, { ...message, read: true }])
             socket.emit('receiver-seen-signal', { room_id: room_id })
+            queryClient.invalidateQueries({ queryKey: ['convo', room_id] })
+            queryClient.setQueryData(
+                ['convo', { id: room_id }],
+                [...convoData, { ...message, read: true }]
+            )
         })
 
         socket.on('typing-started', () => setTyping(true))
         socket.on('typing-stopped', () => setTyping(false))
 
         socket.on('receiver-seen', () => {
-            getChats(room_id)
+            convoDataRefetch()
         })
     }, [socket, room])
 
@@ -253,7 +301,9 @@ const Conversation = (props) => {
                             </IconButton>
                         </Link>
                         <Box sx={{ flexGrow: 1 }}>
-                            <p className="title">{unit && unit.name}</p>
+                            <p className="title">
+                                {convoUnitData && convoUnitData.name}
+                            </p>
                             <p>{room && recipient}</p>
                         </Box>
 
@@ -309,7 +359,7 @@ const Conversation = (props) => {
                 </AppBar>
                 {socket && room && (
                     <AvailModal
-                        unit={unit}
+                        unit={convoUnitData}
                         user_id={user_id}
                         socket={socket}
                         room={room}

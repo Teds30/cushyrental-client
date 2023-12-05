@@ -41,7 +41,7 @@ const Profile = () => {
                     sx={{
                         margin: 0,
                         // backgroundColor: '#fff',
-                        backgroundColor: 'transparent',
+                        backgroundColor: 'var(--bg)',
                         color: 'var(--fc-body)',
                         fontFamily: 'Inter',
                         boxShadow: 'none',
