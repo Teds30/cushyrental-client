@@ -18,7 +18,11 @@ const CostComparisonUnit = (props) => {
     useEffect(() => {
         const handleFetch = async () => {
             try {
-                const res = await fetchImage(unit.images[0].image)
+                const res = await fetchImage(
+                    unit.images
+                        .sort((a, b) => b.is_thumbnail - a.is_thumbnail)[0].image
+                        .replace('images/', '')
+                )
                 setUnitImg(res)
             } catch (err) {
                 console.log(err)
@@ -26,6 +30,7 @@ const CostComparisonUnit = (props) => {
         }
         if (unit.images[0]) handleFetch()
     }, [unit])
+    console.log(unit.images)
 
     const updatedPrice =
         monthsList.length > 0
