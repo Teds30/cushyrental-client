@@ -71,6 +71,31 @@ const useImageManager = () => {
         [sendRequest]
     )
 
+    const fetchImageById = useCallback(
+        async (id) => {
+            let responseData
+            try {
+                const pic = await sendRequest({
+                    url: `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/imagesById/${id}`,
+                })
+
+                if (pic) {
+                    responseData = await fetchImage(
+                        pic.image.replace('images/', '')
+                    )
+                }
+            } catch (err) {
+                console.log(err)
+                throw err.message
+            }
+
+            return responseData
+        },
+        [sendRequest]
+    )
+
     const fetchAvatar = useCallback(
         async (image_path) => {
             let responseData
@@ -148,6 +173,7 @@ const useImageManager = () => {
         isLoading,
         fetchImages,
         fetchImage,
+        fetchImageById,
         fetchAvatar,
         fetchIcon,
         deleteIcon,
