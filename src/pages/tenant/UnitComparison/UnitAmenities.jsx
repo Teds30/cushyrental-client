@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useAttributeManager from "../../../hooks/data/attribute-hook";
-import CheckBox from "../../../components/CheckBox/CheckBox";
+import CheckBox from "./CheckBox";
 import styles from './UnitComparison.module.css';
 
 const UnitAmenities = (props) => {

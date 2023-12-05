@@ -72,7 +72,7 @@ const LandlordUnit = (props) => {
                         )
                     })}
                     {excessAmenities.length > 0 && (
-                        <div>
+                        <div className={`${styles['amenity-text-container']}`}>
                             <Stack direction="row" spacing={1}>
                                 <Chip
                                     label={`+${excessAmenities.length} more`}
@@ -81,7 +81,7 @@ const LandlordUnit = (props) => {
                                     sx={{
                                         padding: '2px 0px',
                                         border: '2px solid #E4E9ED',
-                                        fontSize: '10px',
+                                        fontSize: '8px',
                                     }}
                                 />
                             </Stack>

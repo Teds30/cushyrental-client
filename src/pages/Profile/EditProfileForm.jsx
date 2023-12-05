@@ -95,7 +95,7 @@ const EditProfileForm = (props) => {
             const resUpdate = await updateUser(userUpdate, user.id)
 
             console.log('updated user')
-            // userCtx.onLogin({ user: resUpdate, token: userCtx.token })
+            userCtx.onLogin({ user: resUpdate, token: userCtx.token })
             navigate('/profile')
             notify('User update successfully!', 'success')
         } catch (err) {}
@@ -104,13 +104,13 @@ const EditProfileForm = (props) => {
     const submitHandler = async (event) => {
         event.preventDefault()
 
-        if (
-            middleName === '' ||
-            user.phone_number === '' ||
-            user.gender === ''
-        ) {
-            return
-        }
+        // if (
+        //     middleName === '' ||
+        //     user.phone_number === '' ||
+        //     user.gender === ''
+        // ) {
+        //     return
+        // }
 
         console.log('saving')
 
@@ -133,7 +133,7 @@ const EditProfileForm = (props) => {
                 console.log('updating user...')
                 const resUpdate = await updateUser(userUpdate, user.id)
                 console.log('saved')
-                // userCtx.onLogin({ user: resUpdate, token: userCtx.token })
+                userCtx.onLogin({ user: resUpdate, token: userCtx.token })
                 navigate('/profile')
                 notify('User update successfully!', 'success')
             } catch (err) {}
