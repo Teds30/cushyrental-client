@@ -22,25 +22,30 @@ const RecommendedUnits = () => {
         <div className={styles['container']}>
             <h4>Recommended for you</h4>
             <div className={styles['units-container']}>
-                {units ? (
-                    units.map((unit, index) => {
-                        if (index + 1 === units.length) {
-                            return (
-                                <Fragment>
-                                <Fragment>
-                                    <LandlordUnit unit={unit.unit} key={index} />
-                                </Fragment>
-                                <p>No more units found.</p>
-                                </Fragment>
-                            )
-                        }
+                {units && (
+                    <Fragment>
+                        {units.map((unit, index) => {
+                            if (index + 1 === units.length) {
+                                return (
+                                    <Fragment key={index}>
+                                        <LandlordUnit
+                                            unit={unit.unit}
+                                            key={index}
+                                        />
+                                    </Fragment>
+                                )
+                            }
 
-                        return <LandlordUnit unit={unit.unit} key={index} />
-                    })
-                ) : (
-                    <p>No units found.</p>
+                            return <LandlordUnit unit={unit.unit} key={index} />
+                        })}
+                    </Fragment>
                 )}
             </div>
+            {units ? (
+                <p style={{ textAlign: 'center' }}>No more units found.</p>
+            ) : (
+                <p style={{ textAlign: 'center' }}>No units found.</p>
+            )}
         </div>
     )
 }
