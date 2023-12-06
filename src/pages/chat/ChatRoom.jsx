@@ -7,9 +7,12 @@ import moment from 'moment'
 import styles from './Chats.module.css'
 import { Link } from 'react-router-dom'
 
+import UserAvatar from '../../components/Avatar/UserAvatar'
+
 import useUserManager from '../../hooks/data/users-hook'
 import useUnitManager from '../../hooks/data/units-hook'
 import useImageManager from '../../hooks/data/image-hook'
+import { useQuery } from '@tanstack/react-query'
 
 const ChatRoom = ({ room, user_id, socket }) => {
     const [chat, setChat] = useState('')
@@ -19,55 +22,97 @@ const ChatRoom = ({ room, user_id, socket }) => {
     const recipient_id =
         user_id === room.landlord_id ? room.tenant_id : room.landlord_id
 
-    const { fetchUser } = useUserManager()
     const { fetchUnit } = useUnitManager()
     const { fetchImage } = useImageManager()
 
     const { sendRequest } = useHttp()
 
-    const getUnitImage = async () => {
-        const res = await fetchUnit(room.unit_id)
+    const {
+        data: chatUnitImageData,
+        isLoading: chatUnitImageLoading,
+        refetch: chatUnitImageRefetch,
+    } = useQuery({
+        queryKey: ['chatUnitImage', room?._id],
+        queryFn: async () => {
+            if (room) {
+                const res = await fetchUnit(room.unit_id)
 
-        const img = await fetchImage(res.images[0].image.replace('images/', ''))
-        console.log('img: ', img)
-        setUnitImg(img)
-    }
+                const img = await fetchImage(
+                    res.images[0].image.replace('images/', '')
+                )
 
-    const getChats = async (room_id) => {
-        const res = await sendRequest({
-            url: `${import.meta.env.VITE_CHAT_LOCALHOST}/last-chat/${room_id}`,
-        })
-        // const data = await res.json()
-
-        let lastChat = res.slice(-1)[0]
-        setChat({ ...lastChat })
-    }
-
-    const getChatCount = async (room_id) => {
-        const res = await sendRequest({
-            url: `${
-                import.meta.env.VITE_CHAT_LOCALHOST
-            }/chats-count/${room_id}/${user_id}`,
-        })
-
-        if (res.count > 0) setChatCount(res.count)
-        else setChatCount(null)
-    }
+                return img
+            }
+        },
+        refetchOnWindowFocus: false,
+        enabled: !!room,
+    })
 
     useEffect(() => {
-        getChats(room._id)
-        getChatCount(room._id)
-        getUnitImage()
-    }, [])
+        if (chatUnitImageData) setUnitImg(chatUnitImageData)
+    }, [chatUnitImageData])
+
+    const {
+        data: lastChatData,
+        isLoading: lastChatLoading,
+        refetch: lastChatRefetch,
+    } = useQuery({
+        queryKey: ['lastChat', room?._id],
+        queryFn: async () => {
+            if (room) {
+                const res = await sendRequest({
+                    url: `${import.meta.env.VITE_CHAT_LOCALHOST}/last-chat/${
+                        room._id
+                    }`,
+                })
+
+                let lastChat = res.slice(-1)[0]
+
+                return lastChat
+            }
+        },
+        refetchOnWindowFocus: false,
+        enabled: !!room,
+    })
+
+    const {
+        data: chatCountData,
+        isLoading: chatCountLoading,
+        refetch: chatCountRefetch,
+    } = useQuery({
+        queryKey: ['chatCount', room?._id],
+        queryFn: async () => {
+            if (room) {
+                const res = await sendRequest({
+                    url: `${import.meta.env.VITE_CHAT_LOCALHOST}/chats-count/${
+                        room._id
+                    }/${user_id}`,
+                })
+
+                return res
+            }
+        },
+        refetchOnWindowFocus: false,
+        enabled: !!room && !!user_id,
+    })
+
+    useEffect(() => {
+        if (lastChatData) {
+            setChat({ ...lastChatData })
+        }
+    }, [lastChatData])
+
+    useEffect(() => {
+        if (chatCountData?.count > 0) setChatCount(chatCountData.count)
+        else setChatCount(null)
+    }, [chatCountData])
 
     useEffect(() => {
         if (!socket) return
 
         socket.on('message-sent', ({ message }) => {
-            getChats(room._id)
-            getChatCount(room._id)
-            // fetchRooms()
-            // setChats((prev) => [...prev, { ...message, read: true }])
+            lastChatRefetch()
+            chatCountRefetch()
             // socket.emit('receiver-seen-signal', { room_id: room_id })
         })
     }, [socket])
@@ -101,16 +146,32 @@ const ChatRoom = ({ room, user_id, socket }) => {
 
     return (
         <div className={styles['chat-container']}>
-            <Link to={`/chats/${room.id}`}>
+            <Link to={`/chats/${room._id}`}>
                 <div className={styles['chat']}>
                     <div className={styles['chat-img']}>
                         <img src={unitImg} alt="" />
+                        {user_id === room.landlord_id && (
+                            <div className={styles['tenant-img']}>
+                                <UserAvatar
+                                    avatar_url={room.user.profile_picture_img}
+                                    size="24px"
+                                />
+                            </div>
+                        )}
                     </div>
                     <div className={styles['chat-content']}>
                         <div
                             className={`${messageStyle} ${styles['chat-message']}`}
                         >
-                            <p className="title">{room.name}</p>
+                            {user_id === room.landlord_id ? (
+                                <p className="title">
+                                    {room.user.first_name} {room.user.last_name}{' '}
+                                    <span className="">• {room.name}</span>
+                                </p>
+                            ) : (
+                                <p className="title">{room.name}</p>
+                            )}
+
                             <p>{message}</p>
                         </div>
                     </div>

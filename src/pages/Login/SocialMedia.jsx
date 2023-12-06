@@ -91,7 +91,7 @@ const SocialMediaLogin = () => {
     return (
         <div className={styles.socmed}>
             {/* <FacebookLogin
-            appId={"782460463883150"}
+            appId={"6722357257784876"}
             fields="name,email,picture"
             callback={responseFacebook}
             render={({ disabled, onClick }) => (

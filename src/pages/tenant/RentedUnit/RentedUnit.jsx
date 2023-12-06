@@ -127,6 +127,8 @@ const RentedUnit = (props) => {
                 body: JSON.stringify(formData),
             });
 
+            console.log(res);
+
             setSubmittedReview(res);
             onSubmittedReview(res);
             // console.log("saving");

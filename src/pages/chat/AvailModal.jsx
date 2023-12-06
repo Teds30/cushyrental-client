@@ -14,12 +14,14 @@ import { TbCircleCheck } from 'react-icons/tb'
 
 import styles from './AvailModal.module.css'
 import AuthContext from '../../context/auth-context'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 const AvailModal = (props) => {
     const { user_id, socket, room_id, room, unit } = props
 
     const authCtx = useContext(AuthContext)
     const { sendRequest, isLoading } = useHttp()
+    const [isSaving, setIsSaving] = useState(false)
 
     const [roomDetails, setRoomDetails] = useState({
         data: null,
@@ -29,26 +31,40 @@ const AvailModal = (props) => {
     const [quantity, setQuantity] = useState({ value: 0 })
     const [availToggle, setAvailToggle] = useState(false)
 
-    useEffect(() => {
-        const fetchData = async (room_id) => {
+    // Access the client
+    const queryClient = useQueryClient()
+
+    const {
+        data: availRoomData,
+        isLoading: availRoomLoading,
+        refetch: availRoomRefetch,
+    } = useQuery({
+        queryKey: ['availRoom', room_id],
+        queryFn: async () => {
             const res = await sendRequest({
                 url: `${
                     import.meta.env.VITE_CHAT_LOCALHOST
                 }/rooms/${room_id}/token=${authCtx.token}`,
             })
 
-            setRoomDetails({
-                data: res,
-                request: res.request_status,
-                req_slots: res.slots,
-            })
-        }
+            return res
+        },
+        refetchOnWindowFocus: false,
+        enabled: !!room_id && !!authCtx.token,
+    })
 
-        fetchData(room_id)
-    }, [unit])
+    useEffect(() => {
+        if (availRoomData)
+            setRoomDetails({
+                data: availRoomData,
+                request: availRoomData.request_status,
+                req_slots: availRoomData.slots,
+            })
+    }, [availRoomData])
 
     const addRental = async () => {
         try {
+            setIsSaving(true)
             const currentDate = new Date()
 
             // Get the year, month, and day
@@ -88,8 +104,9 @@ const AvailModal = (props) => {
                     Authorization: `Bearer ${authCtx.token}`,
                 },
             })
-
+            setIsSaving(false)
         } catch (err) {
+            setIsSaving(false)
             console.log(err)
         }
     }
@@ -97,26 +114,26 @@ const AvailModal = (props) => {
     useEffect(() => {
         if (!socket) return
 
-        socket.on('unit-avail-pending', () =>
+        socket.on('unit-avail-pending', () => {
             setRoomDetails((prev) => {
                 return { ...prev, request: 'pending' }
             })
-        )
-        socket.on('unit-avail', () =>
+        })
+        socket.on('unit-avail', () => {
             setRoomDetails((prev) => {
                 return { ...prev, request: null }
             })
-        )
+        })
         socket.on('unit-avail-accepted', () => {
             setRoomDetails((prev) => {
                 return { ...prev, request: 'accepted' }
             })
         })
-        socket.on('unit-avail-rejected', () =>
+        socket.on('unit-avail-rejected', () => {
             setRoomDetails((prev) => {
                 return { ...prev, request: 'rejected' }
             })
-        )
+        })
     }, [socket])
 
     const handleAvail = () => {
@@ -275,15 +292,15 @@ const AvailModal = (props) => {
                             btnType="danger"
                             btnSize="small"
                             onClick={handleReject}
-                            disabled={isLoading}
+                            disabled={isSaving}
                         >
                             Reject
                         </BorderedButton>
                         <PrimaryButton
                             width="100%"
                             onClick={handleAccept}
-                            isLoading={isLoading}
-                            loadingText='Accepting'
+                            isLoading={isSaving}
+                            loadingText="Accepting"
                         >
                             Accept
                         </PrimaryButton>
