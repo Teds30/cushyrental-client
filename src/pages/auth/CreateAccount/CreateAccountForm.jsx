@@ -1,22 +1,22 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import FacebookLogin, { FacebookLoginResponse } from 'rc-facebook-login'
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import FacebookLogin, { FacebookLoginResponse } from "rc-facebook-login";
 
-import TextField from '../../../components/TextField/TextField'
-import Dropdown from '../../../components/Dropdown/Dropdown'
-import PrimaryButton from '../../../components/Button/PrimaryButton'
-import useValidate from '../../../hooks/validate-input-hook'
+import TextField from "../../../components/TextField/TextField";
+import Dropdown from "../../../components/Dropdown/Dropdown";
+import PrimaryButton from "../../../components/Button/PrimaryButton";
+import useValidate from "../../../hooks/validate-input-hook";
 
-import styles from './CreateAccount.module.css'
+import styles from "./CreateAccount.module.css";
 
-import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined'
-import google from '../../../assets/google.svg'
-import TextFieldAdornedPassword from '../../../components/TextFieldAdorned/TextFieldAdornedPassword'
+import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
+import google from "../../../assets/google.svg";
+import TextFieldAdornedPassword from "../../../components/TextFieldAdorned/TextFieldAdornedPassword";
 
 const CreateAccountForm = (props) => {
-    const { onCreateAccount, isLoading, onGoogleAuth, onfacebookAuth } = props
+    const { onCreateAccount, isLoading, onGoogleAuth, onfacebookAuth } = props;
 
-    const regex = /^(?=.*\d)(?=.*[!@#$%^&*._])(?=.*[a-z])(?=.*[A-Z]).{8,}$/
+    const regex = /^(?=.*\d)(?=.*[!@#$%^&*._])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
     const {
         value: enteredFirstName,
@@ -25,7 +25,7 @@ const CreateAccountForm = (props) => {
         valueChangeHandler: firstNameChangeHandler,
         inputBlurHandler: firstNameBlurHandler,
         reset: firstNameReset,
-    } = useValidate((value) => value.trim() !== '')
+    } = useValidate((value) => value.trim() !== "");
     const {
         value: enteredLastName,
         isValid: enteredLastNameIsValid,
@@ -33,7 +33,7 @@ const CreateAccountForm = (props) => {
         valueChangeHandler: lastNameChangeHandler,
         inputBlurHandler: lastNameBlurHandler,
         reset: lastNameReset,
-    } = useValidate((value) => value.trim() !== '')
+    } = useValidate((value) => value.trim() !== "");
     const {
         value: enteredGender,
         isValid: enteredGenderIsValid,
@@ -41,7 +41,7 @@ const CreateAccountForm = (props) => {
         valueChangeHandler: genderChangeHandler,
         inputBlurHandler: genderBlurHandler,
         reset: genderReset,
-    } = useValidate((value) => value.trim() !== '')
+    } = useValidate((value) => value.trim() !== "");
     const {
         value: enteredPhoneNumber,
         isValid: enteredPhoneNumberIsValid,
@@ -52,14 +52,14 @@ const CreateAccountForm = (props) => {
     } = useValidate((value) => {
         // Check if the value contains a plus sign, is a valid number, and not empty
         const isValueValidWithPlus =
-            value.includes('+') && Number(value) && value.trim() !== ''
+            value.includes("+") && Number(value) && value.trim() !== "";
 
         // Check if the value is a valid number and not empty
-        const isValueValid = Number(value) && value.trim() !== ''
+        const isValueValid = Number(value) && value.trim() !== "";
 
         // The final condition: If either of the above conditions is true, return true
-        return isValueValidWithPlus || isValueValid
-    })
+        return isValueValidWithPlus || isValueValid;
+    });
     const {
         value: enteredEmail,
         isValid: enteredEmailIsValid,
@@ -67,7 +67,7 @@ const CreateAccountForm = (props) => {
         valueChangeHandler: emailChangeHandler,
         inputBlurHandler: emailBlurHandler,
         reset: emailReset,
-    } = useValidate((value) => value.trim() !== '')
+    } = useValidate((value) => value.trim() !== "");
     const {
         value: enteredPassword,
         isValid: enteredPasswordIsValid,
@@ -76,8 +76,8 @@ const CreateAccountForm = (props) => {
         inputBlurHandler: passwordBlurHandler,
         reset: passwordReset,
     } = useValidate(
-        (value) => value.trim() !== '' && value.length >= 8 && regex.test(value)
-    )
+        (value) => value.trim() !== "" && value.length >= 8 && regex.test(value)
+    );
     const {
         value: enteredConfirmPassword,
         isValid: enteredConfirmPasswordIsValid,
@@ -85,12 +85,12 @@ const CreateAccountForm = (props) => {
         valueChangeHandler: confirmPasswordChangeHandler,
         inputBlurHandler: confirmPasswordBlurHandler,
         reset: confirmPasswordReset,
-    } = useValidate((value) => enteredPassword === value)
+    } = useValidate((value) => enteredPassword === value);
 
-    const [showPassword, setShowPassword] = useState(false)
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    let formIsValid
+    let formIsValid;
 
     if (
         enteredFirstNameIsValid &&
@@ -101,14 +101,14 @@ const CreateAccountForm = (props) => {
         enteredPasswordIsValid &&
         enteredConfirmPasswordIsValid
     ) {
-        formIsValid = true
+        formIsValid = true;
     }
 
     const submitHandler = (event) => {
-        event.preventDefault()
+        event.preventDefault();
 
         if (!formIsValid) {
-            return
+            return;
         }
 
         onCreateAccount({
@@ -118,13 +118,13 @@ const CreateAccountForm = (props) => {
             first_name: enteredFirstName,
             last_name: enteredLastName,
             gender:
-                enteredGender === 'Male'
-                    ? '1'
-                    : enteredGender === 'Female'
-                    ? '2'
-                    : '3',
+                enteredGender === "Male"
+                    ? "1"
+                    : enteredGender === "Female"
+                    ? "2"
+                    : "3",
             phone_number: enteredPhoneNumber,
-        })
+        });
 
         // firstNameReset();
         // lastNameReset();
@@ -133,22 +133,24 @@ const CreateAccountForm = (props) => {
         // emailReset();
         // passwordReset();
         // confirmPasswordReset();
-    }
+    };
 
     const registerGoogleAuthHandler = () => {
-        onGoogleAuth()
-    }
+        onGoogleAuth();
+    };
 
-    const responseFacebook = (FacebookLoginResponse) => {
-        onfacebookAuth(FacebookLoginResponse)
-    }
+    const responseFacebook = () => {
+        onfacebookAuth();
+    };
+
+    
 
     return (
         <form
-            className={`${styles['form-container']}`}
+            className={`${styles["form-container"]}`}
             onSubmit={submitHandler}
         >
-            <div className={`${styles['form-container-identity']}`}>
+            <div className={`${styles["form-container-identity"]}`}>
                 <TextField
                     fullWidth
                     label="First Name"
@@ -157,7 +159,7 @@ const CreateAccountForm = (props) => {
                     onBlur={firstNameBlurHandler}
                     helperText={
                         enteredFirstNameHasError &&
-                        'Please enter your first name.'
+                        "Please enter your first name."
                     }
                     error
                 />
@@ -169,27 +171,27 @@ const CreateAccountForm = (props) => {
                     onBlur={lastNameBlurHandler}
                     helperText={
                         enteredLastNameHasError &&
-                        'Please enter your last name.'
+                        "Please enter your last name."
                     }
                     error
                 />
             </div>
 
-            <div className={`${styles['form-container-info']}`}>
+            <div className={`${styles["form-container-info"]}`}>
                 <Dropdown
                     fullWidth
                     label="Gender"
                     value={enteredGender}
                     items={[
-                        { id: 0, name: 'Male' },
-                        { id: 1, name: 'Female' },
-                        { id: 2, name: 'Not to specify' },
+                        { id: 0, name: "Male" },
+                        { id: 1, name: "Female" },
+                        { id: 2, name: "Not to specify" },
                     ]}
                     handleSelect={genderChangeHandler}
                     onBlur={genderBlurHandler}
                     selected={enteredGender}
                     errorText={
-                        enteredGenderHasError && 'Please select your gender.'
+                        enteredGenderHasError && "Please select your gender."
                     }
                     error={enteredGenderHasError}
                 />
@@ -201,7 +203,7 @@ const CreateAccountForm = (props) => {
                     onBlur={phoneNumberBlurHandler}
                     helperText={
                         enteredPhoneNumberHasError &&
-                        'Please enter your valid mobile number.'
+                        "Please enter your valid mobile number."
                     }
                     error
                 />
@@ -214,7 +216,7 @@ const CreateAccountForm = (props) => {
                     onBlur={emailBlurHandler}
                     helperText={
                         enteredEmailHasError &&
-                        'Please enter your valid email address.'
+                        "Please enter your valid email address."
                     }
                     error
                 />
@@ -225,7 +227,7 @@ const CreateAccountForm = (props) => {
                     onBlur={passwordBlurHandler}
                     helperText={
                         enteredPasswordHasError &&
-                        'Password must contain 8+ characters, symbol, upper and lowercase letters and a number.'
+                        "Password must contain 8+ characters, symbol, upper and lowercase letters and a number."
                     }
                 />
 
@@ -236,12 +238,12 @@ const CreateAccountForm = (props) => {
                     onBlur={confirmPasswordBlurHandler}
                     helperText={
                         enteredConfirmPasswordHasError &&
-                        'Please confirm your password.'
+                        "Please confirm your password."
                     }
                 />
             </div>
 
-            <div className={`${styles['sign-up-btn']}`}>
+            <div className={`${styles["sign-up-btn"]}`}>
                 <PrimaryButton
                     width="100%"
                     isLoading={isLoading}
@@ -251,22 +253,17 @@ const CreateAccountForm = (props) => {
                 </PrimaryButton>
             </div>
 
-            <div className={`${styles['sign-up-socmed']}`}>
+            <div className={`${styles["sign-up-socmed"]}`}>
                 <div className={styles.hr}></div>
                 <div className={styles.option}>Or Sign Up with</div>
                 <div className={styles.hr}></div>
             </div>
 
             <div className={styles.socmed}>
-                {/* <FacebookLogin
-                    appId={"6722357257784876"}
-                    fields="name,email,picture"
-                    callback={responseFacebook}
-                    // custom button using render props
-                    render={({ disabled, onClick }) => (
-                        <Link
-                            onClick={onClick}
-                            disabled={disabled}
+                {/* <button onClick={fbLogin}>Facebook</button> */}
+                <Link
+                            onClick={responseFacebook}
+                            // disabled={disabled}
                             className="facebook-login-button"
                         >
                             <div className={styles["back"]}>
@@ -277,34 +274,32 @@ const CreateAccountForm = (props) => {
                                 Facebook
                             </div>
                         </Link>
-                    )}
-                /> */}
 
                 <Link
                     onClick={registerGoogleAuthHandler}
-                    style={{ width: '100%' }}
+                    style={{ width: "100%" }}
                 >
-                    <div className={styles['back']}>
+                    <div className={styles["back"]}>
                         <img
                             src={google}
                             alt="Google Icon"
                             className={styles.googleIcon}
-                        />{' '}
+                        />{" "}
                         Google
                     </div>
                 </Link>
             </div>
 
-            <div className={`${styles['login-option']}`}>
+            <div className={`${styles["login-option"]}`}>
                 <span>Already have an account? </span>
                 <span>
-                    <Link to={'/signin'} className={`${styles['login-word']}`}>
+                    <Link to={"/signin"} className={`${styles["login-word"]}`}>
                         Log In
                     </Link>
                 </span>
             </div>
         </form>
-    )
-}
+    );
+};
 
-export default CreateAccountForm
+export default CreateAccountForm;
