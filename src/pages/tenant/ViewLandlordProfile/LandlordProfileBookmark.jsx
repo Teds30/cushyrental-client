@@ -73,7 +73,7 @@ export default function LandlordProfileBookmark(props) {
                     icon={
                         isLoading ? (
                             <CircularProgress
-                                size={24}
+                                size={18}
                                 sx={{
                                     color: 'var(--accent)',
                                 }}
@@ -92,7 +92,7 @@ export default function LandlordProfileBookmark(props) {
                     checkedIcon={
                         isLoading ? (
                             <CircularProgress
-                                size={24}
+                                size={18}
                                 sx={{
                                     color: 'var(--accent)',
                                 }}
