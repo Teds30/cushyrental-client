@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import styles from './RecommendedUnits.module.css'
@@ -24,6 +24,17 @@ const RecommendedUnits = () => {
             <div className={styles['units-container']}>
                 {units ? (
                     units.map((unit, index) => {
+                        if (index + 1 === units.length) {
+                            return (
+                                <Fragment>
+                                <Fragment>
+                                    <LandlordUnit unit={unit.unit} key={index} />
+                                </Fragment>
+                                <p>No more units found.</p>
+                                </Fragment>
+                            )
+                        }
+
                         return <LandlordUnit unit={unit.unit} key={index} />
                     })
                 ) : (
