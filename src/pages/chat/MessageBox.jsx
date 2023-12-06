@@ -21,46 +21,52 @@ const MessageBox = (props) => {
 
     const handleFileUpload = async (e) => {
         const file = e.target.files[0]
-        const formData = new FormData()
+        if (file.type.startsWith('image/')) {
+            const formData = new FormData()
 
-        formData.append('image', file)
-        formData.append('name', 'chat_image')
-        formData.append('path', `chats/${room_id}`)
+            formData.append('image', file)
+            formData.append('name', 'chat_image')
+            formData.append('path', `chats/${room_id}`)
 
-        try {
-            const res = await fetch(
-                `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/image-upload`,
-                {
-                    method: 'POST',
-                    body: formData,
-                }
-            )
+            try {
+                const res = await fetch(
+                    `${
+                        import.meta.env.VITE_BACKEND_LOCALHOST
+                    }/api/image-upload`,
+                    {
+                        method: 'POST',
+                        body: formData,
+                    }
+                )
 
-            const data = await res.json()
+                const data = await res.json()
 
-            setChats((prev) => [
-                ...prev,
-                {
+                setChats((prev) => [
+                    ...prev,
+                    {
+                        type: 'image',
+                        message: `${data.name}`,
+                        sender_id: user_id,
+                        room_id: room_id,
+                        createdAt: new Date().toISOString(),
+                    },
+                ])
+                socket.emit('send-message', {
                     type: 'image',
                     message: `${data.name}`,
                     sender_id: user_id,
                     room_id: room_id,
                     createdAt: new Date().toISOString(),
-                },
-            ])
-            socket.emit('send-message', {
-                type: 'image',
-                message: `${data.name}`,
-                sender_id: user_id,
-                room_id: room_id,
-                createdAt: new Date().toISOString(),
-            })
+                })
 
-            socket.emit('message-to-read', { room_id: room_id })
-            return data
-        } catch (err) {}
+                socket.emit('message-to-read', { room_id: room_id })
+                return data
+            } catch (err) {}
+        }
 
-        return []
+        console.log({ error: 'File is not an image.' })
+
+        return { error: 'File is not an image.' }
     }
 
     return (

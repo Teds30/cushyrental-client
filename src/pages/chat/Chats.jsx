@@ -66,6 +66,11 @@ const Chats = () => {
     const handleSearch = (e) => {
         const keywords = e.target.value
         const newList = initialRooms.filter((data) => {
+            console.log(data)
+            if (authCtx.user.user_type_id == 2) {
+                const toSearch = `${data.user.first_name} ${data.user.last_name} ${data.name}`
+                return toSearch.toLowerCase().includes(keywords.toLowerCase())
+            }
             return data.name.toLowerCase().includes(keywords.toLowerCase())
         })
         setRooms(newList)
@@ -123,7 +128,7 @@ const Chats = () => {
             <div className={styles['content']}>
                 <div className={styles['search-box']}>
                     <SearchField
-                        placeholder="Seach a user"
+                        placeholder="Seach a user or unit"
                         onChange={handleSearch}
                     />
                 </div>
