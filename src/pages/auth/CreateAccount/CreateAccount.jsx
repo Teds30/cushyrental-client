@@ -74,8 +74,6 @@ const CreateAccount = () => {
             } catch (error) {
                 notify("Email already exist.", "info");
             }
-            {
-            }
         },
     });
 
@@ -94,39 +92,35 @@ const CreateAccount = () => {
         }
     };
 
-    
+    window.fbAsyncInit = function () {
+        window.FB.init({
+            appId: "787284089875090", // Replace with your FB App ID
+            cookie: true,
+            xfbml: true,
+            version: "v18.0", // Use the latest version
+        });
 
-    useEffect(() => {
-        // Load the Facebook SDK asynchronously
-    const loadFacebookSDK = () => {
-        window.fbAsyncInit = function () {
-            window.FB.init({
-                appId: "787284089875090", // Replace with your FB App ID
-                cookie: true,
-                xfbml: true,
-                version: "v18.0", // Use the latest version
-            });
-
-            window.FB.getLoginStatus(function (response) {
-                if (response.status === "connected") {
-                    getFbUserData();
-                }
-            });
-        };
-
-        (function (d, s, id) {
-            var js,
-                fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        })(document, "script", "facebook-jssdk");
+        window.FB.getLoginStatus(function (response) {
+            if (response.status === "connected") {
+                getFbUserData();
+            }
+        });
     };
 
-        loadFacebookSDK();
-    }, []);
+    (function (d, s, id) {
+        var js,
+            fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    })(document, "script", "facebook-jssdk");
+
+    // useEffect(() => {
+
+    //     loadFacebookSDK();
+    // }, []);
 
     const getFbUserData = () => {
         window.FB.api(
