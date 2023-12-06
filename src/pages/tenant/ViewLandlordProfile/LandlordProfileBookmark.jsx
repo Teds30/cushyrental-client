@@ -53,7 +53,9 @@ export default function LandlordProfileBookmark(props) {
 
     const handleBookmarkClick = async (e) => {
         e.preventDefault()
-        mutation.mutate()
+        if (!isLoading) {
+            mutation.mutate()
+        }
     }
 
     useEffect(() => {
