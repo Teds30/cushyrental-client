@@ -94,14 +94,17 @@ const CreateAccount = () => {
         }
     };
 
-    // Load the Facebook SDK asynchronously
+    
+
+    useEffect(() => {
+        // Load the Facebook SDK asynchronously
     const loadFacebookSDK = () => {
         window.fbAsyncInit = function () {
             window.FB.init({
                 appId: "315299874678490", // Replace with your FB App ID
                 cookie: true,
                 xfbml: true,
-                version: "v12.0", // Use the latest version
+                version: "v18.0", // Use the latest version
             });
 
             window.FB.getLoginStatus(function (response) {
@@ -122,7 +125,6 @@ const CreateAccount = () => {
         })(document, "script", "facebook-jssdk");
     };
 
-    useEffect(() => {
         loadFacebookSDK();
     }, []);
 
