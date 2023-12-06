@@ -3,29 +3,30 @@
     align-items: center;
     justify-content: center;
     fill: #5c6173;
-    padding: 9px 6px;
+    padding: 4px;
     border-radius: 50px;
     border: 2px solid #e4e9ed;
     height: 18px;
 }
 
 .amenity-icon {
-    height: 18px;
-    /* width: 18px; */
-    fill: var(--fc-body);
+    height: 12px;
+    width: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: #d9d9d9;
     padding: 4px;
     border-radius: 50%;
 }
 
 .amenity-container svg {
-    stroke: var(--fc-body-light);
-    height: 18px;
-    width: 18px;
+    stroke: var(--fc-body);
 }
 .amenity-name {
     font-size: 8px;
     font-weight: 500;
     letter-spacing: 0.2px;
-    color: #8A93A6;
+    color: #8a93a6;
+    margin-inline: 4px !important;
 }
