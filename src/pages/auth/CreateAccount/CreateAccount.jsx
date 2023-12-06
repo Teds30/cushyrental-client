@@ -77,49 +77,6 @@ const CreateAccount = () => {
         },
     })
 
-    // const nameTransFunction = (nameParts) => {
-    //     let first_name = nameParts.filter((element) => !element.includes('.'))
-    //     first_name.pop()
-    //     first_name = first_name.join(' ')
-
-    //     let middle_name = nameParts.filter((element) => element.includes('.'))
-
-    //     let last_name = nameParts[nameParts.length - 1]
-
-    //     return {
-    //         first_name: first_name,
-    //         middle_name: middle_name.join(' '),
-    //         last_name: last_name,
-    //     }
-    // }
-
-    // const facebookRegisterHandler = async (response) => {
-    //     console.log(response);
-    //     const user_name = response.name.split(' ')
-
-    //     const transform_name = nameTransFunction(user_name)
-
-    //     const data = {
-    //         first_name: transform_name.first_name,
-    //         middle_name: !transform_name.middle_name
-    //             ? ''
-    //             : transform_name.middle_name,
-    //         last_name: transform_name.last_name,
-    //         email: response.email,
-    //         profile_picture_img: response.picture.data.url,
-    //         user_type_id: userType.user_type_id,
-    //     }
-
-    //     console.log(data);
-
-        // try {
-        //     const res = await facebookAccountRegistration(data)
-        //     console.log(res);
-        //     ctx.onLogin({ user: res.user, token: res.token })
-        //     navigate('/');
-        // } catch (error) {}
-    // }
-
     const facebookRegisterHandler = async () => {
         try {
           // Assuming the Facebook SDK is already loaded
@@ -134,43 +91,43 @@ const CreateAccount = () => {
           console.error('Error during Facebook login:', error);
         }
       };
+
+      // Load the Facebook SDK asynchronously
+      const loadFacebookSDK = () => {
+        window.fbAsyncInit = function () {
+          window.FB.init({
+            appId: '863373298592556', // Replace with your FB App ID
+            cookie: true,
+            xfbml: true,
+            version: 'v12.0', // Use the latest version
+          });
+  
+          window.FB.getLoginStatus(function (response) {
+            if (response.status === 'connected') {
+              getFbUserData();
+            }
+          });
+        };
+  
+        (function (d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s);
+          js.id = id;
+          js.src = '//connect.facebook.net/en_US/sdk.js';
+          fjs.parentNode.insertBefore(js, fjs);
+        })(document, 'script', 'facebook-jssdk');
+      };
     
       useEffect(() => {
-        // Load the Facebook SDK asynchronously
-        const loadFacebookSDK = () => {
-          window.fbAsyncInit = function () {
-            window.FB.init({
-              appId: '863373298592556', // Replace with your FB App ID
-              cookie: true,
-              xfbml: true,
-              version: 'v12.0', // Use the latest version
-            });
-    
-            window.FB.getLoginStatus(function (response) {
-              if (response.status === 'connected') {
-                getFbUserData();
-              }
-            });
-          };
-    
-          (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = '//connect.facebook.net/en_US/sdk.js';
-            fjs.parentNode.insertBefore(js, fjs);
-          })(document, 'script', 'facebook-jssdk');
-        };
-    
         loadFacebookSDK();
-      }, []); // Empty dependency array ensures this effect runs only once on component mount
+      }, []);
 
     const getFbUserData = () => {
         window.FB.api(
             "/me",
             { fields: "id,first_name,last_name,email,picture.width(200)" },
-            function (response) {
+           async function (response) {
                 console.log(response);
 
                 const data = {
@@ -181,14 +138,12 @@ const CreateAccount = () => {
                     user_type_id: userType.user_type_id,
                 }
 
-                SubmitFaceBookData(data);
-
-                // try {
-                //     const res = await facebookAccountRegistration(data)
-                //     console.log(res);
-                //     ctx.onLogin({ user: res.user, token: res.token })
-                //     navigate('/');
-                // } catch (error) {}
+                try {
+                    const res = await facebookAccountRegistration(data)
+                    console.log(res);
+                    ctx.onLogin({ user: res.user, token: res.token })
+                    navigate('/');
+                } catch (error) {}
             }
         );
     };
