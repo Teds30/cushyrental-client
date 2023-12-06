@@ -98,7 +98,7 @@ const CreateAccount = () => {
     const loadFacebookSDK = () => {
         window.fbAsyncInit = function () {
             window.FB.init({
-                appId: "782460463883150", // Replace with your FB App ID
+                appId: "315299874678490", // Replace with your FB App ID
                 cookie: true,
                 xfbml: true,
                 version: "v12.0", // Use the latest version
