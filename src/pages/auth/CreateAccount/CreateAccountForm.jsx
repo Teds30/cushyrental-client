@@ -261,7 +261,7 @@ const CreateAccountForm = (props) => {
 
             <div className={styles.socmed}>
                 {/* <button onClick={fbLogin}>Facebook</button> */}
-                <Link
+                {/* <Link
                             onClick={responseFacebook}
                             // disabled={disabled}
                             className="facebook-login-button"
@@ -273,7 +273,7 @@ const CreateAccountForm = (props) => {
                                 />{" "}
                                 Facebook
                             </div>
-                        </Link>
+                        </Link> */}
 
                 <Link
                     onClick={registerGoogleAuthHandler}
