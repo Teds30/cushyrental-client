@@ -74,8 +74,6 @@ const CreateAccount = () => {
             } catch (error) {
                 notify("Email already exist.", "info");
             }
-            {
-            }
         },
     });
 
@@ -94,10 +92,6 @@ const CreateAccount = () => {
         }
     };
 
-    
-
-    useEffect(() => {
-        // Load the Facebook SDK asynchronously
     const loadFacebookSDK = () => {
         window.fbAsyncInit = function () {
             window.FB.init({
@@ -124,6 +118,8 @@ const CreateAccount = () => {
             fjs.parentNode.insertBefore(js, fjs);
         })(document, "script", "facebook-jssdk");
     };
+
+    useEffect(() => {
 
         loadFacebookSDK();
     }, []);
