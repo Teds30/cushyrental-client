@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
-import StarIcon from '@mui/icons-material/Star';
+import StarIcon from "@mui/icons-material/Star";
+import { color } from "framer-motion";
 
 const RentedUnitRatingStar = (props) => {
     const { average_ratings } = props;
-    const [starsToShow, setStarsToShow] = useState(5);
+    const [starsToShow, setStarsToShow] = useState(average_ratings);
 
     useEffect(() => {
         if (Number.isInteger(average_ratings)) {
@@ -17,71 +18,75 @@ const RentedUnitRatingStar = (props) => {
         }
     }, [average_ratings]);
 
+    console.log(average_ratings);
+
     return (
         <Stack spacing={1}>
             <Rating
                 name="custom-rating-read"
-                readOnly
                 size="small"
-                max={5}
-                value={starsToShow}
+                defaultValue={average_ratings}
                 precision={0.5}
-                emptyIcon={<StarIcon style={{ opacity: 0.55, color: "#8A93A6"}} fontSize="inherit" />}
+                readOnly
+                emptyIcon={
+                    <StarIcon
+                        style={{ opacity: 0.55, color: "#8A93A6" }}
+                        fontSize="inherit"
+                    />
+                }
                 sx={{
                     color: "var(--accent)",
                     fontSize: "22px",
-                    "& .MuiRating-icon": {
+                    ".css-34he1w-MuiRating-decimal": {
                         marginRight: "2px",
-                        marginLeft: "15px", 
+                        marginLeft: "15px",
                     },
-
-                    '@media (max-width: 768px)': {
-                        "& .MuiRating-icon": {
+                    "@media (max-width: 768px)": {
+                        ".css-34he1w-MuiRating-decimal": {
                             marginRight: "5px",
                             marginLeft: "8px",
                             transition: "all 0.15s ease-in-out",
                         },
                     },
 
-                    '@media (min-width: 375px)': {
-                        "& .MuiRating-icon": {
+                    "@media (min-width: 375px)": {
+                        ".css-34he1w-MuiRating-decimal": {
                             marginRight: "6px",
                             marginLeft: "6px",
                         },
                     },
-                    
-                    '@media (min-width: 475px)': {
-                        "& .MuiRating-icon": {
+
+                    "@media (min-width: 475px)": {
+                        ".css-34he1w-MuiRating-decimal": {
                             marginRight: "15px",
-                            marginLeft: "23px", 
+                            marginLeft: "23px",
                         },
                     },
 
-                    '@media (min-width: 550px)': {
-                        "& .MuiRating-icon": {
+                    "@media (min-width: 550px)": {
+                        ".css-34he1w-MuiRating-decimal": {
                             marginRight: "20px",
                             marginLeft: "30px",
                         },
                     },
-                    
-                    '@media (min-width: 640px)': {
-                        "& .MuiRating-icon": {
+
+                    "@media (min-width: 640px)": {
+                        ".css-34he1w-MuiRating-decimal": {
                             marginRight: "25px",
-                            marginLeft: "40px"
+                            marginLeft: "40px",
                         },
                     },
-                    
-                    '@media (min-width: 768px)': {
-                        "& .MuiRating-icon": {
+
+                    "@media (min-width: 768px)": {
+                        ".css-34he1w-MuiRating-decimal": {
                             marginRight: "30px",
                             marginLeft: "45px",
                         },
-                    
-                    }
+                    },
                 }}
             />
         </Stack>
     );
 };
 
-export default RentedUnitRatingStar
+export default RentedUnitRatingStar;

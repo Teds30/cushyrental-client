@@ -86,10 +86,27 @@ const RentedUnit = (props) => {
         setOpen(false);
     };
     
+    const customRound = (rating) => {
+        if (rating <= 1.3) {
+            return Math.floor(rating) + 0.5;
+        } else if (rating <= 2.3) {
+            return Math.floor(rating) + 0.5;
+        } else if (rating <= 3.3) {
+            return Math.floor(rating) + 0.5;
+        } else if (rating <= 4.3) {
+            return Math.floor(rating) + 0.5;
+        } else if (rating === 5) {
+            return 5;
+        } else {
+            return Math.floor(rating) + 0.5;
+        }
+    };
+
     const handleSubmit = async (rentalId) => {
-        const averageStar = math.Round(
+        const averageStar = customRound(
             (environmentRating + boardingHouseRating + landlordRating) / 3
-        );
+        ).toFixed(2);
+        
         const formData = {
             user_id: authCtx.user.id,
             rental_id: rentalId,
