@@ -12,15 +12,15 @@ const RecommendedUnits = () => {
 
     useEffect(() => {
         const loadData = async () => {
-            let subscription;
+            let subscription
 
             subscription = await fetchGoldUnits()
-            
+
             const res = await fetchSilverUnits()
 
-            setUnits({...subscription, ...[...res, ...res})
+            setUnits({ ...subscription, ...res })
 
-            setUnits(Object.values(subscription)2])
+            setUnits(Object.values(subscription))
         }
         loadData()
     }, [])
