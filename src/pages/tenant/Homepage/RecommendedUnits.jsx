@@ -6,15 +6,16 @@ import LandlordUnit from '../ViewLandlordProfile/LandlordUnit'
 import useSubscriptionManager from '../../../hooks/data/subscriptions-hooks'
 
 const RecommendedUnits = () => {
-    const { fetchSilverUnits } = useSubscriptionManager()
+    const { fetchSilverUnits, fetchGoldUnits } = useSubscriptionManager()
 
     const [units, setUnits] = useState([])
 
     useEffect(() => {
         const loadData = async () => {
             const res = await fetchSilverUnits()
+            const res2 = await fetchGoldUnits()
 
-            setUnits(res)
+            setUnits([...res, ...res2])
         }
         loadData()
     }, [])
