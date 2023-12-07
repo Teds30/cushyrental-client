@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -52,9 +53,11 @@ const UnitComparisonTable = (props) => {
         unitIndex = index;
     
         return (
-            <div key={index} className={`${styles["unit-photo-col"]}`}>
-                <div className={`${styles["photo"]}`}>
+            <div key={index} className={`${styles["unit-photo-col"]}`} >
+                <div className={`${styles["photo"]}`} to={`/unit/${unit.id}`}>
+                    <Link to={`/unit/${unit.id}`}>
                     <UnitPhotos images={unit.images} />
+                    </Link>
     
                     <Button
                         onClick={() => removeUnitHandler(unit.id)}
@@ -73,7 +76,8 @@ const UnitComparisonTable = (props) => {
                     </Button>
                 </div>
     
-                <TextMarque name={unit.name}/>
+                {/* <TextMarque name={unit.name}/> */}
+                <p className={`${styles['unit-name']}`}>{unit.name}</p>
             </div>
         );
     });
