@@ -37,8 +37,8 @@ const About = () => {
                 </div>
                 <ul className={styles['nav-container']}>
                     <li>Home</li>
-                    <li>About</li>
-                    <li>Contact Us</li>
+                    <li>Team</li>
+                    <li>Contact</li>
                 </ul>
 
                 <Link

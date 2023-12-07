@@ -5,6 +5,7 @@ import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
 import AuthContext from '../../../context/auth-context'
 import useBookmark from '../../../hooks/data/bookmark-hook'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { CircularProgress } from '@mui/material'
 
 export default function LandlordProfileBookmark(props) {
     const { adjustSize = false, unitId } = props
@@ -14,9 +15,12 @@ export default function LandlordProfileBookmark(props) {
     // Access the client
     const queryClient = useQueryClient()
 
-    const { fetchBookmark, addToBookmark, isLoading } = useBookmark()
+    const { fetchBookmark, addToBookmark } = useBookmark()
+
+    const [loadingUnit, setLoadingUnit] = useState()
 
     const [isBookmarked, setIsBookmarked] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const {
         data: bookmarks,
@@ -27,7 +31,6 @@ export default function LandlordProfileBookmark(props) {
         queryFn: async () => {
             // console.log('refreshhh')
             const res = await fetchBookmark(userCtx.user.id)
-
             return res
         },
         refetchOnWindowFocus: false,
@@ -36,6 +39,7 @@ export default function LandlordProfileBookmark(props) {
 
     const mutation = useMutation({
         mutationFn: async () => {
+            setIsLoading(true)
             await addToBookmark({
                 user_id: userCtx.user.id,
                 unit_id: unitId,
@@ -49,7 +53,9 @@ export default function LandlordProfileBookmark(props) {
 
     const handleBookmarkClick = async (e) => {
         e.preventDefault()
-        mutation.mutate()
+        if (!isLoading) {
+            mutation.mutate()
+        }
     }
 
     useEffect(() => {
@@ -58,6 +64,7 @@ export default function LandlordProfileBookmark(props) {
         )
 
         setIsBookmarked(isUnitBookmarked?.length !== 0)
+        setIsLoading(false)
     }, [bookmarks])
 
     return (
@@ -66,24 +73,42 @@ export default function LandlordProfileBookmark(props) {
                 <Checkbox
                     checked={isBookmarked}
                     icon={
-                        <BsBookmark
-                            style={{
-                                width: '18px',
-                                height: '18px',
-                                color: 'var(--fc-strong)',
-                                fill: 'var(--fc-body)',
-                            }}
-                        />
+                        isLoading ? (
+                            <CircularProgress
+                                size={18}
+                                sx={{
+                                    color: 'var(--accent)',
+                                }}
+                            />
+                        ) : (
+                            <BsBookmark
+                                style={{
+                                    width: '18px',
+                                    height: '18px',
+                                    color: 'var(--fc-strong)',
+                                    fill: 'var(--fc-body)',
+                                }}
+                            />
+                        )
                     }
                     checkedIcon={
-                        <BsBookmarkFill
-                            style={{
-                                width: '18px',
-                                height: '18px',
-                                color: 'var(--fc-strong)',
-                                fill: 'var(--accent)',
-                            }}
-                        />
+                        isLoading ? (
+                            <CircularProgress
+                                size={18}
+                                sx={{
+                                    color: 'var(--accent)',
+                                }}
+                            />
+                        ) : (
+                            <BsBookmarkFill
+                                style={{
+                                    width: '18px',
+                                    height: '18px',
+                                    color: 'var(--fc-strong)',
+                                    fill: 'var(--accent)',
+                                }}
+                            />
+                        )
                     }
                     onClick={handleBookmarkClick}
                 />
