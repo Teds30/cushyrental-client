@@ -130,6 +130,7 @@
     justify-content: center;
     /* align-items: center; */
     text-align: center;
+    /* border-right: 1px solid grey; */
 }
 
 .attributes {
@@ -179,6 +180,11 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+}
+
+.unit-name {
+    text-align: center;
+    color: var(--bg-layer1);
 }
 
 @media (min-width: 640px) {
