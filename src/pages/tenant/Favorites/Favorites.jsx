@@ -40,7 +40,6 @@ const Favorites = () => {
     };
 
     useEffect(() => {
-        
         if (authCtx.user) loadData();
     }, [authCtx.user]);
 
@@ -327,8 +326,8 @@ const Favorites = () => {
                     })}
             </div>
 
-            <Link to={`/costcomparison`}>
-                <div className={`${styles["button-add-container"]}`}>
+            <div className={`${styles["button-add-container"]}`}>
+                <Link to={`/costcomparison`}>
                     <Box sx={{ "& > :not(style)": { m: 1 } }}>
                         <Fab
                             sx={{ backgroundColor: "var(--accent)" }}
@@ -350,8 +349,8 @@ const Favorites = () => {
                             </svg>
                         </Fab>
                     </Box>
-                </div>
-            </Link>
+                </Link>
+            </div>
         </div>
     );
 };
