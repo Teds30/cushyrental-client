@@ -17,6 +17,7 @@ import styles from './UnitsCarousel.module.css'
 import { Box } from '@mui/material'
 
 import pic from '../../../assets/Units/pics.png'
+import { Link } from 'react-router-dom'
 
 const UnitsCarousel = () => {
     const { fetchGoldUnits } = useSubscriptionManager()
@@ -42,7 +43,9 @@ const UnitsCarousel = () => {
             {units &&
                 units.map((unit, index) => (
                     <SwiperSlide key={index} className="banner-swiper-slide">
-                        <UnitCard unit={unit} />
+                        <Link to={`/unit/${unit.id}`}>
+                            <UnitCard unit={unit} />
+                        </Link>
                     </SwiperSlide>
                 ))}
         </Box>
