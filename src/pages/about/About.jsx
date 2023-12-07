@@ -448,14 +448,7 @@ const About = () => {
                 <h2>Discover boarding house with us!</h2>
                 <div className={styles['actions']}>
                     <Link
-                        onClick={(e) => {
-                            e.preventDefault()
-                            navigate('/register', {
-                                state: {
-                                    user_type_id: 3,
-                                },
-                            })
-                        }}
+                        to={authCtx && authCtx.user ? '/' : '/register'}
                     >
                         <div
                             className={`${styles['discover-btn']} ${styles['btn-primary']}`}
@@ -472,14 +465,7 @@ const About = () => {
                         </div>
                     </Link>
                     <Link
-                        onClick={(e) => {
-                            e.preventDefault()
-                            navigate('/register', {
-                                state: {
-                                    user_type_id: 2,
-                                },
-                            })
-                        }}
+                        to={authCtx && authCtx.user ? '/' : '/register'}
                     >
                         <div
                             className={`${styles['discover-btn']} ${styles['btn-outlined']}`}
