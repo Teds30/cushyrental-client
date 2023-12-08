@@ -168,7 +168,7 @@ const CreateAccount = () => {
                         onCreateAccount={createAccountHandler}
                         isLoading={isLoading}
                         onGoogleAuth={googleRegisterHandle}
-                        onfacebookAuth={facebookRegisterHandler}
+                        // onfacebookAuth={facebookRegisterHandler}
                     />
                 </div>
             </div>
