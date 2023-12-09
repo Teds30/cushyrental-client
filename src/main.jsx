@@ -11,6 +11,7 @@ import { CreateUnitContextProvider } from './context/create-unit-context.jsx'
 import App from './App.jsx'
 import './index.css'
 import './GlobalCss.css'
+import { CompareUnitContextProvider } from './context/compareunit-context.jsx'
 
 const queryClient = new QueryClient()
 
@@ -24,7 +25,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                         clientId={import.meta.env.VITE_GOOGLE_AUTH_CLIENTID}
                     >
                         <CreateUnitContextProvider>
-                            <App />
+                            <CompareUnitContextProvider>
+                                <App />
+                            </CompareUnitContextProvider>
                         </CreateUnitContextProvider>
                     </GoogleOAuthProvider>
                 </NotifyProvider>

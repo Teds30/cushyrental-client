@@ -61,6 +61,8 @@ import About from './pages/about/About'
 import ChangeContactNumberMain from './pages/Profile/ChangeContactNumber/ChangeContactNumberMain'
 import SplashScreen from './components/SplashScreen/SplashScreen'
 import LocationEdit from './pages/landlord/ManageUnits/EditUnit/Location/LocationEdit'
+import CompareUnit from './pages/tenant/CompareUnit/CompareUnit'
+import CompareUnitTool from './pages/tenant/CompareUnit/CompareUnitTool'
 
 function App() {
     const { user, token, loginHandler, logoutHandler, isLoggedIn } = useAuth()
@@ -201,10 +203,10 @@ function App() {
                     {/* Unit Search */}
 
                     {/* Unit Comparison */}
-                    <Route
+                    {/* <Route
                         path="/unit_comparison/:id"
                         element={<UnitComparison />}
-                    ></Route>
+                    ></Route> */}
                     {/* Unit Comparison */}
 
                     <Route path="/myunit-landlord" element={<MyUnit />}></Route>
@@ -244,6 +246,10 @@ function App() {
                         <Route path="" element={<CostComparison />} />
                         <Route path="edit" element={<Expenditures />} />
                     </Route>
+                    <Route
+                        path="/unitcomparison"
+                        element={<CompareUnitTool />}
+                    ></Route>
 
                     <Route path="/about" element={<About />}></Route>
                     <Route

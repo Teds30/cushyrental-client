@@ -1,58 +1,58 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import styles from "./Favorites.module.css";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Fab from "@mui/material/Fab";
-import { PiHouseFill, PiHouseLight } from "react-icons/pi";
+import React, { useState, useEffect, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import styles from './Favorites.module.css'
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
+import Fab from '@mui/material/Fab'
+import { PiHouseFill, PiHouseLight } from 'react-icons/pi'
 
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
-import { FiChevronLeft } from "react-icons/fi";
-import { TbMapPin } from "react-icons/tb";
-import { BiMessageAlt } from "react-icons/bi";
-import { GrGallery } from "react-icons/gr";
-import FavoritesUnitRating from "./FavoritesUnitRating";
-import FavoritesImage from "./FavoritesImage";
-import useBookmark from "../../../hooks/data/bookmark-hook";
-import AuthContext from "../../../context/auth-context";
-import Status from "./FavoritesStatus";
-import useHttp from "../../../hooks/http-hook";
+import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
+import { FiChevronLeft } from 'react-icons/fi'
+import { TbMapPin } from 'react-icons/tb'
+import { BiMessageAlt } from 'react-icons/bi'
+import { GrGallery } from 'react-icons/gr'
+import FavoritesUnitRating from './FavoritesUnitRating'
+import FavoritesImage from './FavoritesImage'
+import useBookmark from '../../../hooks/data/bookmark-hook'
+import AuthContext from '../../../context/auth-context'
+import Status from './FavoritesStatus'
+import useHttp from '../../../hooks/http-hook'
 
 const Favorites = () => {
-    const [units, setUnits] = useState([]);
-    const [isBookmarked, setIsBookmarked] = useState([]);
-    const { fetchBookmarkUnits, addToBookmark, isLoading } = useBookmark();
-    const { sendRequest } = useHttp();
-    const navigate = useNavigate();
+    const [units, setUnits] = useState([])
+    const [isBookmarked, setIsBookmarked] = useState([])
+    const { fetchBookmarkUnits, addToBookmark, isLoading } = useBookmark()
+    const { sendRequest } = useHttp()
+    const navigate = useNavigate()
 
-    const authCtx = useContext(AuthContext);
+    const authCtx = useContext(AuthContext)
 
     // console.log(units);
     const loadData = async () => {
         try {
-            const response = await fetchBookmarkUnits(authCtx.user.id);
-            setUnits(response);
+            const response = await fetchBookmarkUnits(authCtx.user.id)
+            setUnits(response)
         } catch (error) {
-            console.error("Error fetching units:", error);
+            console.error('Error fetching units:', error)
         }
-    };
+    }
 
     useEffect(() => {
-        if (authCtx.user) loadData();
-    }, [authCtx.user]);
+        if (authCtx.user) loadData()
+    }, [authCtx.user])
 
     const handleBookmarkClick = async (id) => {
-        const body = { unit_id: id, user_id: authCtx.user.id };
-        const res = await addToBookmark(body);
-        setUnits(res);
-        loadData();
-    };
+        const body = { unit_id: id, user_id: authCtx.user.id }
+        const res = await addToBookmark(body)
+        setUnits(res)
+        loadData()
+    }
 
     const unitHandler = (id) => {
-        navigate(`/unit/${id}`);
-    };
+        navigate(`/unit/${id}`)
+    }
 
     const sortedUnits = [...units].sort((a, b) => {
         if (
@@ -60,20 +60,20 @@ const Favorites = () => {
             b.slots !== null &&
             b.slots !== 0
         ) {
-            return 1;
+            return 1
         } else if (
             (b.slots === null || b.slots === 0) &&
             a.slots !== null &&
             a.slots !== 0
         ) {
-            return -1;
+            return -1
         } else {
             return (
                 new Date(b.bookmark.created_at) -
                 new Date(a.bookmark.created_at)
-            );
+            )
         }
-    });
+    })
 
     const handleInquire = async (id, unit) => {
         // SOON: ALLOW NON-AUTHENTICATED USER\
@@ -82,16 +82,16 @@ const Favorites = () => {
                 url: `${
                     import.meta.env.VITE_CHAT_LOCALHOST
                 }/find-existing-room/${id}/${authCtx.user.id}`,
-            });
+            })
 
             if (res) {
-                navigate(`/chats/${res._id}`);
-                return;
+                navigate(`/chats/${res._id}`)
+                return
             }
 
             const newRoom = await sendRequest({
                 url: `${import.meta.env.VITE_CHAT_LOCALHOST}/new-room`,
-                method: "POST",
+                method: 'POST',
                 body: JSON.stringify({
                     name: unit.name,
                     unit_id: id,
@@ -99,29 +99,29 @@ const Favorites = () => {
                     tenant_id: authCtx.user.id,
                 }),
                 headers: {
-                    "Content-Type": "application/json",
+                    'Content-Type': 'application/json',
                 },
-            });
+            })
 
             if (newRoom) {
-                navigate(`/chats/${newRoom._id}`);
+                navigate(`/chats/${newRoom._id}`)
             }
         } catch (err) {
-            console.log(err);
+            console.log(err)
         }
-    };
+    }
 
     return (
-        <div className={`${styles["main-container"]} `}>
-            <Box className={`${styles["top-back-container"]} `}>
+        <div className={`${styles['main-container']} `}>
+            <Box className={`${styles['top-back-container']} `}>
                 <AppBar
                     position="static"
                     sx={{
                         margin: 0,
-                        backgroundColor: "#fff",
-                        color: "var(--fc-body)",
-                        fontFamily: "Inter",
-                        boxShadow: "none",
+                        backgroundColor: '#fff',
+                        color: 'var(--fc-body)',
+                        fontFamily: 'Inter',
+                        boxShadow: 'none',
                     }}
                 >
                     <Toolbar>
@@ -134,15 +134,15 @@ const Favorites = () => {
                             >
                                 <FiChevronLeft
                                     style={{
-                                        color: "var(--fc-strong)",
-                                        fill: "transparent",
+                                        color: 'var(--fc-strong)',
+                                        fill: 'transparent',
                                     }}
                                 />
                             </IconButton>
                         </Link>
                         <Box
-                            sx={{ marginLeft: "-22px" }}
-                            className={`${styles["favorites-title"]}`}
+                            sx={{ marginLeft: '-22px' }}
+                            className={`${styles['favorites-title']}`}
                         >
                             <p className="title">Favorites</p>
                         </Box>
@@ -150,27 +150,27 @@ const Favorites = () => {
                 </AppBar>
             </Box>
 
-            <div className={`${styles["padding-top-container"]} `}>
+            <div className={`${styles['padding-top-container']} `}>
                 {units &&
                     sortedUnits.map((units) => {
                         const imageThumbnail = units.images
                             .filter((image, index) => image.is_thumbnail === 1)
-                            .shift();
+                            .shift()
 
                         return (
                             <div
                                 key={units.id}
-                                className={`${styles["main-unit-container"]} `}
+                                className={`${styles['main-unit-container']} `}
                                 id={`user-${units.id}`}
                             >
                                 {(units.slots === null ||
                                     units.slots === 0) && (
                                     <div
-                                        className={`${styles["disabled-unit-container"]}`}
+                                        className={`${styles['disabled-unit-container']}`}
                                     ></div>
                                 )}
                                 <div
-                                    className={`${styles["image-container"]} `}
+                                    className={`${styles['image-container']} `}
                                     onClick={() => unitHandler(units.id)}
                                 >
                                     <FavoritesImage
@@ -181,13 +181,13 @@ const Favorites = () => {
                                         }
                                     />
                                     <div
-                                        className={`${styles["unit-gallery-container"]} `}
+                                        className={`${styles['unit-gallery-container']} `}
                                     >
                                         <GrGallery
                                             style={{
-                                                height: "14px",
-                                                width: "14px",
-                                                fill: "var(--border-color)",
+                                                height: '14px',
+                                                width: '14px',
+                                                fill: 'var(--border-color)',
                                             }}
                                         />
                                         <p className="smaller-text">
@@ -196,19 +196,19 @@ const Favorites = () => {
                                     </div>
                                 </div>
                                 <div
-                                    className={`${styles["side-unit-container"]} `}
+                                    className={`${styles['side-unit-container']} `}
                                 >
                                     <div
-                                        className={`${styles["content-container"]} `}
+                                        className={`${styles['content-container']} `}
                                     >
                                         <div
-                                            className={`${styles["text-container"]} `}
+                                            className={`${styles['text-container']} `}
                                             onClick={() =>
                                                 unitHandler(units.id)
                                             }
                                         >
                                             <p
-                                                className={`${styles["bname-container"]} `}
+                                                className={`${styles['bname-container']} `}
                                             >
                                                 {units.name}
                                             </p>
@@ -218,17 +218,17 @@ const Favorites = () => {
                                                 }
                                             />
                                             <p
-                                                className={`${styles["price-container"]} `}
+                                                className={`${styles['price-container']} `}
                                             >
                                                 Php {units.price}
                                             </p>
                                             <p
-                                                className={`${styles["address-container"]} `}
+                                                className={`${styles['address-container']} `}
                                             >
                                                 <TbMapPin
                                                     style={{
-                                                        fill: "transparent",
-                                                        paddingRight: "3px",
+                                                        fill: 'transparent',
+                                                        paddingRight: '3px',
                                                         // marginTop: "-2px",
                                                     }}
                                                     size={14}
@@ -237,7 +237,7 @@ const Favorites = () => {
                                             </p>
                                         </div>
                                         <div
-                                            className={`${styles["bookmark-container"]}`}
+                                            className={`${styles['bookmark-container']}`}
                                         >
                                             <IconButton
                                                 size="large"
@@ -254,19 +254,19 @@ const Favorites = () => {
                                                 ) ? (
                                                     <BsBookmark
                                                         style={{
-                                                            width: "18px",
-                                                            height: "18px",
-                                                            color: "var(--fc-strong)",
-                                                            fill: "var(--fc-body)",
+                                                            width: '18px',
+                                                            height: '18px',
+                                                            color: 'var(--fc-strong)',
+                                                            fill: 'var(--fc-body)',
                                                         }}
                                                     />
                                                 ) : (
                                                     <BsBookmarkFill
                                                         style={{
-                                                            width: "18px",
-                                                            height: "18px",
-                                                            color: "var(--fc-strong)",
-                                                            fill: "var(--accent)",
+                                                            width: '18px',
+                                                            height: '18px',
+                                                            color: 'var(--fc-strong)',
+                                                            fill: 'var(--accent)',
                                                         }}
                                                     />
                                                 )}
@@ -274,13 +274,11 @@ const Favorites = () => {
                                         </div>
                                     </div>
                                     <div
-                                        className={`${styles["button-container"]}`}
+                                        className={`${styles['button-container']}`}
                                     >
-                                        <Link
-                                            to={`/unit_comparison/${units.id}`}
-                                        >
+                                        <Link to={`/unitcomparison`}>
                                             <div
-                                                className={`${styles["button-compare"]}`}
+                                                className={`${styles['button-compare']}`}
                                             >
                                                 <svg
                                                     width="16"
@@ -289,7 +287,7 @@ const Favorites = () => {
                                                     fill="none"
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     style={{
-                                                        marginTop: "-1.5px",
+                                                        marginTop: '-1.5px',
                                                     }}
                                                 >
                                                     <path
@@ -305,16 +303,16 @@ const Favorites = () => {
                                         </Link>
 
                                         <button
-                                            className={`${styles["button-message"]}`}
+                                            className={`${styles['button-message']}`}
                                             onClick={() =>
                                                 handleInquire(units.id, units)
                                             }
                                         >
-                                            {" "}
+                                            {' '}
                                             <BiMessageAlt
                                                 style={{
-                                                    fill: "var(--accent)",
-                                                    padding: "0px",
+                                                    fill: 'var(--accent)',
+                                                    padding: '0px',
                                                 }}
                                                 size={20}
                                             />
@@ -322,15 +320,15 @@ const Favorites = () => {
                                     </div>
                                 </div>
                             </div>
-                        );
+                        )
                     })}
             </div>
 
-            <div className={`${styles["button-add-container"]}`}>
+            <div className={`${styles['button-add-container']}`}>
                 <Link to={`/costcomparison`}>
-                    <Box sx={{ "& > :not(style)": { m: 1 } }}>
+                    <Box sx={{ '& > :not(style)': { m: 1 } }}>
                         <Fab
-                            sx={{ backgroundColor: "var(--accent)" }}
+                            sx={{ backgroundColor: 'var(--accent)' }}
                             aria-label="add"
                         >
                             <svg
@@ -352,7 +350,7 @@ const Favorites = () => {
                 </Link>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Favorites;
+export default Favorites
