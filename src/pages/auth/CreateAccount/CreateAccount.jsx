@@ -77,78 +77,78 @@ const CreateAccount = () => {
         },
     });
 
-    const facebookRegisterHandler = async () => {
-        try {
-            // Assuming the Facebook SDK is already loaded
-            const response = await new Promise((resolve) =>
-                window.FB.login(resolve, { scope: "email" })
-            );
+    // const facebookRegisterHandler = async () => {
+    //     try {
+    //         // Assuming the Facebook SDK is already loaded
+    //         const response = await new Promise((resolve) =>
+    //             window.FB.login(resolve, { scope: "email" })
+    //         );
 
-            if (response.authResponse) {
-                getFbUserData();
-            }
-        } catch (error) {
-            console.error("Error during Facebook login:", error);
-        }
-    };
+    //         if (response.authResponse) {
+    //             getFbUserData();
+    //         }
+    //     } catch (error) {
+    //         console.error("Error during Facebook login:", error);
+    //     }
+    // };
 
-    window.fbAsyncInit = function () {
-        window.FB.init({
-            appId: "787284089875090", // Replace with your FB App ID
-            cookie: true,
-            xfbml: true,
-            version: "v18.0", // Use the latest version
-        });
+    // window.fbAsyncInit = function () {
+    //     window.FB.init({
+    //         appId: "787284089875090", // Replace with your FB App ID
+    //         cookie: true,
+    //         xfbml: true,
+    //         version: "v18.0", // Use the latest version
+    //     });
 
-        window.FB.getLoginStatus(function (response) {
-            if (response.status === "connected") {
-                getFbUserData();
-            }
-        });
-    };
+    //     window.FB.getLoginStatus(function (response) {
+    //         if (response.status === "connected") {
+    //             getFbUserData();
+    //         }
+    //     });
+    // };
 
-    (function (d, s, id) {
-        var js,
-            fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    })(document, "script", "facebook-jssdk");
+    // (function (d, s, id) {
+    //     var js,
+    //         fjs = d.getElementsByTagName(s)[0];
+    //     if (d.getElementById(id)) return;
+    //     js = d.createElement(s);
+    //     js.id = id;
+    //     js.src = "//connect.facebook.net/en_US/sdk.js";
+    //     fjs.parentNode.insertBefore(js, fjs);
+    // })(document, "script", "facebook-jssdk");
 
     // useEffect(() => {
 
     //     loadFacebookSDK();
     // }, []);
 
-    const getFbUserData = () => {
-        window.FB.api(
-            "/me",
-            { fields: "id,first_name,last_name,email,picture.width(200)" },
-            async function (response) {
-                console.log(response);
+    // const getFbUserData = () => {
+    //     window.FB.api(
+    //         "/me",
+    //         { fields: "id,first_name,last_name,email,picture.width(200)" },
+    //         async function (response) {
+    //             console.log(response);
 
-                const data = {
-                    email: response.email,
-                    first_name: response.first_name,
-                    last_name: response.last_name,
-                    middle_name: 'middle_name',
-                    profile_picture_img: response.picture.data.url,
-                    user_type_id: userType.user_type_id,
-                };
+    //             const data = {
+    //                 email: response.email,
+    //                 first_name: response.first_name,
+    //                 last_name: response.last_name,
+    //                 middle_name: 'middle_name',
+    //                 profile_picture_img: response.picture.data.url,
+    //                 user_type_id: userType.user_type_id,
+    //             };
 
-                try {
-                    const res = await facebookAccountRegistration(data);
-                    console.log(res);
-                    ctx.onLogin({ user: res.user, token: res.token });
-                    navigate("/");
-                } catch (error) {
-                    notify("Email already exist.", "info");
-                }
-            }
-        );
-    };
+    //             try {
+    //                 const res = await facebookAccountRegistration(data);
+    //                 console.log(res);
+    //                 ctx.onLogin({ user: res.user, token: res.token });
+    //                 navigate("/");
+    //             } catch (error) {
+    //                 notify("Email already exist.", "info");
+    //             }
+    //         }
+    //     );
+    // };
 
     return (
         <div className={styles.container}>
@@ -168,7 +168,7 @@ const CreateAccount = () => {
                         onCreateAccount={createAccountHandler}
                         isLoading={isLoading}
                         onGoogleAuth={googleRegisterHandle}
-                        onfacebookAuth={facebookRegisterHandler}
+                        // onfacebookAuth={facebookRegisterHandler}
                     />
                 </div>
             </div>

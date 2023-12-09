@@ -67,7 +67,7 @@ const UnitComparison = () => {
                             </IconButton>
                         </Link>
                         <Box className={`${styles["manage-unit-title"]}`}>
-                            <p className="title">Unit Comparison</p>
+                            <p className="title">Unit Comparison Tool</p>
                         </Box>
                     </Toolbar>
                 </AppBar>

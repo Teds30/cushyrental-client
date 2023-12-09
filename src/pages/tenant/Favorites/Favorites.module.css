@@ -17,7 +17,7 @@
     align-self: stretch;
     display: flex;
     flex-direction: column;
-    padding-left: -16px;
+    /* padding-left: -16px; */
     /* padding: 0; */
     background: var(--bg-layer1);
     z-index: 100;

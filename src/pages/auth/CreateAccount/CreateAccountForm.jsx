@@ -139,9 +139,9 @@ const CreateAccountForm = (props) => {
         onGoogleAuth();
     };
 
-    const responseFacebook = () => {
-        onfacebookAuth();
-    };
+    // const responseFacebook = () => {
+    //     onfacebookAuth();
+    // };
 
     
 

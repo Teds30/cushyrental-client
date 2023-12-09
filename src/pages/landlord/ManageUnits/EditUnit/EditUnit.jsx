@@ -75,7 +75,7 @@ const EditUnit = (props) => {
                 filtered[key] = obj[key]
             }
         }
-        return filtered
+        return {...filtered, is_listed: obj.slots === 0 && 0};
     }
 
     const saveHandler = async (event) => {
