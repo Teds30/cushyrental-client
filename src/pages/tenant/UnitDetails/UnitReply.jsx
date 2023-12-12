@@ -69,7 +69,7 @@ const UnitReply = ({
                             <div>
                                 <p className="caption">
                                     {reviewReply.star}
-                                    .0/5
+                                    /5
                                 </p>
                             </div>
                         </div>

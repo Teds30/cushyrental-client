@@ -35,7 +35,7 @@ const useAuth = () => {
         const storedData = JSON.parse(localStorage.getItem('userData'))
 
         try {
-            console.log('tioke: ', token)
+            // console.log('tioke: ', token)
             const response = await fetch(
                 `${import.meta.env.VITE_BACKEND_LOCALHOST}/api/user_data`,
                 {
@@ -47,8 +47,6 @@ const useAuth = () => {
             )
 
             const data = await response.json()
-
-            console.log('res.ok? ', response)
 
             const { user } = data
             if (response) {

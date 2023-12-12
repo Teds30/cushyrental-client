@@ -174,7 +174,7 @@ const Profile = () => {
                                     /> */}
                                 </div>
                             </div>
-                            <p className="smaller-text">Rule and Regulations</p>
+                            <p className="smaller-text">Rules and Regulations</p>
                         </Link>
                     </div>
                 </div>
