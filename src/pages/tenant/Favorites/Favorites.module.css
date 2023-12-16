@@ -20,7 +20,7 @@
     /* padding-left: -16px; */
     /* padding: 0; */
     background: var(--bg-layer1);
-    z-index: 100;
+    z-index: 99;
     transition: max-width 0.3s ease-in-out;
 }
 
@@ -160,7 +160,7 @@
     background: #f6f8fc;
     height: 30px;
     /* width: 31px; */
-    z-index: 200;
+    /* z-index: 200; */
     border: 1px solid var(#e0e4f5);
     background: #fff;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
