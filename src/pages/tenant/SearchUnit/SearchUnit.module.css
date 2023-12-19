@@ -1,6 +1,6 @@
 .search-container {
     height: auto;
-    padding-bottom: 38px;
+    /* padding-bottom: 38px; */
 
     position: relative;
 
@@ -11,7 +11,7 @@
 }
 
 .search-nav {
-    position: fixed;
+    position: static;
     width: 100%;
     z-index: 10;
 
@@ -22,7 +22,7 @@
 
 .location-main,
 .filter-main {
-    margin-top: 64px;
+    /* margin-top: 64px; */
 
     display: flex;
     flex-direction: column;
