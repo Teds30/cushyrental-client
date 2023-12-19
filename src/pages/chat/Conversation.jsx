@@ -103,7 +103,6 @@ const Conversation = (props) => {
     const { data: convoRoomData, isLoading: convoRoomLoading } = useQuery({
         queryKey: ['convoRoom', room_id],
         queryFn: async () => {
-            console.log('sdasd')
             const res = await sendRequest({
                 url: `${
                     import.meta.env.VITE_CHAT_LOCALHOST
@@ -282,7 +281,7 @@ const Conversation = (props) => {
                             to="/chats"
                             onClick={() => {
                                 socket.emit('room-leave', { room_id: room_id })
-                                console.log('left')
+                                // console.log('left')
                             }}
                         >
                             <IconButton
