@@ -6,7 +6,7 @@ const useAuth = () => {
     const { sendRequest, isLoading } = useHttp()
 
     const [user, setUser] = useState()
-    const [token, setToken] = useState('')
+    const [token, setToken] = useState('405|gO6IljibTttGx0GkYrwjyo7ndMXYiwXjirvX3SFHed291651')
     const [isLoggedIn, setIsLoggedIn] = useState('initial')
     const navigate = useNavigate()
     const logoutHandler = () => {
@@ -67,6 +67,13 @@ const useAuth = () => {
     }, [])
 
     useEffect(() => {
+        localStorage.setItem(
+            'userData',
+            JSON.stringify({
+                // userId: user.id,
+                token: token,
+            })
+        )
         const storedData = JSON.parse(localStorage.getItem('userData'))
 
         if (storedData) {
