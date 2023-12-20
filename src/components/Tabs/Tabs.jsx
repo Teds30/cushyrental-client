@@ -39,7 +39,7 @@ export const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
         },
         '&.Mui-selected': {
             color: 'var(--accent)',
-            fontWeight: 600,
+            fontWeight: 700,
         },
     })
 )

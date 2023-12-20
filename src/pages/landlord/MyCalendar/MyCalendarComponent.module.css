@@ -4,6 +4,8 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+
+    background-color: var(--bg-layer1);
 }
 
 .calendar-container {

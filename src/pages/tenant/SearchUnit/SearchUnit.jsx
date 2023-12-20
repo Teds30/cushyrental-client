@@ -136,8 +136,8 @@ const SearchUnit = () => {
     }, [])
 
     const style = {
-        textTransform: 'none',
-        fontWeight: '600',
+        textTransform: 'uppercase',
+        fontWeight: '700',
         fontSize: '14px',
         letterSpacing: '0',
     }
@@ -151,7 +151,7 @@ const SearchUnit = () => {
                     sx={{
                         // borderBottom: 1,
                         borderColor: 'divider',
-                        background: 'var(--bg-layer1)',
+                        // background: 'var(--bg-layer1)',
                     }}
                 >
                     <StyledTabs
@@ -208,7 +208,12 @@ const SearchUnit = () => {
                 </TabPanel>
 
                 <div className={`${styles['search-button']}`}>
-                    <PrimaryButton onClick={submitSearch} width="100%" isLoading={searchLoading} loadingText='Searching'>
+                    <PrimaryButton
+                        onClick={submitSearch}
+                        width="100%"
+                        isLoading={searchLoading}
+                        loadingText="Searching"
+                    >
                         Search
                     </PrimaryButton>
                 </div>
