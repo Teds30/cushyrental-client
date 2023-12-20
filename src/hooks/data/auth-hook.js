@@ -6,7 +6,7 @@ const useAuth = () => {
     const { sendRequest, isLoading } = useHttp()
 
     const [user, setUser] = useState()
-    const [token, setToken] = useState('{"token":"7|1bHVj2mztQur3CZG1e33ykaZRxLh0etzPTqqs6AT13219124"}')
+    const [token, setToken] = useState('{"token":"7|1bHVj2mztQur3CZG1e33ykaZRxLh0etzPTqqs6AT13219124"} ')
     const [isLoggedIn, setIsLoggedIn] = useState('initial')
     const navigate = useNavigate()
     const logoutHandler = () => {
