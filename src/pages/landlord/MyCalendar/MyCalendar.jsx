@@ -69,7 +69,7 @@ const MyCalendar = ({ window }) => {
                     }/api/landlord-rentals/${authCtx.user.id}`,
                 })
 
-                responseData = responseData.filter(event => event.rental_status !== 4 )
+                responseData = responseData.filter(event => event.rental_status !== 4 && event.rental_status !== 3 && event.rental_status !== 2)
                 console.log(responseData);
 
                 if (responseData) {
