@@ -75,7 +75,8 @@ const EditUnit = (props) => {
                 filtered[key] = obj[key]
             }
         }
-        return {...filtered, is_listed: obj.slots === 0 && 0};
+        // return {...filtered, is_listed: obj.slots === 0};
+        return filtered;
     }
 
     const saveHandler = async (event) => {
@@ -100,8 +101,10 @@ const EditUnit = (props) => {
 
         const id = filteredData.id
 
+        const data = {...filteredData, is_listed: filteredData.slots === 0 ? 0 : 1};   
+
         try {
-            const res = await updateUnit(id, filteredData)
+            const res = await updateUnit(id, data);
             notify('Update successfully!', 'success')
             navigate('/manage_unit')
         } catch (error) {}

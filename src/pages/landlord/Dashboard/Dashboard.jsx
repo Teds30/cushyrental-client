@@ -19,6 +19,9 @@ import UserAvatar from '../../../components/Avatar/UserAvatar'
 const Dashboard = () => {
     const authCtx = useContext(AuthContext)
 
+    const [unitStats, setUnitStats] = useState()
+    const [upcomingDues, setUpcomingDues] = useState()  
+
     useEffect(() => {
         const changeUser = () => {
             if (authCtx.user) {
@@ -41,16 +44,20 @@ const Dashboard = () => {
                 }/api/landlord_upcoming_events/${userId}`,
             })
 
-            setUpcomingDues(res2)
+            const upCommingDues = res2.filter(rental => rental.rental_status !== 4 && rental.rental_status !== 3 && rental.rental_status !== 2);
+
+
+
+            console.log(upCommingDues);
+
+            setUpcomingDues(upCommingDues);
+            // setUnitStats(upCommingDues.length)
         }
 
         changeUser()
     }, [authCtx])
 
     const { sendRequest } = useHttp()
-
-    const [unitStats, setUnitStats] = useState()
-    const [upcomingDues, setUpcomingDues] = useState()
 
     return (
         <React.Fragment>
@@ -144,7 +151,7 @@ const Dashboard = () => {
                             </div>
                             <div className={styles['count-container']}>
                                 Tenants
-                                <h1>{unitStats && unitStats.tenants_count}</h1>
+                                <h1>{upcomingDues && upcomingDues.length}</h1>
                             </div>
                         </div>
 
