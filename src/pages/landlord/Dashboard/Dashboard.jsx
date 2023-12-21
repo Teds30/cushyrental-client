@@ -20,7 +20,9 @@ const Dashboard = () => {
     const authCtx = useContext(AuthContext)
 
     const [unitStats, setUnitStats] = useState()
-    const [upcomingDues, setUpcomingDues] = useState()  
+    const [upcomingDues, setUpcomingDues] = useState() 
+    
+    console.log(upcomingDues);
 
     useEffect(() => {
         const changeUser = () => {
@@ -108,7 +110,7 @@ const Dashboard = () => {
                             <div className={styles['status-vr']}></div>
                             <div className={styles['status']}>
                                 <h3 className={styles['count']}>
-                                    {unitStats && unitStats.occupied_count}
+                                    {upcomingDues !== undefined ? upcomingDues.length : 0}
                                 </h3>
                                 <p>Occupied</p>
                             </div>
