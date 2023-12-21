@@ -28,6 +28,8 @@ const UnitsCarousel = () => {
         const fetchUnits = async () => {
             const res = await fetchGoldUnits()
 
+            console.log(res);
+
             setUnits(res)
         }
         fetchUnits()
@@ -43,7 +45,7 @@ const UnitsCarousel = () => {
             {units &&
                 units.map((unit, index) => (
                     <SwiperSlide key={index} className="banner-swiper-slide">
-                        <Link to={`/unit/${unit.id}`}>
+                        <Link to={`/unit/${unit.unit_id}`}>
                             <UnitCard unit={unit} />
                         </Link>
                     </SwiperSlide>

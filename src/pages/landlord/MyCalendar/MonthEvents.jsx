@@ -6,6 +6,8 @@ import styles from './MonthEvents.module.css'
 const MonthEvents = (props) => {
     const { events, date } = props
 
+    console.log(events);
+
     const [filteredEvents, setFilteredEvents] = useState([])
 
     useEffect(() => {

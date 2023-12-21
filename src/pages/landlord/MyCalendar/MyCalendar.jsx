@@ -69,6 +69,9 @@ const MyCalendar = ({ window }) => {
                     }/api/landlord-rentals/${authCtx.user.id}`,
                 })
 
+                responseData = responseData.filter(event => event.rental_status !== 4 )
+                console.log(responseData);
+
                 if (responseData) {
                     responseData.map((rental) => {
                         setEvents((prev) => [
