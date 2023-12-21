@@ -81,6 +81,7 @@ const EditUnit = (props) => {
 
     const saveHandler = async (event) => {
         event.preventDefault()
+        let data = 0;
 
         if (unit.name === '' || (unit.details === '' && unit.price === '')) {
             return
@@ -101,10 +102,12 @@ const EditUnit = (props) => {
 
         const id = filteredData.id
 
-        const data = {...filteredData, is_listed: filteredData.slots === 0 ? 0 : 1};   
+        if (filteredData.slots === 0) {
+            data = {...filteredData, is_listed: filteredData.slots === 0 ? 0 : 1};   
+        }
 
         try {
-            const res = await updateUnit(id, data);
+            const res = await updateUnit(id,  data === 0 ? filteredData : data);
             notify('Update successfully!', 'success')
             navigate('/manage_unit')
         } catch (error) {}
@@ -135,10 +138,12 @@ const EditUnit = (props) => {
 
         const id = filteredData.id
 
+        const data = {...filteredData, is_listed: filteredData.slots === 0 ? 0 : 1};   
+
         try {
-            const res = await updateUnit(id, { ...filteredData, status: 0 })
+            const res = await updateUnit(id, { ...data, status: 0 });
             notify('Deleted successfully!', 'success')
-            navigate('/manage_unit/' + res.id)
+            navigate('/manage_unit/')
         } catch (error) {}
     }
 
