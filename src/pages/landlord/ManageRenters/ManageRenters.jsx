@@ -34,8 +34,9 @@ const ManageRenters = () => {
         try {
             const res = await fetchRentals(userCtx.user.id)
             const availableRentals = res.filter(
-                (rental) => rental.rental_status === 1
+                (rental) => rental.rental_status === 1 || rental.rental_status === 0
             )
+            console.log(res);
             setTenantsData(availableRentals)
         } catch (error) {}
     }
