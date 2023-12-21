@@ -67,13 +67,15 @@ const PersonalInformation = (props) => {
 
             const data = res.filter((unit) => {
                 if (unit.request_status === 1) {
-                    const subscription = unit.subscriptions.filter((subscribe) => subscribe.request_status === 0 || subscribe.request_status === 1 && subscribe.type === 0);
+                    const subscription = unit.subscriptions.filter((subscribe) => subscribe.request_status !== 0 || subscribe.type !== 0);
 
                     if (subscription.length === 0) {
                         return unit;
                     }
                 }
             })
+
+            console.log(data);
 
             setUnits(data)
         }
