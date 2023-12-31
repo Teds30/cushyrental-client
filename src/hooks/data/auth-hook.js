@@ -16,19 +16,22 @@ const useAuth = () => {
         localStorage.removeItem('userData')
     }
 
-    const loginHandler = useCallback(({ user = {}, token = '' }) => {
-        setToken(token)
-        setUser(user)
-        setIsLoggedIn(true)
-        localStorage.setItem(
-            'userData',
-            JSON.stringify({
-                // userId: user.id,
-                token: token,
-            })
-        )
-        navigate('/')
-    }, [])
+    const loginHandler = useCallback(
+        ({ user = {}, token = '', fresh = false }) => {
+            setToken(token)
+            setUser(user)
+            setIsLoggedIn(true)
+            localStorage.setItem(
+                'userData',
+                JSON.stringify({
+                    // userId: user.id,
+                    token: token,
+                })
+            )
+            navigate('/', { state: { isFresh: fresh } })
+        },
+        []
+    )
 
     const fetchUserData = useCallback(async (token) => {
         const storedData = JSON.parse(localStorage.getItem('userData'))

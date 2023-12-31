@@ -16,14 +16,18 @@ import Badge from '@mui/material/Badge'
 
 import { IoIosCalendar } from 'react-icons/io'
 import { FiSearch } from 'react-icons/fi'
+import { BiBuildingHouse } from 'react-icons/bi'
 
 import AuthContext from '../../../context/auth-context'
 import useHttp from '../../../hooks/http-hook'
 import useNotificationManager from '../../../hooks/data/notification-hook'
 
+import PrimaryButton from '../../Button/PrimaryButton'
+
 import styles from './BottomNavigation.module.css'
 
 import nav_data from '../nav_data'
+import Tour from 'reactour'
 
 function HideOnScroll(props) {
     const { children } = props
@@ -71,8 +75,96 @@ const itemStyles = {
     fontSize: '10px',
 }
 
+const steps = [
+    {
+        selector: '#chats',
+        content: (
+            <div className={styles['tourcontainer']}>
+                <p className="title">Chats</p>
+                <p>
+                    View your conversations with other users. On this page, you
+                    can accept or reject incoming rental requests from tenants,
+                    allowing you to manage and respond to inquiries efficiently.
+                </p>
+            </div>
+        ),
+    },
+    {
+        selector: '#manage_unit',
+        content: (
+            <div className={styles['tourcontainer']}>
+                <p className="title">My Units</p>
+                <p>
+                    Use this page to manage your units. Create or edit unit
+                    listings easily.
+                </p>
+            </div>
+        ),
+    },
+    {
+        selector: '#notifications',
+        content: (
+            <div className={styles['tourcontainer']}>
+                <p className="title">Notifications</p>
+                <p>
+                    Get reminders for your tenants' upcoming payment dates and
+                    receive notification when a tenant is renting a unit.
+                </p>
+            </div>
+        ),
+    },
+    {
+        selector: '#profile',
+        content: (
+            <div className={styles['tourcontainer']}>
+                <p className="title">Profile</p>
+                <p>
+                    Make changes to your profile, handle unit subscriptions, or
+                    use the interactive calendar to view rental due dates.
+                </p>
+            </div>
+        ),
+    },
+]
+
+const unitSteps = [
+    {
+        selector: '#manage_unit',
+        content: (
+            <div className={styles['tourcontainer']}>
+                {/* <p className="title">Manage Unit</p> */}
+                <p>Unit listings can be found in the 'My Units' page</p>
+            </div>
+        ),
+    },
+]
+
 const BottomNavigation = (props) => {
-    const { current = 0, children, isTenant = false } = props
+    const {
+        current = 0,
+        children,
+        isTenant = false,
+        openNextTour = false,
+        isUnitTourOpen: isUnitTourOpenProps,
+        setUnitOpen,
+    } = props
+
+    const [isTourOpen, setIsTourOpen] = useState(openNextTour)
+    const [isUnitTourOpen, setIsUnitTourOpen] = useState(false)
+
+    useEffect(() => {
+        const reloadPage = () => {
+            if (openNextTour) setIsTourOpen(true)
+        }
+        reloadPage()
+    }, [openNextTour])
+
+    useEffect(() => {
+        const reloadPage = () => {
+            if (isUnitTourOpenProps) setIsUnitTourOpen(true)
+        }
+        reloadPage()
+    }, [isUnitTourOpenProps])
 
     const authCtx = useContext(AuthContext)
     const { fetchUserNotifications, isLoading: notificationLoading } =
@@ -124,10 +216,11 @@ const BottomNavigation = (props) => {
 
         const mainNav = !isTenant
             ? {
-                  name: 'Calendar',
-                  icon: <IoIosCalendar size={32} style={{ fill: '#fff' }} />,
+                  name: 'My Units',
+                  icon: <BiBuildingHouse size={32} style={{ fill: '#fff' }} />,
                   main: true,
-                  redirect_url: '/calendar',
+                  redirect_url: '/manage_unit',
+                  element_id: 'manage_unit',
               }
             : {
                   name: 'Search',
@@ -139,6 +232,7 @@ const BottomNavigation = (props) => {
                   ),
                   main: true,
                   redirect_url: '/search',
+                  element_id: 'search',
               }
 
         setNavData([...nav_data.slice(0, 2), mainNav, ...nav_data.slice(2)])
@@ -147,100 +241,149 @@ const BottomNavigation = (props) => {
     return (
         !notificationLoading && (
             <React.Fragment>
-                {/* <CssBaseline /> */}
-                {
-                    <HideOnScroll {...props}>
-                        <AppBar
-                            position="fixed"
-                            sx={{
-                                background: 'var(--bg-layer1)',
-                                color: 'var(--fc-body-light)',
-                                top: 'auto',
-                                bottom: 0,
+                <Tour
+                    steps={steps}
+                    isOpen={isTourOpen}
+                    onRequestClose={() => setIsTourOpen(false)}
+                    accentColor="var(--accent)"
+                    badgeContent={(curr, tot) => `${curr}/${tot}`}
+                    showNumber={true}
+                    showNavigation={false}
+                    showNavigationNumber={true}
+                    disableInteraction={true}
+                    disableKeyboardNavigation={true}
+                    rounded={10}
+                    lastStepNextButton={
+                        <PrimaryButton
+                            onClick={() => {
+                                document.body.scrollTop = 0 // For Safari
+                                document.documentElement.scrollTop = 0 // For Chrome, Firefox, IE, and Opera
+                                setUnitOpen(true)
                             }}
                         >
-                            <Toolbar
-                                sx={{
-                                    top: 'auto',
-                                    bottom: 0,
-                                    padding: 0,
-                                }}
-                            >
-                                {navData.map((data, index) => {
-                                    const nav_style =
-                                        index === selected
-                                            ? {
-                                                  ...itemStyles,
-                                                  color: 'var(--accent)',
-                                                  fill: 'var(--accent)',
-                                              }
-                                            : {
-                                                  ...itemStyles,
-                                                  color: 'var(--fc-body-light)',
-                                                  fill: 'var(--fc-body-light)',
-                                              }
+                            Done
+                        </PrimaryButton>
+                    }
+                />
+                <Tour
+                    steps={unitSteps}
+                    isOpen={isUnitTourOpen}
+                    onRequestClose={() => setIsTourOpen(false)}
+                    accentColor="var(--accent)"
+                    badgeContent={(curr, tot) => `${curr}/${tot}`}
+                    showNumber={false}
+                    showNavigation={false}
+                    showNavigationNumber={false}
+                    showButtons={false}
+                    rounded={10}
+                />
+                {/* <CssBaseline /> */}
+                {
+                    // <HideOnScroll {...props}>
+                    <AppBar
+                        position="fixed"
+                        sx={{
+                            background: 'var(--bg-layer1)',
+                            color: 'var(--fc-body-light)',
+                            top: 'auto',
+                            bottom: 0,
+                        }}
+                    >
+                        <Toolbar
+                            sx={{
+                                top: 'auto',
+                                bottom: 0,
+                                padding: 0,
+                            }}
+                        >
+                            {navData.map((data, index) => {
+                                const nav_style =
+                                    index === selected
+                                        ? {
+                                              ...itemStyles,
+                                              color: 'var(--accent)',
+                                              fill: 'var(--accent)',
+                                          }
+                                        : {
+                                              ...itemStyles,
+                                              color: 'var(--fc-body-light)',
+                                              fill: 'var(--fc-body-light)',
+                                          }
 
-                                    return data.main === true ? (
-                                        <div key={index} style={{ flex: '1' }}>
-                                            <StyledFab
-                                                color="secondary"
-                                                aria-label="add"
-                                                onClick={(e) => {
-                                                    e.preventDefault()
-                                                    selectHandler(index)
+                                return data.main === true ? (
+                                    <div key={index} style={{ flex: '1' }}>
+                                        <StyledFab
+                                            color="secondary"
+                                            aria-label="add"
+                                            id={data.element_id}
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                selectHandler(index)
+
+                                                if (data.name === 'My Units') {
+                                                    navigate(
+                                                        data.redirect_url,
+                                                        {
+                                                            state: {
+                                                                isTourOpen:
+                                                                    isUnitTourOpen,
+                                                            },
+                                                        }
+                                                    )
+                                                } else {
                                                     navigate(data.redirect_url)
-                                                }}
-                                            >
-                                                {data.icon}
-                                            </StyledFab>
-                                            <Box sx={itemStyles}>
-                                                <Box
-                                                    sx={{
-                                                        width: '24px',
-                                                        height: '24px',
-                                                    }}
-                                                />
-                                                {data.name}
-                                            </Box>
-                                        </div>
-                                    ) : (
-                                        <Box
-                                            sx={{
-                                                ...nav_style,
-                                                position: 'relative',
+                                                }
                                             }}
-                                            key={index}
                                         >
-                                            <Link
-                                                // to={data.redirect_url}
-                                                className={styles['nav_link']}
-                                                onClick={(e) => {
-                                                    e.preventDefault()
-                                                    selectHandler(index)
-                                                    navigate(data.redirect_url)
+                                            {data.icon}
+                                        </StyledFab>
+                                        <Box sx={itemStyles}>
+                                            <Box
+                                                sx={{
+                                                    width: '24px',
+                                                    height: '24px',
                                                 }}
-                                            >
-                                                {data.name ===
-                                                    'Notification' && (
-                                                    <CustomBadge
-                                                        badgeContent={notifCtr}
-                                                    >
-                                                        {index === selected
-                                                            ? data.selectedIcon
-                                                            : data.icon}
-                                                    </CustomBadge>
-                                                )}
-                                                {data.name !==
-                                                    'Notification' && (
-                                                    <>
-                                                        {index === selected
-                                                            ? data.selectedIcon
-                                                            : data.icon}
-                                                    </>
-                                                )}
-                                                {data.name}
+                                            />
+                                            {data.name}
+                                        </Box>
+                                    </div>
+                                ) : (
+                                    <Box
+                                        sx={{
+                                            ...nav_style,
+                                            position: 'relative',
+                                        }}
+                                        key={index}
+                                        id={data.element_id}
+                                    >
+                                        <Link
+                                            // to={data.redirect_url}
+                                            className={styles['nav_link']}
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                selectHandler(index)
+                                                navigate(data.redirect_url)
+                                            }}
+                                        >
+                                            {data.name === 'Notification' && (
+                                                <CustomBadge
+                                                    badgeContent={notifCtr}
+                                                >
+                                                    {index === selected
+                                                        ? data.selectedIcon
+                                                        : data.icon}
+                                                </CustomBadge>
+                                            )}
+                                            {data.name !== 'Notification' && (
+                                                <>
+                                                    {index === selected
+                                                        ? data.selectedIcon
+                                                        : data.icon}
+                                                </>
+                                            )}
+                                            {data.name}
 
-                                                {/* {data.name === 'Notification' &&
+                                            {/* {data.name === 'Notification' &&
                                                 notifCtr > 0 && (
                                                     <span
                                                         className={
@@ -250,13 +393,13 @@ const BottomNavigation = (props) => {
                                                         {notifCtr}
                                                     </span>
                                                 )} */}
-                                            </Link>
-                                        </Box>
-                                    )
-                                })}
-                            </Toolbar>
-                        </AppBar>
-                    </HideOnScroll>
+                                        </Link>
+                                    </Box>
+                                )
+                            })}
+                        </Toolbar>
+                    </AppBar>
+                    // </HideOnScroll>
                 }
                 <Toolbar />
                 <Container>{children}</Container>
