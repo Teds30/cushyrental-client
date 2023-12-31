@@ -4,6 +4,8 @@ import styles from './LandLordProfile.module.css'
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
 // import SubscriptionsIcon from '@mui/icons-material/Subscriptions'
 import SubscriptionIcon from './SubscriptionIcon'
+
+import { IoIosCalendar } from 'react-icons/io'
 import { BiBuildingHouse } from 'react-icons/bi'
 
 const ProfileOption = (props) => {
@@ -29,15 +31,16 @@ const ProfileOption = (props) => {
             )}
 
             {user_type_id == 2 && (
-                <Link to="/myunit-landlord" className={styles.col}>
-                    <BiBuildingHouse
+                <Link to="/calendar" className={styles.col}>
+                    <IoIosCalendar
+                        size={30}
                         style={{
                             color: 'var(--fc-strong)',
                             height: '30px',
                             width: '30px',
                         }}
                     />
-                    <p className="smaller-text">My Unit</p>
+                    <p className="smaller-text">Calendar</p>
                 </Link>
             )}
         </div>
