@@ -27,3 +27,9 @@
 .nav_link:visited {
     color: inherit;
 }
+
+.tourcontainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}

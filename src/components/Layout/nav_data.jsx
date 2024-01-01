@@ -24,12 +24,14 @@ const nav_data = [
             <BsChatSquareFill style={{ fill: 'inherit' }} size={24} />
         ),
         redirect_url: '/chats',
+        element_id: 'chats',
     },
     {
         name: 'Notification',
         icon: <BsBell style={{ fill: 'inherit' }} size={24} />,
         selectedIcon: <BsBellFill style={{ fill: 'inherit' }} size={24} />,
         redirect_url: '/notifications',
+        element_id: 'notifications',
     },
     {
         name: 'Profile',
@@ -43,6 +45,7 @@ const nav_data = [
         ),
         selectedIcon: <BiSolidUser style={{ fill: 'inherit' }} size={24} />,
         redirect_url: '/profile',
+        element_id: 'profile',
     },
 ]
 

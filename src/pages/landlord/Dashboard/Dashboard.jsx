@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
+import Tour from 'reactour'
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 
 import useHttp from '../../../hooks/http-hook'
 import { TbBuildingCommunity, TbArrowRight } from 'react-icons/tb'
@@ -11,18 +13,44 @@ import brand_logo from '../../../assets/cushyrental.svg'
 import styles from './Dashboard.module.css'
 
 import profile from '../../../assets/Units/pics.png'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import AuthContext from '../../../context/auth-context'
 import UserAvatar from '../../../components/Avatar/UserAvatar'
 
+import PrimaryButton from '../../../components/Button/PrimaryButton'
+import BorderedButton from '../../../components/Button/BorderedButton'
+import BorderlessButton from '../../../components/Button/BorderlessButton'
+
+import { Backdrop, Box, Card, CardActions, CardContent } from '@mui/material'
+import CreateUnitTour from './Tours/CreateUnitTour'
+import DashboardTour from './Tours/DashboardTour'
+
+import { steps } from './dashboard_steps'
+
 const Dashboard = () => {
     const authCtx = useContext(AuthContext)
+    const navigate = useNavigate()
+    const location = useLocation()
+    const receivedState = location.state
 
     const [unitStats, setUnitStats] = useState()
-    const [upcomingDues, setUpcomingDues] = useState() 
-    
-    console.log(upcomingDues);
+    const [upcomingDues, setUpcomingDues] = useState()
+    const [isTourOpen, setIsTourOpen] = useState(false)
+    const [openNextTour, setOpenNextTour] = useState(false)
+    const [isUnitTourOpen, setIsUnitTourOpen] = useState(false)
+    const [open, setOpen] = useState(receivedState?.isFresh || false)
+    const [unitOpen, setUnitOpen] = useState(false)
+
+    const handleClose = () => {
+        setOpen(false)
+    }
+    const handleUnitClose = () => {
+        setUnitOpen(false)
+    }
+
+    const disableBody = (target) => disableBodyScroll(target)
+    const enableBody = (target) => enableBodyScroll(target)
 
     useEffect(() => {
         const changeUser = () => {
@@ -46,23 +74,66 @@ const Dashboard = () => {
                 }/api/landlord_upcoming_events/${userId}`,
             })
 
-            const upCommingDues = res2.filter(rental => rental.rental_status !== 4 && rental.rental_status !== 3 && rental.rental_status !== 2);
+            const upCommingDues = res2.filter(
+                (rental) =>
+                    rental.rental_status !== 4 &&
+                    rental.rental_status !== 3 &&
+                    rental.rental_status !== 2
+            )
 
+            console.log(upCommingDues)
 
-
-            console.log(upCommingDues);
-
-            setUpcomingDues(upCommingDues);
+            setUpcomingDues(upCommingDues)
             // setUnitStats(upCommingDues.length)
         }
 
         changeUser()
     }, [authCtx])
 
+    useEffect(() => {
+        if (unitStats && unitStats.units_count == 0) {
+            // setIsTourOpen(true)
+        }
+    }, [unitStats])
+
     const { sendRequest } = useHttp()
 
     return (
         <React.Fragment>
+            <DashboardTour
+                open={open}
+                handleClose={handleClose}
+                setIsTourOpen={setIsTourOpen}
+            />
+
+            <CreateUnitTour
+                open={unitOpen}
+                handleClose={handleUnitClose}
+                setIsTourOpen={setIsUnitTourOpen}
+            />
+
+            <Tour
+                steps={steps}
+                isOpen={isTourOpen}
+                onRequestClose={() => setIsTourOpen(false)}
+                accentColor="var(--accent)"
+                badgeContent={(curr, tot) => `${curr}/${tot}`}
+                showNumber={true}
+                showNavigation={false}
+                showNavigationNumber={true}
+                rounded={10}
+                lastStepNextButton={
+                    <PrimaryButton
+                        onClick={() => {
+                            setOpenNextTour(true)
+                        }}
+                    >
+                        Next
+                    </PrimaryButton>
+                }
+                // onAfterOpen={disableBody}
+                // onBeforeClose={enableBody}
+            />
             <div className={styles['container']}>
                 <div className={styles['brand-container']}>
                     <img src={brand_logo} alt="logo" width="64" height="64" />
@@ -88,41 +159,64 @@ const Dashboard = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className={styles['count-container']}>
+                            <div
+                                className={styles['count-container']}
+                                id="total_units_count"
+                            >
                                 Units
                                 <h1>{unitStats && unitStats.units_count}</h1>
                             </div>
                         </div>
                         <div className={styles['status-container']}>
-                            <div className={styles['status']}>
+                            <div
+                                className={styles['status']}
+                                id="listed_units_count"
+                            >
                                 <h3 className={styles['count']}>
                                     {unitStats && unitStats.listed_count}
                                 </h3>
                                 <p>Listed</p>
                             </div>
                             <div className={styles['status-vr']}></div>
-                            <div className={styles['status']}>
+                            <div
+                                className={styles['status']}
+                                id="unlisted_units_count"
+                            >
                                 <h3 className={styles['count']}>
                                     {unitStats && unitStats.unlisted_count}
                                 </h3>
                                 <p>Unlisted</p>
                             </div>
                             <div className={styles['status-vr']}></div>
-                            <div className={styles['status']}>
+                            <div
+                                className={styles['status']}
+                                id="occupied_units_count"
+                            >
                                 <h3 className={styles['count']}>
-                                    {upcomingDues !== undefined ? upcomingDues.length : 0}
+                                    {upcomingDues !== undefined
+                                        ? upcomingDues.length
+                                        : 0}
                                 </h3>
                                 <p>Occupied</p>
                             </div>
                             <div className={styles['status-vr']}></div>
-                            <div className={styles['status']}>
+                            <div
+                                className={styles['status']}
+                                id="pending_units_count"
+                            >
                                 <h3 className={styles['count']}>
                                     {unitStats && unitStats.pending_count}
                                 </h3>
                                 <p>Pending</p>
                             </div>
                         </div>
-                        <Link to="/manage_unit">
+                        <Link
+                            onClick={(e) => {
+                                e.preventDefault()
+                                navigate('/manage_unit')
+                            }}
+                            id="action_manage_units"
+                        >
                             <div className={styles['action']}>
                                 <div className={styles['action-label']}>
                                     Manage Units
@@ -151,7 +245,10 @@ const Dashboard = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className={styles['count-container']}>
+                            <div
+                                className={styles['count-container']}
+                                id="tenants_count"
+                            >
                                 Tenants
                                 <h1>{upcomingDues && upcomingDues.length}</h1>
                             </div>
@@ -169,7 +266,10 @@ const Dashboard = () => {
                         </Link>
                     </div>
                 </div>
-                <div className={styles['events-container']}>
+                <div
+                    className={styles['events-container']}
+                    id="upcoming_due_dates"
+                >
                     <h3>Upcoming Due Date</h3>
                     <div className={styles['events']}>
                         {upcomingDues &&
@@ -223,7 +323,13 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            <BottomNavigation current={0} />
+            <BottomNavigation
+                current={0}
+                openNextTour={openNextTour}
+                isUnitTourOpen={isUnitTourOpen}
+                setIsUnitTourOpen={setIsUnitTourOpen}
+                setUnitOpen={setUnitOpen}
+            />
         </React.Fragment>
     )
 }

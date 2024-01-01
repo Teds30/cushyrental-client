@@ -51,7 +51,7 @@ const CreateAccount = () => {
         // try {
         //     const res = await accountRegistration(data)
 
-        //     ctx.onLogin({ user: res.user, token: res.token })
+        //     ctx.onLogin({ user: res.user, token: res.token, fresh: true })
         //     // navigate('/')
         // } catch (error) {
         //     notify('Email already exist.', 'info')
@@ -75,8 +75,9 @@ const CreateAccount = () => {
                 ctx.onLogin({
                     user: registerGoogleRes.user,
                     token: registerGoogleRes.token,
+                    fresh: true,
                 })
-                navigate('/')
+                // navigate('/')
             } catch (error) {
                 notify('Email already exist.', 'info')
             }

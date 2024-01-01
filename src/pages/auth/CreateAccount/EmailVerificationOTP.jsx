@@ -105,8 +105,8 @@ const EmailVerificationOTP = (props) => {
 
                 console.log(res);
 
-                ctx.onLogin({ user: res.user, token: res.token });
-                navigate("/");
+                ctx.onLogin({ user: res.user, token: res.token, fresh: true })
+                // navigate("/");
             } catch (error) {
                 notify("Email already exist.", "info");
             }

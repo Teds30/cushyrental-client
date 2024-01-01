@@ -22,6 +22,7 @@
     flex-direction: column;
     gap: 12px;
     padding-inline: 12px;
+    margin-bottom: 200px;
 
     /* background: var(--bg); */
 }

@@ -1,5 +1,5 @@
 import { Fragment, useContext, useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -13,14 +13,19 @@ import styles from './ManageUnit.module.css'
 import { FiChevronLeft } from 'react-icons/fi'
 
 const ManageUnit = () => {
+    const location = useLocation()
+    const isTourOpen = location.state?.isTourOpen
+
+    console.log('isTourOpen: ', isTourOpen)
+
     const userCtx = useContext(AuthContext)
     const { fetchUserUnits, isLoading } = useUserManager()
 
     const [userUnits, setUserUnits] = useState([])
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const deleteUnitHandler = (id) => {
-        setUserUnits(userUnits.filter(unit => unit.id !== id));
+        setUserUnits(userUnits.filter((unit) => unit.id !== id))
     }
 
     useEffect(() => {
@@ -95,7 +100,11 @@ const ManageUnit = () => {
                     </Box>
 
                     <div className={`${styles['main-container']}`}>
-                        <ManageUnitTabs userUnits={userUnits} onDeleteUnit={deleteUnitHandler} />
+                        <ManageUnitTabs
+                            userUnits={userUnits}
+                            onDeleteUnit={deleteUnitHandler}
+                            isTourOpen={isTourOpen}
+                        />
                     </div>
                 </Fragment>
             )}
