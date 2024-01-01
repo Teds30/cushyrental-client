@@ -1,16 +1,21 @@
-import React, { useEffect, useState, Fragment } from "react";
-import styles from "../Login/SignInPage.module.css";
-import PrimaryButton from "../../components/Button/PrimaryButton";
-import useSendEmail from "./send-email-hook";
-import useLogin from "../../hooks/data/login-hook";
-import ForgotPasswordInfo from "./ForgotPasswordInfo";
+import React, { useEffect, useState, Fragment, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "../../Login/SignInPage.module.css";
+import PrimaryButton from "../../../components/Button/PrimaryButton";
+import useSendEmail from "../../Login/send-email-hook";
+import useLogin from "../../../hooks/data/login-hook";
+import ForgotPasswordInfo from "../../Login/ForgotPasswordInfo";
+import useAuth from "../../../hooks/data/auth-hook";
+import AuthContext from "../../../context/auth-context";
 
 import { AiOutlineInfoCircle } from "react-icons/ai";
 
-const ForgotPassword = (props) => {
-    const { email, onVerified } = props;
+const EmailVerificationOTP = (props) => {
+    const { email, onVerified, data } = props;
     const { sendOtp } = useSendEmail();
-    const { forgotPassword, isLoading } = useLogin();
+    const navigate = useNavigate();
+    const ctx = useContext(AuthContext);
+    const { accountRegistration, isLoading } = useAuth();
 
     const [otpDigits, setOtpDigits] = useState(Array(5).fill(""));
     const [otp, setOtp] = useState([]);
@@ -50,7 +55,7 @@ const ForgotPassword = (props) => {
     const generateRandomNumbers = () => {
         const newRandomNumbers = [];
         for (let i = 0; i < 5; i++) {
-            const randomNumber = Math.floor(Math.random() * 10); 
+            const randomNumber = Math.floor(Math.random() * 10);
             newRandomNumbers.push(randomNumber);
         }
         return newRandomNumbers;
@@ -62,7 +67,23 @@ const ForgotPassword = (props) => {
         setTime(60);
     };
 
-    const submitHandler = () => {
+    function getFormattedDate() {
+        const currentDate = new Date();
+
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+        const day = String(currentDate.getDate()).padStart(2, "0");
+
+        const hours = String(currentDate.getHours()).padStart(2, "0");
+        const minutes = String(currentDate.getMinutes()).padStart(2, "0");
+        const seconds = String(currentDate.getSeconds()).padStart(2, "0");
+
+        const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+        return formattedDate;
+    }
+
+    const submitHandler = async () => {
         if (otpDigits.length !== 5) {
             return;
         }
@@ -74,33 +95,49 @@ const ForgotPassword = (props) => {
         const isEqual = JSON.stringify(otpCode) === JSON.stringify(otp);
 
         if (isEqual) {
-            onVerified();
+            console.log(isEqual);
+            const presentDate = getFormattedDate();
+            console.log(typeof(presentDate));
+            try {
+                const userData = {...data, email_verified_at: presentDate};
+                // console.log(userData);
+                const res = await accountRegistration(userData);
+
+                console.log(res);
+
+                ctx.onLogin({ user: res.user, token: res.token });
+                navigate("/");
+            } catch (error) {
+                notify("Email already exist.", "info");
+            }
         } else {
             setError(true);
         }
     };
 
     useEffect(() => {
-        let interval;
-        let message = 'To change your password, your OTP is ';
+        // if (!isLoading) {
+            let interval;
+            let message = "This is your code to verify your email ";
 
-        if (time === 60) {
-            const returnOtp = generateRandomNumbers();
-            setOtp(returnOtp);
-            sendOtp(email, returnOtp, message);
-        }
+            if (time === 60) {
+                const returnOtp = generateRandomNumbers();
+                setOtp(returnOtp);
+                sendOtp(email, returnOtp, message);
+            }
 
-        if (time !== 0) {
-            // if ()
+            if (time !== 0) {
+                // if ()
 
-            interval = setInterval(() => {
-                setTime(time - 1);
-            }, 1000);
-        } else {
-            setOtp([]);
-        }
+                interval = setInterval(() => {
+                    setTime(time - 1);
+                }, 1000);
+            } else {
+                setOtp([]);
+            }
 
-        return () => clearInterval(interval);
+            return () => clearInterval(interval);
+        // }
     }, [time, setTime]);
 
     return (
@@ -164,4 +201,4 @@ const ForgotPassword = (props) => {
     );
 };
 
-export default ForgotPassword;
+export default EmailVerificationOTP;

@@ -11,6 +11,7 @@ import AuthContext from '../../../context/auth-context'
 import useNotistack from '../../../hooks/notistack-hook'
 
 import styles from './CreateAccount.module.css'
+import EmailVerification from './EmailVerification'
 
 const CreateAccount = () => {
     const { accountRegistration, isLoading } = useAuth()
@@ -28,6 +29,8 @@ const CreateAccount = () => {
                 ? receivedData.state.user_type_id
                 : 3,
     })
+    const [isVerify, setIsVerify] = useState(false);
+    const [ userData, setUserData ] = useState({});
 
     const userTypeHandler = useCallback(
         (userType) => {
@@ -42,14 +45,17 @@ const CreateAccount = () => {
             user_type_id: userType.user_type_id,
         }
 
-        try {
-            const res = await accountRegistration(data)
+        setUserData(data);
+        setIsVerify(true);
 
-            ctx.onLogin({ user: res.user, token: res.token })
-            // navigate('/')
-        } catch (error) {
-            notify('Email already exist.', 'info')
-        }
+        // try {
+        //     const res = await accountRegistration(data)
+
+        //     ctx.onLogin({ user: res.user, token: res.token })
+        //     // navigate('/')
+        // } catch (error) {
+        //     notify('Email already exist.', 'info')
+        // }
     }
 
     const googleRegisterHandle = useGoogleLogin({
@@ -76,6 +82,10 @@ const CreateAccount = () => {
             }
         },
     })
+
+    const resetIsVerifiedHandler = () => {
+        setIsVerify(false);
+    }
 
     // const facebookRegisterHandler = async () => {
     //     try {
@@ -151,28 +161,28 @@ const CreateAccount = () => {
     // };
 
     return (
-        <div className={styles.container}>
-            <div className={`${styles['container-title']}`}>
-                <h2>Create Account</h2>
+        !isVerify ? <div className={styles.container}>
+        <div className={`${styles['container-title']}`}>
+            <h2>Create Account</h2>
+        </div>
+        <div className={`${styles['main-container']}`}>
+            <div className={`${styles['main-container-type']}`}>
+                <UserToggleButton
+                    onUserType={userTypeHandler}
+                    initialSelected={userType}
+                />
             </div>
-            <div className={`${styles['main-container']}`}>
-                <div className={`${styles['main-container-type']}`}>
-                    <UserToggleButton
-                        onUserType={userTypeHandler}
-                        initialSelected={userType}
-                    />
-                </div>
 
-                <div className={`${styles['main-container-form']}`}>
-                    <CreateAccountForm
-                        onCreateAccount={createAccountHandler}
-                        isLoading={isLoading}
-                        onGoogleAuth={googleRegisterHandle}
-                        // onfacebookAuth={facebookRegisterHandler}
-                    />
-                </div>
+            <div className={`${styles['main-container-form']}`}>
+                <CreateAccountForm
+                    onCreateAccount={createAccountHandler}
+                    isLoading={isLoading}
+                    onGoogleAuth={googleRegisterHandle}
+                    // onfacebookAuth={facebookRegisterHandler}
+                />
             </div>
         </div>
+    </div> : <EmailVerification data={userData} onRegistration={resetIsVerifiedHandler}/>
     )
 }
 

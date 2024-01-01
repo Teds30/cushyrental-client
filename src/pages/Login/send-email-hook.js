@@ -12,11 +12,11 @@ export const useSendEmail = () => {
         Subject: "HUWAG I SHARE ANG IYONG OTP",
     };
 
-    const sendOtp = (email, otp) => {
+    const sendOtp = (email, otp, message) => {
         const updateConfig = {
             ...config,
             To: email,
-            Body: "To change your password, your OTP is " + otp.join(""),
+            Body: message + otp.join(""),
         };
 
         if (window.Email) {
