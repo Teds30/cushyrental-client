@@ -51,7 +51,7 @@ const EmailVerification = (props) => {
                 </AppBar>
             </Box>
 
-            <EmailVerificationOTP email={data.email} data={data}/>
+            <EmailVerificationOTP email={data.email} data={data} onRegistration={backHandler}/>
         </div>
     );
 };

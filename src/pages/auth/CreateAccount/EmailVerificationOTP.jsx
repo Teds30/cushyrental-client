@@ -11,7 +11,7 @@ import AuthContext from "../../../context/auth-context";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 
 const EmailVerificationOTP = (props) => {
-    const { email, onVerified, data } = props;
+    const { email, onRegistration, data } = props;
     const { sendOtp } = useSendEmail();
     const navigate = useNavigate();
     const ctx = useContext(AuthContext);
@@ -81,6 +81,10 @@ const EmailVerificationOTP = (props) => {
         const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
         return formattedDate;
+    }
+
+    const backHandler = () => {
+        onRegistration();
     }
 
     const submitHandler = async () => {
@@ -187,15 +191,30 @@ const EmailVerificationOTP = (props) => {
                     </div>
                 </div>
 
+                <div className={`${styles['email-verification-button']}`}>
+                {/* <div className={`${styles['verification-button']}`}> */}
                 <PrimaryButton
                     type="submit"
                     isLoading={isLoading}
                     loadingText="SUBMIT"
-                    width="100%"
+                    // width="100%"
+                    onClick={backHandler}
+                >
+                    Go back to signup page
+                </PrimaryButton>
+                {/* </div> */}
+                {/* <div className={`${styles['verification-button']}`}> */}
+                <PrimaryButton
+                    type="submit"
+                    isLoading={isLoading}
+                    loadingText="SUBMIT"
+                    // width="100%"
                     onClick={submitHandler}
                 >
                     SUBMIT
                 </PrimaryButton>
+                {/* </div> */}
+                </div>
             </div>
         </div>
     );

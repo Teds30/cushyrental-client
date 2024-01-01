@@ -285,6 +285,11 @@
     gap: 37px;
 }
 
+.email-verification-button {
+    display: flex;
+    justify-content: space-between;
+}
+
 @media (max-width: 768px) {
     .otp {
         flex-wrap: wrap;
