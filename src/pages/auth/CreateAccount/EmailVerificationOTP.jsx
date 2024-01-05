@@ -1,152 +1,152 @@
-import React, { useEffect, useState, Fragment, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import styles from "../../Login/SignInPage.module.css";
-import PrimaryButton from "../../../components/Button/PrimaryButton";
-import useSendEmail from "../../Login/send-email-hook";
-import useLogin from "../../../hooks/data/login-hook";
-import ForgotPasswordInfo from "../../Login/ForgotPasswordInfo";
-import useAuth from "../../../hooks/data/auth-hook";
-import AuthContext from "../../../context/auth-context";
+import React, { useEffect, useState, Fragment, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import styles from '../../Login/SignInPage.module.css'
+import PrimaryButton from '../../../components/Button/PrimaryButton'
+import useSendEmail from '../../Login/send-email-hook'
+import useLogin from '../../../hooks/data/login-hook'
+import ForgotPasswordInfo from '../../Login/ForgotPasswordInfo'
+import useAuth from '../../../hooks/data/auth-hook'
+import AuthContext from '../../../context/auth-context'
 
-import { AiOutlineInfoCircle } from "react-icons/ai";
+import { AiOutlineInfoCircle } from 'react-icons/ai'
 
 const EmailVerificationOTP = (props) => {
-    const { email, onRegistration, data } = props;
-    const { sendOtp } = useSendEmail();
-    const navigate = useNavigate();
-    const ctx = useContext(AuthContext);
-    const { accountRegistration, isLoading } = useAuth();
+    const { email, onRegistration, data } = props
+    const { sendOtp } = useSendEmail()
+    const navigate = useNavigate()
+    const ctx = useContext(AuthContext)
+    const { accountRegistration, isLoading } = useAuth()
 
-    const [otpDigits, setOtpDigits] = useState(Array(5).fill(""));
-    const [otp, setOtp] = useState([]);
-    const [isVerified, setIsVerified] = useState(false);
-    const [error, setError] = useState(false);
-    const [time, setTime] = useState(60);
-    const [isHasTime, SetItHasTime] = useState(false);
-    const [dialogOpen, setDialogOpen] = useState(false);
+    const [otpDigits, setOtpDigits] = useState(Array(5).fill(''))
+    const [otp, setOtp] = useState([])
+    const [isVerified, setIsVerified] = useState(false)
+    const [error, setError] = useState(false)
+    const [time, setTime] = useState(60)
+    const [isHasTime, SetItHasTime] = useState(false)
+    const [dialogOpen, setDialogOpen] = useState(false)
 
     const otpDigitChangeHandler = (index, value) => {
-        const updatedOtpDigits = [...otpDigits];
-        updatedOtpDigits[index] = value;
+        const updatedOtpDigits = [...otpDigits]
+        updatedOtpDigits[index] = value
 
         if (
-            otp.join("") != updatedOtpDigits.join("") &&
+            otp.join('') != updatedOtpDigits.join('') &&
             updatedOtpDigits.length != 5
         ) {
-            setIsVerified(false);
-            setError(true);
-            setError(true);
+            setIsVerified(false)
+            setError(true)
+            setError(true)
         } else if (
-            otp.join("") === updatedOtpDigits.join("") &&
+            otp.join('') === updatedOtpDigits.join('') &&
             updatedOtpDigits.length === 5
         ) {
-            setIsVerified(true);
-            setError(false);
+            setIsVerified(true)
+            setError(false)
         }
 
-        setOtpDigits(updatedOtpDigits);
-    };
+        setOtpDigits(updatedOtpDigits)
+    }
 
     const toggleInfo = () => {
-        setDialogOpen(true);
-        console.log("clicked!");
-    };
+        setDialogOpen(true)
+        console.log('clicked!')
+    }
 
     const generateRandomNumbers = () => {
-        const newRandomNumbers = [];
+        const newRandomNumbers = []
         for (let i = 0; i < 5; i++) {
-            const randomNumber = Math.floor(Math.random() * 10);
-            newRandomNumbers.push(randomNumber);
+            const randomNumber = Math.floor(Math.random() * 10)
+            newRandomNumbers.push(randomNumber)
         }
-        return newRandomNumbers;
-    };
+        return newRandomNumbers
+    }
 
     const resendHandler = () => {
-        setError(false);
-        setOtpDigits(Array(5).fill(""));
-        setTime(60);
-    };
+        setError(false)
+        setOtpDigits(Array(5).fill(''))
+        setTime(60)
+    }
 
     function getFormattedDate() {
-        const currentDate = new Date();
+        const currentDate = new Date()
 
-        const year = currentDate.getFullYear();
-        const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-        const day = String(currentDate.getDate()).padStart(2, "0");
+        const year = currentDate.getFullYear()
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0')
+        const day = String(currentDate.getDate()).padStart(2, '0')
 
-        const hours = String(currentDate.getHours()).padStart(2, "0");
-        const minutes = String(currentDate.getMinutes()).padStart(2, "0");
-        const seconds = String(currentDate.getSeconds()).padStart(2, "0");
+        const hours = String(currentDate.getHours()).padStart(2, '0')
+        const minutes = String(currentDate.getMinutes()).padStart(2, '0')
+        const seconds = String(currentDate.getSeconds()).padStart(2, '0')
 
-        const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
 
-        return formattedDate;
+        return formattedDate
     }
 
     const backHandler = () => {
-        onRegistration();
+        onRegistration()
     }
 
     const submitHandler = async () => {
         if (otpDigits.length !== 5) {
-            return;
+            return
         }
 
-        setError(false);
+        setError(false)
 
-        const otpCode = otpDigits.map(Number);
+        const otpCode = otpDigits.map(Number)
 
-        const isEqual = JSON.stringify(otpCode) === JSON.stringify(otp);
+        const isEqual = JSON.stringify(otpCode) === JSON.stringify(otp)
 
         if (isEqual) {
-            console.log(isEqual);
-            const presentDate = getFormattedDate();
-            console.log(typeof(presentDate));
+            console.log(isEqual)
+            const presentDate = getFormattedDate()
+            console.log(typeof presentDate)
             try {
-                const userData = {...data, email_verified_at: presentDate};
+                const userData = { ...data, email_verified_at: presentDate }
                 // console.log(userData);
-                const res = await accountRegistration(userData);
+                const res = await accountRegistration(userData)
 
-                console.log(res);
+                console.log(res)
 
                 ctx.onLogin({ user: res.user, token: res.token, fresh: true })
                 // navigate("/");
             } catch (error) {
-                notify("Email already exist.", "info");
+                notify('Email already exist.', 'info')
             }
         } else {
-            setError(true);
+            setError(true)
         }
-    };
+    }
 
     useEffect(() => {
         // if (!isLoading) {
-            let interval;
-            let message = "This is your code to verify your email ";
+        let interval
+        let message = 'This is your code to verify your email '
 
-            if (time === 60) {
-                const returnOtp = generateRandomNumbers();
-                setOtp(returnOtp);
-                sendOtp(email, returnOtp, message);
-            }
+        if (time === 60) {
+            const returnOtp = generateRandomNumbers()
+            setOtp(returnOtp)
+            sendOtp(email, returnOtp, message)
+        }
 
-            if (time !== 0) {
-                // if ()
+        if (time !== 0) {
+            // if ()
 
-                interval = setInterval(() => {
-                    setTime(time - 1);
-                }, 1000);
-            } else {
-                setOtp([]);
-            }
+            interval = setInterval(() => {
+                setTime(time - 1)
+            }, 1000)
+        } else {
+            setOtp([])
+        }
 
-            return () => clearInterval(interval);
+        return () => clearInterval(interval)
         // }
-    }, [time, setTime]);
+    }, [time, setTime])
 
     return (
-        <div className={`${styles["forgot-password-code-row"]}`}>
-            <div className={`${styles["enter-code"]} `}>
+        <div className={`${styles['forgot-password-code-row']}`}>
+            <div className={`${styles['enter-code']} `}>
                 <p>Enter Code</p>
                 <AiOutlineInfoCircle size={20} onClick={toggleInfo} />
             </div>
@@ -156,15 +156,15 @@ const EmailVerificationOTP = (props) => {
                 onClose={() => setDialogOpen(false)}
             />
 
-            <div className={`${styles["otp-main"]}`}>
-                <div className={`${styles["otp-row"]}`}>
-                    <div className={styles["otp"]}>
+            <div className={`${styles['otp-main']}`}>
+                <div className={`${styles['otp-row']}`}>
+                    <div className={styles['otp']}>
                         {otpDigits.map((digit, index) => (
                             <input
                                 key={index}
                                 type="text"
                                 maxLength={1}
-                                className={`${styles["otp-input"]} ${
+                                className={`${styles['otp-input']} ${
                                     error && styles.error
                                 }`}
                                 value={digit}
@@ -176,8 +176,8 @@ const EmailVerificationOTP = (props) => {
                     </div>
 
                     <div
-                        className={`${styles["resend-button"]} ${
-                            time !== 0 && styles["has-time"]
+                        className={`${styles['resend-button']} ${
+                            time !== 0 && styles['has-time']
                         }`}
                     >
                         <button
@@ -185,15 +185,15 @@ const EmailVerificationOTP = (props) => {
                             onClick={resendHandler}
                         >
                             {time === 0
-                                ? "Resend"
-                                : "Resend in " + "(" + time + "s)"}
+                                ? 'Resend'
+                                : 'Resend in ' + '(' + time + 's)'}
                         </button>
                     </div>
                 </div>
 
                 <div className={`${styles['email-verification-button']}`}>
-                {/* <div className={`${styles['verification-button']}`}> */}
-                <PrimaryButton
+                    {/* <div className={`${styles['verification-button']}`}> */}
+                    {/* <PrimaryButton
                     type="submit"
                     isLoading={isLoading}
                     loadingText="SUBMIT"
@@ -201,23 +201,23 @@ const EmailVerificationOTP = (props) => {
                     onClick={backHandler}
                 >
                     Go back to signup page
-                </PrimaryButton>
-                {/* </div> */}
-                {/* <div className={`${styles['verification-button']}`}> */}
-                <PrimaryButton
-                    type="submit"
-                    isLoading={isLoading}
-                    loadingText="SUBMIT"
-                    // width="100%"
-                    onClick={submitHandler}
-                >
-                    SUBMIT
-                </PrimaryButton>
-                {/* </div> */}
+                </PrimaryButton> */}
+                    {/* </div> */}
+                    {/* <div className={`${styles['verification-button']}`}> */}
+                    <PrimaryButton
+                        type="submit"
+                        isLoading={isLoading}
+                        loadingText="SUBMIT"
+                        width="100%"
+                        onClick={submitHandler}
+                    >
+                        SUBMIT
+                    </PrimaryButton>
+                    {/* </div> */}
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default EmailVerificationOTP;
+export default EmailVerificationOTP
