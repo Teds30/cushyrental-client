@@ -17,16 +17,7 @@ const Homepage = (props) => {
             </div>
             <div className={styles['carousel-container']}>
                 <div className={styles['carousel']}>
-                    {items?.map((item) => {
-                        return (
-                            <GuideElement
-                                page_elements={data.filter(
-                                    (page) => page.id === item.id
-                                )}
-                                handleElementChanged={handleElementChanged}
-                            />
-                        )
-                    })}
+                    <UnitsCarousel />
                 </div>
             </div>
 
