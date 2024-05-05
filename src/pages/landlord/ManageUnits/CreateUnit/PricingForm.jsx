@@ -1,20 +1,20 @@
-import { useContext, useState } from "react";
+import { useContext, useState } from 'react'
 
-import TextField from "../../../../components/TextField/TextField";
-import BorderlessButton from "../../../../components/Button/BorderlessButton";
-import PrimaryButton from "../../../../components/Button/PrimaryButton";
-import CreateUnitContext from "../../../../context/create-unit-context";
-import useValidate from "../../../../hooks/validate-input-hook";
-import Quantity from "../../../../components/Quantity/Quantity";
+import TextField from '../../../../components/TextField/TextField'
+import BorderlessButton from '../../../../components/Button/BorderlessButton'
+import PrimaryButton from '../../../../components/Button/PrimaryButton'
+import CreateUnitContext from '../../../../context/create-unit-context'
+import useValidate from '../../../../hooks/validate-input-hook'
+import Quantity from '../../../../components/Quantity/Quantity'
 
-import styles from "./CreateUnit.module.css";
-import EastIcon from "@mui/icons-material/East";
+import styles from './CreateUnit.module.css'
+import EastIcon from '@mui/icons-material/East'
 
 const PricingForm = (props) => {
-    const createUnitCtx = useContext(CreateUnitContext);
-    const pricingDetails = createUnitCtx.unitData;
+    const createUnitCtx = useContext(CreateUnitContext)
+    const pricingDetails = createUnitCtx.unitData
 
-    const { onNext, onBack } = props;
+    const { onNext, onBack } = props
 
     const {
         value: enteredPrice,
@@ -23,28 +23,28 @@ const PricingForm = (props) => {
         valueChangeHandler: priceChangeHandler,
         inputBlurHandler: priceBlurHandler,
         reset: priceReset,
-    } = useValidate((value) => value.trim() !== "" && value !== 0);
+    } = useValidate((value) => value.trim() !== '' && value !== 0)
 
     const [monthlyDeposit, setMonthlyDeposit] = useState(
         pricingDetails.month_deposit ? pricingDetails.month_deposit : 0
-    );
+    )
     const [monthlyAdvancePayment, setMonthlyAdvancePayment] = useState(
         pricingDetails.month_advance ? pricingDetails.month_advance : 0
-    );
+    )
 
-    let formIsValid = false;
+    let formIsValid = false
 
     if (enteredPriceIsValid) {
-        formIsValid = true;
+        formIsValid = true
     }
 
     const monthDepositHandler = (value) => {
-        setMonthlyDeposit(value.value);
-    };
+        setMonthlyDeposit(value.value)
+    }
 
     const monthAdvanceHandler = (value) => {
-        setMonthlyAdvancePayment(value.value);
-    };
+        setMonthlyAdvancePayment(value.value)
+    }
 
     const draftPricing = () => {
         if (formIsValid) {
@@ -53,27 +53,27 @@ const PricingForm = (props) => {
                 price: enteredPrice,
                 month_deposit: monthlyDeposit,
                 month_advance: monthlyAdvancePayment,
-            });
+            })
         } else if (pricingDetails !== undefined) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
                 price: createUnitCtx.unitData.price,
                 month_deposit: monthlyDeposit,
                 month_advance: monthlyAdvancePayment,
-            });
+            })
         }
-    };
+    }
 
     const backHandler = (event) => {
-        event.preventDefault();
+        event.preventDefault()
 
-        draftPricing();
+        draftPricing()
 
-        onBack();
-    };
+        onBack()
+    }
 
     const submitHandler = (event) => {
-        event.preventDefault();
+        event.preventDefault()
 
         if (formIsValid) {
             createUnitCtx.onUnitData({
@@ -81,27 +81,27 @@ const PricingForm = (props) => {
                 price: enteredPrice,
                 month_deposit: monthlyDeposit,
                 month_advance: monthlyAdvancePayment,
-            });
+            })
         } else if (pricingDetails !== undefined) {
             createUnitCtx.onUnitData({
                 ...createUnitCtx.unitData,
                 price: createUnitCtx.unitData.price,
                 month_deposit: monthlyDeposit,
                 month_advance: monthlyAdvancePayment,
-            });
+            })
         } else {
-            return;
+            return
         }
 
-        onNext();
-    };
+        onNext()
+    }
 
     return (
         <form
-            className={`${styles["basic-details-form"]}`}
+            className={`${styles['basic-details-form']}`}
             onSubmit={submitHandler}
         >
-            <div className="title">How many tenants can stay in the unit?</div>
+            <div className="title">Tell us about the price</div>
 
             <TextField
                 fullWidth
@@ -116,7 +116,9 @@ const PricingForm = (props) => {
             />
 
             <div>
-                <div className={`${styles.title}`}>Do you require security deposit?</div>
+                <div className={`${styles.title}`}>
+                    Do you require security deposit?
+                </div>
                 <div className="caption">
                     Leave 0 if you don’t require the tenant for security
                     deposits.
@@ -141,12 +143,12 @@ const PricingForm = (props) => {
                 />
             </div>
 
-            <div className={`${styles["basic-details-button"]}`}>
+            <div className={`${styles['basic-details-button']}`}>
                 <BorderlessButton onClick={backHandler}>Back</BorderlessButton>
                 <PrimaryButton rightIcon={<EastIcon />}>Next</PrimaryButton>
             </div>
         </form>
-    );
-};
+    )
+}
 
-export default PricingForm;
+export default PricingForm
