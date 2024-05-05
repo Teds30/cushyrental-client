@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import styles from './Homepage.module.css'
 import BottomNavigation from '../../../components/Layout/BottomNavigation/BottomNavigation'
@@ -7,7 +7,8 @@ import brand_logo from '../../../assets/cushyrental.svg'
 import UnitsCarousel from './UnitsCarousel'
 import RecommendedUnits from './RecommendedUnits'
 
-const Homepage = () => {
+const Homepage = (props) => {
+    const { items } = props
     return (
         <div className={styles['container']}>
             <div className={styles['brand-container']}>
@@ -16,7 +17,16 @@ const Homepage = () => {
             </div>
             <div className={styles['carousel-container']}>
                 <div className={styles['carousel']}>
-                    <UnitsCarousel />
+                    {items?.map((item) => {
+                        return (
+                            <GuideElement
+                                page_elements={data.filter(
+                                    (page) => page.id === item.id
+                                )}
+                                handleElementChanged={handleElementChanged}
+                            />
+                        )
+                    })}
                 </div>
             </div>
 

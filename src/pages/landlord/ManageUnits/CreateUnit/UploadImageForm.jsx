@@ -18,7 +18,7 @@ const UploadImageForm = (props) => {
     const { onNext, onBack } = props
     const { createUnit } = useUnitManager()
     const imageData = []
-    const {notify} = useNotistack();
+    const { notify } = useNotistack()
 
     const createUnitCtx = useContext(CreateUnitContext)
     const userCtx = useContext(AuthContext)
@@ -31,15 +31,15 @@ const UploadImageForm = (props) => {
     const [unitImages, setUnitImages] = useState(uploadImageDetails)
 
     const addImageChangeHandler = (event) => {
-        const selectedImage = event.target.files[0];
-    
-        if (selectedImage && selectedImage.size > 5 * 1024 * 1024) {
-            notify('Selected image is greater than 5MB', 'info');
-            return;
+        const selectedImage = event.target.files[0]
+
+        if (selectedImage && selectedImage.size > 20 * 1024 * 1024) {
+            notify('Selected image is greater than 20MB', 'info')
+            return
         }
-    
-        setUnitImages([...unitImages, selectedImage]);
-    };
+
+        setUnitImages([...unitImages, selectedImage])
+    }
 
     const removeHandler = (id) => {
         const newUnitImages = unitImages.filter((image, index) => index !== id)

@@ -36,9 +36,18 @@ const About = () => {
                     <p className={styles['title']}>Cushy Rental</p>
                 </div>
                 <ul className={styles['nav-container']}>
-                    <li>Home</li>
-                    <li>Team</li>
-                    <li>Contact</li>
+                    <li>
+                        <a href="#team">Team</a>
+                    </li>
+                    <li>
+                        <a href="#community">Community</a>
+                    </li>
+                    <li>
+                        <a href="#features">Features</a>
+                    </li>
+                    <li>
+                        <a href="#contact">Contact</a>
+                    </li>
                 </ul>
 
                 <Link
@@ -48,7 +57,7 @@ const About = () => {
                     Board Now
                 </Link>
             </div>
-            <section className={styles['intro']}>
+            <section className={styles['intro']} id="home">
                 <div className={styles['blur-img']}>
                     <img src={blurLogo} alt="" />
                 </div>
@@ -150,7 +159,7 @@ const About = () => {
                     </svg>
                 </span>
             </section>
-            <section className={styles['mtt']}>
+            <section className={styles['mtt']} id="team">
                 <AnimatedElement>
                     <h1>Meet the Team</h1>
                 </AnimatedElement>
@@ -267,7 +276,7 @@ const About = () => {
                                 animation="zoom-in"
                                 transition={{ duration: 0.25, delay: 0.25 }}
                                 classes={styles['blob']}
-                                // showOnce={true}
+                                showOnce={true}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -296,7 +305,7 @@ const About = () => {
                 </div>
             </section>
 
-            <section className={styles['community']}>
+            <section className={styles['community']} id="community">
                 <div className={styles['community-title']}>
                     <AnimatedElement>
                         <h2>Community</h2>
@@ -339,7 +348,7 @@ const About = () => {
                 </div>
             </section>
 
-            <section className={styles['features-container']}>
+            <section className={styles['features-container']} id="features">
                 <div>
                     <AnimatedElement>
                         <h2>Why not look for an easier way?</h2>
@@ -381,7 +390,7 @@ const About = () => {
                             <div className={styles['feature-img']}>
                                 <img src="" alt="" />
                             </div>
-                            <p className="title">Unit Comparison Tooll</p>
+                            <p className="title">Unit Comparison Tool</p>
                         </div>
                     </AnimatedElement>
 
@@ -447,9 +456,7 @@ const About = () => {
             <section className={styles['discover']}>
                 <h2>Discover boarding house with us!</h2>
                 <div className={styles['actions']}>
-                    <Link
-                        to={authCtx && authCtx.user ? '/' : '/register'}
-                    >
+                    <Link to={authCtx && authCtx.user ? '/' : '/register'}>
                         <div
                             className={`${styles['discover-btn']} ${styles['btn-primary']}`}
                         >
@@ -464,9 +471,7 @@ const About = () => {
                             </span>
                         </div>
                     </Link>
-                    <Link
-                        to={authCtx && authCtx.user ? '/' : '/register'}
-                    >
+                    <Link to={authCtx && authCtx.user ? '/' : '/register'}>
                         <div
                             className={`${styles['discover-btn']} ${styles['btn-outlined']}`}
                         >
@@ -483,83 +488,102 @@ const About = () => {
                     </Link>
                 </div>
             </section>
-            <section className={styles['contact-container']}>
+            <section className={styles['contact-container']} id="contact">
                 <div className={styles['contact-title']}>
                     <h2>Contact</h2>
                     <div className={styles['contact-shape']}></div>
                 </div>
                 <div className={styles['contact']}>
-                    <div className={styles['contact-item']}>
-                        <p className="title">Socials</p>
-                        <div className={styles['socials']}>
-                            <a
-                                className={styles['social-brand']}
-                                href="https://www.facebook.com/profile.php?id=61553585090103"
-                                target="_blank"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="icon icon-tabler icon-tabler-brand-facebook"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="2"
-                                    stroke="currentColor"
-                                    fill="none"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
+                    <div className={styles['contact-col']}>
+                        <div className={styles['contact-item']}>
+                            <p className="title">Socials</p>
+                            <div className={styles['socials']}>
+                                <a
+                                    className={styles['social-brand']}
+                                    href="https://www.facebook.com/profile.php?id=61553585090103"
+                                    target="_blank"
                                 >
-                                    <path
-                                        stroke="none"
-                                        d="M0 0h24v24H0z"
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="icon icon-tabler icon-tabler-brand-facebook"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="2"
+                                        stroke="currentColor"
                                         fill="none"
-                                    />
-                                    <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
-                                </svg>
-                            </a>
-                            <a
-                                className={styles['social-brand']}
-                                href="https://www.instagram.com/cushyrental"
-                                target="_blank"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="icon icon-tabler icon-tabler-brand-instagram"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="2"
-                                    stroke="currentColor"
-                                    fill="none"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path
+                                            stroke="none"
+                                            d="M0 0h24v24H0z"
+                                            fill="none"
+                                        />
+                                        <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+                                    </svg>
+                                </a>
+                                <a
+                                    className={styles['social-brand']}
+                                    href="https://www.instagram.com/cushyrental"
+                                    target="_blank"
                                 >
-                                    <path
-                                        stroke="none"
-                                        d="M0 0h24v24H0z"
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="icon icon-tabler icon-tabler-brand-instagram"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="2"
+                                        stroke="currentColor"
                                         fill="none"
-                                    />
-                                    <path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" />
-                                    <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                                    <path d="M16.5 7.5l0 .01" />
-                                </svg>
-                            </a>
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path
+                                            stroke="none"
+                                            d="M0 0h24v24H0z"
+                                            fill="none"
+                                        />
+                                        <path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" />
+                                        <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                                        <path d="M16.5 7.5l0 .01" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div className={styles['contact-item']}>
+                            <p className="title">Email Address</p>
+                            <p>developers@cushyrental.com</p>
+                        </div>
+                        <div className={styles['contact-item']}>
+                            <p className="title">Phone Number</p>
+                            <div className={styles['phone-num']}>
+                                <span>
+                                    <img src={ph} alt="" />
+                                </span>
+                                <p>+63915-733-1288</p>
+                            </div>
                         </div>
                     </div>
-                    <div className={styles['contact-item']}>
-                        <p className="title">Email Address</p>
-                        <p>developers@cushyrental.com</p>
-                    </div>
-                    <div className={styles['contact-item']}>
-                        <p className="title">Phone Number</p>
-                        <div className={styles['phone-num']}>
-                            <span>
-                                <img src={ph} alt="" />
-                            </span>
-                            <p>+63915-733-1288</p>
+                    <div className={styles['contact-col']}>
+                        <div className={styles['contact-item']}>
+                            <p className="title">Share your insights with us</p>
+                            <p>recommend@cushyrental.com</p>
+                        </div>
+                        <div className={styles['contact-item']}>
+                            <p className="title">Send your credentials</p>
+                            <p>employment@cushyrental.com</p>
+                        </div>
+                        <div className={styles['contact-item']}>
+                            <p className="title">Found bugs and errors</p>
+                            <p>developers@cushyrental.com</p>
                         </div>
                     </div>
                 </div>
+            </section>
+            <section className={styles['copyright']}>
+                <p>Copyright 2023 © CushyRental</p>
             </section>
         </main>
     )

@@ -41,7 +41,7 @@ const EstimatedStay = (props) => {
                                     ? dayjs(selectedDates.from)
                                     : dayjs()
                             }
-                            minDate={dayjs()}
+                            // minDate={dayjs()}
                             onChange={(newValue) => {
                                 handleSelectDates({
                                     from: newValue.format('MM/DD/YYYY'),

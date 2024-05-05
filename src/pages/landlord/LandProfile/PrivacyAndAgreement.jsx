@@ -1,54 +1,53 @@
-import CardShadow from "../../../components/Card/CardShadow";
-import TextField from "../../../components/TextField/TextField";
-import PrimaryButton from "../../../components/Button/PrimaryButton";
-import CheckBox from "../../../components/CheckBox/CheckBox";
-import useVerificationManager from "../../../hooks/data/verifications-hook";
-import VerifyAccountContext from "../../../context/verify-account-context";
-import AuthContext from "../../../context/auth-context";
+import CardShadow from '../../../components/Card/CardShadow'
+import TextField from '../../../components/TextField/TextField'
+import PrimaryButton from '../../../components/Button/PrimaryButton'
+import CheckBox from '../../../components/CheckBox/CheckBox'
+import useVerificationManager from '../../../hooks/data/verifications-hook'
+import VerifyAccountContext from '../../../context/verify-account-context'
+import AuthContext from '../../../context/auth-context'
 
-import styles from "./AccountVerification.module.css";
-import { useContext, useState } from "react";
+import styles from './AccountVerification.module.css'
+import { useContext, useState } from 'react'
 
 const PrivacyAndAgreement = (props) => {
-    const { onNext } = props;
-    const { accountVerification, isLoading } = useVerificationManager();
-    const verifyCtx = useContext(VerifyAccountContext);
-    const userCtx = useContext(AuthContext);
+    const { onNext } = props
+    const { accountVerification, isLoading } = useVerificationManager()
+    const verifyCtx = useContext(VerifyAccountContext)
+    const userCtx = useContext(AuthContext)
 
-    const [selected, setSelected] = useState([]);
+    const [selected, setSelected] = useState([])
 
     const submitHandler = async (event) => {
-        event.preventDefault();
+        event.preventDefault()
 
         if (selected.length === 0) {
-            return;
+            return
         }
 
         const data = {
             ...verifyCtx.userAccount,
             user_id: userCtx.user.id,
-        };
-
-        console.log(data);
-
-        try {
-            const res = await accountVerification(data);
-            userCtx.onLogin({ user: res.user, token: userCtx.token });
-            onNext();
-        } catch (err) {
-            console.log(err);
         }
 
-    };
+        console.log(data)
+
+        try {
+            const res = await accountVerification(data)
+            userCtx.onLogin({ user: res.user, token: userCtx.token })
+            onNext()
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     return (
-        <div className={`${styles["personal-information-section"]}`}>
+        <div className={`${styles['personal-information-section']}`}>
             <p
                 className="smaller-text"
                 style={{
-                    color: "var(--fc-body-light)",
-                    textAlign: "center",
-                    padding: "0 30px",
+                    color: 'var(--fc-body-light)',
+                    textAlign: 'center',
+                    padding: '0 30px',
                 }}
             >
                 Do you agree to the terms in protecting users and privacy?
@@ -56,19 +55,19 @@ const PrivacyAndAgreement = (props) => {
 
             <form
                 onSubmit={submitHandler}
-                className={`${styles["personal-information-section-form"]}`}
+                className={`${styles['personal-information-section-form']}`}
             >
-                <div className={`${styles["personal-information-row"]}`}>
+                <div className={`${styles['personal-information-row']}`}>
                     <CardShadow>
-                        <p className="title" style={{ marginBottom: "12px" }}>
+                        <p className="title" style={{ marginBottom: '12px' }}>
                             Privacy and Agreement
                         </p>
 
                         <div
-                            className={`${styles["privacy-information-form"]}`}
+                            className={`${styles['privacy-information-form']}`}
                         >
                             <div
-                                className={`${styles["privacy-and-agreement"]}`}
+                                className={`${styles['privacy-and-agreement']}`}
                             >
                                 <p>
                                     As we guarantee the safety of our users'
@@ -84,32 +83,31 @@ const PrivacyAndAgreement = (props) => {
                                 </p>
 
                                 <p>
-                                    As we guarantee the safety of our users'
-                                    privacy, the provided information will not
-                                    be used for any unrelated purposes or shared
-                                    with any third party without the user's
-                                    explicit consent. We ensure that the
-                                    information is always kept secure and
-                                    confidential. Thus, your uploaded document
-                                    will be permanently deleted in our system
-                                    after the administrators verified your
-                                    account.
+                                    You can prevent any problems or delays in
+                                    the processing of your request by making
+                                    sure the information you supply is accurate
+                                    and valid. Therefore, please ensure that all
+                                    of the information you submit is legitimate
+                                    and your documents are not expired.
+                                    Uploading unrelated details or false
+                                    information will result in penalties or
+                                    rejection of your request.
                                 </p>
                             </div>
 
-                            <div className={styles["hr"]}></div>
+                            <div className={styles['hr']}></div>
 
                             <p
                                 className="smaller-text"
-                                style={{ textAlign: "justify" }}
+                                style={{ textAlign: 'justify' }}
                             >
                                 By clicking this, you agree to the privacy and
                                 agreement in verifying your account.
                             </p>
 
-                            <div className={`${styles["approve"]}`}>
+                            <div className={`${styles['approve']}`}>
                                 <CheckBox
-                                    items={[{ id: 1, name: "" }]}
+                                    items={[{ id: 1, name: '' }]}
                                     selectedValue={selected}
                                     onSelectedUsers={setSelected}
                                 />
@@ -124,7 +122,7 @@ const PrivacyAndAgreement = (props) => {
                 </PrimaryButton>
             </form>
         </div>
-    );
-};
+    )
+}
 
-export default PrivacyAndAgreement;
+export default PrivacyAndAgreement
