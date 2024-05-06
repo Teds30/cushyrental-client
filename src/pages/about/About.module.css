@@ -456,7 +456,7 @@
 }
 
 .contact-col:nth-child(2) {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
     flex-direction: column;
     gap: 32px;
